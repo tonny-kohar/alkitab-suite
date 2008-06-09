@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: kiyut.alkitab.modules.commons.logging
+OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/commons/logging/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.1.1
+

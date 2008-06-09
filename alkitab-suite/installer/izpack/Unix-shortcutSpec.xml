@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+    <notSupported/>
+    
+    <!-- <skipIfNotSupported/>
+    <programGroup defaultName="${app.title}/${app.title} ${app.version}" location="Applications"/>
+    
+    <shortcut
+        name="${app.title} ${app.version}"
+        type="Application"
+        programGroup="yes"
+        desktop="yes"
+        applications="no"
+        startMenu="yes"
+        startup="no"
+        target="$INSTALL_PATH/bin/${app.name}"
+        commandLine=""
+        workingDirectory="$INSTALL_PATH/bin"
+        description="${app.title} Launcher"
+        iconFile="$INSTALL_PATH/${app.name}/${app.name}48.png"
+        iconIndex="0"
+        encoding="UTF-8"
+        terminal="false"
+        KdeSubstUID="false"
+        initialState="normal">
+            
+        <createForPack name="${app.title.full}"/>
+    </shortcut>
+    
+    <shortcut
+        name="Readme.html"
+        type="Application"
+        programGroup="yes"
+        desktop="no"
+        applications="no"
+        startMenu="yes"
+        startup="no"
+        target="$INSTALL_PATH/readme.html"
+        commandLine=""
+        description="${app.title} Readme"
+        terminal="false"
+        KdeSubstUID="false"
+        initialState="normal">
+            
+        <createForPack name="${app.title.full}"/>
+    </shortcut>
+
+    <shortcut
+        name="Uninstaller"
+        type="Application"
+        programGroup="yes"
+        desktop="no"
+        applications="no"
+        startMenu="yes"
+        startup="no"
+        target="$INSTALL_PATH/Uninstaller/uninstaller"
+        commandLine=""
+        workingDirectory="$INSTALL_PATH/Uninstaller"
+        description="${app.title} Uninstaller"
+        terminal="false"
+        KdeSubstUID="false"
+        initialState="normal">
+            
+        <createForPack name="${app.title.full}"/>
+    </shortcut>
+    -->
+</shortcuts>

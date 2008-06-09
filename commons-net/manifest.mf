@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+OpenIDE-Module: kiyut.alkitab.modules.commons.net
+OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/commons/net/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.4.1
+

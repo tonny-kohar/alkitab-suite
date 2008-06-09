@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE settings PUBLIC "-//NetBeans//DTD Session settings 1.0//EN" "http://www.netbeans.org/dtds/sessionsettings-1_0.dtd">
+<settings version="1.0">
+    <module name="kiyut.alkitab.modules.branding"/>
+    <instanceof class="org.netbeans.spi.autoupdate.UpdateProvider"/>
+    <instance class="org.netbeans.modules.autoupdate.updateprovider.AutoupdateCatalogFactory" method="createUpdateProvider"/>
+</settings>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 2.0//EN" "http://java.sun.com/products/javahelp/map_2_0.dtd">
+<map version="2.0">
+    <mapID target="kiyut.alkitab.modules.userguide" url="userguide/index.html"/>
+    
+    <!--
+    <mapID target="kiyut.alkitab.modules.userguide.crosswire" url="userguide/crosswire/index.html#crosswire" />
+    <mapID target="kiyut.alkitab.modules.userguide.jsword" url="userguide/crosswire/index.html#jsword" />
+    -->
+    <mapID target="kiyut.alkitab.modules.userguide.legal" url="userguide/legal/index.html" />
+    <mapID target="kiyut.alkitab.modules.userguide.support" url="userguide/support/index.html" />
+    
+</map>

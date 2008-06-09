@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.apisupport.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
+            <code-name-base>kiyut.alkitab.modules.jdom</code-name-base>
+            <suite-component/>
+            <module-dependencies/>
+            <public-packages>
+                <package>org.jdom</package>
+                <package>org.jdom.adapters</package>
+                <package>org.jdom.filter</package>
+                <package>org.jdom.input</package>
+                <package>org.jdom.output</package>
+                <package>org.jdom.transform</package>
+                <package>org.jdom.xpath</package>
+            </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/jdom-1.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jdom-1.0.jar</binary-origin>
+            </class-path-extension>
+        </data>
+    </configuration>
+</project>

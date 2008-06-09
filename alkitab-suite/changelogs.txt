@@ -1,0 +1,52 @@
+ver 1.0
+- Add Expand verse by 1
+- Add Expand verse by 5
+- Improve UI flow
+- Move ViewSource from BookViewer Toolbar to TopComponent context menu
+- Cleanup IDE non related stuff
+- Updated to use JSword 1.0.8 (20080608)
+- Fix HTML broken image eg: BAO (Bible Atlas Online)
+- Fix Linux GTK lnf JEditorPane.setEditable(false) background color
+- Fix Installer books install path
+
+ver 0.9.5
+- Fix BibleKeyTreeCellRenderer NPE
+- Fix GeneralBooks StackOverflow
+- Add History (Go Back and Forward)
+- Add Verses per view (Go Previous and Next)
+
+ver 0.9
+- Add Sword AugmentPath and DownloadDir
+- Add Strongs and Morphology User Preferences or Options
+- Add Source Viewer
+- Various UI Improvement
+- Various Bug Fixes
+- [Installer] add options to install some books:
+  KJV, StrongsHebrew, StrongsGreek, Robinson Morph
+
+ver 0.8
+- Updated to use JSword 1.0.8
+- Added User Guide
+- Added Glossary View
+- Added shortcut on ParallelView ctrl-enter
+- Added Book Downloader/Installer (Plugins)
+- Enable swing.aatext by default
+- Fix Search (Search Limit)
+- Fix various NullPointerException
+
+ver 0.7
+- Updated to use Netbeans 6.1 RCP Platform
+- Fix installer chmod +x on Unix/Linux
+- Added User Preferences or Options
+- Improved Bookshelf
+- Improved Search Panel
+- Many UI Improvement and bug fixes
+
+ver 0.6
+- Added Search Panel (Advanced)
+- Added some icon
+- Various UI Improvement
+- Fix Java 1.5 compatibility problem
+
+ver 0.5
+- Initial Public Release

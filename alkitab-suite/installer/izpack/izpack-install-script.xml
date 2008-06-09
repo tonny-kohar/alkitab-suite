@@ -1,0 +1,134 @@
+<installation version="1.0">
+    
+    <!--
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+    <info>
+        <appname>${app.title.full}</appname>
+        <appversion>${app.version}</appversion>
+        <appsubpath>${app.path}</appsubpath> 
+        <url>http://www.kiyut.com</url>
+        <authors>
+            <author email="support@kiyut.com" name="KIYUT Software"/>
+        </authors>
+        <uninstaller>yes</uninstaller>
+        <!-- combine this later with ProcessPanel for set prefs during install -->
+        <javaversion>1.5</javaversion>
+    </info>
+    
+    
+    <variables>
+        <variable name="APP_TITLE_FULL" value="${app.title.full}"/>
+        <variable name="JVM_REQ" value="Java 1.5 or higher."/>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+        <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
+    </variables>
+    
+    <dynamicvariables>
+        <!-- <variable name="SWORD_PATH" value="${USER_HOME}${FILE_SEPARATOR}.sword"/> -->
+        <!-- <variable name="UserPathPanelVariable" value="${USER_HOME}${FILE_SEPARATOR}.sword" /> -->
+    </dynamicvariables>
+    
+    <!--
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    
+    <guiprefs width="640" height="480" resizable="no">
+        <modifier key="useButtonIcons" value="no"/>
+        <modifier key="useLabelIcons" value="no"/>
+        <modifier key="allYGap" value="3"/>
+        <modifier key="layoutAnchor" value="NORTHWEST"/>    
+        <modifier key="useHeadingPanel" value="yes"/>
+        <modifier key="headingLineCount" value="1"/>
+        <modifier key="headingFontSize" value="1.5"/>
+        <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+        <modifier key="headingPanelCounter" value="text"/>
+        <modifier key="headingPanelCounterPos" value="inHeading"/>
+    </guiprefs>
+    
+    <!--
+        The locale section.
+        Asks here to include the English.
+    -->
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    
+    <!--
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="LicencePanel.licence" src="legal/LICENSE-alkitab.txt"/>
+        <res id="shortcutSpec.xml" src="Win-shortcutSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="Unix-shortcutSpec.xml"/>
+        <res id="Installer.image" src="installer-image.png"/>
+        <res id="Heading.image" src="heading-image.png"/>
+        <res id="XInfoPanel.info" src="XInfoPanel.txt"/>
+        <res id="packsLang.xml" src="packsLang.xml" type="xml"/>
+        <res id="UserPathPanel.dir" src="UserPathPanel.txt"/>
+    </resources>
+    
+    <!-- The native libraries to add -->
+    <native type="izpack" name="ShellLink.dll"/>
+    
+    <!--
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TreePacksPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="UserPathPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="XInfoPanel"/>
+        <!-- <panel classname="FinishPanel"/> -->
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    
+    <!--
+        The packs section.
+        We specify here our packs.
+    -->
+    <packs>
+        <pack name="${app.title.full}" required="yes">
+            <description>${app.title.full} Core</description>
+            <file targetdir="$INSTALL_PATH" src="bin" override="true" />
+            <file targetdir="$INSTALL_PATH" src="etc" override="true" />
+            <file targetdir="$INSTALL_PATH" src="harness" override="true" />
+            <file targetdir="$INSTALL_PATH" src="ide9" override="true" />
+            <file targetdir="$INSTALL_PATH" src="legal" override="true" />
+            <file targetdir="$INSTALL_PATH" src="platform8" override="true" />
+            <file targetdir="$INSTALL_PATH" src="alkitab" override="true" />
+            <file targetdir="$INSTALL_PATH" src="readme.html" override="true" />
+            <file targetdir="$INSTALL_PATH/Uninstaller" src="uninstaller.exe" override="true" />
+            <file targetdir="$INSTALL_PATH/Uninstaller" src="uninstaller" override="true" />
+            <executable targetfile="$INSTALL_PATH/bin/alkitab" stage="never"/>
+            <executable targetfile="$INSTALL_PATH/Uninstaller/uninstaller" stage="never"/>
+        </pack>
+        <pack name="[Optional] Books" required="no">
+            <description>Optional Books. It is from http://www.crosswire.org/sword/modules/</description>
+        </pack>
+        <pack name="Bible: King James Version (KJV)" required="no" parent="[Optional] Books">
+            <description>King James Version (1769) with Strongs Numbers and Morphology</description>
+            <file targetdir="$UserPathPanelVariable" src="redist-books/KJV.zip" override="askfalse" unpack="true" />
+        </pack>
+        <pack name="Dictionary: Strong's Greek" required="no" parent="[Optional] Books">
+            <description>Strong's Greek Bible Dictionary</description>
+            <file targetdir="$UserPathPanelVariable" src="redist-books/StrongsGreek.zip" override="askfalse" unpack="true" />
+        </pack>
+        <pack name="Dictionary: Strong's Hebrew" required="no" parent="[Optional] Books">
+            <description>Strong's Hebrew Bible Dictionary</description>
+            <file targetdir="$UserPathPanelVariable" src="redist-books/StrongsHebrew.zip" override="askfalse" unpack="true" />
+        </pack>
+        <pack name="Dictionary: Robinson's Morphology" required="no" parent="[Optional] Books">
+            <description>Robinson's Morphological Analysis Codes</description>
+            <file targetdir="$UserPathPanelVariable" src="redist-books/Robinson.zip" override="askfalse" unpack="true" />
+        </pack>
+    </packs>
+</installation>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See harness/README in the NetBeans platform -->
+<!-- for some information on what you could do (e.g. targets to override). -->
+<!-- If you delete this file and reopen the project it will be recreated. -->
+<project name="alkitab" basedir=".">
+    <description>Builds the module suite alkitab.</description>
+    <import file="nbproject/build-impl.xml"/>
+    
+    <!-- override build to add custom.branding -->
+    <target name="build" depends="build-brand,suite.build"/>
+    
+    <target name="build-brand" depends="-init">
+        <propertyfile
+            file="${basedir}/branding/core/core.jar/org/netbeans/core/startup/Bundle.properties" 
+            comment="Updated by build script">
+            <entry key="currentVersion" value="${app.title.full} ${app.version} (Build ${app.buildnumber})" />
+        </propertyfile>
+        
+        <propertyfile
+            file="${basedir}/branding/modules/org-netbeans-core-windows.jar/org/netbeans/core/windows/view/ui/Bundle.properties"
+            comment="Updated by build script">
+            <entry key="CTL_MainWindow_Title" value="${app.title.full}" />
+            <entry key="CTL_MainWindow_Title_No_Project" value="${app.title.full}" />
+        </propertyfile>
+        
+        <!-- TODO Why i comment this, is it not needed anymore ???
+        <propertyfile
+            file="${basedir}/branding/modules/org-netbeans-core.jar/org/netbeans/core/ui/Bundle.properties" 
+            comment="Updated by build script">
+            <entry key="LBL_ProductInformation" value="${app.title.full}" />
+        </propertyfile>
+        -->
+        
+        <propertyfile
+            file="${basedir}/../alkitab-core/src/kiyut/alkitab/Application.properties" 
+            comment="Updated by build script">
+            <entry key="title" value="${app.title}" />
+            <entry key="title.full" value="${app.title.full}" />
+            <entry key="buildnumber" value="${app.buildnumber}" />
+            <entry key="version" value="${app.version}" />
+            <entry key="debug" value="${app.debug}" />
+        </propertyfile>
+        
+        <copy todir="${basedir}/branding/core/core.jar/org/netbeans/core/startup/" overwrite="true">
+            <fileset dir="${basedir}">
+                <include name="frame.gif"/>
+                <include name="frame32.gif"/>
+                <include name="frame48.gif"/>
+            </fileset>
+        </copy>
+        
+    </target>
+    
+    <target name="build-installer" description="Create Installer" depends="clean,build-zip">
+        <echo message=" "/>
+        <echo message="Setting property and task for installer creation" />
+        <property name="nbdist.dir" value="dist"/>
+        <property name="nbdist-app.dir" value="${nbdist.dir}/${app.name}"/>
+        <property name="nbdist-app-installer" value="${app.name}-${app.version.dash}.zip"/> 
+        <property name="izpack-installer" value="setup.jar"/>
+        <property name="izpack.dir" value="/home/tonny/opt/IzPack"/>
+        <taskdef name="izpack" classpath="${izpack.dir}/lib/compiler.jar" 
+            classname="com.izforge.izpack.ant.IzPackTask"/>
+        
+        <echo message="Preparing ...." />
+
+        <unzip src="${nbdist.dir}/${app.name}.zip" dest="${nbdist.dir}"/>
+
+        <copy todir="${nbdist-app.dir}/legal">
+            <fileset dir="legal"/>
+        </copy>
+
+        <copy todir="${nbdist-app.dir}/${app.name}">
+            <fileset dir="installer/icons"/>
+        </copy>
+        
+        <echo message="copying book to be included with installer:" />
+        <echo message="    KJV, StrongsGreek, StrongsHebrew, Robinson" />
+        <copy todir="${nbdist-app.dir}/redist-books">
+            <fileset dir="${basedir}/../../redist-books"/>
+        </copy>
+
+        <copy file="installer/readme.html" todir="${nbdist-app.dir}"/>
+        <replace file="${nbdist-app.dir}/readme.html">
+            <replacefilter token="$${app.version}" value="${app.version}" />
+        </replace>
+        
+        <copy todir="${nbdist-app.dir}">
+            <fileset dir="installer/izpack" />
+        </copy>
+        <replace file="${nbdist-app.dir}/izpack-install-script.xml">
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.title}" value="${app.title}" />
+            <replacefilter token="$${app.version}" value="${app.version}" />
+            <replacefilter token="$${app.path}" value="Kiyut/Alkitab-${app.version.dash}" />
+        </replace>
+        <replace file="${nbdist-app.dir}/Win-shortcutSpec.xml">
+            <replacefilter token="$${app.name}" value="${app.name}" />
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.title}" value="${app.title}" />
+            <replacefilter token="$${app.version}" value="${app.version}" />
+        </replace>
+        <replace file="${nbdist-app.dir}/Unix-shortcutSpec.xml">
+            <replacefilter token="$${app.name}" value="${app.name}" />
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.title}" value="${app.title}" />
+            <replacefilter token="$${app.version}" value="${app.version}" />
+        </replace>
+        <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
+            <replacefilter token="/dev" value="/${app.version}" />
+            <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
+        </replace>
+        <delete file="${nbdist-app.dir}/DISTRIBUTION.txt"/>
+        <delete file="${nbdist-app.dir}/LICENSE.txt"/>
+            
+        <echo message=" "/>
+        <echo message="Makes the installer using IzPack to ${izpack-installer}"/>
+            <izpack input="${basedir}/${nbdist-app.dir}/izpack-install-script.xml"
+                output="${basedir}/${nbdist-app.dir}/${izpack-installer}"  
+                installerType="standard"              
+                basedir="${basedir}/${nbdist-app.dir}"
+                izPackDir="${izpack.dir}/"/>
+        
+        <echo message=" "/>
+        <echo message="create the release ${nbdist-app-installer}"/>
+        <zip destfile="${nbdist.dir}/${nbdist-app-installer}">
+            <zipfileset dir="${nbdist-app.dir}">
+                <include name="readme.html"/>
+                <include name="setup.exe"/>
+                <include name="${izpack-installer}"/>
+            </zipfileset>
+            <zipfileset dir="${nbdist-app.dir}" filemode="755">
+                <include name="setup"/>
+            </zipfileset>
+        </zip>
+        
+        <echo message=" "/>
+        <echo message="cleaning and finalizing release" />
+        <delete dir="${nbdist-app.dir}"/>
+        
+        <echo message=" "/>
+        <echo message="release: ${nbdist-app-installer}" />
+        
+    </target>
+    
+    <!-- override to add add legal, icons, and some stuffs -->
+    <target name="build-mac" description="Create Mac OSX Installer" depends="suite.build-mac">
+        <property name="nbdist.dir" value="dist"/>
+        <property name="nbdist-contents.dir" value="${nbdist.dir}/${app.name}.app/Contents"/>
+        <property name="nbdist-resources.dir" value="${nbdist-contents.dir}/Resources"/>
+        <property name="nbdist-app.dir" value="${nbdist-resources.dir}/${app.name}"/>
+        <property name="nbdist-app-installer" value="${app.name}-${app.version.dash}-mac.zip"/>
+        
+        <delete file="${nbdist-app.dir}/DISTRIBUTION.txt"/>
+        <delete file="${nbdist-app.dir}/LICENSE.txt"/>
+        
+        <copy todir="${nbdist-app.dir}/legal">
+            <fileset dir="legal"/>
+        </copy>
+
+        <!-- TODO icon/icns for Mac is not ready yet
+        <delete file="${nbdist-resources.dir}/${app.name}.icns"/>
+        <copy tofile="${nbdist-resources.dir}/${app.name}.icns" file="installer/icons/${app.name}.icns" />
+        -->
+        
+        <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
+            <replacefilter token="/dev" value="/${app.version}" />
+            <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
+        </replace>
+        
+        <!-- TODO always check this, when there is new NbPlatform release -->
+        <replace file="${nbdist-contents.dir}/Info.plist">
+            <replacefilter token="0.1" value="${app.version}" />
+            <replacefilter token="6.0" value="${app.version}" />
+        </replace>
+        
+        <delete file="${nbdist.dir}/${nbdist-app-installer}"/>
+        <exec dir="${nbdist.dir}" executable="zip">
+            <arg line="-yr ${nbdist-app-installer} ${app.name}.app"/>
+        </exec>
+        
+    </target>
+    
+</project>
