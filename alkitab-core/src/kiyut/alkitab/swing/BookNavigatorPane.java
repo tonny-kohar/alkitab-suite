@@ -12,6 +12,7 @@ import kiyut.alkitab.api.event.BookChangeListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyUtil;
 
 /**
  * Panel which display book Key aka Table of Content. It display the content using
@@ -145,7 +146,8 @@ public class BookNavigatorPane extends javax.swing.JPanel {
                     // this is book level, too big to be displayed
                     return;
                 }
-                bookViewer.setKey(key);
+                // convert the key into Passage
+                bookViewer.setKey(KeyUtil.getPassage(key));
                 bookViewer.refresh();
             } else {
                 //System.out.println(obj.toString());

@@ -28,8 +28,10 @@ public class BookViewerHistory implements History {
         index = 0;
 
         if (key instanceof Passage) {
+            //System.out.println("Passage");
             buildPassageKey(key);
         } else {
+            //System.out.println("Non Passage");
             buildTreeKey(key);
         }
     }
@@ -64,6 +66,7 @@ public class BookViewerHistory implements History {
     }
 
     public Key current() {
+        //System.out.println(index + " size: " + keyList.size());
         return keyList.get(index);
     }
     

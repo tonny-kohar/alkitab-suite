@@ -1,6 +1,6 @@
 /* This work has been placed into the public domain. */
 
-package kiyut.alkitab.core;
+package kiyut.alkitab.modules.branding;
 
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -25,7 +25,7 @@ import org.openide.windows.WindowManager;
  * Core Module Install for Netbeans Platform
  * 
  */
-public class CoreModuleInstall extends ModuleInstall {
+public class BrandingModuleInstall extends ModuleInstall {
     @Override
     public  void restored() {
         super.restored();

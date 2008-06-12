@@ -1,3 +1,7 @@
+ver 1.0.1
+- Fix Navigator for Bible
+- Remove Menu - Help - Log Files
+
 ver 1.0
 - Add Expand verse by 1
 - Add Expand verse by 5

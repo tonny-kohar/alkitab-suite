@@ -15,6 +15,7 @@
         </folder>
         <folder name="View">
             <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
+            <file name="org-netbeans-core-actions-LogAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.CustomZoomAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.ZoomInAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.ZoomOutAction.instance_hidden"/>
@@ -55,10 +56,6 @@
         <folder name="Help">
             <file name="master-help.xml" url="alkitab-master-help.xml">
                 <attr name="position" intvalue="0"/>
-            </file>
-            <file name="LogAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
-                <attr name="position" intvalue="1000"/>
             </file>
         </folder>
         <folder name="Tools">
