@@ -105,6 +105,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         downloadPathField = new javax.swing.JTextField();
         browseDownloadPathButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         addBookPathButton = new javax.swing.JButton();
         removeBookPathButton = new javax.swing.JButton();
@@ -470,7 +471,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 12);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
         jPanel8.add(jLabel10, gridBagConstraints);
 
         bookPathList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -514,6 +515,13 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel8.add(jPanel6, gridBagConstraints);
+
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText(bundle.getString("CTL_RequireRestart.Text")); // NOI18N
+        jPanel7.add(jLabel14, java.awt.BorderLayout.CENTER);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -588,6 +596,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
