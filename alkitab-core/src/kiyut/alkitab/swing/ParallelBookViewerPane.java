@@ -687,10 +687,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     public void openURI(SwordURI uri) {
         //System.out.println("ParallelBookViewerPane.openURI()");
-        if (!uri.getFragment().equals("")) {
-            passageTextArea.setText(uri.getFragment());
-            setKey(passageTextArea.getText());
-        } 
         
         if (uri.getPath().equals("")) {
             if (bookTextPane.getBooks().isEmpty()) {
@@ -705,14 +701,18 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 } else {
                     addBook(book.getInitials());
                 }
-            } else {
-                refresh();
-            }
+            } 
         } else {
             Book book =  Books.installed().getBook(uri.getPath());
             if (book == null) { return; }
             addBook(book.getInitials());
         }
+        
+        if (!uri.getFragment().equals("")) {
+            passageTextArea.setText(uri.getFragment());
+            setKey(passageTextArea.getText());
+        } 
+        refresh();
     }
     
     /** Add Book
@@ -740,11 +740,12 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         bookTextPane.getBooks().add(book);
         checkIndexStatus();
+        comboBox.setSelectedItem(bookName);
 
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         
         // try to display something, if this is first book displayed
-        if (count == 0) {
+        if (count == 0 && getKey() == null) {
             Key tKey = book.getGlobalKeyList();
             if (tKey == null) { return; }
             if (tKey.getCardinality() > 0) {
@@ -762,8 +763,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 setKey(tKey);
             }
         }
-        
-        comboBox.setSelectedItem(bookName);
     }
     
     /** Remove book at particular index
@@ -810,7 +809,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
 
-        refresh();
+        bookTextPane.refresh(true);
     }
     
     protected synchronized void checkIndexStatus() {
@@ -891,6 +890,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     public void refresh() {
+        //System.out.println("refresh called");
         bookTextPane.refresh(true);
         updateHistoryUI();
     }

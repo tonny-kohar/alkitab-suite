@@ -35,7 +35,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
     
     private void bookViewerTopComponentPropertyChangeListener(PropertyChangeEvent evt) {
         Object obj = evt.getNewValue();
-        if (!(obj instanceof BookViewerTopComponent)) {
+        if (!(obj instanceof ParallelBookTopComponent)) {
             return;
         }
         

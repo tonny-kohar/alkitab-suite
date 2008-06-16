@@ -6,10 +6,13 @@ import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
+import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
@@ -100,11 +103,37 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         return bookViewer;
     }
     
-    private void hyperlinkUpdate(HyperlinkEvent evt) {
+    /*private void hyperlinkUpdate(HyperlinkEvent evt) {
         EventType eventType = evt.getEventType();
         String uri = evt.getDescription();
         if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             StatusDisplayer.getDefault().setStatusText(uri);
+        }
+    }*/
+    
+    private void hyperlinkUpdate(HyperlinkEvent evt) {
+        EventType eventType = evt.getEventType();
+        String uri = evt.getDescription();
+        SwordURI swordURI = SwordURI.createURI(uri);
+        
+        if (swordURI == null) {
+            Logger logger = Logger.getLogger(DefinitionsTopComponent.class.getName());
+            logger.log(Level.WARNING, "invalid SwordURI: " + uri);
+            
+        }
+        
+        if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {
+            String fragment = swordURI.getFragment();
+            if (fragment.length() > 0) {
+                if (fragment.charAt(0) == '#') {
+                    return;
+                }
+            }
+            
+            BookViewManager.getInstance().openURI(swordURI);
+        } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
+            //StatusDisplayer.getDefault().setStatusText(uri);
+            StatusDisplayer.getDefault().setStatusText(swordURI.toString());
         }
     }
 }
