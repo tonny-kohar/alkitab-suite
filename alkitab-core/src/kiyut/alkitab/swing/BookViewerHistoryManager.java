@@ -48,6 +48,13 @@ public class BookViewerHistoryManager implements HistoryManager {
             throw new IllegalArgumentException("history should not be null");
         }
         
+        History curr = current();
+        if (curr != null) {
+            if (history.getKey().equals(current().getKey())) {
+                return;
+            }
+        }
+        
         backList.add(0, history);
         forwardList.clear();
         
