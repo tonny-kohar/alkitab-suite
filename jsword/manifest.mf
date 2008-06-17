@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
 OpenIDE-Module: kiyut.alkitab.modules.jsword
-OpenIDE-Module-Implementation-Version: 20080608
+OpenIDE-Module-Implementation-Version: 20080614
 OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/jsword/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0.8
 
