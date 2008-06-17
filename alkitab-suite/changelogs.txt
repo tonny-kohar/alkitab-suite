@@ -1,8 +1,9 @@
 ver 1.0.1
 - Fix navigator for Bible
 - Fix cross reference verse
+- Fix duplicate history entries
 - Remove Menu - Help - Log Files
-- Updated to use JSword 1.0.8 (20080608)
+- Updated to use JSword 1.0.8 (20080614)
 
 ver 1.0
 - Add Expand verse by 1
