@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.swing;
 
+import java.awt.Point;
 import javax.swing.JPanel;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.TransformerHints;

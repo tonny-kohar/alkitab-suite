@@ -4,8 +4,12 @@ package kiyut.alkitab.windows;
 
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
@@ -16,7 +20,13 @@ import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
+import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.ParallelBookViewerPane;
+import kiyut.alkitab.swing.ToolTip;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookFilters;
+import org.crosswire.jsword.book.Books;
+import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -32,6 +42,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private static final String PREFERRED_ID = "ParallelBookTopComponent";
     
     private BookViewer bookViewer;
+    private ToolTip linkToolTip;
+    private Point linkToolTipLocation;
     
     public ParallelBookTopComponent() {
         initComponents();
@@ -72,6 +84,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         add(BorderLayout.CENTER,(JComponent)bookViewer);
         
         bookViewerNode = new BookViewerNode(bookViewer);
+        linkToolTip = new ToolTip();
         
         bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
@@ -85,6 +98,18 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 ParallelBookTopComponent.this.hyperlinkUpdate(evt);
                 
+            }
+        });
+        
+        linkToolTipLocation = new Point();
+        
+        bookViewer.getViewerComponent().addMouseMotionListener(new MouseMotionListener() {
+            public void mouseDragged(MouseEvent evt) { 
+                //do nothing
+            }
+
+            public void mouseMoved(MouseEvent evt) {
+                linkToolTipLocation.setLocation(evt.getX(), evt.getY());
             }
         });
         
@@ -119,7 +144,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         if (swordURI == null) {
             Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
             logger.log(Level.WARNING, "invalid SwordURI: " + uri);
-            
         }
         
         if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {
@@ -132,8 +156,87 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             
             BookViewManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
-            //StatusDisplayer.getDefault().setStatusText(uri);
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
+            showTooltip(swordURI);
+        } else if (eventType.equals(HyperlinkEvent.EventType.EXITED)) {
+            //linkToolTip.setVisible(false);
+            linkToolTip.hide();
         }
+    }
+    
+    private void showTooltip(SwordURI swordURI) {
+        if (swordURI == null) { return; } 
+        
+        Book book = getToolTipBook(swordURI);
+        Key key = null;
+        
+        
+        if (book != null) {
+            key = book.getValidKey(swordURI.getFragment());
+        }
+        
+        Point p = new Point(linkToolTipLocation.x, linkToolTipLocation.y);
+        JComponent comp = bookViewer.getViewerComponent();
+        
+        linkToolTip.show(book,key, comp, p.x, p.y);
+    }
+
+    private Book getToolTipBook(SwordURI swordURI) {
+        Book book = null;
+        
+        if (swordURI == null) { return book; }
+        
+        String bookName = swordURI.getPath();
+        
+        if (bookName.equals("")) {
+            switch (swordURI.getType()) {
+                case GREEK_STRONGS:
+                    bookName = BookViewerOptions.getInstance().getDefaultGreekStrongs();
+                    if (bookName == null) {
+                        List books = Books.installed().getBooks(BookFilters.getGreekDefinitions());
+                        if (!books.isEmpty()) {
+                            bookName = ((Book)books.get(0)).getInitials();
+                        }
+                    }
+                    break;
+                case HEBREW_STRONGS:
+                    bookName = BookViewerOptions.getInstance().getDefaultHebrewStrongs();
+                    if (bookName == null) {
+                        List books = Books.installed().getBooks(BookFilters.getHebrewDefinitions());
+                        if (!books.isEmpty()) {
+                            bookName = ((Book)books.get(0)).getInitials();
+                        }
+                    }
+                    break;
+                case GREEK_MORPH:
+                    bookName = BookViewerOptions.getInstance().getDefaultGreekMorph();
+                    if (bookName == null) {
+                        List books = Books.installed().getBooks(BookFilters.getGreekParse());
+                        if (!books.isEmpty()) {
+                            bookName = ((Book)books.get(0)).getInitials();
+                        }
+                    }
+                    break;
+                case HEBREW_MORPH:
+                    // TODO need to implement this
+                    //bookName = BookViewerOptions.getInstance().getDefaultHebrewMorph();
+                    
+                    List books = Books.installed().getBooks(BookFilters.getHebrewParse());
+                    if (!books.isEmpty()) {
+                        bookName = ((Book)books.get(0)).getInitials();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } 
+        
+        if (bookName != null) {
+            if (!bookName.equals("")) { 
+                book = Books.installed().getBook(bookName);
+            }
+        }
+        
+        return book;
     }
 }

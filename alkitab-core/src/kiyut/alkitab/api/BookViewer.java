@@ -2,9 +2,11 @@
 
 package kiyut.alkitab.api;
 
+import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.ActionMap;
+import javax.swing.JComponent;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.event.BookChangeListener;
 import org.crosswire.jsword.book.Book;
@@ -17,6 +19,11 @@ import org.crosswire.jsword.passage.Key;
 public interface BookViewer {
     
     public static final String VIEWER_NAME = "ViewerName";
+    
+    /** Return {@code JComponent} that acts as the viewer 
+     * @return {@code JComponent}
+     */
+    public JComponent getViewerComponent();
     
     /** Return {@link java.util.Collections#unmodifiableList(List) unmodifiableList} of {@code Book}
      * @return unmodifiableList of {@code Book}

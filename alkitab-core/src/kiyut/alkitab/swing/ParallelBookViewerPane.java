@@ -3,11 +3,14 @@
 package kiyut.alkitab.swing;
 
 import java.awt.CardLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
 import kiyut.alkitab.api.BookViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseMotionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +20,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.History;
@@ -448,7 +452,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         bookTextPane = new BookTextPane(transformerHints);
         bookScrollPane.setViewportView(bookTextPane);
         
-        getActionMap().setParent(bookTextPane.getActionMap());
+        //getActionMap().setParent(bookTextPane.getActionMap());
         
         addBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -675,6 +679,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         return sb.toString();
+    }
+    
+    public JComponent getViewerComponent() {
+        return bookTextPane;
     }
     
     public void addHyperlinkListener(HyperlinkListener listener) {

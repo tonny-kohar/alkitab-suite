@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.swing.JComponent;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
@@ -133,6 +134,10 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
 
         return book.getInitials();
     }
+    
+    public JComponent getViewerComponent() {
+        return bookTextPane;
+    }
 
     public void addHyperlinkListener(HyperlinkListener listener) {
         bookTextPane.addHyperlinkListener(listener);
@@ -166,7 +171,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
             firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
             fireBookChange(new BookChangeEvent(this));
         } else {
-            books.set(1, book);
+            books.set(0, book);
         }
 
         if (book == null) {
