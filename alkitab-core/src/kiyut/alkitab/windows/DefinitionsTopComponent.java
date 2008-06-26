@@ -104,7 +104,7 @@ public final class DefinitionsTopComponent extends TopComponent {
 
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
+        return TopComponent.PERSISTENCE_NEVER;
     }
 
     /** replaces this in object stream */
@@ -125,7 +125,7 @@ public final class DefinitionsTopComponent extends TopComponent {
         public Object readResolve() {
             return DefinitionsTopComponent.getDefault();
         }
-    }
+    } 
     
     @Override
     public javax.swing.Action[] getActions() {

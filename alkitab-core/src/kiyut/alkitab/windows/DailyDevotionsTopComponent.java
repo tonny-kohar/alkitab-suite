@@ -100,7 +100,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
 
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
+        return TopComponent.PERSISTENCE_NEVER;
     }
     
     /** replaces this in object stream */
@@ -117,6 +117,8 @@ public final class DailyDevotionsTopComponent extends TopComponent {
     final static class ResolvableHelper implements Serializable {
 
         private static final long serialVersionUID = 1L;
+        
+        
 
         public Object readResolve() {
             return DailyDevotionsTopComponent.getDefault();

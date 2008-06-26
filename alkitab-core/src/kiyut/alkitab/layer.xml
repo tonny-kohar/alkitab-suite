@@ -42,9 +42,10 @@
         <folder name="Components">
             <file name="BookNavigatorTopComponent.settings" url="windows/BookNavigatorTopComponent.settings"/>
             <file name="BookshelfTopComponent.settings" url="windows/BookshelfTopComponent.settings"/>
-            <file name="DefinitionsTopComponent.settings" url="windows/DefinitionsTopComponent.settings"/>
+            <!-- <file name="DefinitionsTopComponent.settings" url="windows/DefinitionsTopComponent.settings"/>
             <file name="DailyDevotionsTopComponent.settings" url="windows/DailyDevotionsTopComponent.settings"/>
-        </folder>
+            -->
+        </folder> 
         <folder name="Modes">
             <folder name="explorer">
                 <file name="BookshelfTopComponent.wstcref" url="windows/BookshelfTopComponent.wstcref">
