@@ -49,6 +49,8 @@ public class BookTextPane extends JTextPane {
     
     protected TransformerHints<TransformerHints.Key,Object> transformerHints;
     
+    /** Default is true */
+    protected boolean enableSourceText;
     protected String rawText;
     protected String osisText;
 
@@ -57,10 +59,14 @@ public class BookTextPane extends JTextPane {
      * 
      */
     public BookTextPane() {
-        this(new TransformerHints<TransformerHints.Key,Object>());
+        this(new TransformerHints<TransformerHints.Key,Object>(),true);
     }
     
     public BookTextPane(TransformerHints<TransformerHints.Key,Object> transformerHints) {
+        this(transformerHints,true);
+    }
+    
+    public BookTextPane(TransformerHints<TransformerHints.Key,Object> transformerHints, boolean enableSourceText) {
         books = new ArrayList<Book>();
         setEditable(false);
         setEditorKit(new HTMLEditorKit());
@@ -73,6 +79,7 @@ public class BookTextPane extends JTextPane {
         setConverter(new SwingHTMLConverter());
         setTransformerHints(transformerHints);
         this.compareView = false;
+        this.enableSourceText = enableSourceText;
 
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
         Color color = UIManager.getColor("EditorPane.background");
@@ -162,39 +169,43 @@ public class BookTextPane extends JTextPane {
         String text = null;
         try {
             
-            // Raw Text
-            StringBuilder sb = new StringBuilder();
-            Iterator<Key> iter = key.iterator();
-            while (iter.hasNext()) {
-                Key curKey = iter.next();
-                
-                // XXX JSword Bug? Non bible key getOsisID end up in endless loop
-                String osisID = null;
-                if (key instanceof Verse) {
-                    osisID = key.getOsisID();
-                }
-                //System.out.println("BookTextPane.refreshImpl osisID: " + osisID);
-                for (int i = 0; i < books.size(); i++) {
-                    Book book = books.get(i);
-                    if (sb.length() > 0) {
-                        sb.append("\n");
+            if (enableSourceText) {
+                // Raw Text
+                StringBuilder sb = new StringBuilder();
+                Iterator<Key> iter = key.iterator();
+                while (iter.hasNext()) {
+                    Key curKey = iter.next();
+
+                    // XXX JSword Bug? Non bible key getOsisID end up in endless loop
+                    String osisID = null;
+                    if (key instanceof Verse) {
+                        osisID = key.getOsisID();
                     }
-                    sb.append(book.getInitials());
-                    if (osisID != null) {
-                        sb.append(':' + osisID);
+                    //System.out.println("BookTextPane.refreshImpl osisID: " + osisID);
+                    for (int i = 0; i < books.size(); i++) {
+                        Book book = books.get(i);
+                        if (sb.length() > 0) {
+                            sb.append("\n");
+                        }
+                        sb.append(book.getInitials());
+                        if (osisID != null) {
+                            sb.append(':' + osisID);
+                        }
+                        sb.append(" - " + book.getRawText(curKey));
                     }
-                    sb.append(" - " + book.getRawText(curKey));
                 }
+
+                rawText = sb.toString();
             }
-            
-            rawText = sb.toString();
             
             SAXEventProvider osissep = bookData.getSAXEventProvider();
             
             // OSIS Text
             ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             osissep.provideSAXEvents(osis);
-            osisText = osis.toString();
+            if (enableSourceText) {
+                osisText = osis.toString();
+            }
             
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
             htmlsep.setParameter("direction", ltr ? "ltr" : "rtl");

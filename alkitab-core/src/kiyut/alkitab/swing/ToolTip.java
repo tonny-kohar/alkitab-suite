@@ -33,7 +33,7 @@ public class ToolTip extends JComponent {
     
     public ToolTip() {
         TransformerHints<TransformerHints.Key,Object> transformerHints = new TransformerHints<TransformerHints.Key, Object>(TransformerHintsOptions.getInstance().getTransformerHints());
-        bookTextPane = new BookTextPane(transformerHints);
+        bookTextPane = new BookTextPane(transformerHints,false);
         setLayout(new BorderLayout());
         add(bookTextPane,BorderLayout.CENTER);
         
