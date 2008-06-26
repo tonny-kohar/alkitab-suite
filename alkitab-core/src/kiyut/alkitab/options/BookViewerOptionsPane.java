@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.text.html.HTMLEditorKit;
 import kiyut.alkitab.api.TransformerHints;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.util.SwordUtilities;
@@ -29,6 +30,7 @@ import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
+import org.crosswire.jsword.book.sword.SwordBookPath;
 
 /**
  * BookViewerOptionsPane implementation
@@ -97,6 +99,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         xRefCheckBox = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         bookPathList = new javax.swing.JList();
@@ -105,7 +108,9 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         downloadPathField = new javax.swing.JTextField();
         browseDownloadPathButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        currentConfigTextPane = new javax.swing.JTextPane();
+        jLabel15 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         addBookPathButton = new javax.swing.JButton();
         removeBookPathButton = new javax.swing.JButton();
@@ -466,12 +471,22 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
         jPanel8.setLayout(new java.awt.GridBagLayout());
 
-        jLabel10.setText(bundle.getString("CTL_BookPath.Text")); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel14.setText(bundle.getString("CTL_RequireRestart.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel8.add(jLabel14, gridBagConstraints);
+
+        jLabel10.setText(bundle.getString("CTL_BookPath.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
+        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 12);
         jPanel8.add(jLabel10, gridBagConstraints);
 
         bookPathList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -479,15 +494,16 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
         jPanel8.add(jScrollPane1, gridBagConstraints);
 
         jLabel11.setText(bundle.getString("CTL_DownloadPath.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 12);
         jPanel8.add(jLabel11, gridBagConstraints);
@@ -505,30 +521,48 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         jPanel6.add(browseDownloadPathButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel8.add(jPanel6, gridBagConstraints);
 
-        jPanel7.setLayout(new java.awt.BorderLayout());
+        jPanel7.setLayout(new java.awt.GridBagLayout());
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText(bundle.getString("CTL_RequireRestart.Text")); // NOI18N
-        jPanel7.add(jLabel14, java.awt.BorderLayout.CENTER);
+        currentConfigTextPane.setEditable(false);
+        jScrollPane2.setViewportView(currentConfigTextPane);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        jPanel7.add(jScrollPane2, gridBagConstraints);
+
+        jLabel15.setText(bundle.getString("CTL_CurrentConfig.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel7.add(jLabel15, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
         jPanel8.add(jPanel7, gridBagConstraints);
 
         jToolBar1.setFloatable(false);
@@ -560,7 +594,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel8.add(jToolBar1, gridBagConstraints);
@@ -576,6 +610,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JRadioButton bcvNumRadioButton;
     private javax.swing.JList bookPathList;
     private javax.swing.JButton browseDownloadPathButton;
+    private javax.swing.JTextPane currentConfigTextPane;
     private javax.swing.JRadioButton cvNumRadioButton;
     private javax.swing.JComboBox defaultBibleComboBox;
     private javax.swing.JComboBox defaultDailyDevotionsComboBox;
@@ -597,6 +632,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -615,6 +651,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
@@ -837,6 +874,18 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
                 model.addElement(paths[i]);
             }
         }
+        
+        // current config
+        refreshCurrentConfig();
+    }
+    
+    protected void refreshCurrentConfig() {
+        StringBuilder sb = new StringBuilder();
+        File[] files = SwordBookPath.getSwordPath();
+        for (int i=0; i<files.length; i++) {
+            sb.append(files[i].toString() + "\n");
+        }
+        currentConfigTextPane.setText(sb.toString());
     }
 
     @Override
