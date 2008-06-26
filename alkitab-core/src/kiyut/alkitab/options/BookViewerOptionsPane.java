@@ -159,7 +159,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel4.add(parallelBookLimitComboBox, gridBagConstraints);
 
-        versesPerTabComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "20", "25", "50", "60", "75", "100" }));
+        versesPerTabComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "25", "50", "75", "100", "125", "150", "176", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
