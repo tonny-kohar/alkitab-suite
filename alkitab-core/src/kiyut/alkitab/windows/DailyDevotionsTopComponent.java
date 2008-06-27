@@ -100,13 +100,14 @@ public final class DailyDevotionsTopComponent extends TopComponent {
 
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_NEVER;
+        return TopComponent.PERSISTENCE_ALWAYS;
     }
     
     /** replaces this in object stream */
     @Override
     public Object writeReplace() {
-        return new ResolvableHelper();
+        //return new ResolvableHelper();
+        return null; //always close on startup
     }
 
     @Override

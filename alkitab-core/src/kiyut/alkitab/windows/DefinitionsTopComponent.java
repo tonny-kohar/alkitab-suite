@@ -79,7 +79,7 @@ public final class DefinitionsTopComponent extends TopComponent {
     public static synchronized DefinitionsTopComponent getDefault() {
         if (instance == null) {
             instance = new DefinitionsTopComponent();
-        }
+        } 
         return instance;
     }
 
@@ -104,13 +104,14 @@ public final class DefinitionsTopComponent extends TopComponent {
 
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_NEVER;
+        return TopComponent.PERSISTENCE_ALWAYS;
     }
 
     /** replaces this in object stream */
     @Override
     public Object writeReplace() {
-        return new ResolvableHelper();
+        //return new ResolvableHelper();
+        return null; //always close on startup
     }
 
     @Override
