@@ -22,7 +22,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.text.html.HTMLEditorKit;
 import kiyut.alkitab.api.TransformerHints;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.util.SwordUtilities;
@@ -68,6 +67,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         fontSizeComboBox = new javax.swing.JComboBox();
         fontBoldCheckBox = new javax.swing.JCheckBox();
         fontItalicCheckBox = new javax.swing.JCheckBox();
+        sessionPersistenceCheckBox = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel9 = new javax.swing.JPanel();
@@ -223,6 +223,15 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(fontPanel, gridBagConstraints);
+
+        sessionPersistenceCheckBox.setText(bundle.getString("CTL_SessionPersistence.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        jPanel4.add(sessionPersistenceCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -662,6 +671,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JCheckBox notesCheckBox;
     private javax.swing.JComboBox parallelBookLimitComboBox;
     private javax.swing.JButton removeBookPathButton;
+    private javax.swing.JCheckBox sessionPersistenceCheckBox;
     private javax.swing.JCheckBox strongsCheckBox;
     private javax.swing.JCheckBox tinyVNumCheckBox;
     private javax.swing.JCheckBox vLineCheckBox;
@@ -784,6 +794,8 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         versesPerTabComboBox.setSelectedItem(Integer.toString(viewerOpts.getVersesLimit()));
         defaultSearchLimitComboBox.setSelectedItem(Integer.toString(viewerOpts.getDefaultSearchLimit()));
         
+        sessionPersistenceCheckBox.setSelected(viewerOpts.isSessionPersistence());
+        
         setDefaultBookComboBox(defaultBibleComboBox, viewerOpts.getDefaultBible());
         setDefaultBookComboBox(defaultDictionaryComboBox, viewerOpts.getDefaultDictionary());
         setDefaultBookComboBox(defaultDailyDevotionsComboBox, viewerOpts.getDefaultDailyDevotions());
@@ -899,6 +911,8 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         } else {
             viewerOpts.setDefaultSearchLimit(Integer.parseInt(defaultSearchLimitComboBox.getSelectedItem().toString()));
         }
+        
+        viewerOpts.setSessionPersistence(sessionPersistenceCheckBox.isSelected());
         
         String initials = null;
         if (defaultBibleComboBox.getSelectedIndex() > 0) {

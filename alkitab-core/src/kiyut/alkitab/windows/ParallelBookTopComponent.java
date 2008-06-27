@@ -2,13 +2,16 @@
 
 package kiyut.alkitab.windows;
 
-import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +21,14 @@ import javax.swing.JComponent;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
+import kiyut.alkitab.api.BookViewManager;
+import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.ParallelBookViewerPane;
 import kiyut.alkitab.swing.ToolTip;
+import kiyut.alkitab.windows.BookViewerTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
@@ -76,7 +80,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         return TopComponent.PERSISTENCE_ONLY_OPENED;
     }
 
-
     @Override
     protected String preferredID() {
         return PREFERRED_ID;
@@ -84,7 +87,10 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     
     /** replaces this in object stream */
     @Override
-    public Object writeReplace() {
+    public Object writeReplace() throws ObjectStreamException {
+        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
+            return null;
+        } 
         return new ResolvableHelper(bookViewer);
     }
     

@@ -25,6 +25,7 @@ public final class BookViewerOptions extends AbstractOptions {
         return instance;
     }
     
+    private static final String SESSION_PERSISTENCE = "session-persistence";
     private static final String PARALLEL_BOOK_LIMIT = "parallel-book-limit";
     private static final String VERSES_LIMIT = "verses-limit";
     private static final String DEFAULT_SEARCH_LIMIT = "default-search-limit";
@@ -40,6 +41,7 @@ public final class BookViewerOptions extends AbstractOptions {
     private int parallelBookLimit;
     private int defaultSearchLimit;
     private int versesLimit;
+    private boolean sessionPersistence;
     private String defaultBible;
     private String defaultDictionary;
     private String defaultDailyDevotions;
@@ -57,6 +59,7 @@ public final class BookViewerOptions extends AbstractOptions {
     public void load() {
         Preferences prefs = getPreferences();
 
+        sessionPersistence = prefs.getBoolean(SESSION_PERSISTENCE, true);
         parallelBookLimit = prefs.getInt(PARALLEL_BOOK_LIMIT, 5);
         defaultSearchLimit = prefs.getInt(DEFAULT_SEARCH_LIMIT, 50);
         versesLimit = prefs.getInt(VERSES_LIMIT, 176); // default 176, because Psalm 119 (176 verses)
@@ -87,6 +90,7 @@ public final class BookViewerOptions extends AbstractOptions {
     
     public void save() {
         Preferences prefs = getPreferences();
+        prefs.putBoolean(SESSION_PERSISTENCE, sessionPersistence);
         prefs.putInt(PARALLEL_BOOK_LIMIT, parallelBookLimit);
         prefs.putInt(DEFAULT_SEARCH_LIMIT, defaultSearchLimit);
         prefs.putInt(VERSES_LIMIT, versesLimit);
@@ -144,6 +148,14 @@ public final class BookViewerOptions extends AbstractOptions {
         }
     }
  
+    public void setSessionPersistence(boolean b) {
+        this.sessionPersistence = b;
+    }
+    
+    public boolean isSessionPersistence() {
+        return this.sessionPersistence;
+    }
+    
     public void setParallelBookLimit(int limit) {
         if (limit < 2) {
             throw new IllegalArgumentException("limit should >= 2");
