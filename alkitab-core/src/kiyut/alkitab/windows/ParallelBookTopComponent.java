@@ -35,11 +35,9 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.ParallelBookViewerPane ParallelBookViewerPane }.
+ * Top component which displays {@link kiyut.alkitab.swing.ParallelBookViewerPane ParallelBookViewerPane}.
  */
 public class ParallelBookTopComponent extends BookViewerTopComponent {
-    
-    private static ParallelBookTopComponent instance;
     
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
@@ -122,7 +120,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 logger.warning("Unable to restore session");
                 return null;
             }
-            
             
             return result;
         }
