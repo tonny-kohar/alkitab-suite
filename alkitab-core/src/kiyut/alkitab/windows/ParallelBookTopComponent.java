@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,18 +32,21 @@ import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays {@link kiyut.alkitab.swing.ParallelBookViewerPane ParallelBookViewerPane }.
  */
 public class ParallelBookTopComponent extends BookViewerTopComponent {
     
+    private static ParallelBookTopComponent instance;
+    
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
 
     private static final String PREFERRED_ID = "ParallelBookTopComponent";
     
-    private BookViewer bookViewer;
+    private ParallelBookViewerPane bookViewer;
     private ToolTip linkToolTip;
     private Point linkToolTipLocation;
     
@@ -67,9 +72,10 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
+    
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_NEVER;
+        return TopComponent.PERSISTENCE_ONLY_OPENED;
     }
 
 
@@ -77,6 +83,73 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     protected String preferredID() {
         return PREFERRED_ID;
     }
+    
+    /** replaces this in object stream */
+    @Override
+    public Object writeReplace() {
+        return new ResolvableHelper(bookViewer);
+    }
+    
+    final static class ResolvableHelper implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+        
+        private List<String> bookNames;
+        private Key key;
+        private boolean compareView;
+        
+        public ResolvableHelper(ParallelBookViewerPane bookViewer) {
+            if (bookViewer == null) { return; }
+        
+            List<Book> books = bookViewer.getBooks();
+
+            bookNames = new ArrayList<String>(books.size());
+            for (int i = 0; i < books.size(); i++) {
+                bookNames.add(books.get(i).getInitials());
+            }
+
+            key = bookViewer.getKey();
+            compareView = bookViewer.isCompareView();
+        }
+
+        public Object readResolve() {
+            ParallelBookTopComponent result = new ParallelBookTopComponent();
+            
+            try {
+                restoreSession(result.bookViewer);
+            } catch (Exception ex) {
+                Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
+                logger.warning("Unable to restore session");
+                return null;
+            }
+            
+            
+            return result;
+        }
+        
+        private void restoreSession(final ParallelBookViewerPane bookViewer) {
+            if (bookNames == null || key == null) {
+                return;
+            }
+
+            if (key != null) {
+                bookViewer.setKey(key);
+            }
+
+            for (int i = 0; i < bookNames.size(); i++) {
+                bookViewer.addBook(bookNames.get(i));
+            }
+
+            bookViewer.compareView(compareView);
+            
+            WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+                public void run() {
+                    bookViewer.refresh();
+                }
+            });
+        }
+    }
+    
     
     /** If you override this, please make sure to call super.initCustom() */
     protected void initCustom() {

@@ -3,14 +3,11 @@
 package kiyut.alkitab.swing;
 
 import java.awt.CardLayout;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
 import kiyut.alkitab.api.BookViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseMotionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -457,12 +454,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         addBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 addBook(null);
+                refresh();
             }
         });
         
         removeBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 removeBook(booksComboPane.getComponentCount()-1);
+                refresh();
             }
         });
         
@@ -482,12 +481,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
                 String bookName = comboBox.getSelectedItem().toString();
                 setBook(index, bookName);
+                refresh();
             }
         };
         
         compareCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                bookTextPane.setCompareView(compareCheckBox.isSelected());
+                compareView(compareCheckBox.isSelected());
                 refresh();
             }
         });
@@ -726,7 +726,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     /** Add Book
      * @param bookName Book Initials or Book Name
      */
-    protected void addBook(String bookName) {
+    public void addBook(String bookName) {
         maximumBook = BookViewerOptions.getInstance().getParallelBookLimit();
         int count = booksComboPane.getComponentCount();
         if (count >= maximumBook) {
@@ -775,16 +775,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     /** Remove book at particular index
      * @param index index at which the specified book is to be removed.
+     * @throws ArrayIndexOutOfBoundsException - if the index value does not exist.
      */
-    protected void removeBook(int index) {
-        if (index >= booksComboPane.getComponentCount()) {
-            return;
-        }
-        
-        if (booksComboPane.getComponentCount() == 1) {
-            return;
-        }
-        
+    public void removeBook(int index) {
         //comboBox.addActionListener(bookComboActionListener);
         JComboBox comboBox = (JComboBox) booksComboPane.getComponent(index);
         booksComboPane.remove(index);
@@ -798,14 +791,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
 
-        bookTextPane.refresh(true);
     }
     
     /** Replaces book at particular index
      * @param index index at which the specified book is to be replaced.
      * @param bookName Book Initials or Book Name
      */
-    protected void setBook(int index, String bookName) {
+    public void setBook(int index, String bookName) {
         Book book = Books.installed().getBook(bookName);
         if (book == null) {
             return;
@@ -816,8 +808,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
-
-        bookTextPane.refresh(true);
     }
     
     protected synchronized void checkIndexStatus() {
@@ -856,6 +846,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     public void compareView(boolean compare) {
         bookTextPane.setCompareView(compare);
+        if (compare != compareCheckBox.isSelected()) {
+            compareCheckBox.setSelected(compare);
+        }
     }
 
     /** Return {@code true} or {@code false}
@@ -1183,6 +1176,5 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         public void workStateChanged(WorkEvent evt) {
             // do nothing
         }
-        
     }
 }
