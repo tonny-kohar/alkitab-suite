@@ -1,3 +1,5 @@
+/* This work has been placed into the public domain. */
+
 package kiyut.alkitab.swing;
 
 import java.awt.BorderLayout;
