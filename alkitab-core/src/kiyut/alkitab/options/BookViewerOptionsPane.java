@@ -52,6 +52,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        sessionPersistenceButtonGroup = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -65,9 +66,13 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         fontPanel = new javax.swing.JPanel();
         fontComboBox =  new SeparatorComboBox();
         fontSizeComboBox = new javax.swing.JComboBox();
+        jPanel11 = new javax.swing.JPanel();
         fontBoldCheckBox = new javax.swing.JCheckBox();
         fontItalicCheckBox = new javax.swing.JCheckBox();
-        sessionPersistenceCheckBox = new javax.swing.JCheckBox();
+        jPanel10 = new javax.swing.JPanel();
+        sessionPersistenceEnabledRadio = new javax.swing.JRadioButton();
+        sessionPersistenceDisabledRadio = new javax.swing.JRadioButton();
+        jLabel16 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel9 = new javax.swing.JPanel();
@@ -127,15 +132,15 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         jLabel1.setText(bundle.getString("CTL_ParallelLimit.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 12);
         jPanel4.add(jLabel1, gridBagConstraints);
 
         jLabel2.setText(bundle.getString("CTL_VerseLimit.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 12);
         jPanel4.add(jLabel2, gridBagConstraints);
@@ -143,7 +148,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         jLabel3.setText(bundle.getString("CTL_SearchLimit.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 12);
         jPanel4.add(jLabel3, gridBagConstraints);
@@ -151,7 +156,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         jLabel4.setText(bundle.getString("CTL_Font.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 12);
         jPanel4.add(jLabel4, gridBagConstraints);
@@ -159,15 +164,16 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         parallelBookLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(parallelBookLimitComboBox, gridBagConstraints);
 
         versesPerTabComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "25", "50", "75", "100", "125", "150", "176", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
@@ -176,7 +182,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         defaultSearchLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "unlimited", "10", "20", "30", "40", "50", "75", "100", "125", "150", "175", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
@@ -187,7 +193,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.ipadx = 40;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
         fontPanel.add(fontComboBox, gridBagConstraints);
@@ -199,39 +205,74 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         fontPanel.add(fontSizeComboBox, gridBagConstraints);
 
+        jPanel11.setLayout(new java.awt.GridBagLayout());
+
         fontBoldCheckBox.setText(bundle.getString("CTL_FontBold.Tex")); // NOI18N
         fontBoldCheckBox.setToolTipText(bundle.getString("CTL_FontBold.Tex")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
-        fontPanel.add(fontBoldCheckBox, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
+        jPanel11.add(fontBoldCheckBox, gridBagConstraints);
 
         fontItalicCheckBox.setText(bundle.getString("CTL_FontItalic.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        fontPanel.add(fontItalicCheckBox, gridBagConstraints);
+        jPanel11.add(fontItalicCheckBox, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        fontPanel.add(jPanel11, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(fontPanel, gridBagConstraints);
 
-        sessionPersistenceCheckBox.setText(bundle.getString("CTL_SessionPersistence.Text")); // NOI18N
+        jPanel10.setLayout(new java.awt.GridBagLayout());
+
+        sessionPersistenceButtonGroup.add(sessionPersistenceEnabledRadio);
+        sessionPersistenceEnabledRadio.setText(bundle.getString("CTL_Enabled.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
+        jPanel10.add(sessionPersistenceEnabledRadio, gridBagConstraints);
+
+        sessionPersistenceButtonGroup.add(sessionPersistenceDisabledRadio);
+        sessionPersistenceDisabledRadio.setText(bundle.getString("CTL_Disabled.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel10.add(sessionPersistenceDisabledRadio, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        jPanel4.add(sessionPersistenceCheckBox, gridBagConstraints);
+        jPanel4.add(jPanel10, gridBagConstraints);
+
+        jLabel16.setText(bundle.getString("CTL_SessionPersistence.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
+        jPanel4.add(jLabel16, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -642,6 +683,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -651,6 +693,8 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -671,7 +715,9 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JCheckBox notesCheckBox;
     private javax.swing.JComboBox parallelBookLimitComboBox;
     private javax.swing.JButton removeBookPathButton;
-    private javax.swing.JCheckBox sessionPersistenceCheckBox;
+    private javax.swing.ButtonGroup sessionPersistenceButtonGroup;
+    private javax.swing.JRadioButton sessionPersistenceDisabledRadio;
+    private javax.swing.JRadioButton sessionPersistenceEnabledRadio;
     private javax.swing.JCheckBox strongsCheckBox;
     private javax.swing.JCheckBox tinyVNumCheckBox;
     private javax.swing.JCheckBox vLineCheckBox;
@@ -794,7 +840,13 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         versesPerTabComboBox.setSelectedItem(Integer.toString(viewerOpts.getVersesLimit()));
         defaultSearchLimitComboBox.setSelectedItem(Integer.toString(viewerOpts.getDefaultSearchLimit()));
         
-        sessionPersistenceCheckBox.setSelected(viewerOpts.isSessionPersistence());
+        if (viewerOpts.isSessionPersistence()) {
+            sessionPersistenceEnabledRadio.setSelected(true);
+        } else {
+            sessionPersistenceDisabledRadio.setSelected(true);
+        }
+        //sessionPersistenceEnabledRadio.setSelected(viewerOpts.isSessionPersistence());
+        //System.out.println("SessionPersist: " + viewerOpts.isSessionPersistence() + " radio: " + sessionPersistenceEnabledRadio.isSelected());
         
         setDefaultBookComboBox(defaultBibleComboBox, viewerOpts.getDefaultBible());
         setDefaultBookComboBox(defaultDictionaryComboBox, viewerOpts.getDefaultDictionary());
@@ -912,7 +964,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
             viewerOpts.setDefaultSearchLimit(Integer.parseInt(defaultSearchLimitComboBox.getSelectedItem().toString()));
         }
         
-        viewerOpts.setSessionPersistence(sessionPersistenceCheckBox.isSelected());
+        viewerOpts.setSessionPersistence(sessionPersistenceEnabledRadio.isSelected());
         
         String initials = null;
         if (defaultBibleComboBox.getSelectedIndex() > 0) {

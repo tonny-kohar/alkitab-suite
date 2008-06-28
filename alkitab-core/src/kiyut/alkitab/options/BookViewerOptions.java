@@ -59,7 +59,7 @@ public final class BookViewerOptions extends AbstractOptions {
     public void load() {
         Preferences prefs = getPreferences();
 
-        sessionPersistence = prefs.getBoolean(SESSION_PERSISTENCE, true);
+        sessionPersistence = prefs.getBoolean(SESSION_PERSISTENCE, false);
         parallelBookLimit = prefs.getInt(PARALLEL_BOOK_LIMIT, 5);
         defaultSearchLimit = prefs.getInt(DEFAULT_SEARCH_LIMIT, 50);
         versesLimit = prefs.getInt(VERSES_LIMIT, 176); // default 176, because Psalm 119 (176 verses)
