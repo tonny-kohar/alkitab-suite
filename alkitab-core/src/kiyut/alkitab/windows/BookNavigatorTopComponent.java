@@ -160,7 +160,8 @@ public final class BookNavigatorTopComponent extends TopComponent {
         
         result = Utilities.actionsGlobalContext().lookupResult(BookViewer.class);
         result.addLookupListener(bookViewerLookupListener);
-        result.allInstances(); // needed to tell Nb that it is processed
+        //result.allInstances(); // needed to tell Nb that it is processed
+        bookViewerLookupListenerResultChanged(new LookupEvent(result));
     }
     
     private void bookViewerLookupListenerResultChanged(LookupEvent lookupEvent) {
@@ -174,7 +175,6 @@ public final class BookNavigatorTopComponent extends TopComponent {
             }
             displayBookNavigator(bookViewer);
         } 
-        //System.out.println("BookNavTC.lookupResultChanged isEmpty(): " + c.isEmpty());
     }
     
     
