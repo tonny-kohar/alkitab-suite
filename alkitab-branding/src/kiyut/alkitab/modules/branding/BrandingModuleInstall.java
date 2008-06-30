@@ -139,9 +139,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         if (BookViewerOptions.getInstance().isSessionPersistence()) {
             return super.closing();
         }
-        
-        System.out.println("ModuleInstall closing");
-        
+               
         // if not session persistence. close all currently opened BookViewer
         TopComponent[] tcs = TopComponent.getRegistry().getOpened().toArray(new TopComponent[0]);
         for (int i=0; i<tcs.length; i++) {
