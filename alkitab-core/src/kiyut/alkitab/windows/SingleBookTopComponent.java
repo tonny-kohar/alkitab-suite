@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -130,7 +131,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                 bookViewer.setKey(key);
             }
 
-            WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     bookViewer.refresh();
                 }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -33,7 +34,6 @@ import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays {@link kiyut.alkitab.swing.ParallelBookViewerPane ParallelBookViewerPane}.
@@ -142,7 +142,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
             bookViewer.compareView(compareView);
             
-            WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     bookViewer.refresh();
                 }
