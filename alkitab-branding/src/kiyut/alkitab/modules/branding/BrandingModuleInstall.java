@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 import kiyut.alkitab.Application;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.IOUtilities;
+import kiyut.alkitab.windows.BookViewerTopComponent;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.sword.SwordBookPath;
@@ -96,7 +97,7 @@ public class BrandingModuleInstall extends ModuleInstall {
             public void run() {
                 
                 if (BookViewerOptions.getInstance().isSessionPersistence()) {
-                    // if using Session Persistence do not set Bookshelft focus
+                    // if using Session Persistence do not set Bookshelf focus
                     return;
                 }
                 
@@ -131,5 +132,25 @@ public class BrandingModuleInstall extends ModuleInstall {
             }
         });
         
+    }
+    
+    @Override
+    public boolean closing() {
+        if (BookViewerOptions.getInstance().isSessionPersistence()) {
+            return super.closing();
+        }
+        
+        System.out.println("ModuleInstall closing");
+        
+        // if not session persistence. close all currently opened BookViewer
+        TopComponent[] tcs = TopComponent.getRegistry().getOpened().toArray(new TopComponent[0]);
+        for (int i=0; i<tcs.length; i++) {
+            TopComponent tc = tcs[i];
+            if (tc instanceof BookViewerTopComponent) {
+                tc.close();
+            }
+        }
+        
+        return super.closing();
     }
 }

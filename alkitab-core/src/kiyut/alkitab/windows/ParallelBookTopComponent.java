@@ -1,5 +1,4 @@
 /* This work has been placed into the public domain. */
-
 package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
@@ -39,22 +38,20 @@ import org.openide.windows.TopComponent;
  * Top component which displays {@link kiyut.alkitab.swing.ParallelBookViewerPane ParallelBookViewerPane}.
  */
 public class ParallelBookTopComponent extends BookViewerTopComponent {
-    
+
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-
     private static final String PREFERRED_ID = "ParallelBookTopComponent";
-    
     private ParallelBookViewerPane bookViewer;
     private ToolTip linkToolTip;
     private Point linkToolTipLocation;
-    
+
     public ParallelBookTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(ParallelBookTopComponent.class, "CTL_ParallelBookTopComponent"));
         setToolTipText(NbBundle.getMessage(ParallelBookTopComponent.class, "HINT_ParallelBookTopComponent"));
 //        setIcon(Utilities.loadImage(ICON_PATH, true));
-        
+
         initCustom();
     }
 
@@ -71,7 +68,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    
     @Override
     public int getPersistenceType() {
         return TopComponent.PERSISTENCE_ONLY_OPENED;
@@ -81,27 +77,23 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     protected String preferredID() {
         return PREFERRED_ID;
     }
-    
+
     /** replaces this in object stream */
     @Override
     public Object writeReplace() throws ObjectStreamException {
-        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
-            return null;
-        } 
         return new ResolvableHelper(bookViewer);
     }
-    
+
     final static class ResolvableHelper implements Serializable {
 
         private static final long serialVersionUID = 1L;
-        
         private List<String> bookNames;
         private Key key;
         private boolean compareView;
-        
+
         public ResolvableHelper(ParallelBookViewerPane bookViewer) {
             if (bookViewer == null) { return; }
-        
+
             List<Book> books = bookViewer.getBooks();
 
             bookNames = new ArrayList<String>(books.size());
@@ -114,19 +106,29 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         }
 
         public Object readResolve() {
-            ParallelBookTopComponent result = new ParallelBookTopComponent();
-            
-            try {
-                restoreSession(result.bookViewer);
-            } catch (Exception ex) {
-                Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                logger.warning("Unable to restore session");
-                return null;
-            }
-            
+            final ParallelBookTopComponent result = new ParallelBookTopComponent();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    if (!BookViewerOptions.getInstance().isSessionPersistence()) {
+                        // just a fallback mechanism in case ModuleInstall fail to handle
+                        result.close();
+                        return;
+                    }
+
+                    try {
+                        restoreSession(result.bookViewer);
+                    } catch (Exception ex) {
+                        Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
+                        logger.warning("Unable to restore session");
+                        result.close();
+                    }
+                }
+            });
+
             return result;
         }
-        
+
         private void restoreSession(final ParallelBookViewerPane bookViewer) {
             if (bookNames == null || key == null) {
                 return;
@@ -141,27 +143,22 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             bookViewer.compareView(compareView);
-            
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    bookViewer.refresh();
-                }
-            });
+
+            bookViewer.refresh();
         }
     }
-    
-    
+
     /** If you override this, please make sure to call super.initCustom() */
     protected void initCustom() {
         bookViewer = new ParallelBookViewerPane();
-        add(BorderLayout.CENTER,(JComponent)bookViewer);
-        
+        add(BorderLayout.CENTER, (JComponent) bookViewer);
+
         bookViewerNode = new BookViewerNode(bookViewer);
         linkToolTip = new ToolTip();
-        
+
         bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
-                String name = (String)evt.getNewValue();
+                String name = (String) evt.getNewValue();
                 setName(name);
                 setToolTipText(name);
             }
@@ -218,7 +215,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
             logger.log(Level.WARNING, "invalid SwordURI: " + uri);
         }
-        
+
         if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {
             String fragment = swordURI.getFragment();
             if (fragment.length() > 0) {
@@ -226,7 +223,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     return;
                 }
             }
-            
+
             BookViewManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
@@ -236,31 +233,35 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             linkToolTip.hide();
         }
     }
-    
+
     private void showTooltip(SwordURI swordURI) {
-        if (swordURI == null) { return; } 
-        
+        if (swordURI == null) {
+            return;
+        }
+
         Book book = getToolTipBook(swordURI);
         Key key = null;
-        
-        
+
+
         if (book != null) {
             key = book.getValidKey(swordURI.getFragment());
         }
-        
+
         Point p = new Point(linkToolTipLocation.x, linkToolTipLocation.y);
         JComponent comp = bookViewer.getViewerComponent();
-        
-        linkToolTip.show(book,key, comp, p.x, p.y);
+
+        linkToolTip.show(book, key, comp, p.x, p.y);
     }
 
     private Book getToolTipBook(SwordURI swordURI) {
         Book book = null;
-        
-        if (swordURI == null) { return book; }
-        
+
+        if (swordURI == null) {
+            return book;
+        }
+
         String bookName = swordURI.getPath();
-        
+
         if (bookName.equals("")) {
             switch (swordURI.getType()) {
                 case GREEK_STRONGS:
@@ -268,7 +269,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     if (bookName == null) {
                         List books = Books.installed().getBooks(BookFilters.getGreekDefinitions());
                         if (!books.isEmpty()) {
-                            bookName = ((Book)books.get(0)).getInitials();
+                            bookName = ((Book) books.get(0)).getInitials();
                         }
                     }
                     break;
@@ -277,7 +278,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     if (bookName == null) {
                         List books = Books.installed().getBooks(BookFilters.getHebrewDefinitions());
                         if (!books.isEmpty()) {
-                            bookName = ((Book)books.get(0)).getInitials();
+                            bookName = ((Book) books.get(0)).getInitials();
                         }
                     }
                     break;
@@ -286,30 +287,30 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     if (bookName == null) {
                         List books = Books.installed().getBooks(BookFilters.getGreekParse());
                         if (!books.isEmpty()) {
-                            bookName = ((Book)books.get(0)).getInitials();
+                            bookName = ((Book) books.get(0)).getInitials();
                         }
                     }
                     break;
                 case HEBREW_MORPH:
                     // TODO need to implement this
                     //bookName = BookViewerOptions.getInstance().getDefaultHebrewMorph();
-                    
+
                     List books = Books.installed().getBooks(BookFilters.getHebrewParse());
                     if (!books.isEmpty()) {
-                        bookName = ((Book)books.get(0)).getInitials();
+                        bookName = ((Book) books.get(0)).getInitials();
                     }
                     break;
                 default:
                     break;
             }
-        } 
-        
+        }
+
         if (bookName != null) {
-            if (!bookName.equals("")) { 
+            if (!bookName.equals("")) {
                 book = Books.installed().getBook(bookName);
             }
         }
-        
+
         return book;
     }
 }

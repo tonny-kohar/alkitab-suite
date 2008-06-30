@@ -78,9 +78,6 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     /** replaces this in object stream */
     @Override
     public Object writeReplace() throws ObjectStreamException {
-        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
-            return null;
-        } 
         return new ResolvableHelper(bookViewer);
     }
     
@@ -105,15 +102,25 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         }
 
         public Object readResolve() {
-            SingleBookTopComponent result = new SingleBookTopComponent();
+            final SingleBookTopComponent result = new SingleBookTopComponent();
             
-            try {
-                restoreSession(result.bookViewer);
-            } catch (Exception ex) {
-                Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                logger.warning("Unable to restore session");
-                return null;
-            }
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    if (!BookViewerOptions.getInstance().isSessionPersistence()) {
+                        // just a fallback mechanism in case ModuleInstall fail to handle
+                        result.close();
+                        return;
+                    }
+
+                    try {
+                        restoreSession(result.bookViewer);
+                    } catch (Exception ex) {
+                        Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
+                        logger.warning("Unable to restore session");
+                        result.close();
+                    }
+                }
+            });
             
             return result;
         }
@@ -131,11 +138,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                 bookViewer.setKey(key);
             }
 
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    bookViewer.refresh();
-                }
-            });
+            bookViewer.refresh();
         }
     }
     
@@ -176,14 +179,6 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     public BookViewer getBookViewer() {
         return bookViewer;
     }
-    
-    /*private void hyperlinkUpdate(HyperlinkEvent evt) {
-        EventType eventType = evt.getEventType();
-        String uri = evt.getDescription();
-        if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
-            StatusDisplayer.getDefault().setStatusText(uri);
-        }
-    }*/
     
     private void hyperlinkUpdate(HyperlinkEvent evt) {
         EventType eventType = evt.getEventType();
