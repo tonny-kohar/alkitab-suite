@@ -6,6 +6,10 @@ import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
@@ -16,10 +20,15 @@ import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
+import kiyut.alkitab.options.BookViewerOptions;
+import kiyut.alkitab.swing.ParallelBookViewerPane;
 import kiyut.alkitab.swing.SingleBookViewerPane;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays {@link kiyut.alkitab.swing.SingleBookViewerPane SingleBookViewerPane}.
@@ -31,7 +40,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
 
     private static final String PREFERRED_ID = "SingleBookTopComponent";
     
-    private BookViewer bookViewer;
+    private SingleBookViewerPane bookViewer;
     
     public SingleBookTopComponent() {
         initComponents();
@@ -57,12 +66,76 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
 
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_NEVER;
+        return TopComponent.PERSISTENCE_ONLY_OPENED;
     }
 
     @Override
     protected String preferredID() {
         return PREFERRED_ID;
+    }
+    
+    /** replaces this in object stream */
+    @Override
+    public Object writeReplace() throws ObjectStreamException {
+        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
+            return null;
+        } 
+        return new ResolvableHelper(bookViewer);
+    }
+    
+    final static class ResolvableHelper implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+        
+        private List<String> bookNames;
+        private Key key;
+                
+        public ResolvableHelper(SingleBookViewerPane bookViewer) {
+            if (bookViewer == null) { return; }
+        
+            List<Book> books = bookViewer.getBooks();
+
+            bookNames = new ArrayList<String>(books.size());
+            for (int i = 0; i < books.size(); i++) {
+                bookNames.add(books.get(i).getInitials());
+            }
+
+            key = bookViewer.getKey();
+        }
+
+        public Object readResolve() {
+            SingleBookTopComponent result = new SingleBookTopComponent();
+            
+            try {
+                restoreSession(result.bookViewer);
+            } catch (Exception ex) {
+                Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
+                logger.warning("Unable to restore session");
+                return null;
+            }
+            
+            return result;
+        }
+        
+        private void restoreSession(final SingleBookViewerPane bookViewer) {
+            if (bookNames == null || key == null) {
+                return;
+            }
+
+            for (int i = 0; i < bookNames.size(); i++) {
+                bookViewer.setBook(bookNames.get(i));
+            }
+            
+            if (key != null) {
+                bookViewer.setKey(key);
+            }
+
+            WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+                public void run() {
+                    bookViewer.refresh();
+                }
+            });
+        }
     }
     
     /** If you override this, please make sure to call super.initCustom() */

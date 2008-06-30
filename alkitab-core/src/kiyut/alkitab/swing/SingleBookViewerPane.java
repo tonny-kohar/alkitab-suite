@@ -163,8 +163,18 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     }
 
     public void openURI(SwordURI uri) {
-        List<Book> books = bookTextPane.getBooks();
         Book book = Books.installed().getBook(uri.getPath());
+        setBook(book);
+        refresh();
+    }
+
+    public void setBook(String bookName) {
+        Book book = Books.installed().getBook(bookName);
+        setBook(book);
+    }
+    
+    public void setBook(Book book) {
+        List<Book> books = bookTextPane.getBooks();
 
         if (books.isEmpty()) {
             books.add(book);
@@ -173,11 +183,11 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         } else {
             books.set(0, book);
         }
-
+        
         if (book == null) {
             return;
         }
-
+        
         Key tKey = book.getGlobalKeyList();
 
         if (tKey == null) {
@@ -187,10 +197,9 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
             History hist = new BookViewerHistory(tKey);
             historyManager.add(hist);
             bookTextPane.setKey(hist.current());
-            refresh();
         }
     }
-
+    
     public void setKey(Key key) {
         // find the key in history
         History hist = historyManager.current();
