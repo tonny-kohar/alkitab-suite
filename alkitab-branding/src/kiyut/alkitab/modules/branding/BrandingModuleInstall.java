@@ -94,6 +94,12 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
+                
+                if (BookViewerOptions.getInstance().isSessionPersistence()) {
+                    // if using Session Persistence do not set Bookshelft focus
+                    return;
+                }
+                
                 final Frame mainWindow = WindowManager.getDefault().getMainWindow();
                 mainWindow.addWindowListener(new WindowAdapter() {
                     @Override
