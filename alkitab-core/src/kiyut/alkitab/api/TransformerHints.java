@@ -78,21 +78,6 @@ public class TransformerHints<K,V> extends HashMap<K,V> {
         return v;
     }
     
-    /*@Override
-    public Object put(Object key, Object value) {
-        if (!(key instanceof Key)) {
-            throw new IllegalArgumentException("key should be instanceof TransformerHints.Key");
-        }
-        return put((Key)key,value);
-    }
-    
-    public Object put(Key key, Object value) {
-        if (!key.accept(value)) {
-            throw new IllegalArgumentException(value+ " is not valid value for "+ key);
-        }
-        return super.put(key, value);
-    }*/
-    
     /** Update the supplied provider parameter, with this TransformerHints 
      * @param provider the {@code TransformingSAXEventProvider}
      */
