@@ -67,6 +67,9 @@ public class BookViewerHistory implements History {
 
     public Key current() {
         //System.out.println(index + " size: " + keyList.size());
+        if (index >= keyList.size()) {
+            return null;
+        }
         return keyList.get(index);
     }
     
