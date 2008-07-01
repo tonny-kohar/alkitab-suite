@@ -16,6 +16,7 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
 import kiyut.alkitab.api.TransformerHints;
 import kiyut.alkitab.options.TransformerHintsOptions;
 import org.crosswire.jsword.book.Book;
@@ -39,12 +40,23 @@ public class ToolTip extends JComponent {
         setLayout(new BorderLayout());
         add(bookTextPane,BorderLayout.CENTER);
         
-        bookTextPane.setBackground(UIManager.getColor("Tooltip.background"));
+        /*Color background = new ColorUIResource(255, 247, 200); // The color is #fff7c8.
+        Border border = BorderFactory.createLineBorder(new Color(76,79,83)); // The color is #4c4f53.
+        
+        bookTextPane.setBackground(background);
         bookTextPane.setForeground(UIManager.getColor("Tooltip.foreground"));
+        bookTextPane.setBorder(border);
+         */
+        
+        //bookTextPane.setBackground(UIManager.getColor("Tooltip.background"));
+        //bookTextPane.setForeground(UIManager.getColor("Tooltip.foreground"));
+        
+        bookTextPane.setBackground(UIManager.getColor("info"));
+        bookTextPane.setForeground(UIManager.getColor("infoText"));
         
         Border border = UIManager.getBorder("Tooltip.border");
         if (border == null) {
-            border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(6,6,6,6));
+            border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(76,79,83)), BorderFactory.createEmptyBorder(6,6,6,6));
         }
         bookTextPane.setBorder(border);
         
