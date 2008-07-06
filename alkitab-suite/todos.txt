@@ -6,8 +6,6 @@ in no particular order
 - [GUI] Improve indexing progress bar (use SwingFX)
 - [GUI] Alternative HTML viewer: xhtml (flying sourcer), XULEmbed, JDIC native browser, JWebPane (preferred, but not available yet)
 - [GUI] Defintions/Dictionary searching
-- [GUI] Tooltip for definitions/strongs/morph in BookViewer
-- [GUI] Saving session (book opened, etc)
 - [i18n] Internationalization or Localization for Alkitab Bible Study
 - [Installer] Mac OSX dmg
 - [SWORD] Indonesian Bible Translation, need to check with LAI (http://www.alkitab.or.id) for copyright

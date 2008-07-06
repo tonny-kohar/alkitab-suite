@@ -1,3 +1,9 @@
+ver 1.1
+- Add Session Persistence (default is disabled)
+- Add Tooltip popup for Strongs and Morphology
+- Improved Options/Preferences
+- Updated to use JSword 1.0.8 (20080629)
+
 ver 1.0.1
 - Fix navigator for Bible
 - Fix cross reference verse
