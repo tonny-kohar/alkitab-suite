@@ -16,7 +16,6 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
-import javax.swing.plaf.ColorUIResource;
 import kiyut.alkitab.api.TransformerHints;
 import kiyut.alkitab.options.TransformerHintsOptions;
 import org.crosswire.jsword.book.Book;
@@ -89,6 +88,10 @@ public class ToolTip extends JComponent {
         bookTextPane.setKey(key);
         
         bookTextPane.refresh(false);
+        
+        // XXX workaround for pack/panel size problem
+        //this.revalidate();
+        //System.out.println(bookTextPane.getPreferredSize() + "  " + this.getPreferredSize());
         
         point.setLocation(x, y);
         
