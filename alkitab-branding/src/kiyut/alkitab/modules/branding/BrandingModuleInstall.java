@@ -16,6 +16,7 @@ import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import kiyut.alkitab.windows.BookshelfTopComponent;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.sword.SwordBookPath;
 import org.openide.modules.ModuleInstall;
@@ -44,9 +45,10 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         File[] paths = viewerOpts.getBookPaths();
         try {
-            if (paths != null) {
+            /*if (paths != null) {
                SwordBookPath.setAugmentPath(paths);
-            }
+            }*/
+            setDefaultSwordPath(paths);
         } catch (Exception ex) {
             logger.log(Level.WARNING,ex.getMessage(),ex);
         }
@@ -105,6 +107,11 @@ public class BrandingModuleInstall extends ModuleInstall {
                 mainWindow.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowOpened(WindowEvent evt) {
+                        // if sessionPersistence do not set the active TC, let Nb deal with it
+                        if (BookViewerOptions.getInstance().isSessionPersistence()) {
+                            return; 
+                        }
+                        
                         // set active BookshelfTopComponent if opened
                         Set set = WindowManager.getDefault().getRegistry().getOpened();
                         TopComponent tc = null;
@@ -150,5 +157,47 @@ public class BrandingModuleInstall extends ModuleInstall {
         }
         
         return super.closing();
+    }
+    
+    /** Set Default Sword Path for Alkitab. Make sure [user.home]/.sword is included */
+    private void setDefaultSwordPath(File[] paths) throws BookException {
+        boolean defPathFound = false;
+        
+        String str = System.getProperty("user.home");
+        File defPath = new File(str + File.separator + ".sword");
+        
+        File[] files = SwordBookPath.getSwordPath();
+        for (int i=0; i<files.length; i++) {
+            if (files[i].equals(defPath)) {
+                defPathFound = true;
+                break;
+            }
+        }
+        
+        if (!defPathFound && paths != null) {
+            files = paths;
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].equals(defPath)) {
+                    defPathFound = true;
+                    break;
+                }
+            }
+        }
+        
+        // if defPath is not there, make sure it is included
+        if (!defPathFound) {
+            if (paths == null) {
+                files = new File[1];
+            } else {
+                files = new File[paths.length + 1];
+                System.arraycopy(paths, 0, files, 0, paths.length);
+            }
+            paths = files;
+            paths[paths.length-1] = defPath;
+        }
+        
+        if (paths != null) {
+            SwordBookPath.setAugmentPath(paths);
+        }
     }
 }
