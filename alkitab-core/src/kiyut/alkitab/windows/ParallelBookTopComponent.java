@@ -22,6 +22,7 @@ import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.ParallelBookViewerPane;
 import kiyut.alkitab.swing.ToolTip;
@@ -235,7 +236,11 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     }
 
     private void showTooltip(SwordURI swordURI) {
-        if (swordURI == null) {
+        if (swordURI == null) { return; }
+        
+        ViewerHints viewerHints = bookViewer.getViewerHints();
+        Boolean val = (Boolean)viewerHints.get(ViewerHints.TOOLTIP_POPUP);
+        if (val.booleanValue() == false) {
             return;
         }
 

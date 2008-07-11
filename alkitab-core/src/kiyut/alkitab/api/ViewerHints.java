@@ -6,29 +6,31 @@ import java.util.HashMap;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 
 /**
- * The {@code TransformerHints} class defines a way to pass
- * transformer parameters for XSLT transform.
- *
+ * This class describe various hints for viewing books.
+ * It also defines a way to pass transformer parameters for XSLT transform. 
+ * 
+ * 
  */
-public class TransformerHints<K,V> extends HashMap<K,V> {
+public class ViewerHints<K,V> extends HashMap<K,V> {
     
-    public static final TransformerHints.Key START_VERSE_ON_NEWLINE = new BooleanKey("VLine");
-    public static final TransformerHints.Key STRONGS_NUMBERS = new BooleanKey("Strongs");
-    public static final TransformerHints.Key MORPH = new BooleanKey("Morph");
-    public static final TransformerHints.Key VERSE_NUMBERS = new BooleanKey("VNum");
-    public static final TransformerHints.Key CHAPTER_VERSE_NUMBERS = new BooleanKey("CVNum");
-    public static final TransformerHints.Key BOOK_CHAPTER_VERSE_NUMBERS = new BooleanKey("BCVNum");
-    public static final TransformerHints.Key NO_VERSE_NUMBERS = new BooleanKey("NoVNum");
-    public static final TransformerHints.Key TINY_VERSE_NUMBERS = new BooleanKey("TinyVNum");
-    public static final TransformerHints.Key HEADINGS = new BooleanKey("Headings");
-    public static final TransformerHints.Key NOTES = new BooleanKey("Notes");
-    public static final TransformerHints.Key XREF = new BooleanKey("XRef");
-    //public static final TransformerHints.Key DIRECTION = new StringKey("direction");
-    public static final TransformerHints.Key FONT = new StringKey("font");
-    public static final TransformerHints.Key BASE_URL = new URLKey("baseURL");
-    public static final TransformerHints.Key CSS = new URLKey("css");
+    public static final ViewerHints.Key START_VERSE_ON_NEWLINE = new BooleanKey("VLine");
+    public static final ViewerHints.Key STRONGS_NUMBERS = new BooleanKey("Strongs");
+    public static final ViewerHints.Key MORPH = new BooleanKey("Morph");
+    public static final ViewerHints.Key VERSE_NUMBERS = new BooleanKey("VNum");
+    public static final ViewerHints.Key CHAPTER_VERSE_NUMBERS = new BooleanKey("CVNum");
+    public static final ViewerHints.Key BOOK_CHAPTER_VERSE_NUMBERS = new BooleanKey("BCVNum");
+    public static final ViewerHints.Key NO_VERSE_NUMBERS = new BooleanKey("NoVNum");
+    public static final ViewerHints.Key TINY_VERSE_NUMBERS = new BooleanKey("TinyVNum");
+    public static final ViewerHints.Key HEADINGS = new BooleanKey("Headings");
+    public static final ViewerHints.Key NOTES = new BooleanKey("Notes");
+    public static final ViewerHints.Key XREF = new BooleanKey("XRef");
+    //public static final ViewerHints.Key DIRECTION = new StringKey("direction");
+    public static final ViewerHints.Key FONT = new StringKey("font");
+    public static final ViewerHints.Key BASE_URL = new URLKey("baseURL");
+    public static final ViewerHints.Key CSS = new URLKey("css");
+    public static final ViewerHints.Key TOOLTIP_POPUP = new BooleanKey("TooltipPopup");
     
-    private static final TransformerHints.Key[] KEYS = {
+    private static final ViewerHints.Key[] KEYS = {
         STRONGS_NUMBERS,
         MORPH,
         START_VERSE_ON_NEWLINE,
@@ -44,15 +46,16 @@ public class TransformerHints<K,V> extends HashMap<K,V> {
         /*DIRECTION,*/
         FONT,
         CSS,
+        TOOLTIP_POPUP,
     };
     
-    protected TransformerHints<K,V> defaults;
+    protected ViewerHints<K,V> defaults;
     
-    public TransformerHints() {
+    public ViewerHints() {
         this(null);
     }
     
-    public TransformerHints(TransformerHints<K,V> defaults) {
+    public ViewerHints(ViewerHints<K,V> defaults) {
         super();
         this.defaults = defaults;
     }
@@ -68,7 +71,7 @@ public class TransformerHints<K,V> extends HashMap<K,V> {
     @Override
     public V get(Object key) {
         if (!(key instanceof Key)) {
-            throw new IllegalArgumentException("key should be instanceof TransformerProperties.Key");
+            throw new IllegalArgumentException("key should be instanceof ViewerHints.Key");
         }
         
         V v = super.get(key);
@@ -78,7 +81,7 @@ public class TransformerHints<K,V> extends HashMap<K,V> {
         return v;
     }
     
-    /** Update the supplied provider parameter, with this TransformerHints 
+    /** Update the supplied provider parameter, with this ViewerHints 
      * @param provider the {@code TransformingSAXEventProvider}
      */
     public void updateProvider(TransformingSAXEventProvider provider) {

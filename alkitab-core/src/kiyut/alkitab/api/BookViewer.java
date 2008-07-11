@@ -2,7 +2,6 @@
 
 package kiyut.alkitab.api;
 
-import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.ActionMap;
@@ -65,12 +64,12 @@ public interface BookViewer {
      */
     public void openURI(SwordURI uri);
     
-    /** Return {@code TransformerPropertiesOld} used by this BookViewer.
-     * This method should not return null, it could return empty {@code TransformerPropertiesOld}
+    /** Return {@link kiyut.alkitab.api.ViewerHints ViewerHints} used by this BookViewer.
+     * This method should not return null, it could return empty {@link kiyut.alkitab.api.ViewerHints ViewerHints}
      * but not null
-     * @return {@code TransformerPropertiesOld}
+     * @return {@code ViewerHints}
      */
-    public TransformerHints<TransformerHints.Key,Object> getTransformerHints();
+    public ViewerHints<ViewerHints.Key,Object> getViewerHints();
     
     /** Is this methods needed ? */
     public ActionMap getActionMap();

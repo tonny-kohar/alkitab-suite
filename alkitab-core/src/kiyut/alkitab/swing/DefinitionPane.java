@@ -7,8 +7,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import kiyut.alkitab.api.TransformerHints;
-import kiyut.alkitab.options.TransformerHintsOptions;
+import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.options.ViewerHintsOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.PreferredKey;
@@ -22,7 +22,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     //protected Book book;
     
     protected BookTextPane bookTextPane;
-    protected TransformerHints<TransformerHints.Key,Object> transformerHints;
+    protected ViewerHints<ViewerHints.Key,Object> viewerHints;
     
     /** Creates new DefinitionPane */
     public DefinitionPane() {
@@ -30,7 +30,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     }
     
     public DefinitionPane(Book book) {
-        this.transformerHints = new TransformerHints<TransformerHints.Key,Object>(TransformerHintsOptions.getInstance().getTransformerHints());
+        this.viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
         initComponents();
         initCustom();
         setBook(book);
@@ -76,7 +76,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
-        bookTextPane = new BookTextPane(transformerHints);
+        bookTextPane = new BookTextPane(viewerHints);
         bookScrollPane.setViewportView(bookTextPane);
         
         //getActionMap().setParent(bookTextPane.getActionMap());
@@ -151,11 +151,11 @@ public class DefinitionPane extends javax.swing.JPanel {
         sourcePane.showDialog(this,true);
     }
     
-    public TransformerHints<TransformerHints.Key,Object> getTransformerHints() {
-        if (transformerHints == null) {
-            transformerHints = new TransformerHints<TransformerHints.Key,Object>();
+    public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
+        if (viewerHints == null) {
+            viewerHints = new ViewerHints<ViewerHints.Key,Object>();
         }
-        return transformerHints;
+        return viewerHints;
     }
     
     public void addHyperlinkListener(HyperlinkListener listener) {

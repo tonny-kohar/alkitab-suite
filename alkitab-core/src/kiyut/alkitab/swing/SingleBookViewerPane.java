@@ -13,9 +13,9 @@ import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.api.TransformerHints;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.api.event.BookChangeEvent;
-import kiyut.alkitab.options.TransformerHintsOptions;
+import kiyut.alkitab.options.ViewerHintsOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
@@ -33,7 +33,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     
     /** Creates new SingleBookViewerPane */
     public SingleBookViewerPane() {
-        this.transformerHints = new TransformerHints<TransformerHints.Key, Object>(TransformerHintsOptions.getInstance().getTransformerHints());
+        this.viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
         initComponents();
         initCustom();
     }
@@ -90,7 +90,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
-        bookTextPane = new BookTextPane(transformerHints);
+        bookTextPane = new BookTextPane(viewerHints);
         bookScrollPane.setViewportView(bookTextPane);
         historyManager = new BookViewerHistoryManager();
 

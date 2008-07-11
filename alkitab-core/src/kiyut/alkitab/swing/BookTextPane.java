@@ -19,7 +19,7 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.SwingHTMLConverter;
-import kiyut.alkitab.api.TransformerHints;
+import kiyut.alkitab.api.ViewerHints;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
@@ -47,7 +47,7 @@ public class BookTextPane extends JTextPane {
     /** Default it is false */
     protected boolean compareView;
     
-    protected TransformerHints<TransformerHints.Key,Object> transformerHints;
+    protected ViewerHints<ViewerHints.Key,Object> viewerHints;
     
     /** Default is true */
     protected boolean enableSourceText;
@@ -59,14 +59,14 @@ public class BookTextPane extends JTextPane {
      * 
      */
     public BookTextPane() {
-        this(new TransformerHints<TransformerHints.Key,Object>(),true);
+        this(new ViewerHints<ViewerHints.Key,Object>(),true);
     }
     
-    public BookTextPane(TransformerHints<TransformerHints.Key,Object> transformerHints) {
-        this(transformerHints,true);
+    public BookTextPane(ViewerHints<ViewerHints.Key,Object> viewerHints) {
+        this(viewerHints,true);
     }
     
-    public BookTextPane(TransformerHints<TransformerHints.Key,Object> transformerHints, boolean enableSourceText) {
+    public BookTextPane(ViewerHints<ViewerHints.Key,Object> viewerHints, boolean enableSourceText) {
         books = new ArrayList<Book>();
         setEditable(false);
         setEditorKit(new HTMLEditorKit());
@@ -77,7 +77,7 @@ public class BookTextPane extends JTextPane {
         });
 
         setConverter(new SwingHTMLConverter());
-        setTransformerHints(transformerHints);
+        setViewerHints(viewerHints);
         this.compareView = false;
         this.enableSourceText = enableSourceText;
 
@@ -90,15 +90,15 @@ public class BookTextPane extends JTextPane {
         }
     }
 
-    public void setTransformerHints(TransformerHints<TransformerHints.Key,Object> transformerHints) {
-        if (transformerHints == null) {
+    public void setViewerHints(ViewerHints<ViewerHints.Key,Object> viewerHints) {
+        if (viewerHints == null) {
             throw new IllegalArgumentException("transformerHints could not be null");
         }
-        this.transformerHints = transformerHints;
+        this.viewerHints = viewerHints;
     }
     
-    public TransformerHints<TransformerHints.Key,Object> getTransformerHints() {
-        return transformerHints;
+    public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
+        return viewerHints;
     }
     
     /** Default it is false */
@@ -213,9 +213,9 @@ public class BookTextPane extends JTextPane {
             URI uri = bmd.getLocation();
             //String uriString = uri == null ? "" : NetUtil.getAsFile(uri).getCanonicalPath();
             String uriString = uri == null ? "" : uri.toURL().toString();
-            transformerHints.put(TransformerHints.BASE_URL, uriString);
+            viewerHints.put(ViewerHints.BASE_URL, uriString);
             
-            transformerHints.updateProvider(htmlsep);
+            viewerHints.updateProvider(htmlsep);
             
             // HTML Text
             text = XMLUtil.writeToString(htmlsep);

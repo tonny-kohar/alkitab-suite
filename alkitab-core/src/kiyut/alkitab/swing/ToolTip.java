@@ -16,8 +16,8 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
-import kiyut.alkitab.api.TransformerHints;
-import kiyut.alkitab.options.TransformerHintsOptions;
+import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.options.ViewerHintsOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 
@@ -34,8 +34,8 @@ public class ToolTip extends JComponent {
     protected Point point = new Point();
     
     public ToolTip() {
-        TransformerHints<TransformerHints.Key,Object> transformerHints = new TransformerHints<TransformerHints.Key, Object>(TransformerHintsOptions.getInstance().getTransformerHints());
-        bookTextPane = new BookTextPane(transformerHints,false);
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        bookTextPane = new BookTextPane(viewerHints,false);
         setLayout(new BorderLayout());
         add(bookTextPane,BorderLayout.CENTER);
         
@@ -114,6 +114,7 @@ public class ToolTip extends JComponent {
         if (!visible) {
             hide();
         }
+        super.setVisible(visible);
     }
     
     /** Return preferred popup location based on ScreenSize, etc so it does not overlap 

@@ -23,10 +23,10 @@ import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.api.TransformerHints;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.api.event.BookChangeEvent;
 import kiyut.alkitab.options.BookViewerOptions;
-import kiyut.alkitab.options.TransformerHintsOptions;
+import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.common.progress.JobManager;
@@ -71,7 +71,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * 
      */
     public ParallelBookViewerPane() {
-        this.transformerHints = new TransformerHints<TransformerHints.Key,Object>(TransformerHintsOptions.getInstance().getTransformerHints());
+        this.viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
         unindexedBooks = false;
         indexInProgress = false;
         initComponents();
@@ -97,7 +97,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         expand1Button = new javax.swing.JButton();
         expand5Button = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        transformerHintsButton = new javax.swing.JButton();
+        viewerHintsButton = new javax.swing.JButton();
         splitPane = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -182,12 +182,12 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jToolBar4.add(expand5Button);
         jToolBar4.add(jSeparator2);
 
-        transformerHintsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/transformer-hints.png"))); // NOI18N
-        transformerHintsButton.setToolTipText(bundle.getString("HINT_TransformerHints.Text")); // NOI18N
-        transformerHintsButton.setFocusable(false);
-        transformerHintsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        transformerHintsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(transformerHintsButton);
+        viewerHintsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/viewer-hints.png"))); // NOI18N
+        viewerHintsButton.setToolTipText(bundle.getString("HINT_ViewerHints.Text")); // NOI18N
+        viewerHintsButton.setFocusable(false);
+        viewerHintsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewerHintsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar4.add(viewerHintsButton);
 
         add(jToolBar4, java.awt.BorderLayout.NORTH);
 
@@ -432,7 +432,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JPanel searchPane;
     private javax.swing.JTextArea searchTextArea;
     private javax.swing.JSplitPane splitPane;
-    private javax.swing.JButton transformerHintsButton;
+    private javax.swing.JButton viewerHintsButton;
     // End of variables declaration//GEN-END:variables
  
     protected void initCustom() {
@@ -446,7 +446,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         //splitPane.setOneTouchExpandable(true);
         
-        bookTextPane = new BookTextPane(transformerHints);
+        bookTextPane = new BookTextPane(viewerHints);
         bookScrollPane.setViewportView(bookTextPane);
         
         //getActionMap().setParent(bookTextPane.getActionMap());
@@ -643,15 +643,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             }
         });
         
-        transformerHintsButton.addActionListener(new ActionListener() {
+        viewerHintsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                TransformerHintsPane hintsPane = new TransformerHintsPane();
-                hintsPane.setTransformerHints(transformerHints);
+                ViewerHintsPane hintsPane = new ViewerHintsPane();
+                hintsPane.setViewerHints(viewerHints);
                 int choice = hintsPane.showDialog(ParallelBookViewerPane.this);
                 if (choice != JOptionPane.OK_OPTION) {
                     return;
                 }
-                hintsPane.updateTransformerHintsValue();
+                hintsPane.updateViewerHintsValue();
                 refresh();
             }
         });

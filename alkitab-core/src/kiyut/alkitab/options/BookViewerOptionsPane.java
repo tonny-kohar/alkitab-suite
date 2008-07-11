@@ -22,7 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import kiyut.alkitab.api.TransformerHints;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
@@ -101,6 +101,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         notesCheckBox = new javax.swing.JCheckBox();
         strongsCheckBox = new javax.swing.JCheckBox();
         morphCheckBox = new javax.swing.JCheckBox();
+        tooltipPopupCheckBox = new javax.swing.JCheckBox();
         xRefCheckBox = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -500,16 +501,24 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
         jPanel2.add(morphCheckBox, gridBagConstraints);
 
-        xRefCheckBox.setText(bundle.getString("CTL_XRef.Text")); // NOI18N
+        tooltipPopupCheckBox.setText(org.openide.util.NbBundle.getMessage(BookViewerOptionsPane.class, "CTL_TooltipPopup.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
-        jPanel2.add(xRefCheckBox, gridBagConstraints);
+        jPanel2.add(tooltipPopupCheckBox, gridBagConstraints);
+
+        xRefCheckBox.setText(bundle.getString("CTL_XRef.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
+        jPanel2.add(xRefCheckBox, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -720,6 +729,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     private javax.swing.JRadioButton sessionPersistenceEnabledRadio;
     private javax.swing.JCheckBox strongsCheckBox;
     private javax.swing.JCheckBox tinyVNumCheckBox;
+    private javax.swing.JCheckBox tooltipPopupCheckBox;
     private javax.swing.JCheckBox vLineCheckBox;
     private javax.swing.JRadioButton vNumRadioButton;
     private javax.swing.JPanel verseNumbersPane;
@@ -857,16 +867,16 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         
         
         ///////////////////////////
-        // TransformerHintsOptions
+        // ViewerHints Options
         
-        TransformerHints<TransformerHints.Key,Object> hints = TransformerHintsOptions.getInstance().getTransformerHints();
+        ViewerHints<ViewerHints.Key,Object> hints = ViewerHintsOptions.getInstance().getViewerHints();
         Object hintsVal;
         
-        hintsVal = hints.get(TransformerHints.NO_VERSE_NUMBERS);
+        hintsVal = hints.get(ViewerHints.NO_VERSE_NUMBERS);
         noVNumCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.VERSE_NUMBERS);
+        hintsVal = hints.get(ViewerHints.VERSE_NUMBERS);
         boolean vNum = ((Boolean)hintsVal).booleanValue();
-        hintsVal = hints.get(TransformerHints.CHAPTER_VERSE_NUMBERS);
+        hintsVal = hints.get(ViewerHints.CHAPTER_VERSE_NUMBERS);
         boolean cvNum = ((Boolean)hintsVal).booleanValue();
         
         if (vNum) {
@@ -879,28 +889,29 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
             }
         }
         
-        hintsVal = hints.get(TransformerHints.TINY_VERSE_NUMBERS);
+        hintsVal = hints.get(ViewerHints.TINY_VERSE_NUMBERS);
         tinyVNumCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.START_VERSE_ON_NEWLINE);
+        hintsVal = hints.get(ViewerHints.START_VERSE_ON_NEWLINE);
         vLineCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.HEADINGS);
+        hintsVal = hints.get(ViewerHints.HEADINGS);
         headingsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.NOTES);
-        notesCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.STRONGS_NUMBERS);
-        strongsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.MORPH);
-        morphCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(TransformerHints.XREF);
+        hintsVal = hints.get(ViewerHints.NOTES);
+        hintsVal = hints.get(ViewerHints.XREF);
         xRefCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-
+        notesCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
+        hintsVal = hints.get(ViewerHints.STRONGS_NUMBERS);
+        strongsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
+        hintsVal = hints.get(ViewerHints.MORPH);
+        morphCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
+        hintsVal = hints.get(ViewerHints.TOOLTIP_POPUP);
+        tooltipPopupCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
         
-        String fontDef = hints.get(TransformerHints.FONT).toString();
+        String fontDef = hints.get(ViewerHints.FONT).toString();
         String[] fontDefs = fontDef.split(",");
         if (fontDefs.length < 3) {
-            // invalid font definitions, set default; serif,0,14
-            fontComboBox.setSelectedIndex(0);
-            fontSizeComboBox.setSelectedItem(Integer.toString(14));
+            // invalid font definitions, set default; SansSerif,0,13";
+            fontComboBox.setSelectedIndex(1);
+            fontSizeComboBox.setSelectedItem(Integer.toString(13));
             fontBoldCheckBox.setSelected(false);
             fontItalicCheckBox.setSelected(false);
         } else {
@@ -923,7 +934,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         
         
         ///////////////////////////
-        // TransformerHintsOptions
+        // Path Options
         
         File path = viewerOpts.getDownloadPath();
         if (path != null) {
@@ -1036,27 +1047,28 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         viewerOpts.save();
         
         
-        TransformerHints<TransformerHints.Key,Object> hints = TransformerHintsOptions.getInstance().getTransformerHints();
-        hints.put(TransformerHints.NO_VERSE_NUMBERS, noVNumCheckBox.isSelected());
-        hints.put(TransformerHints.VERSE_NUMBERS, vNumRadioButton.isSelected());
-        hints.put(TransformerHints.CHAPTER_VERSE_NUMBERS, cvNumRadioButton.isSelected());
-        hints.put(TransformerHints.BOOK_CHAPTER_VERSE_NUMBERS, bcvNumRadioButton.isSelected());
-        hints.put(TransformerHints.TINY_VERSE_NUMBERS, tinyVNumCheckBox.isSelected());
-        hints.put(TransformerHints.START_VERSE_ON_NEWLINE, vLineCheckBox.isSelected());
-        hints.put(TransformerHints.HEADINGS, headingsCheckBox.isSelected());
-        hints.put(TransformerHints.NOTES, notesCheckBox.isSelected());
-        hints.put(TransformerHints.STRONGS_NUMBERS, strongsCheckBox.isSelected());
-        hints.put(TransformerHints.MORPH, morphCheckBox.isSelected());
-        hints.put(TransformerHints.XREF, xRefCheckBox.isSelected());
+        ViewerHints<ViewerHints.Key,Object> hints = ViewerHintsOptions.getInstance().getViewerHints();
+        hints.put(ViewerHints.NO_VERSE_NUMBERS, noVNumCheckBox.isSelected());
+        hints.put(ViewerHints.VERSE_NUMBERS, vNumRadioButton.isSelected());
+        hints.put(ViewerHints.CHAPTER_VERSE_NUMBERS, cvNumRadioButton.isSelected());
+        hints.put(ViewerHints.BOOK_CHAPTER_VERSE_NUMBERS, bcvNumRadioButton.isSelected());
+        hints.put(ViewerHints.TINY_VERSE_NUMBERS, tinyVNumCheckBox.isSelected());
+        hints.put(ViewerHints.START_VERSE_ON_NEWLINE, vLineCheckBox.isSelected());
+        hints.put(ViewerHints.HEADINGS, headingsCheckBox.isSelected());
+        hints.put(ViewerHints.NOTES, notesCheckBox.isSelected());
+        hints.put(ViewerHints.XREF, xRefCheckBox.isSelected());
+        hints.put(ViewerHints.STRONGS_NUMBERS, strongsCheckBox.isSelected());
+        hints.put(ViewerHints.MORPH, morphCheckBox.isSelected());
+        hints.put(ViewerHints.TOOLTIP_POPUP, tooltipPopupCheckBox.isSelected());
         
         int style = Font.PLAIN;
         style = fontBoldCheckBox.isSelected() ? style | Font.BOLD : style;
         style = fontItalicCheckBox.isSelected() ? style | Font.ITALIC : style;
         String fontDefs = fontComboBox.getSelectedItem().toString() + "," + style + "," + fontSizeComboBox.getSelectedItem().toString();
-        hints.put(TransformerHints.FONT, fontDefs);
+        hints.put(ViewerHints.FONT, fontDefs);
         //System.out.println(fontDefs + "   TEST ONLY");
         
-        TransformerHintsOptions.getInstance().save();
+        ViewerHintsOptions.getInstance().save();
     }
     
     /** Refresh available fonts */

@@ -4,7 +4,7 @@ package kiyut.alkitab.swing;
 
 import javax.swing.JPanel;
 import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.TransformerHints;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.api.event.BookChangeEvent;
 import kiyut.alkitab.api.event.BookChangeListener;
 
@@ -16,7 +16,7 @@ public abstract class AbstractBookViewerPane extends JPanel implements BookViewe
     /** Maximum books allowed in this view. Default is 1 */
     protected int maximumBook = 1;
     
-    protected TransformerHints<TransformerHints.Key,Object> transformerHints;
+    protected ViewerHints<ViewerHints.Key,Object> viewerHints;
     
     public int getMaximumBook() {
         return maximumBook;
@@ -29,11 +29,11 @@ public abstract class AbstractBookViewerPane extends JPanel implements BookViewe
         return false;
     }
     
-    public TransformerHints<TransformerHints.Key,Object> getTransformerHints() {
-        if (transformerHints == null) {
-            transformerHints = new TransformerHints<TransformerHints.Key,Object>();
+    public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
+        if (viewerHints == null) {
+            viewerHints = new ViewerHints<ViewerHints.Key,Object>();
         }
-        return transformerHints;
+        return viewerHints;
     }
     
     public void addBookChangeListener(BookChangeListener listener) {
