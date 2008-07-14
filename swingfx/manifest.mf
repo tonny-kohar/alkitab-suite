@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: net.java.swingfx.common
-OpenIDE-Module-Localizing-Bundle: net/java/swingfx/common/Bundle.properties
+OpenIDE-Module: kiyut.alkitab.modules.swingfx
+OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/swingfx/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0.0.20050622
 
