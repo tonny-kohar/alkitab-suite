@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.apisupport.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
+            <code-name-base>net.java.swingfx.common</code-name-base>
+            <suite-component/>
+            <module-dependencies/>
+            <public-packages>
+                <package>net.java.swingfx.common</package>
+                <package>net.java.swingfx.jdraggable</package>
+                <package>net.java.swingfx.jdraggable.demo</package>
+                <package>net.java.swingfx.rubberband</package>
+                <package>net.java.swingfx.rubberband.canvas</package>
+                <package>net.java.swingfx.rubberband.demo</package>
+                <package>net.java.swingfx.rubberband.rubberbands</package>
+                <package>net.java.swingfx.waitwithstyle</package>
+                <package>net.java.swingfx.waitwithstyle.demo</package>
+            </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/swingfx.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/swingfx.jar</binary-origin>
+            </class-path-extension>
+        </data>
+    </configuration>
+</project>
