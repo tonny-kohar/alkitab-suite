@@ -27,6 +27,7 @@ import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.api.event.BookChangeEvent;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.options.ViewerHintsOptions;
+import kiyut.alkitab.api.Indexer;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.common.progress.JobManager;
@@ -35,6 +36,7 @@ import org.crosswire.common.progress.WorkEvent;
 import org.crosswire.common.progress.WorkListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.index.IndexManagerFactory;
@@ -45,6 +47,7 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
+import org.openide.util.Exceptions;
 
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which able to display parallel book
@@ -62,8 +65,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     protected volatile boolean unindexedBooks; 
     protected volatile boolean indexInProgress;  
-    protected List<Progress> indexJobs;
-    protected IndexWorkListener indexWorkListener;
+    //protected List<Progress> indexJobs;
+    //protected IndexWorkListener indexWorkListener;
     
     protected boolean historyInProgress;
     
@@ -98,6 +101,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         expand5Button = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         viewerHintsButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         splitPane = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -188,6 +192,17 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         viewerHintsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewerHintsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar4.add(viewerHintsButton);
+
+        jButton1.setText("remove index"); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(jButton1);
 
         add(jToolBar4, java.awt.BorderLayout.NORTH);
 
@@ -392,6 +407,17 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         add(splitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+// TODO remove this only for testing
+    Book book = bookTextPane.getBooks().get(0);
+        try {
+
+            Indexer.getInstance().removeIndex(book);
+        } catch (BookException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+}//GEN-LAST:event_jButton1ActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -408,6 +434,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JButton goPreviousButton;
     private javax.swing.JButton indexButton;
     private javax.swing.JProgressBar indexProgress;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -440,9 +467,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         maximumBook = opts.getParallelBookLimit();
         historyManager = new BookViewerHistoryManager();
         
-        indexJobs = Collections.synchronizedList(new ArrayList<Progress>());
-        indexWorkListener = new IndexWorkListener();
-        JobManager.addWorkListener(indexWorkListener);
+        //indexJobs = Collections.synchronizedList(new ArrayList<Progress>());
+        //indexWorkListener = new IndexWorkListener();
+        //JobManager.addWorkListener(indexWorkListener);
         
         //splitPane.setOneTouchExpandable(true);
         
@@ -583,7 +610,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         indexButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if (indexInProgress) {
+                List<Book> books = bookTextPane.getBooks();
+                Indexer.getInstance().createIndex(books,true);
+                
+                /*if (indexInProgress) {
                     // cancel indexing
                     cancelIndexing();
                 } else {
@@ -597,7 +627,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                             }
                         }
                     }
-                }
+                }*/
             }
         });
         
@@ -1127,15 +1157,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         return comboBox;
     }
     
-    protected synchronized void cancelIndexing() {
+    /*protected synchronized void cancelIndexing() {
         synchronized (indexJobs) {
             while (!indexJobs.isEmpty()) {
                 indexJobs.get(0).cancel();
             }
         }
-    }
+    }*/
     
-    protected synchronized void updateIndexProgress() {
+    /*protected synchronized void updateIndexProgress() {
         if (indexJobs.isEmpty()) {
             indexInProgress = false;
             indexButton.setText(bundle.getString("CTL_NoIndex.Text"));
@@ -1154,9 +1184,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         indexButton.setText(bundle.getString("CTL_CancelIndex.Text"));
         
-    }
+    }*/
     
-    public class IndexWorkListener implements WorkListener {
+    /*public class IndexWorkListener implements WorkListener {
         public void workProgressed(WorkEvent evt) {
             synchronized (indexJobs) {
                 Progress job = evt.getJob();
@@ -1176,5 +1206,5 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         public void workStateChanged(WorkEvent evt) {
             // do nothing
         }
-    }
+    }*/
 }
