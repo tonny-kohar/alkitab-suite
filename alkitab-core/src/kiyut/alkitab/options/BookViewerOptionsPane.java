@@ -501,7 +501,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
         jPanel2.add(morphCheckBox, gridBagConstraints);
 
-        tooltipPopupCheckBox.setText(org.openide.util.NbBundle.getMessage(BookViewerOptionsPane.class, "CTL_TooltipPopup.Text")); // NOI18N
+        tooltipPopupCheckBox.setText(bundle.getString("CTL_TooltipPopup.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
