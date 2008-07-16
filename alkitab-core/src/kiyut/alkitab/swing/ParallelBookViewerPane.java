@@ -101,7 +101,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         expand5Button = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         viewerHintsButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         splitPane = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -192,17 +191,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         viewerHintsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewerHintsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar4.add(viewerHintsButton);
-
-        jButton1.setText("remove index"); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar4.add(jButton1);
 
         add(jToolBar4, java.awt.BorderLayout.NORTH);
 
@@ -407,17 +395,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         add(splitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-// TODO remove this only for testing
-    Book book = bookTextPane.getBooks().get(0);
-        try {
-
-            Indexer.getInstance().removeIndex(book);
-        } catch (BookException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-}//GEN-LAST:event_jButton1ActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -434,7 +411,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JButton goPreviousButton;
     private javax.swing.JButton indexButton;
     private javax.swing.JProgressBar indexProgress;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1156,55 +1132,4 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         comboBox.setPrototypeDisplayValue("BOOKINITIALS");
         return comboBox;
     }
-    
-    /*protected synchronized void cancelIndexing() {
-        synchronized (indexJobs) {
-            while (!indexJobs.isEmpty()) {
-                indexJobs.get(0).cancel();
-            }
-        }
-    }*/
-    
-    /*protected synchronized void updateIndexProgress() {
-        if (indexJobs.isEmpty()) {
-            indexInProgress = false;
-            indexButton.setText(bundle.getString("CTL_NoIndex.Text"));
-            indexProgress.setValue(0);
-            checkIndexStatus();
-            return;
-        }
-        
-        indexInProgress = true;
-        double count = indexJobs.size();
-        double cur = indexJobs.get(0).getWork();
-        if (count == 0) { count = 1; }
-        int val = (int) ((cur / (100 * count)) * 100);
-        //System.out.println("... " + val + "  " + count + "  "  + cur);
-        indexProgress.setValue(val);
-        
-        indexButton.setText(bundle.getString("CTL_CancelIndex.Text"));
-        
-    }*/
-    
-    /*public class IndexWorkListener implements WorkListener {
-        public void workProgressed(WorkEvent evt) {
-            synchronized (indexJobs) {
-                Progress job = evt.getJob();
-                
-                if (job.isFinished()) {
-                    indexJobs.remove(job);
-                } else {
-                    if (!indexJobs.contains(job)) {
-                        indexJobs.add(evt.getJob());
-                    }
-                }
-
-                updateIndexProgress();
-            }
-        }
-
-        public void workStateChanged(WorkEvent evt) {
-            // do nothing
-        }
-    }*/
 }
