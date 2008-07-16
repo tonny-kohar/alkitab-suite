@@ -3,6 +3,7 @@ package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
@@ -10,9 +11,12 @@ import java.beans.PropertyChangeListener;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
@@ -21,6 +25,7 @@ import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.api.BookViewManager;
+import kiyut.alkitab.api.Indexer;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
@@ -148,7 +153,25 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             bookViewer.refresh();
         }
     }
+    
+    @Override
+    public void componentClosed() {
+        if (bookViewer != null) {
+            bookViewer.dispose();
+        }
+    }
 
+    @Override
+    public javax.swing.Action[] getActions() {
+        List<Action> actionList = new ArrayList<Action>();
+        
+        // add 
+        actionList.addAll(Arrays.asList(super.getActions()));
+        actionList.add(1, new ReindexAction());
+        
+        return actionList.toArray(new Action[0]);
+    }
+    
     /** If you override this, please make sure to call super.initCustom() */
     protected void initCustom() {
         bookViewer = new ParallelBookViewerPane();
@@ -317,5 +340,23 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         }
 
         return book;
+    }
+    
+     protected class ReindexAction extends AbstractAction {
+        public ReindexAction() {
+            putValue(Action.NAME, NbBundle.getMessage(ReindexAction.class, "CTL_ReindexAction"));
+        }
+
+        public void actionPerformed(ActionEvent evt) {
+            BookViewer bookViewer = getBookViewer();
+            if (bookViewer == null) {
+                return;
+            }
+            
+            List<Book> books = bookViewer.getBooks();
+            if (books != null) {
+                Indexer.getInstance().createIndex(books, true);
+            }
+        }
     }
 }

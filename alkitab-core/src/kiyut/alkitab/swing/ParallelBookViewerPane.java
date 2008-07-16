@@ -3,6 +3,7 @@
 package kiyut.alkitab.swing;
 
 import java.awt.CardLayout;
+import javax.swing.event.ChangeEvent;
 import kiyut.alkitab.api.BookViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
@@ -30,16 +32,10 @@ import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.api.Indexer;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
-import org.crosswire.common.progress.JobManager;
-import org.crosswire.common.progress.Progress;
-import org.crosswire.common.progress.WorkEvent;
-import org.crosswire.common.progress.WorkListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
-import org.crosswire.jsword.index.IndexManagerFactory;
 import org.crosswire.jsword.index.IndexStatus;
 import org.crosswire.jsword.index.search.DefaultSearchModifier;
 import org.crosswire.jsword.index.search.DefaultSearchRequest;
@@ -47,7 +43,6 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
-import org.openide.util.Exceptions;
 
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which able to display parallel book
@@ -69,6 +64,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     //protected IndexWorkListener indexWorkListener;
     
     protected boolean historyInProgress;
+    
+    protected ChangeListener indexChangeListener;
     
     /** Creates new ParallelBookViewerPane. 
      * 
@@ -126,7 +123,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         advancedSearchButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         indexButton = new javax.swing.JButton();
-        indexProgress = new javax.swing.JProgressBar();
         bookScrollPane = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.BorderLayout());
@@ -359,24 +355,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         searchPane.add(jPanel4, "search-layout");
 
-        jPanel5.setLayout(new java.awt.GridBagLayout());
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
 
         indexButton.setText(bundle.getString("CTL_NoIndex.Text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(indexButton, gridBagConstraints);
-
-        indexProgress.setStringPainted(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        jPanel5.add(indexProgress, gridBagConstraints);
+        jPanel5.add(indexButton);
 
         searchPane.add(jPanel5, "index-layout");
 
@@ -410,7 +392,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JButton goNextButton;
     private javax.swing.JButton goPreviousButton;
     private javax.swing.JButton indexButton;
-    private javax.swing.JProgressBar indexProgress;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -442,11 +423,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         BookViewerOptions opts = BookViewerOptions.getInstance();
         maximumBook = opts.getParallelBookLimit();
         historyManager = new BookViewerHistoryManager();
-        
-        //indexJobs = Collections.synchronizedList(new ArrayList<Progress>());
-        //indexWorkListener = new IndexWorkListener();
-        //JobManager.addWorkListener(indexWorkListener);
-        
+               
         //splitPane.setOneTouchExpandable(true);
         
         bookTextPane = new BookTextPane(viewerHints);
@@ -588,22 +565,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             public void actionPerformed(ActionEvent evt) {
                 List<Book> books = bookTextPane.getBooks();
                 Indexer.getInstance().createIndex(books,true);
-                
-                /*if (indexInProgress) {
-                    // cancel indexing
-                    cancelIndexing();
-                } else {
-                    List<Book> books = bookTextPane.getBooks();
-                    for (int i=0; i< books.size(); i++) {
-                        Book book = books.get(i);
-                        if (book.getBookCategory().equals(BookCategory.BIBLE) 
-                                || book.getBookCategory().equals(BookCategory.COMMENTARY)) {
-                            if (!IndexManagerFactory.getIndexManager().isIndexed(book)) {
-                                IndexManagerFactory.getIndexManager().scheduleIndexCreation(book);
-                            }
-                        }
-                    }
-                }*/
             }
         });
         
@@ -661,6 +622,21 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 refresh();
             }
         });
+        
+        indexChangeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                checkIndexStatus();
+            }
+        };
+        
+        Indexer.getInstance().addChangeListener(indexChangeListener);
+    }
+    
+    /** cleanup resource and this component should not be used after a call to this */
+    public void dispose() {
+        if (indexChangeListener != null)  {
+            Indexer.getInstance().removeChangeListener(indexChangeListener);
+        }
     }
     
     @Override
@@ -833,6 +809,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } else {
             cl.show(searchPane, "search-layout");
         }
+        searchPane.revalidate();
     }
     
     public List<Book> getBooks() {

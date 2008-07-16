@@ -20,6 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
 import net.java.swingfx.waitwithstyle.CancelableProgessAdapter;
 import net.java.swingfx.waitwithstyle.PerformanceCancelableProgressPanel;
 import org.crosswire.common.progress.JobManager;
@@ -40,15 +43,14 @@ import org.openide.windows.WindowManager;
  * rather than invoking JSword IndexManager directly.
  * 
  */
-public class Indexer {
+public final class Indexer {
 
     private static Indexer instance; // The single instance
-
-    
-
     static {
         instance = new Indexer();
     }
+    
+    private EventListenerList listenerList;
 
     /**
      * Returns singleton instance accessor method for indexer
@@ -59,26 +61,38 @@ public class Indexer {
         return instance;
     }
 
+    // to prevent instantiation
     private Indexer() {
-        // to prevent instantiation
+        listenerList = new EventListenerList();
     }
-
-    /** Create index for all books inside category Bible and Commentary disregard index status. 
-     * It the same as called createIndex(false)
-     * @see createIndex(boolean)
-     * @see createIndex(List<Book>)
+    
+    /** Registers listener so that it will receive ChangeEvent when createIndex or removeIndex.
+     * The ChangeEvent source will be this Indexer.
+     * Note: to keep everything simple, it will trigger the notifcation does not matter when it is failed/success.
+     * It just fire the notication at the end of the process (not per book but per process)
+     *@param listener the ProgressListener to register
      */
-    public void createIndex() {
-        createIndex(false);
+    public void addChangeListener(ChangeListener listener) {
+        listenerList.add(ChangeListener.class, listener);
     }
-
-    /** Create index for all books inside category Bible and Commentary, 
-     * it will check for book index status (no reindex) if reindex is false
-     * @param reindex flag for reindex
-     * 
-     */
-    public void createIndex(boolean reindex) {
-        // TODO createIndex is not done yet
+    
+    /** Unregisters listener so it will not receive ChangeEvent when createIndex or removeIndex. */
+    public void removeChangeListener(ChangeListener listener) {
+        listenerList.remove(ChangeListener.class, listener);
+    }
+    
+    /** Notifies all listeners that have registered interest for notification on this event type. */
+    private void fireStateChanged() {
+        // Guaranteed to return a non-null array
+        Object[] listeners = listenerList.getListenerList();
+        // Process the listeners last to first, notifying
+        // those that are interested in this event
+        ChangeEvent event = new ChangeEvent(this);
+        for (int i = listeners.length-2; i>=0; i-=2) {
+            if (listeners[i]==ChangeListener.class) {
+                ((ChangeListener)listeners[i+1]).stateChanged(event);
+            }
+        }
     }
 
     /** Create index for the specified books for category Bible and Commentary only.
@@ -100,12 +114,6 @@ public class Indexer {
     public void createIndex(List<Book> books, boolean reindex) {
         IndexerProgress progress = new IndexerProgress();
         progress.createIndex(books, reindex);
-    /*EventQueue.invokeLater(new Runnable() {
-    public void run() {
-    IndexerProgress progress = new IndexerProgress();
-    progress.createIndex(books, reindex);
-    }
-    });*/
     }
 
     public void removeIndex(Book book) throws BookException {
@@ -204,7 +212,6 @@ public class Indexer {
             }
 
             show();
-            //totalJob = list.size();
             for (int i = 0; i < list.size(); i++) {
                 IndexManagerFactory.getIndexManager().scheduleIndexCreation(list.get(i));
             }
@@ -272,7 +279,7 @@ public class Indexer {
                     }
 
                     displayed = false;
-
+                    fireStateChanged();
                     //System.out.println("hide");
                 }
             };
