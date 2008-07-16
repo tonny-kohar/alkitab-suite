@@ -15,7 +15,7 @@ import org.crosswire.jsword.passage.Key;
 public class SwordUtilities {
 
     private SwordUtilities() {
-        throw new Error("SwordUtilities is a utility class for static methods");
+        throw new Error("SwordUtilities is a utility class for static methods"); // NOI18N
     }
     
     public static String bookCategoryToURIScheme(BookCategory category) {

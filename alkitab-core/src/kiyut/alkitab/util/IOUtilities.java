@@ -14,7 +14,7 @@ public class IOUtilities {
     //private  static JFileChooser fc;
     
     private IOUtilities() {
-        throw new Error("IOUtilities is a utility class for static methods");
+        throw new Error("IOUtilities is a utility class for static methods"); // NOI18N
     }
     
     /** Return JFileChooser that remember the last opened directory based on
