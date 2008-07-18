@@ -61,7 +61,7 @@
         The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
     -->
     <resources>
-        <res id="LicencePanel.licence" src="legal/LICENSE-alkitab.txt"/>
+        <res id="LicencePanel.licence" src="LICENSE-alkitab.txt"/>
         <res id="shortcutSpec.xml" src="Win-shortcutSpec.xml"/>
         <res id="Unix_shortcutSpec.xml" src="Unix-shortcutSpec.xml"/>
         <res id="Installer.image" src="installer-image.png"/>
@@ -94,41 +94,40 @@
     <!--
         The packs section.
         We specify here our packs.
+        note: bug on IzPack 4.0 loose=true can be used together with unpack=true
     -->
     <packs>
-        <pack name="${app.title.full}" required="yes">
+        <pack name="${app.title.full}" required="yes" loose="true">
             <description>${app.title.full} Core</description>
-            <file targetdir="$INSTALL_PATH" src="bin" override="true" />
-            <file targetdir="$INSTALL_PATH" src="etc" override="true" />
-            <file targetdir="$INSTALL_PATH" src="harness" override="true" />
-            <file targetdir="$INSTALL_PATH" src="ide9" override="true" />
-            <file targetdir="$INSTALL_PATH" src="legal" override="true" />
-            <file targetdir="$INSTALL_PATH" src="platform8" override="true" />
-            <file targetdir="$INSTALL_PATH" src="alkitab" override="true" />
-            <file targetdir="$INSTALL_PATH" src="readme.html" override="true" />
-            <file targetdir="$INSTALL_PATH/Uninstaller" src="uninstaller.exe" override="true" />
-            <file targetdir="$INSTALL_PATH/Uninstaller" src="uninstaller" override="true" />
+            <!-- XXX Izpack 4.0 Bug when loose=true and unpack=true
+            <file targetdir="$INSTALL_PATH" src="${packs.dir}/${app-core.pack}" override="true" /> 
+            -->
+            <fileset targetdir="$INSTALL_PATH" dir="${packs.dir}/${app-core.pack}" override="true" />
             <executable targetfile="$INSTALL_PATH/bin/alkitab" stage="never"/>
             <executable targetfile="$INSTALL_PATH/Uninstaller/uninstaller" stage="never"/>
         </pack>
         <pack name="[Optional] Books" required="no">
             <description>Optional Books. It is from http://www.crosswire.org/sword/modules/</description>
         </pack>
-        <pack name="Bible: King James Version (KJV)" required="no" parent="[Optional] Books">
+        <pack name="Bible: King James Version (KJV)" required="no" parent="[Optional] Books" loose="true">
             <description>King James Version (1769) with Strongs Numbers and Morphology</description>
-            <file targetdir="$UserPathPanelVariable" src="redist-books/KJV.zip" override="askfalse" unpack="true" />
+            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/KJV.zip" override="askfalse" unpack="true" /> -->
+            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/KJV" override="true" />
         </pack>
-        <pack name="Dictionary: Strong's Greek" required="no" parent="[Optional] Books">
+        <pack name="Dictionary: Strong's Greek" required="no" parent="[Optional] Books" loose="true">
             <description>Strong's Greek Bible Dictionary</description>
-            <file targetdir="$UserPathPanelVariable" src="redist-books/StrongsGreek.zip" override="askfalse" unpack="true" />
+            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/StrongsGreek.zip" override="askfalse" unpack="true" /> -->
+            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/StrongsGreek" override="true" />
         </pack>
-        <pack name="Dictionary: Strong's Hebrew" required="no" parent="[Optional] Books">
+        <pack name="Dictionary: Strong's Hebrew" required="no" parent="[Optional] Books" loose="true">
             <description>Strong's Hebrew Bible Dictionary</description>
-            <file targetdir="$UserPathPanelVariable" src="redist-books/StrongsHebrew.zip" override="askfalse" unpack="true" />
+            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/StrongsHebrew.zip" override="askfalse" unpack="true" /> -->
+            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/StrongsHebrew" override="true" />
         </pack>
-        <pack name="Dictionary: Robinson's Morphology" required="no" parent="[Optional] Books">
+        <pack name="Dictionary: Robinson's Morphology" required="no" parent="[Optional] Books" loose="true">
             <description>Robinson's Morphological Analysis Codes</description>
-            <file targetdir="$UserPathPanelVariable" src="redist-books/Robinson.zip" override="askfalse" unpack="true" />
+            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/Robinson.zip" override="askfalse" unpack="true" /> -->
+            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Robinson" override="true" />
         </pack>
     </packs>
 </installation>

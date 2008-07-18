@@ -51,18 +51,24 @@
         
     </target>
     
-    <target name="build-installer" description="Create Installer" depends="clean,build-zip">
-        <echo message=" "/>
+    <target name="build-installer" description="Create Installer" depends="build-zip">
+    <!-- <target name="build-installer" description="Create Installer" depends="clean,build-zip"> -->
         <echo message="Setting property and task for installer creation" />
+        <property name="redist-books" value="redist-books"/>
         <property name="nbdist.dir" value="dist"/>
         <property name="nbdist-app.dir" value="${nbdist.dir}/${app.name}"/>
         <property name="nbdist-app-installer" value="${app.name}-${app.version.dash}.zip"/> 
+        <property name="nbdist-izpack.dir" value="${nbdist.dir}/izpack"/>
+        <property name="nbdist-izpack-packs.dir" value="packs"/>
+        <property name="nbdist-izpack-app-core.pack" value="${app.title}-${app.version.dash}"/>
         <property name="izpack-installer" value="setup.jar"/>
         <property name="izpack.dir" value="/home/tonny/opt/IzPack"/>
-        <taskdef name="izpack" classpath="${izpack.dir}/lib/compiler.jar" 
+        <taskdef name="izpack" classpath="${izpack.dir}/lib/standalone-compiler.jar" 
             classname="com.izforge.izpack.ant.IzPackTask"/>
         
-        <echo message="Preparing ...." />
+        <echo message="=================" />
+        <echo message="STEP 1" />
+        <echo message="=================" />
 
         <unzip src="${nbdist.dir}/${app.name}.zip" dest="${nbdist.dir}"/>
 
@@ -74,72 +80,111 @@
             <fileset dir="installer/icons"/>
         </copy>
         
-        <echo message="copying book to be included with installer:" />
-        <echo message="    KJV, StrongsGreek, StrongsHebrew, Robinson" />
-        <copy todir="${nbdist-app.dir}/redist-books">
-            <fileset dir="${basedir}/../../redist-books"/>
-        </copy>
-
         <copy file="installer/readme.html" todir="${nbdist-app.dir}"/>
         <replace file="${nbdist-app.dir}/readme.html">
             <replacefilter token="$${app.version}" value="${app.version}" />
         </replace>
         
-        <copy todir="${nbdist-app.dir}">
-            <fileset dir="installer/izpack" />
-        </copy>
-        <replace file="${nbdist-app.dir}/izpack-install-script.xml">
-            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.title}" value="${app.title}" />
-            <replacefilter token="$${app.version}" value="${app.version}" />
-            <replacefilter token="$${app.path}" value="Kiyut/Alkitab-${app.version.dash}" />
-        </replace>
-        <replace file="${nbdist-app.dir}/Win-shortcutSpec.xml">
-            <replacefilter token="$${app.name}" value="${app.name}" />
-            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.title}" value="${app.title}" />
-            <replacefilter token="$${app.version}" value="${app.version}" />
-        </replace>
-        <replace file="${nbdist-app.dir}/Unix-shortcutSpec.xml">
-            <replacefilter token="$${app.name}" value="${app.name}" />
-            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.title}" value="${app.title}" />
-            <replacefilter token="$${app.version}" value="${app.version}" />
-        </replace>
         <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
             <replacefilter token="/dev" value="/${app.version}" />
             <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
         </replace>
+        
         <delete file="${nbdist-app.dir}/DISTRIBUTION.txt"/>
         <delete file="${nbdist-app.dir}/LICENSE.txt"/>
-            
-        <echo message=" "/>
+        
+        <echo message="=================" />
+        <echo message="STEP 2" />
+        <echo message="=================" />
+        
+        <mkdir dir="${nbdist-izpack.dir}/packs" />
+        
+        <echo message="create core app pack" />
+        
+        <!-- XXX Izpack Bug when loose=true and unpack=true
+        <zip destfile="${nbdist-izpack.dir}/packs/${nbdist-izpack-app-core.pack}" basedir="${nbdist-app.dir}" />
+        <copy todir="${nbdist-izpack.dir}/packs">
+            <fileset dir="${basedir}/../../redist-books"/>
+        </copy>
+        -->
+        <copy todir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/${nbdist-izpack-app-core.pack}">
+            <fileset dir="${nbdist-app.dir}" />
+        </copy>
+        
+        <copy todir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/${nbdist-izpack-app-core.pack}/Uninstaller">
+            <fileset dir="installer/izpack" >
+                <include name="uninstaller"/>
+                <include name="uninstaller.exe"/>
+            </fileset>
+        </copy>
+        
+        <echo message="copying book to be included with installer" />
+        <unzip src="${basedir}/../../redist-books/KJV.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/KJV"/>
+        <unzip src="${basedir}/../../redist-books/StrongsGreek.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsGreek"/>
+        <unzip src="${basedir}/../../redist-books/StrongsHebrew.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsHebrew"/>
+        <unzip src="${basedir}/../../redist-books/Robinson.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/Robinson"/>
+
+        <copy todir="${nbdist-izpack.dir}">
+            <fileset dir="installer/izpack" />
+        </copy>
+        
+        <replace file="${nbdist-izpack.dir}/izpack-install-script.xml">
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.title}" value="${app.title}" />
+            <replacefilter token="$${app.version}" value="${app.version}" />
+            <replacefilter token="$${app.path}" value="Kiyut/Alkitab-${app.version.dash}" />
+            <replacefilter token="$${app-core.pack}" value="${nbdist-izpack-app-core.pack}" />
+            <replacefilter token="$${packs.dir}" value="${nbdist-izpack-packs.dir}" />
+        </replace>
+        <replace file="${nbdist-izpack.dir}/Win-shortcutSpec.xml">
+            <replacefilter token="$${app.name}" value="${app.name}" />
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.title}" value="${app.title}" />
+            <replacefilter token="$${app.version}" value="${app.version}" />
+        </replace>
+        <replace file="${nbdist-izpack.dir}/Unix-shortcutSpec.xml">
+            <replacefilter token="$${app.name}" value="${app.name}" />
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.title}" value="${app.title}" />
+            <replacefilter token="$${app.version}" value="${app.version}" />
+        </replace>
+        
+        <echo message="=================" />
+        <echo message="STEP 3" />
+        <echo message="=================" />
+        
+        <copy file="${nbdist-app.dir}/readme.html" todir="${nbdist-izpack.dir}"/>
+        <copy file="${nbdist-app.dir}/legal/LICENSE-alkitab.txt" todir="${nbdist-izpack.dir}"/>
+        
         <echo message="Makes the installer using IzPack to ${izpack-installer}"/>
-            <izpack input="${basedir}/${nbdist-app.dir}/izpack-install-script.xml"
-                output="${basedir}/${nbdist-app.dir}/${izpack-installer}"  
+            <izpack input="${basedir}/${nbdist-izpack.dir}/izpack-install-script.xml"
+                output="${basedir}/${nbdist-izpack.dir}/${izpack-installer}"  
                 installerType="standard"              
-                basedir="${basedir}/${nbdist-app.dir}"
+                basedir="${basedir}/${nbdist-izpack.dir}"
                 izPackDir="${izpack.dir}/"/>
         
-        <echo message=" "/>
-        <echo message="create the release ${nbdist-app-installer}"/>
         <zip destfile="${nbdist.dir}/${nbdist-app-installer}">
-            <zipfileset dir="${nbdist-app.dir}">
+            <zipfileset dir="${nbdist-izpack.dir}">
                 <include name="readme.html"/>
                 <include name="setup.exe"/>
                 <include name="${izpack-installer}"/>
+                <include name="packs/**"/>
             </zipfileset>
-            <zipfileset dir="${nbdist-app.dir}" filemode="755">
+            <zipfileset dir="${nbdist-izpack.dir}" filemode="755">
                 <include name="setup"/>
             </zipfileset>
         </zip>
         
-        <echo message=" "/>
         <echo message="cleaning and finalizing release" />
-        <delete dir="${nbdist-app.dir}"/>
         
-        <echo message=" "/>
+        <delete dir="${nbdist-app.dir}"/>
+        <delete dir="${nbdist-izpack.dir}"/>
+        
         <echo message="release: ${nbdist-app-installer}" />
+        
+        <echo message="=================" />
+        <echo message="FINISH" />
+        <echo message="=================" />
         
     </target>
     

@@ -1,5 +1,8 @@
 ver 1.2
 - Add Tooltip Popup options to enable/disable
+- Add Reindex on ParallelBookTopComponent context menu
+- Improved indexing progress
+- Improved installer
 
 ver 1.1
 - Add Session Persistence (default is disabled)

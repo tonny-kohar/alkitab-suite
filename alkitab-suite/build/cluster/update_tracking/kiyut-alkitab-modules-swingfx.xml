@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module codename="kiyut.alkitab.modules.swingfx">
+    <module_version install_time="1216364647662" last="true" origin="installer" specification_version="1.0.0.20080506">
+        <file crc="2019021281" name="config/Modules/kiyut-alkitab-modules-swingfx.xml"/>
+        <file crc="4089893063" name="modules/ext/swingfx.jar"/>
+        <file crc="151982672" name="modules/kiyut-alkitab-modules-swingfx.jar"/>
+    </module_version>
+</module>
