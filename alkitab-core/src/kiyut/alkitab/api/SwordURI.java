@@ -43,7 +43,8 @@ public class SwordURI {
     /** enum of URI Type: FRAGMENT, SWORD, BIBLE, COMMENTARY, DAILY_DEVOTION, DICTIONARY, etc */
     public static enum Type {FRAGMENT, SWORD, BIBLE, COMMENTARY, DAILY_DEVOTION, 
                             DICTIONARY, GENERAL_BOOK, GLOSSARY, OTHER, QUESTIONABLE, 
-                            HEBREW_STRONGS, GREEK_STRONGS, GREEK_MORPH, HEBREW_MORPH    }
+                            HEBREW_STRONGS, GREEK_STRONGS, GREEK_MORPH, HEBREW_MORPH,
+                            MAPS}
     
     public static final String SWORD_SCHEME = "sword";
     public static final String BIBLE_SCHEME = "bible";
@@ -58,6 +59,7 @@ public class SwordURI {
     public static final String GREEK_STRONGS_SCHEME = "gdef";
     public static final String GREEK_MORPH_SCHEME = "gmorph";
     public static final String HEBREW_MORPH_SCHEME = "hmorph";
+    public static final String MAPS_SCHEME = "maps";
     
     public static final Map<String,Type> SCHEME_TYPE_MAP = new HashMap<String,Type>();
     static {
@@ -75,6 +77,7 @@ public class SwordURI {
         SCHEME_TYPE_MAP.put(GREEK_STRONGS_SCHEME, Type.GREEK_STRONGS);
         SCHEME_TYPE_MAP.put(GREEK_MORPH_SCHEME, Type.GREEK_MORPH);
         SCHEME_TYPE_MAP.put(HEBREW_MORPH_SCHEME, Type.HEBREW_MORPH);
+        SCHEME_TYPE_MAP.put(MAPS_SCHEME, Type.MAPS);
     }
     
     

@@ -129,7 +129,6 @@ public final class BookshelfTopComponent extends TopComponent {
     /** Transfer the focus to the BooksTree.  
      */
     @Override
-    @Deprecated
     public boolean requestFocusInWindow() {
         return booksTree.requestFocusInWindow();
     }

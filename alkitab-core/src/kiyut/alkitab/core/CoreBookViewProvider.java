@@ -82,6 +82,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
                 openDailyDevotion(uri, newView);
                 break;
             case GENERAL_BOOK:
+            case MAPS:
                 openGeneralBook(uri, newView);
                 break;
             case DICTIONARY:

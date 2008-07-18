@@ -41,6 +41,8 @@ public class SwordUtilities {
             scheme = SwordURI.OTHER_SCHEME;
         } else if (category.equals(BookCategory.QUESTIONABLE)) {
             scheme = SwordURI.QUESTIONABLE_SCHEME;
+        } else if (category.equals(BookCategory.MAPS)) {
+            scheme = SwordURI.MAPS_SCHEME;
         }
         return scheme;
     }
