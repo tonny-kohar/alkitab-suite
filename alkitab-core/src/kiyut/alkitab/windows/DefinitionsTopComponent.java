@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -32,7 +33,6 @@ import org.openide.awt.TabbedPaneFactory;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.Utilities;
 
 /**
  * Top component which displays {@link kiyut.alkitab.swing.DefinitionPane DefinitionPane}.
@@ -110,8 +110,7 @@ public final class DefinitionsTopComponent extends TopComponent {
     /** replaces this in object stream */
     @Override
     public Object writeReplace() {
-        //return new ResolvableHelper();
-        return null; //always close on startup
+        return new ResolvableHelper();
     }
 
     @Override
@@ -124,7 +123,16 @@ public final class DefinitionsTopComponent extends TopComponent {
         private static final long serialVersionUID = 1L;
 
         public Object readResolve() {
-            return DefinitionsTopComponent.getDefault();
+            //return DefinitionsTopComponent.getDefault();
+            
+            final DefinitionsTopComponent result = DefinitionsTopComponent.getDefault();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // always close it at startup
+                    result.close();
+                }
+            });
+            return result;
         }
     } 
     
