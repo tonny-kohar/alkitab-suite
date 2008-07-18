@@ -8,14 +8,12 @@
             <module-dependencies/>
             <public-packages>
                 <package>net.java.swingfx.common</package>
+                <package>net.java.swingfx.imagecropper</package>
                 <package>net.java.swingfx.jdraggable</package>
-                <package>net.java.swingfx.jdraggable.demo</package>
                 <package>net.java.swingfx.rubberband</package>
                 <package>net.java.swingfx.rubberband.canvas</package>
-                <package>net.java.swingfx.rubberband.demo</package>
                 <package>net.java.swingfx.rubberband.rubberbands</package>
                 <package>net.java.swingfx.waitwithstyle</package>
-                <package>net.java.swingfx.waitwithstyle.demo</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/swingfx.jar</runtime-relative-path>
