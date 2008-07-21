@@ -1,9 +1,7 @@
 Just something on my minds that could improve Alkitab Bible Study, 
 in no particular order
-
 - [API] Open more public API for plugins/extension
 - [GUI] Bookshelf popup menu (Open in new view or in current view)
-- [GUI] Improve indexing progress bar (use SwingFX)
 - [GUI] Alternative HTML viewer: xhtml (flying sourcer), XULEmbed, JDIC native browser, JWebPane (preferred, but not available yet)
 - [GUI] Defintions/Dictionary searching
 - [i18n] Internationalization or Localization for Alkitab Bible Study

@@ -3,6 +3,8 @@ ver 1.2
 - Add Reindex on ParallelBookTopComponent context menu
 - Improved indexing progress
 - Improved installer
+- Fix Maps view
+- Updated to use JSword 1.0.8 (20080719)
 
 ver 1.1
 - Add Session Persistence (default is disabled)
