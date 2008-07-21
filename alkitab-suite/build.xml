@@ -51,8 +51,7 @@
         
     </target>
     
-    <target name="build-installer" description="Create Installer" depends="build-zip">
-    <!-- <target name="build-installer" description="Create Installer" depends="clean,build-zip"> -->
+    <target name="build-installer" description="Create Installer" depends="clean,build-zip">
         <echo message="Setting property and task for installer creation" />
         <property name="redist-books" value="redist-books"/>
         <property name="nbdist.dir" value="dist"/>
