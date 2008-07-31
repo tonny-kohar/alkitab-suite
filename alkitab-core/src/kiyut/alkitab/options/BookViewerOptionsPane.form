@@ -196,7 +196,7 @@
                     <Component class="javax.swing.JComboBox" name="fontSizeComboBox">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="15">
+                          <StringArray count="20">
                             <StringItem index="0" value="8"/>
                             <StringItem index="1" value="9"/>
                             <StringItem index="2" value="10"/>
@@ -212,6 +212,11 @@
                             <StringItem index="12" value="24"/>
                             <StringItem index="13" value="26"/>
                             <StringItem index="14" value="28"/>
+                            <StringItem index="15" value="32"/>
+                            <StringItem index="16" value="36"/>
+                            <StringItem index="17" value="40"/>
+                            <StringItem index="18" value="44"/>
+                            <StringItem index="19" value="48"/>
                           </StringArray>
                         </Property>
                       </Properties>

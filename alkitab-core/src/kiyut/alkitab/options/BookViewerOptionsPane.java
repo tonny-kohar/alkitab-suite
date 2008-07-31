@@ -199,7 +199,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
         fontPanel.add(fontComboBox, gridBagConstraints);
 
-        fontSizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "20", "22", "24", "26", "28" }));
+        fontSizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "20", "22", "24", "26", "28", "32", "36", "40", "44", "48" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
