@@ -4,6 +4,7 @@ package kiyut.alkitab.util;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
 
 
@@ -56,6 +57,18 @@ public class IOUtilities {
         } catch (Exception ex) {
             // do nothing
         }
+    }
+    
+    /** Return a new instance of FileFilter preconfigured for Zip file
+     * @return FileFilter
+     */
+    public static FileFilter getZipFileFilter() {
+        ExtendedFileFilter filter = new ExtendedFileFilter();
+        
+        filter.addExtension("zip");
+        filter.setDescription("ZIP Files");
+        
+        return filter;
     }
 }
 
