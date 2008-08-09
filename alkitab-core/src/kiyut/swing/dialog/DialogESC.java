@@ -20,8 +20,8 @@ import javax.swing.KeyStroke;
  */
 public class DialogESC extends JDialog {
     
-    /** Flag for to allow ESC key to close */
-    protected boolean allowESC;
+    /** Flag for to allow ESC key to close, Default is True */
+    protected boolean allowESC = true;
     
     public DialogESC() {
         super();
@@ -86,6 +86,7 @@ public class DialogESC extends JDialog {
         return theRootPane;
     }
     
+    /** Setting allow Escape key to close, default is true */
     public void setAllowESC(boolean allow) {
         allowESC = allow;
     }
