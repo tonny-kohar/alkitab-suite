@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 import kiyut.swing.dialog.DialogESC;
 
 /**
@@ -105,25 +106,23 @@ public class SourceCodePane extends javax.swing.JPanel {
     }
     
     /** Show as Dialog 
-     * @param parentComponent {@code Component}
+     * @param owner {@code Component}
      */
-    public void showDialog(Component parentComponent, boolean modal) {
-        Window owner = null;
+    public void showDialog(Component owner, boolean modal) {
         JDialog dialog = null;
-        String title = bundle.getString("CTL_Title.Text");
-        if (parentComponent != null) {
-            owner = SwingUtilities.getWindowAncestor(parentComponent);
-            if (owner instanceof Frame) {
-                dialog = new DialogESC((Frame)owner);
-            } else if (owner instanceof Dialog) {
-                dialog = new DialogESC((Dialog)owner);
+        
+        if (owner != null) {
+            Component comp = owner;
+            if (!(comp instanceof Frame || comp instanceof Dialog)) {
+                comp = SwingUtilities.getWindowAncestor(owner);
+            }
+            if (comp instanceof Frame) {
+                dialog = new DialogESC((Frame)comp, bundle.getString("CTL_Title.Text"), true);
+            } else if (comp instanceof Dialog) {
+                dialog = new DialogESC((Dialog)comp, bundle.getString("CTL_Title.Text"), true);
             } 
         }
-        if (dialog == null) {
-            dialog = new DialogESC();
-        }
-        dialog.setTitle(title);
-        dialog.setModal(modal);
+        
         dialog.setLayout(new BorderLayout());
         dialog.add(this,BorderLayout.CENTER);
         dialog.pack();
