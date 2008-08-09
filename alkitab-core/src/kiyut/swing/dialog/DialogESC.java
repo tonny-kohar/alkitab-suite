@@ -19,6 +19,10 @@ import javax.swing.KeyStroke;
  *
  */
 public class DialogESC extends JDialog {
+    
+    /** Flag for to allow ESC key to close */
+    protected boolean allowESC;
+    
     public DialogESC() {
         super();
     }
@@ -69,6 +73,9 @@ public class DialogESC extends JDialog {
         KeyStroke stroke = KeyStroke.getKeyStroke("ESCAPE");
         Action actionListener = new AbstractAction() {
             public void actionPerformed(ActionEvent evt) {
+                if (!allowESC) {
+                    return;
+                }
                 setVisible(false);
             }
         };
@@ -77,5 +84,13 @@ public class DialogESC extends JDialog {
         theRootPane.getActionMap().put("ESCAPE", actionListener);
 
         return theRootPane;
+    }
+    
+    public void setAllowESC(boolean allow) {
+        allowESC = allow;
+    }
+    
+    public boolean isAllowESC() {
+        return allowESC;
     }
 }
