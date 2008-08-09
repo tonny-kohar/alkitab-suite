@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -124,7 +125,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.ipadx = 200;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         add(jPanel1, gridBagConstraints);
@@ -303,7 +304,8 @@ public class BookInstallerPane extends javax.swing.JPanel {
                     }
                     
                     extractZip();
-                    JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InstallSuccess.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InstallFinish.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.INFORMATION_MESSAGE);
+                    srcField.setText(null);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(BookInstallerPane.this, ex.getLocalizedMessage(), bundle.getString("CTL_Title.Text"), JOptionPane.ERROR_MESSAGE);
                 } finally {
@@ -388,6 +390,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         //System.out.println("src: " + srcFile);
         //System.out.println("dst: " + dstFile);
         
+        boolean overwrite = overwriteCheckBox.isSelected();
         Enumeration<? extends ZipEntry> entries;
         ZipFile zipFile = null;
         byte[] buffer = new byte[1024];
@@ -407,12 +410,26 @@ public class BookInstallerPane extends javax.swing.JPanel {
                     }
                 }
                 
+                File dstEntryFile = new File(dstFile,entry.getName());
                 //System.out.println("Extracting file: " + entry.getName());
-                updateProgress(bundle.getString("MSG_Extracting.Text") + " " + entry.getName());
+                // use dstEntryFile.getName to get shorter nmae, the zipEntry is very long because it include the parent path
+                updateProgress(bundle.getString("MSG_Extracting.Text") + " " + dstEntryFile.getName()); 
+                
+                if (!overwrite) {
+                    if (dstEntryFile.exists()) {
+                        Object[] args = {dstEntryFile.getName()};
+                        String msg = MessageFormat.format(bundle.getString("MSG_FileExists.Text"), args);
+                        int choice = JOptionPane.showConfirmDialog(BookInstallerPane.this, msg, bundle.getString("CTL_Title.Text"), JOptionPane.YES_NO_OPTION);
+                        if (choice != JOptionPane.YES_OPTION) {
+                            // skip the file
+                            continue;
+                        }
+                    }
+                }
+                
                 
                 InputStream in = zipFile.getInputStream(entry);
-                FileOutputStream fout = new FileOutputStream(new File(dstFile,entry.getName()));
-                BufferedOutputStream out = new BufferedOutputStream(fout);
+                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dstEntryFile));
                 
                 while ((len = in.read(buffer)) >= 0) {
                     out.write(buffer, 0, len);
@@ -422,7 +439,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
             }
             
             
-            updateProgress(bundle.getString("MSG_Extracting.Text") + " " + bundle.getString("MSG_InstallSuccess.Text"));
+            updateProgress(bundle.getString("MSG_Extracting.Text") + " " + bundle.getString("MSG_InstallFinish.Text"));
             
         } finally {
             if (zipFile != null) {
