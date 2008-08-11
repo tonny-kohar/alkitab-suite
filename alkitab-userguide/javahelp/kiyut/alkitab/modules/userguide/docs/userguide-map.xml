@@ -3,10 +3,7 @@
 <map version="2.0">
     <mapID target="kiyut.alkitab.modules.userguide" url="userguide/index.html"/>
     
-    <!--
-    <mapID target="kiyut.alkitab.modules.userguide.crosswire" url="userguide/crosswire/index.html#crosswire" />
-    <mapID target="kiyut.alkitab.modules.userguide.jsword" url="userguide/crosswire/index.html#jsword" />
-    -->
+    <mapID target="kiyut.alkitab.modules.userguide.faq" url="userguide/faq/index.html" />
     <mapID target="kiyut.alkitab.modules.userguide.legal" url="userguide/legal/index.html" />
     <mapID target="kiyut.alkitab.modules.userguide.support" url="userguide/support/index.html" />
     
