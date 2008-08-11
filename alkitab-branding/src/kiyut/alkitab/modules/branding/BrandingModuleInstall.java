@@ -45,9 +45,6 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         File[] paths = viewerOpts.getBookPaths();
         try {
-            /*if (paths != null) {
-               SwordBookPath.setAugmentPath(paths);
-            }*/
             setDefaultSwordPath(paths);
         } catch (Exception ex) {
             logger.log(Level.WARNING,ex.getMessage(),ex);
@@ -88,7 +85,6 @@ public class BrandingModuleInstall extends ModuleInstall {
         }
         
         sb.append("  Book Count: " + Books.installed().getBooks().size() + "\n");
-        
         sb.append("-------------------------------------------------------------------------------\n");
         
         
@@ -184,7 +180,7 @@ public class BrandingModuleInstall extends ModuleInstall {
             }
         }
         
-        // if defPath is not there, make sure it is included
+        // if defPath is not there, make sure it is included as last entry
         if (!defPathFound) {
             if (paths == null) {
                 files = new File[1];

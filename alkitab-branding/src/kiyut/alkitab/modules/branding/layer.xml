@@ -43,6 +43,7 @@
             </file>
         </folder>    
         <folder name="File">
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
             <file name="Separator2.instance_hidden"/>
             <file name="Separator3.instance_hidden"/>
             <file name="Separator4.instance_hidden"/>
@@ -59,17 +60,27 @@
             </file>
         </folder>
         <folder name="Tools">
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
             <file name="Separator1.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-templates-TemplatesAction.instance_hidden"/>
             <file name="org-openide-actions-ToolsAction.instance_hidden"/>
+            <file name="BookInstallerAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Tools/kiyut-alkitab-actions-BookInstallerAction.instance"/>
+                <attr name="position" intvalue="1360"/>
+            </file>
+            <file name="Separator3.instance">
+                <attr name="position" intvalue="1399"/>
+            </file>
         </folder>
         <folder name="View">
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
             <file name="Separator1.instance_hidden"/>
             <file name="Separator2.instance_hidden"/>
             <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-LogAction.instance_hidden"/>
         </folder>
         <folder name="Window">
+            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
             <file name="CloneDocumentAction.shadow_hidden"/>
             <file name="Output_hidden"/>
             <file name="ProgressListAction.shadow_hidden"/>
