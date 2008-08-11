@@ -67,6 +67,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         installButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
         progressLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -123,15 +124,16 @@ public class BookInstallerPane extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 200;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
         add(jPanel1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
@@ -164,11 +166,19 @@ public class BookInstallerPane extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
         add(jPanel2, gridBagConstraints);
+
+        jLabel3.setText(bundle.getString("CTL_RawZipInfo.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        add(jLabel3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -178,6 +188,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
     private javax.swing.JButton installButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
@@ -382,13 +393,14 @@ public class BookInstallerPane extends javax.swing.JPanel {
     /** Install or extracting the book raw zip file */
     protected void extractZip() throws IOException {
         File srcFile = getSourceFile();
-        //File dstFile = getDestinationFile();
-        // TODO remove this only for testing
-        File dstFile = new File("/home/tonny/tmp/test/books/");
-
-        // install process or zip extraction
+        File dstFile = getDestinationFile();
+        
+        // for testing only
+        //File dstFile = new File("/home/tonny/tmp/test/books/");  
         //System.out.println("src: " + srcFile);
         //System.out.println("dst: " + dstFile);
+
+        // install process or zip extraction
         
         boolean overwrite = overwriteCheckBox.isSelected();
         Enumeration<? extends ZipEntry> entries;
