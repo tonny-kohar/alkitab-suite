@@ -3,6 +3,8 @@
 package kiyut.alkitab.util;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -55,7 +57,8 @@ public class IOUtilities {
                 System.setProperty("user.dir", file.getAbsolutePath());
             }
         } catch (Exception ex) {
-            // do nothing
+            Logger logger = Logger.getLogger(IOUtilities.class.getName());
+            logger.log(Level.WARNING, ex.getMessage());
         }
     }
     
@@ -63,11 +66,7 @@ public class IOUtilities {
      * @return FileFilter
      */
     public static FileFilter getZipFileFilter() {
-        ExtendedFileFilter filter = new ExtendedFileFilter();
-        
-        filter.addExtension("zip");
-        filter.setDescription("ZIP Files");
-        
+        ExtendedFileFilter filter = new ExtendedFileFilter("Zip Files", new String[] {"zip"});
         return filter;
     }
 }

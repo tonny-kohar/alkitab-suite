@@ -22,16 +22,28 @@ import javax.swing.filechooser.FileFilter;
  * 
  */
 public class ExtendedFileFilter extends FileFilter {
-    protected static final String TYPE_UNKNOWN = "Type Unknown";
-    protected static final String HIDDEN_FILE = "Hidden File";
-    
+
     protected List<String> filters = null;
     protected String description = null;
     protected String fullDescription = null;
     protected boolean useExtensionsInDescription = true;
     
     public ExtendedFileFilter() {
+        this(null,null);
+    }
+    
+    public ExtendedFileFilter(String description, String[] extensions) {
         this.filters = new ArrayList<String>(2);
+        
+        if (extensions != null) {
+            for (int i=0; i<extensions.length; i++) {
+                addExtension(extensions[i]);
+            }
+        }
+        
+        if (description != null) {
+            setDescription(description);
+        }
     }
     
     public boolean accept(File f) {
@@ -69,11 +81,6 @@ public class ExtendedFileFilter extends FileFilter {
      *
      * For example: the following code will create a filter that filters
      * out all files except those that end in ".jpg" and ".tif":
-     * <pre>
-     *   ExampleFileFilter filter = new ExampleFileFilter();
-     *   filter.addExtension("jpg");
-     *   filter.addExtension("tif");
-     *</pre>
      *
      * Note that the "." before the extension is not needed and will be ignored.
      */
@@ -101,14 +108,6 @@ public class ExtendedFileFilter extends FileFilter {
         if(fullDescription == null) {
             if(description == null || isExtensionListInDescription()) {
                 fullDescription = description==null ? "(" : description + " (";
-                // build the description from the extension list
-                /*Enumeration extensions = filters.keysS();
-                if(extensions != null) {
-                    fullDescription += "." + (String) extensions.nextElement();
-                    while (extensions.hasMoreElements()) {
-                        fullDescription += ", ." + (String) extensions.nextElement();
-                    }
-                }*/
                 Iterator it = filters.iterator();
                 if(it != null) {
                     fullDescription += "." + (String) it.next();
