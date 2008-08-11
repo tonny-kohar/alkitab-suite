@@ -2,10 +2,13 @@
 
 package kiyut.alkitab.util;
 
+import java.io.File;
 import java.util.Comparator;
 import kiyut.alkitab.api.SwordURI;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
+import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.sword.SwordBookPath;
 import org.crosswire.jsword.passage.Key;
 
 /**
@@ -13,7 +16,8 @@ import org.crosswire.jsword.passage.Key;
  * 
  */
 public class SwordUtilities {
-
+    private static File[] initialCopyOfSwordPath = null;
+    
     private SwordUtilities() {
         throw new Error("SwordUtilities is a utility class for static methods"); // NOI18N
     }
@@ -166,5 +170,65 @@ public class SwordUtilities {
         };
         
         return comp;
+    }
+    
+    /** A methods to set sword path (augment path),
+     * Please do not call SwordBookPath.setAugmentPath() directly, 
+     * use this static utilities methods.
+     * This methods also make sure [user.home]/.sword is included, 
+     * whether specified in the param or not. If not specified it will 
+     * add the [user.home]/.sword in the last entry
+     * @param paths an arrays of path
+     */
+    public static void setSwordPath(File[] paths) throws BookException {
+        boolean defPathFound = false;
+        
+        String str = System.getProperty("user.home");
+        File defPath = new File(str + File.separator + ".sword");
+        File[] files;
+        
+        // first copy the initial SwordBookPath
+        if (initialCopyOfSwordPath == null) {
+            files = SwordBookPath.getSwordPath();
+            initialCopyOfSwordPath = new File[files.length];
+            System.arraycopy(files, 0, initialCopyOfSwordPath, 0, files.length);
+        }
+        
+        // search defPath in the initialCopyOfSwordPath
+        //files = SwordBookPath.getSwordPath();
+        files = initialCopyOfSwordPath;
+        for (int i=0; i<files.length; i++) {
+            if (files[i].equals(defPath)) {
+                defPathFound = true;
+                break;
+            }
+        }
+        
+        // search defPath in the paths array supplied as param
+        if (!defPathFound && paths != null) {
+            files = paths;
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].equals(defPath)) {
+                    defPathFound = true;
+                    break;
+                }
+            }
+        }
+        
+        // if defPath is not there, make sure it is included as last entry
+        if (!defPathFound) {
+            if (paths == null) {
+                files = new File[1];
+            } else {
+                files = new File[paths.length + 1];
+                System.arraycopy(paths, 0, files, 0, paths.length);
+            }
+            paths = files;
+            paths[paths.length-1] = defPath;
+        }
+        
+        if (paths != null) {
+            SwordBookPath.setAugmentPath(paths);
+        }
     }
 }
