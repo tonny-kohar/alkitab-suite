@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -38,6 +40,13 @@ public class ToolTip extends JComponent {
         bookTextPane = new BookTextPane(viewerHints,false);
         setLayout(new BorderLayout());
         add(bookTextPane,BorderLayout.CENTER);
+        
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                hide();
+            }
+        });
         
         /*Color background = new ColorUIResource(255, 247, 200); // The color is #fff7c8.
         Border border = BorderFactory.createLineBorder(new Color(76,79,83)); // The color is #4c4f53.
@@ -77,6 +86,8 @@ public class ToolTip extends JComponent {
      *
      */
     public void show(Book book, Key key, Component owner, int x, int y) {
+        hide(); // hide the prev popup if any is opened
+        
         if (book == null || key == null) {
             return;
         }
