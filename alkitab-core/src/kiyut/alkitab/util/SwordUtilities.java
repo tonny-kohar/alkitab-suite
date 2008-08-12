@@ -180,7 +180,7 @@ public class SwordUtilities {
      * add the [user.home]/.sword in the last entry
      * @param paths an arrays of path
      */
-    public static void setSwordPath(File[] paths) throws BookException {
+    public static void setAugmentPath(File[] paths) throws BookException {
         boolean defPathFound = false;
         
         String str = System.getProperty("user.home");
@@ -195,7 +195,6 @@ public class SwordUtilities {
         }
         
         // search defPath in the initialCopyOfSwordPath
-        //files = SwordBookPath.getSwordPath();
         files = initialCopyOfSwordPath;
         for (int i=0; i<files.length; i++) {
             if (files[i].equals(defPath)) {
