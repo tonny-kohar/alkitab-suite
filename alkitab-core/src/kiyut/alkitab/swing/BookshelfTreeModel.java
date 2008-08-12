@@ -34,6 +34,16 @@ public class BookshelfTreeModel extends DefaultTreeModel {
         groupBy.add(BookMetaData.KEY_CATEGORY);
         groupBy.add(BookMetaData.KEY_XML_LANG);
         
+        /*rootObject = new String("root");
+        root = new DefaultMutableTreeNode(rootObject);
+        setRoot(root);
+        reload(root);
+         */
+        reload();
+    }
+    
+    @Override
+    public void reload() {
         rootObject = new String("root");
         root = new DefaultMutableTreeNode(rootObject);
         setRoot(root);

@@ -1,4 +1,5 @@
 /* This work has been placed into the public domain. */
+
 package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
@@ -281,6 +282,11 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         linkToolTip.show(book, key, comp, p.x, p.y);
     }
 
+    /** Return the book from the preferences. If not defined in preferences,
+     * it will return in the following order
+     * - return StrongsGreek, StrongsHebrew, Robinson <br/>
+     * - return the first available book in the category list <br/>
+     */
     private Book getToolTipBook(SwordURI swordURI) {
         Book book = null;
 

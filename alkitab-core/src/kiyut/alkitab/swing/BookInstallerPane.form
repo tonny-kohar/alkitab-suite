@@ -39,7 +39,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="kiyut/alkitab/swing/BookInstallerPane.properties" key="CTL_Dest.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="kiyut/alkitab/swing/BookInstallerPane.properties" key="CTL_Destination.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Constraints>

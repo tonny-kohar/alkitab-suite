@@ -14,11 +14,11 @@ import javax.swing.tree.TreePath;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.swing.BookshelfTree;
+import kiyut.alkitab.swing.BookshelfTreeModel;
 import org.crosswire.jsword.book.Book;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.Utilities;
 
 /**
  * Top component which displays available book as {@link kiyut.alkitab.swing.BookshelfTree BookshelfTree}.
@@ -164,7 +164,10 @@ public final class BookshelfTopComponent extends TopComponent {
         });
     }
     
-    
+    /** Reload the tree */
+    public void reload() {
+        ((BookshelfTreeModel)booksTree.getModel()).reload();
+    }
     
     private void openSelectedNode(DefaultMutableTreeNode node) {
         Object obj = node.getUserObject();

@@ -37,7 +37,10 @@ import org.crosswire.jsword.book.sword.SwordBookPath;
  * 
  */
 public class BookInstallerPane extends javax.swing.JPanel {
-    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
+    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    
+    /** Flag for whether any book is installed during a dialog popup */
+    protected boolean bookInstalled = false;
     
     /** Creates new BookInstallerPane */
     public BookInstallerPane() {
@@ -81,7 +84,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText(bundle.getString("CTL_Dest.Text")); // NOI18N
+        jLabel2.setText(bundle.getString("CTL_Destination.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -263,6 +266,14 @@ public class BookInstallerPane extends javax.swing.JPanel {
         dialog.setVisible(true);
     }
     
+    /** 
+     * Return whether any book is installed sucessfully during the dialog shown.
+     * @return true or false
+     */
+    public boolean isBookInstalled() {
+        return bookInstalled;
+    }
+    
     /** Display JFileChooser
      * @return the selected file or null
      */
@@ -277,6 +288,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         }
        
         file = fc.getSelectedFile();
+        IOUtilities.setUserDir(file);
         
         return file;
     }
@@ -317,6 +329,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
                     extractZip();
                     JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InstallFinish.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.INFORMATION_MESSAGE);
                     srcField.setText(null);
+                    bookInstalled = true;
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(BookInstallerPane.this, ex.getLocalizedMessage(), bundle.getString("CTL_Title.Text"), JOptionPane.ERROR_MESSAGE);
                 } finally {
