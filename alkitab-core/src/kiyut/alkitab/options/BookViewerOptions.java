@@ -56,6 +56,12 @@ public final class BookViewerOptions extends AbstractOptions {
         load();
     }
     
+    
+    /** 
+     * <strong>note: </strong> The following books are the default
+     * KJV, StrongsGreek, StrongsHebrew, Robinson, ot1nt2 unless it is overwrite by the user. <br/>
+     * Why those books? Because they included with the installer
+     */
     public void load() {
         Preferences prefs = getPreferences();
 
@@ -63,12 +69,12 @@ public final class BookViewerOptions extends AbstractOptions {
         parallelBookLimit = prefs.getInt(PARALLEL_BOOK_LIMIT, 5);
         defaultSearchLimit = prefs.getInt(DEFAULT_SEARCH_LIMIT, 50);
         versesLimit = prefs.getInt(VERSES_LIMIT, 176); // default 176, because Psalm 119 (176 verses)
-        defaultBible = prefs.get(DEFAULT_BIBLE, null);
+        defaultBible = prefs.get(DEFAULT_BIBLE, "KJV");
         defaultDictionary = prefs.get(DEFAULT_DICTIONARY, null);
-        defaultDailyDevotions = prefs.get(DEFAULT_DAILY_DEVOTIONS, null);
-        defaultGreekStrongs = prefs.get(DEFAULT_GREEK_STRONGS, null);
-        defaultHebrewStrongs = prefs.get(DEFAULT_HEBREW_STRONGS, null);
-        defaultGreekMorph = prefs.get(DEFAULT_GREEK_MORPH, null);
+        defaultDailyDevotions = prefs.get(DEFAULT_DAILY_DEVOTIONS, "ot1nt2");
+        defaultGreekStrongs = prefs.get(DEFAULT_GREEK_STRONGS, "StrongsGreek");
+        defaultHebrewStrongs = prefs.get(DEFAULT_HEBREW_STRONGS, "StrongsHebrew");
+        defaultGreekMorph = prefs.get(DEFAULT_GREEK_MORPH, "Robinson");
         
         downloadPath = SwordBookPath.getDownloadDir();
         String path = prefs.get(DOWNLOAD_PATH, null);
