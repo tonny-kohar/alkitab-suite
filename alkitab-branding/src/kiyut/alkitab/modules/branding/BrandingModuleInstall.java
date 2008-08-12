@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 import kiyut.alkitab.Application;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.IOUtilities;
+import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.BookException;
@@ -43,17 +44,19 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         BookViewerOptions viewerOpts = BookViewerOptions.getInstance();
         
-        File[] paths = viewerOpts.getBookPaths();
-        try {
-            setDefaultSwordPath(paths);
-        } catch (Exception ex) {
-            logger.log(Level.WARNING,ex.getMessage(),ex);
-        }
-        
+        // download path need to listed first
         File path = viewerOpts.getDownloadPath();
         if (path != null) {
             SwordBookPath.setDownloadDir(path);
         }
+        
+        File[] paths = viewerOpts.getBookPaths();
+        try {
+            SwordUtilities.setAugmentPath(paths);
+        } catch (Exception ex) {
+            logger.log(Level.WARNING,ex.getMessage(),ex);
+        }
+        
         
         StringBuilder sb = new StringBuilder();
         
@@ -156,7 +159,7 @@ public class BrandingModuleInstall extends ModuleInstall {
     }
     
     /** Set Default Sword Path for Alkitab. Make sure [user.home]/.sword is included */
-    private void setDefaultSwordPath(File[] paths) throws BookException {
+    /*private void setDefaultSwordPath(File[] paths) throws BookException {
         boolean defPathFound = false;
         
         String str = System.getProperty("user.home");
@@ -195,5 +198,5 @@ public class BrandingModuleInstall extends ModuleInstall {
         if (paths != null) {
             SwordBookPath.setAugmentPath(paths);
         }
-    }
+    }*/
 }
