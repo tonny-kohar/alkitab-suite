@@ -23,7 +23,7 @@
             <entry key="CTL_MainWindow_Title_No_Project" value="${app.title.full}" />
         </propertyfile>
         
-        <!-- TODO Why i comment this, is it not needed anymore ???
+        <!-- Why i comment this, is it not needed anymore ???
         <propertyfile
             file="${basedir}/branding/modules/org-netbeans-core.jar/org/netbeans/core/ui/Bundle.properties" 
             comment="Updated by build script">
