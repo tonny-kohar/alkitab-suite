@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
+import kiyut.alkitab.api.BookToolTipFactory;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.api.BookViewManager;
@@ -31,7 +32,6 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.ParallelBookViewerPane;
-import kiyut.alkitab.swing.ToolTip;
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -50,7 +50,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "ParallelBookTopComponent";
     private ParallelBookViewerPane bookViewer;
-    private ToolTip linkToolTip;
     private Point linkToolTipLocation;
 
     public ParallelBookTopComponent() {
@@ -179,7 +178,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         add(BorderLayout.CENTER, (JComponent) bookViewer);
 
         bookViewerNode = new BookViewerNode(bookViewer);
-        linkToolTip = new ToolTip();
 
         bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
@@ -252,14 +250,13 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             BookViewManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
-            showTooltip(swordURI);
+            showToolTip(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.EXITED)) {
-            //linkToolTip.setVisible(false);
-            linkToolTip.hide();
+            hideToolTip();
         }
     }
 
-    private void showTooltip(SwordURI swordURI) {
+    private void showToolTip(SwordURI swordURI) {
         if (swordURI == null) { return; }
         
         ViewerHints viewerHints = bookViewer.getViewerHints();
@@ -275,11 +272,19 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         if (book != null) {
             key = book.getValidKey(swordURI.getFragment());
         }
+        
+        if (book == null || key == null) {
+            return;
+        }
 
         Point p = new Point(linkToolTipLocation.x, linkToolTipLocation.y);
         JComponent comp = bookViewer.getViewerComponent();
 
-        linkToolTip.show(book, key, comp, p.x, p.y);
+        BookToolTipFactory.getInstance().getToolTip().show(book, key, comp, p.x, p.y);
+    }
+    
+    private void hideToolTip() {
+        BookToolTipFactory.getInstance().getToolTip().hide();
     }
 
     /** Return the book from the preferences. If not defined in preferences,
