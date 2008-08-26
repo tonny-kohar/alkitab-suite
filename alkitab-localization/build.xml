@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See harness/README in the NetBeans platform -->
+<!-- for some information on what you could do (e.g. targets to override). -->
+<!-- If you delete this file and reopen the project it will be recreated. -->
+<project name="kiyut.alkitab.modules.localization" default="netbeans" basedir=".">
+    <description>Builds, tests, and runs the project kiyut.alkitab.modules.localization.</description>
+    <import file="nbproject/build-impl.xml"/>
+    
+    <target name="build-init" depends="harness.build-init">
+        <property name="update-source.basedir" value="../alkitab-core"/>
+        <property name="locale.dir" value="${cluster}/modules/locale/"/>
+        <property name="app.name" value="alkitab"/>
+    </target>
+    
+    <!-- Update the source for localization, it is only for Alkitab -->
+    <!-- Netbeans properties file need to be update/copied manually -->
+    <target name="update-source" description="Update locale source" depends="init">
+        <copy todir="." preservelastmodified="false" verbose="true" overwrite="true">
+            <fileset dir="${update-source.basedir}">
+                <include name="src/**/*.properties"/>
+                <include name="src/**/*.html"/>
+                <exclude name="src/kiyut/alkitab/*.properties" />
+                <!-- <include name="javahelp/**/*.properties"/>
+                <include name="javahelp/**/*.htm*"/>
+                <include name="javahelp/**/*toc.xml"/>
+                -->
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="jar" depends="build-init,projectized-common.jar">
+        <!-- step 1: create jar for each module which only contains locale and place it under locale folder -->
+        
+        <mkdir dir="${locale.dir}"/>
+        <jar jarfile="${locale.dir}/kiyut-alkitab_${app.name}.jar" compress="${build.package.compress}">
+            <fileset dir="build/classes">
+                <include name="**/kiyut/alkitab/**/*_*.properties"/>
+                <exclude name="**/kiyut/alkitab/modules/**" />
+            </fileset>
+        </jar>
+        
+        <jar jarfile="${locale.dir}/org-netbeans-core_${app.name}.jar" compress="${build.package.compress}" update="true">
+            <fileset dir="build/classes">
+                <include name="**/org/netbeans/core/**/*_*.properties"/>
+                <exclude name="**/org/netbeans/core/windows/**" />
+            </fileset>
+        </jar>
+        
+        <jar jarfile="${locale.dir}/org-netbeans-core-windows_${app.name}.jar" compress="${build.package.compress}" update="true">
+            <fileset dir="build/classes">
+                <include name="**/org/netbeans/core/windows/**/*_*.properties"/>
+            </fileset>
+        </jar>
+        
+        <jar jarfile="${locale.dir}/org-netbeans-modules-options-api_${app.name}.jar" compress="${build.package.compress}" update="true">
+            <fileset dir="build/classes">
+                <include name="**/org/netbeans/modules/options/**/*_*.properties"/>
+            </fileset>
+        </jar>
+        
+        <!-- step 2: update the module jar by removing the uneeded locale files for this module -->
+        
+        <property name="module.jar-temp" value="${module.jar}-temp"/>
+        <jar jarfile="${cluster}/${module.jar-temp}" compress="${build.package.compress}" index="${build.package.index}" filesetmanifest="merge">
+            <zipfileset src="${cluster}/${module.jar}">
+                <include name="**/modules/localization/**"/>
+                <include name="META-INF/**"/>
+            </zipfileset>
+        </jar>
+        <move file="${cluster}/${module.jar-temp}" tofile="${cluster}/${module.jar}"/>
+        
+    </target>
+    
+    <target name="nbm" depends="projectized-common.nbm">
+        <property name="nbm-expand" value="nbm-expand"/>
+
+        <!-- step 1: unjar the created nbm file -->
+        <unjar src="build/${nbm}" dest="build/${nbm-expand}">
+            <patternset>
+                <exclude name="META-INF/**"/>
+            </patternset>
+        </unjar>
+
+        <!-- step 2: put the locale into the appropriate folder -->
+        <copy todir="build/${nbm-expand}/netbeans/modules/locale/" >
+            <fileset dir="${cluster}/modules/locale/" />
+        </copy>
+        
+        <!-- step 3: re jar the result -->
+        <jar jarfile="build/${nbm}" compress="true">
+            <fileset dir="build/${nbm-expand}" />
+        </jar>
+        
+        <!-- step 4 [optional: sign the nbm result -->
+        <antcall target="sign-nbm" />
+    </target>
+    
+    <target name="sign-nbm" if="keystore">
+        <signjar jar="build/${nbm}" keystore="${keystore}" storepass="${storepass}" alias="${nbm_alias}" />
+    </target>
+</project>
