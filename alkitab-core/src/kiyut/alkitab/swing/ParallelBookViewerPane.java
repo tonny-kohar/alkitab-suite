@@ -755,17 +755,23 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
     }
     
-    /** Remove book at particular index
+    /** Remove book at particular index.
+     *  It do nothing if there is only one book left
      * @param index index at which the specified book is to be removed.
      * @throws ArrayIndexOutOfBoundsException - if the index value does not exist.
      */
     public void removeBook(int index) {
+        int count = booksComboPane.getComponentCount();
+        if (count <= 1) {
+            return;
+        }
+        
         //comboBox.addActionListener(bookComboActionListener);
-        JComboBox comboBox = (JComboBox) booksComboPane.getComponent(index);
+        //JComboBox comboBox = (JComboBox) booksComboPane.getComponent(index);
         booksComboPane.remove(index);
         booksComboPane.revalidate();
         booksComboPane.repaint();
-        comboBox.removeActionListener(bookComboActionListener);
+        //comboBox.removeActionListener(bookComboActionListener);
 
         bookTextPane.getBooks().remove(index);
         checkIndexStatus();
