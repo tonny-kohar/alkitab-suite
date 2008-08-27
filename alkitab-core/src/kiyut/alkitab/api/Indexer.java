@@ -152,7 +152,14 @@ public final class Indexer {
                     textY = maxY + 30;
                 }
             };
-            progressPane = new PerformanceCancelableProgressPanel(true, progressAdapter) {
+            
+            // XXX workaround for Java 1.5 useBackBuffer should be false if not it will have screen artifact
+            boolean useBackBuffer = true;
+            //System.out.println(System.getProperty("java.version"));
+            if (System.getProperty("java.version").startsWith("1.5")) {
+                useBackBuffer = false;
+            }
+            progressPane = new PerformanceCancelableProgressPanel(useBackBuffer,progressAdapter) {
                 private Rectangle2D oldBounds = null;
 
                 @Override
@@ -161,7 +168,8 @@ public final class Indexer {
                     super.paintComponent(g);
 
                     // clear the old area
-                    Graphics2D g2 = (Graphics2D)g.create();
+                    //Graphics2D g2 = (Graphics2D)g.create();
+                    Graphics2D g2 = (Graphics2D)g;
                     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     if (oldBounds != null) {
                         g2.setColor(Color.WHITE);
@@ -183,7 +191,8 @@ public final class Indexer {
                     oldBounds = bounds;
                     oldBounds.setRect(textX-2, y-oldBounds.getHeight()-2, oldBounds.getWidth() + 5,oldBounds.getHeight() + 5);
                 }
-            };
+            }; 
+            
 
             // make the font bigger
             Font font = UIManager.getFont("Panel.font");
