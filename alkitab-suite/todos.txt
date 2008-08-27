@@ -4,6 +4,8 @@ in no particular order
 - [GUI] Bookshelf popup menu (Open in new view or in current view)
 - [GUI] Alternative HTML viewer: xhtml (flying sourcer), XULEmbed, JDIC native browser, JWebPane (preferred, but not available yet)
 - [GUI] Defintions/Dictionary searching
-- [i18n] Internationalization or Localization for Alkitab Bible Study
+- [i18n] Internationalization or Localization for Alkitab Bible Study,
+  in_ID = Indonesian (done)
 - [Installer] Mac OSX dmg
-- [SWORD] Indonesian Bible Translation, need to check with LAI (http://www.alkitab.or.id) for copyright
+- [SWORD] Indonesian Bible Translation, require LAI (http://www.alkitab.or.id) permission,
+  LAI is the copyright owner.
