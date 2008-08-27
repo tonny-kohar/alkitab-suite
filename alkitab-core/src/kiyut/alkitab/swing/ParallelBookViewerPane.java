@@ -1120,11 +1120,17 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             bookInitials.add(SeparatorComboBox.DEFAULT_SEPARATOR);
         }
         for (int i=0; i<books.size(); i++) {
-            bookInitials.add(books.get(i).getInitials());
+            Book book = books.get(i);
+            
+            // XXX do not include personal commentary, not supported yet
+            if (book.getInitials().toLowerCase().equals("personal")) {
+                continue;
+            }
+            bookInitials.add(book.getInitials());
         }
         
         SeparatorComboBox comboBox = new SeparatorComboBox(bookInitials.toArray());
-        comboBox.setPrototypeDisplayValue("BOOKINITIALS");
+        comboBox.setPrototypeDisplayValue("BOOKINITIALS"); //NO18N
         return comboBox;
     }
 }
