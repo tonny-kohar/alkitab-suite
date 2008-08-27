@@ -714,11 +714,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         if (count >= maximumBook) {
             return;
         }
+        
         JComboBox comboBox = createBookComboBox();
-        comboBox.addActionListener(bookComboActionListener);
-        booksComboPane.add(comboBox);
-        booksComboPane.revalidate();
-        booksComboPane.repaint();
 
         if (bookName == null) {
             bookName = comboBox.getItemAt(0).toString();
@@ -728,9 +725,17 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         if (book == null) {
             return;
         }
+        
+        comboBox.setSelectedItem(bookName);
+        
         bookTextPane.getBooks().add(book);
         checkIndexStatus();
-        comboBox.setSelectedItem(bookName);
+
+        booksComboPane.add(comboBox);
+        booksComboPane.revalidate();
+        booksComboPane.repaint();
+        
+        comboBox.addActionListener(bookComboActionListener);
 
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         
@@ -740,16 +745,23 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             if (tKey == null) { return; }
             if (tKey.getCardinality() > 0) {
                 tKey = tKey.get(0);
+                
+                String keyString = tKey.toString();
                 if (book.getBookCategory().equals(BookCategory.BIBLE)) {
                     // display 1 chapter, remove the verses
-                    String keyString = tKey.toString();
                     if (keyString.endsWith(":1")) {
                         int index = keyString.indexOf(":1");
                         if (index > 0) {
-                            tKey = book.getValidKey(keyString.substring(0,index));
+                            keyString = keyString.substring(0,index);
                         }
                     }
-                } 
+                }
+                
+                // Need to getValidKey, so history will work
+                // getValidKey will convert Verse to Passage
+                // see BookViewerHistory constructor
+                tKey = book.getValidKey(keyString);
+                
                 setKey(tKey);
             }
         }
@@ -767,11 +779,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         //comboBox.addActionListener(bookComboActionListener);
-        //JComboBox comboBox = (JComboBox) booksComboPane.getComponent(index);
+        JComboBox comboBox = (JComboBox) booksComboPane.getComponent(index);
+        comboBox.removeActionListener(bookComboActionListener);
         booksComboPane.remove(index);
         booksComboPane.revalidate();
         booksComboPane.repaint();
-        //comboBox.removeActionListener(bookComboActionListener);
 
         bookTextPane.getBooks().remove(index);
         checkIndexStatus();
@@ -880,7 +892,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     public void refresh() {
-        //System.out.println("refresh called");
+        //System.out.println("ParallelBookViewerPane.refresh()");
         bookTextPane.refresh(true);
         updateHistoryUI();
     }

@@ -145,12 +145,9 @@ public class BookTextPane extends JTextPane {
     }
 
     protected void refreshImpl() {
+        //System.out.println("BookTextPane refreshImpl()");
+        
         if (books.isEmpty() || key == null) {
-            clear();
-            return;
-        }
-
-        if (key == null) {
             clear();
             return;
         }
@@ -162,7 +159,7 @@ public class BookTextPane extends JTextPane {
             clear();
             return;
         }
-
+        
         boolean ltr = bmd.isLeftToRight();
         applyComponentOrientation(ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
