@@ -178,8 +178,8 @@ public class BookTextPane extends JTextPane {
 
                     // XXX JSword Bug? Non bible key getOsisID end up in endless loop
                     String osisID = null;
-                    if (key instanceof Verse) {
-                        osisID = key.getOsisID();
+                    if (curKey instanceof Verse) {
+                        osisID = curKey.getOsisID();
                     }
                     //System.out.println("BookTextPane.refreshImpl osisID: " + osisID);
                     for (int i = 0; i < books.size(); i++) {
