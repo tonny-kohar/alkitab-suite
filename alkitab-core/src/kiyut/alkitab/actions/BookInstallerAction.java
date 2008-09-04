@@ -3,26 +3,32 @@
 package kiyut.alkitab.actions;
 
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.BookInstallerPane;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookshelfTopComponent;
-import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
-import org.openide.util.actions.CallableSystemAction;
 import org.openide.windows.WindowManager;
 
 /**
- *
+ * Open Book Installer Dialog
  * 
  */
-public final class BookInstallerAction extends CallableSystemAction {
+public final class BookInstallerAction extends AbstractAction {
 
-    public void performAction() {
+    public BookInstallerAction() {
+        super(NbBundle.getMessage(BookInstallerAction.class, "CTL_BookInstallerAction"));
+//        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(BookInstallerAction.ICON_PATH, true)));
+    }
+    
+    
+    public void actionPerformed(ActionEvent evt) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Frame owner = WindowManager.getDefault().getMainWindow();
@@ -49,20 +55,5 @@ public final class BookInstallerAction extends CallableSystemAction {
                 }
             }
         });
-    }
-
-    @Override
-    public String getName() {
-        return NbBundle.getMessage(BookInstallerAction.class, "CTL_BookInstallerAction");
-    }
-
-    @Override
-    public HelpCtx getHelpCtx() {
-        return HelpCtx.DEFAULT_HELP;
-    }
-
-    @Override
-    protected boolean asynchronous() {
-        return false;
-    }
+    }    
 }

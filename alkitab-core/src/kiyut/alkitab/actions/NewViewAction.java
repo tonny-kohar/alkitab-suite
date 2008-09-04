@@ -2,18 +2,28 @@
 
 package kiyut.alkitab.actions;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
-import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
-import org.openide.util.actions.CallableSystemAction;
+import org.openide.util.Utilities;
 
 
-public final class NewViewAction extends CallableSystemAction {
-    public void performAction() {
+public final class NewViewAction extends AbstractAction {
+    
+    public NewViewAction() {
+        super(NbBundle.getMessage(NewViewAction.class, "CTL_NewViewAction"));
+        
+        String iconPath = NbBundle.getMessage(NewViewAction.class, "ICON_NewViewAction");
+        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(iconPath, true)));
+    }
+    
+    public void actionPerformed(ActionEvent evt) {
         String name = null;
         Book book =  Books.installed().getBook(BookViewerOptions.getInstance().getDefaultBible());
         if (book != null) {
@@ -23,25 +33,5 @@ public final class NewViewAction extends CallableSystemAction {
         SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, name, null);
      
         BookViewManager.getInstance().openURI(uri, true);
-    }
-    
-    @Override
-    public String getName() {
-        return NbBundle.getMessage(NewViewAction.class, "CTL_NewViewAction");
-    }
-    
-    @Override
-    protected String iconResource() {
-        return NbBundle.getMessage(NewViewAction.class, "ICON_NewViewAction");
-    }
-    
-    @Override
-    public HelpCtx getHelpCtx() {
-        return HelpCtx.DEFAULT_HELP;
-    }
-    
-    @Override
-    protected boolean asynchronous() {
-        return false;
     }
 }
