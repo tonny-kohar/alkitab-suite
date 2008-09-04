@@ -2,16 +2,21 @@
 
 package kiyut.alkitab.actions;
 
-import org.openide.util.HelpCtx;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import org.openide.util.NbBundle;
-import org.openide.util.actions.CallableSystemAction;
 import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
 
-public final class BookViewerAction extends CallableSystemAction {
-    public void performAction() {
+public final class BookViewerAction extends AbstractAction {
+    
+    public BookViewerAction() {
+        super(NbBundle.getMessage(BookViewerAction.class, "CTL_BookViewerAction"));
+    }
+    
+    public void actionPerformed(ActionEvent evt) {
         Mode mode = WindowManager.getDefault().findMode("editor");
         if (mode == null) { return; }
         TopComponent tc = mode.getSelectedTopComponent();
@@ -19,21 +24,4 @@ public final class BookViewerAction extends CallableSystemAction {
             tc.requestActive();
         }
     }
-    
-    @Override
-    public String getName() {
-        return NbBundle.getMessage(BookViewerAction.class, "CTL_BookViewerAction");
-    }
-    
-    
-    @Override
-    public HelpCtx getHelpCtx() {
-        return HelpCtx.DEFAULT_HELP;
-    }
-    
-    @Override
-    protected boolean asynchronous() {
-        return false;
-    }
-    
 }
