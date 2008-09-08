@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.logging.Logger;
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -15,7 +16,15 @@ import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.swing.BookshelfTree;
 import kiyut.alkitab.swing.BookshelfTreeModel;
+import kiyut.openide.util.NbUtilities;
 import org.crosswire.jsword.book.Book;
+import org.openide.filesystems.FileAttributeEvent;
+import org.openide.filesystems.FileChangeAdapter;
+import org.openide.filesystems.FileEvent;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileRenameEvent;
+import org.openide.filesystems.FileSystem;
+import org.openide.filesystems.Repository;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -32,6 +41,11 @@ public final class BookshelfTopComponent extends TopComponent {
     private static final String PREFERRED_ID = "BookshelfTopComponent";
     
     private BookshelfTree booksTree;
+    
+    // popup menu related
+    private JPopupMenu popupMenu;
+    private boolean popupMenuValid = false;
+    private String popupMenuFolderName = "Alkitab/Bookshelf/PopupMenu";
     
     private BookshelfTopComponent() {
         initComponents();
@@ -123,14 +137,7 @@ public final class BookshelfTopComponent extends TopComponent {
                 booksTree.setSelectionRow(0);
             }
         }
-        //booksTree.requestFocusInWindow();
-    }
-    
-    /** Transfer the focus to the BooksTree.  
-     */
-    @Override
-    public boolean requestFocusInWindow() {
-        return booksTree.requestFocusInWindow();
+        booksTree.requestFocusInWindow();
     }
     
     private void initCustom() {
@@ -140,13 +147,44 @@ public final class BookshelfTopComponent extends TopComponent {
         booksTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
+                if (evt.isPopupTrigger()) { return; }
                 if (evt.getClickCount() != 2) { return; }
-        
-                TreePath treePath = booksTree.getPathForLocation(evt.getX(), evt.getY());
-                if (treePath == null) { return; }
-        
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)treePath.getLastPathComponent();
-                openSelectedNode(node);
+                
+                openSelectedBook();
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                if (evt.isPopupTrigger()) {
+                    showPopup(evt);
+                }
+            }
+            @Override
+            public void mouseReleased(MouseEvent evt) {
+                if (evt.isPopupTrigger()) {
+                    showPopup(evt);
+                }
+            }
+
+            private void showPopup(MouseEvent evt) {
+                if (popupMenuValid == false) {
+                    createPopupMenu();
+                }
+
+                if (popupMenu == null) {
+                    return;
+                }
+                
+                TreePath treePath = booksTree.getSelectionPath();
+                if (treePath == null) {
+                    return;
+                }
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+                if (!node.isLeaf()) {
+                    return;
+                }
+
+                popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
             }
         });
         
@@ -156,12 +194,44 @@ public final class BookshelfTopComponent extends TopComponent {
                 if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
                     return;
                 }
-                TreePath treePath = booksTree.getSelectionPath();
-                if (treePath == null) { return; }
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)treePath.getLastPathComponent();
-                openSelectedNode(node);
+                openSelectedBook();
             }
         });
+        
+        FileSystem fs = Repository.getDefault().getDefaultFileSystem();
+        FileObject fo = fs.getRoot().getFileObject(popupMenuFolderName);
+        
+        // add listener to monitor layer.xml popup menu change
+        fo.addFileChangeListener(new FileChangeAdapter() {
+            @Override
+            public void fileFolderCreated(FileEvent fe) { popupMenuValid = false; }
+            @Override
+            public void fileDataCreated(FileEvent fe) { popupMenuValid = false; }
+            @Override
+            public void fileChanged(FileEvent fe) { popupMenuValid = false; }
+            @Override
+            public void fileDeleted(FileEvent fe) { popupMenuValid = false; }
+            @Override
+            public void fileRenamed(FileRenameEvent fe) { popupMenuValid = false; }
+            @Override
+            public void fileAttributeChanged(FileAttributeEvent fe) { popupMenuValid = false; }
+        });
+
+        if (fo != null) {
+            // initialize here to speed up
+            createPopupMenu();
+        }
+    }
+    
+    private void createPopupMenu() {
+        popupMenu = new JPopupMenu();
+        NbUtilities.createMenu(popupMenu,popupMenuFolderName);
+        
+        if (popupMenu.getComponentCount() <= 0) {
+            this.popupMenu = null;
+        }
+        
+        popupMenuValid = true;
     }
     
     /** Reload the tree */
@@ -169,16 +239,43 @@ public final class BookshelfTopComponent extends TopComponent {
         ((BookshelfTreeModel)booksTree.getModel()).reload();
     }
     
-    private void openSelectedNode(DefaultMutableTreeNode node) {
+    /** Open the selected book, if the currently selected node 
+     * is not a book eg: category, it do nothing
+     */
+    public void openSelectedBook() {
+        TreePath treePath = booksTree.getSelectionPath();
+        if (treePath == null) {
+            return;
+        }
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+
         Object obj = node.getUserObject();
         if (!(obj instanceof Book)) {
-            return; 
+            return;
+        }
+
+        Book book = (Book)obj;
+        SwordURI uri = SwordURI.createURI(book, null);
+        if (uri != null) {
+            BookViewManager.getInstance().openURI(uri, true);
+        }
+    }
+    
+    /** Return the selected book or null
+     *  @return the selected book or null
+     */
+    public Book getSelectedBook() {
+        TreePath treePath = booksTree.getSelectionPath();
+        if (treePath == null) {
+            return null;
+        }
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+
+        Object obj = node.getUserObject();
+        if (!(obj instanceof Book)) {
+            return null;
         }
         
-        Book book = (Book)obj;
-        SwordURI uri = SwordURI.createURI(book,null);
-        if (uri != null) {
-            BookViewManager.getInstance().openURI(uri,true);
-        }
+        return (Book)obj;
     }
 }

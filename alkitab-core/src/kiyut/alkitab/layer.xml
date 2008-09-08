@@ -13,7 +13,6 @@
             </file>
         </folder>
         <folder name="Window">
-            <file name="SelectDocumentNode_hidden"/>
             <file name="kiyut-alkitab-actions-BookshelfAction.instance">
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfAction"/>
             </file>
@@ -65,6 +64,21 @@
                  </file>
                 <file name="DailyDevotionsTopComponent.wstcref" url="windows/DailyDevotionsTopComponent.wstcref">
                     <attr name="position" intvalue="210"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    
+    <folder name="Alkitab">
+        <folder name="Bookshelf">
+            <folder name="PopupMenu">
+                <file name="kiyut-alkitab-actions-BookshelfOpenSelectedAction.instance">
+                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfOpenSelectedAction"/>
+                    <attr name="position" intvalue="10"/>
+                </file>
+                <file name="kiyut-alkitab-actions-BookshelfBookPropertiesAction.instance">
+                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfBookPropertiesAction"/>
+                    <attr name="position" intvalue="1000"/>
                 </file>
             </folder>
         </folder>
