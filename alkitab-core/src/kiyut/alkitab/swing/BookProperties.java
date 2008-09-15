@@ -4,6 +4,7 @@ package kiyut.alkitab.swing;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.html.HTMLEditorKit;
@@ -22,6 +23,8 @@ import org.crosswire.jsword.book.Book;
  */
 public class BookProperties extends javax.swing.JPanel {
 
+    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
+    
     /** Creates new form BookProperties */
     public BookProperties() {
         initComponents();
@@ -68,6 +71,9 @@ public class BookProperties extends javax.swing.JPanel {
         }
         
         this.setPreferredSize(dim);
+        
+        setName(bundle.getString("CTL_Name.Text"));
+        
     }
     
     public void setBook(Book book) {

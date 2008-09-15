@@ -43,6 +43,6 @@ public class BookshelfBookPropertiesAction extends AbstractAction {
         
         Frame mainWindow = WindowManager.getDefault().getMainWindow();
         
-        JOptionPane.showMessageDialog(mainWindow,propsPane,"Book Properties",JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(mainWindow,propsPane,propsPane.getName(),JOptionPane.PLAIN_MESSAGE);
     }
 }
