@@ -58,6 +58,12 @@
             </fileset>
         </jar>
         
+        <jar jarfile="${locale.dir}/org-netbeans-modules-autoupdate-ui_${app.name}.jar" compress="${build.package.compress}" update="true">
+            <fileset dir="build/classes">
+                <include name="**/org/netbeans/modules/autoupdate/ui/**/*_*.properties"/>
+            </fileset>
+        </jar>
+        
         <jar jarfile="${locale.dir}/org-netbeans-modules-javahelp_${app.name}.jar" compress="${build.package.compress}" update="true">
             <fileset dir="build/classes">
                 <include name="**/org/netbeans/modules/javahelp/**/*_*.properties"/>
