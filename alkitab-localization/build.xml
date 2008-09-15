@@ -58,6 +58,12 @@
             </fileset>
         </jar>
         
+        <jar jarfile="${locale.dir}/org-netbeans-modules-javahelp_${app.name}.jar" compress="${build.package.compress}" update="true">
+            <fileset dir="build/classes">
+                <include name="**/org/netbeans/modules/javahelp/**/*_*.properties"/>
+            </fileset>
+        </jar>
+        
         <!-- step 2: update the module jar by removing the uneeded locale files for this module -->
         
         <property name="module.jar-temp" value="${module.jar}-temp"/>

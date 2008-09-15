@@ -17,5 +17,5 @@
         <folder name="Help">
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.localization.Bundle"/>
         </folder>
-    </folder>
+    </folder>    
 </filesystem>
