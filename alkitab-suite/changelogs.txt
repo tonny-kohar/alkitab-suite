@@ -1,3 +1,11 @@
+ver 1.5
+- Add Public API for Bookshelf Popup Menu
+- Add popup menu "Open" for Bookshelf
+- Add popup menu "Properties" for Bookshelf
+- Add some missing localization for in_ID
+- Some bug fixes
+- Updated to use JSword 1.6 (20080913)
+
 ver 1.4
 - Add Alkitab Localization in_ID
 - Improved ToolTip implementation

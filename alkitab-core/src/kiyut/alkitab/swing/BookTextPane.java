@@ -216,7 +216,7 @@ public class BookTextPane extends JTextPane {
             
             // HTML Text
             text = XMLUtil.writeToString(htmlsep);
-
+            
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);

@@ -6,18 +6,6 @@
             <code-name-base>kiyut.alkitab.modules.lucene</code-name-base>
             <suite-component/>
             <module-dependencies/>
-            <class-path-extension>
-                <runtime-relative-path>ext/lucene-core-2.3.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/lucene-core-2.3.2.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/lucene-analyzers-2.3.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/lucene-analyzers-2.3.2.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/lucene-snowball-2.3.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/lucene-snowball-2.3.2.jar</binary-origin>
-            </class-path-extension>
             <public-packages>
                 <package>net.sf.snowball</package>
                 <package>net.sf.snowball.ext</package>
@@ -48,6 +36,18 @@
                 <package>org.apache.lucene.store</package>
                 <package>org.apache.lucene.util</package>
             </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-core-2.3.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-core-2.3.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-analyzers-2.3.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-analyzers-2.3.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-snowball-2.3.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-snowball-2.3.2.jar</binary-origin>
+            </class-path-extension>
         </data>
     </configuration>
 </project>

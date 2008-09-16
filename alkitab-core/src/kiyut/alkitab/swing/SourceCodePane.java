@@ -8,12 +8,10 @@ import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
 import kiyut.swing.dialog.DialogESC;
 
 /**
@@ -133,6 +131,11 @@ public class SourceCodePane extends javax.swing.JPanel {
         dialog.setVisible(true);
     }
     
+    /** Setting the text to be displayed 
+     * @param raw the raw text
+     * @param osis the OSIS text
+     * @param html the HTML text
+     */
     public void setText(String raw, String osis, String html) {
         rawTextArea.setText(raw);
         osisTextArea.setText(osis);

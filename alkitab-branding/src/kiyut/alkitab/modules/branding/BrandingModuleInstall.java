@@ -7,19 +7,26 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.Application;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
+import kiyut.alkitab.options.ViewerHintsOptions;
+import kiyut.alkitab.swing.BookTextPane;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import kiyut.alkitab.windows.BookshelfTopComponent;
+import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.sword.SwordBookPath;
+import org.crosswire.jsword.passage.Key;
 import org.openide.modules.ModuleInstall;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -58,7 +65,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         }
         
         
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("Sword Path Configuration\n");
         
         File[] files;
         File file;
@@ -90,9 +97,13 @@ public class BrandingModuleInstall extends ModuleInstall {
         sb.append("  Book Count: " + Books.installed().getBooks().size() + "\n");
         sb.append("-------------------------------------------------------------------------------\n");
         
-        
-        logger.log(Level.INFO,"Sword Path");
         logger.log(Level.INFO,sb.toString());
+        
+        try {
+            speedUpLazyClassLoader(logger);
+        } catch (Exception ex) {
+            // do nothing
+        }
         
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
@@ -158,45 +169,44 @@ public class BrandingModuleInstall extends ModuleInstall {
         return super.closing();
     }
     
-    /** Set Default Sword Path for Alkitab. Make sure [user.home]/.sword is included */
-    /*private void setDefaultSwordPath(File[] paths) throws BookException {
-        boolean defPathFound = false;
+    /** Just try to load some book to speed up / initialize java lazy class loader */
+    private void speedUpLazyClassLoader(Logger logger) throws BookException {
+        List books = Books.installed().getBooks(BookFilters.getOnlyBibles());
+        if (books.isEmpty()) {
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder("speedUpLazyClassLoader\n");
         
-        String str = System.getProperty("user.home");
-        File defPath = new File(str + File.separator + ".sword");
+        ViewerHints viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        BookTextPane bookTextPane = new BookTextPane(viewerHints);
+        sb.append("    Viewer Loaded: " + (bookTextPane != null) + "\n");
         
-        File[] files = SwordBookPath.getSwordPath();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].equals(defPath)) {
-                defPathFound = true;
+        Book book = null;
+        for (int i = 0; i < books.size(); i++) {
+            Book tBook = (Book) books.get(i);
+            if (tBook.isLocked()) {
+                continue;
+            } else {
+                book = tBook;
                 break;
             }
         }
-        
-        if (!defPathFound && paths != null) {
-            files = paths;
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].equals(defPath)) {
-                    defPathFound = true;
-                    break;
-                }
+
+        if (book != null) {
+            sb.append("    Book: " + book.getInitials() + "\n");
+            bookTextPane.getBooks().add(book);
+
+            Key key = book.getValidKey("Gen 1:1");
+            if (key != null) {
+                sb.append("    Key: " + key.getName() + "\n");
+                bookTextPane.setKey(key);
+                bookTextPane.refresh(false);
+                sb.append("    Render: done\n");
             }
         }
-        
-        // if defPath is not there, make sure it is included as last entry
-        if (!defPathFound) {
-            if (paths == null) {
-                files = new File[1];
-            } else {
-                files = new File[paths.length + 1];
-                System.arraycopy(paths, 0, files, 0, paths.length);
-            }
-            paths = files;
-            paths[paths.length-1] = defPath;
-        }
-        
-        if (paths != null) {
-            SwordBookPath.setAugmentPath(paths);
-        }
-    }*/
+
+        sb.append("-------------------------------------------------------------------------------\n");
+        logger.log(Level.INFO,sb.toString());
+    }
 }

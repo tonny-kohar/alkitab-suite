@@ -14,7 +14,7 @@ import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
 /**
- *
+ * Implementation of Bookshelf Book Properties Action
  * 
  */
 public class BookshelfBookPropertiesAction extends AbstractAction {

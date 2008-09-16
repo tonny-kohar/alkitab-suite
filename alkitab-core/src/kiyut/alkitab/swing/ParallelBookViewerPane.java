@@ -71,9 +71,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * 
      */
     public ParallelBookViewerPane() {
-        this.viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
-        unindexedBooks = false;
-        indexInProgress = false;
         initComponents();
         initCustom();
     }
@@ -420,6 +417,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     // End of variables declaration//GEN-END:variables
  
     protected void initCustom() {
+        this.viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        unindexedBooks = false;
+        indexInProgress = false;
+        
         BookViewerOptions opts = BookViewerOptions.getInstance();
         maximumBook = opts.getParallelBookLimit();
         historyManager = new BookViewerHistoryManager();
