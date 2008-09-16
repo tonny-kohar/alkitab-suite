@@ -5,22 +5,6 @@
         <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
             <code-name-base>kiyut.alkitab.modules.jsword</code-name-base>
             <suite-component/>
-            <class-path-extension>
-                <runtime-relative-path>ext/jsword-1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-1.6.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/jsword-common-1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-common-1.6.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/jsword-common-aqua-1.0.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-common-aqua-1.0.6.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/jsword-common-swing-1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-common-swing-1.6.jar</binary-origin>
-            </class-path-extension>
             <module-dependencies>
                 <dependency>
                     <code-name-base>kiyut.alkitab.modules.commons.httpclient</code-name-base>
@@ -99,6 +83,22 @@
                 <package>org.crosswire.jsword.util</package>
                 <package>org.crosswire.jsword.versification</package>
             </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/jsword-1.6.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jsword-1.6.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jsword-common-1.6.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jsword-common-1.6.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jsword-common-aqua-1.0.6.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jsword-common-aqua-1.0.6.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jsword-common-swing-1.6.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jsword-common-swing-1.6.jar</binary-origin>
+            </class-path-extension>
         </data>
     </configuration>
 </project>
