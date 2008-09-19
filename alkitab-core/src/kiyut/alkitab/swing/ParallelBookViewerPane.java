@@ -738,8 +738,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         comboBox.addActionListener(bookComboActionListener);
 
-        firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
-        
         // try to display something, if this is first book displayed
         if (count == 0 && getKey() == null) {
             Key tKey = book.getGlobalKeyList();
@@ -766,6 +764,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 setKey(tKey);
             }
         }
+        
+        firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
+        fireBookChange(new BookChangeEvent(this));
     }
     
     /** Remove book at particular index.
