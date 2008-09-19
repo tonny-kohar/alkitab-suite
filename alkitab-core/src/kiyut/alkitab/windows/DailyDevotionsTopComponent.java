@@ -193,9 +193,13 @@ public final class DailyDevotionsTopComponent extends TopComponent {
         if (index == -1) {
             DailyDevotionPane dailyPane = new DailyDevotionPane(daily);
             dailyPane.addHyperlinkListener(hyperlinkListener);
+            dailyPane.setName(daily.getInitials());
             
-            tabbedPane.addTab(daily.getInitials() + "   ", null, dailyPane, daily.getName());
+            // do not use addTab, there is bug for space between title and x button
+            //tabbedPane.addTab(daily.getInitials() + "   ", null, dailyPane, daily.getName());
+            tabbedPane.add(dailyPane);
             index = tabbedPane.getTabCount() - 1;
+            tabbedPane.setToolTipTextAt(index, daily.getName());
         }
         
         tabbedPane.setSelectedIndex(index);

@@ -223,10 +223,13 @@ public final class DefinitionsTopComponent extends TopComponent {
         if (index == -1) {
             DefinitionPane defPane = new DefinitionPane(book);
             defPane.addHyperlinkListener(hyperlinkListener);
+            defPane.setName(book.getInitials());
             
-            // add some space between the title and x button
-            tabbedPane.addTab(book.getInitials() + "   ", null, defPane, book.getName());
+            // do not use addTab, there is bug for space between title and x button
+            //tabbedPane.addTab(book.getInitials() + "   ", null, defPane, book.getName());
+            tabbedPane.add(defPane);
             index = tabbedPane.getTabCount() - 1;
+            tabbedPane.setToolTipTextAt(index, book.getName());
         }
         
         tabbedPane.setSelectedIndex(index);
