@@ -224,7 +224,8 @@ public final class DefinitionsTopComponent extends TopComponent {
             DefinitionPane defPane = new DefinitionPane(book);
             defPane.addHyperlinkListener(hyperlinkListener);
             
-            tabbedPane.addTab(book.getInitials() + "  ", null, defPane, book.getName());
+            // add some space between the title and x button
+            tabbedPane.addTab(book.getInitials() + "   ", null, defPane, book.getName());
             index = tabbedPane.getTabCount() - 1;
         }
         

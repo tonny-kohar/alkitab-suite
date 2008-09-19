@@ -194,7 +194,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
             DailyDevotionPane dailyPane = new DailyDevotionPane(daily);
             dailyPane.addHyperlinkListener(hyperlinkListener);
             
-            tabbedPane.addTab(daily.getInitials() + "  ", null, dailyPane, daily.getName());
+            tabbedPane.addTab(daily.getInitials() + "   ", null, dailyPane, daily.getName());
             index = tabbedPane.getTabCount() - 1;
         }
         
