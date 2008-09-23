@@ -178,7 +178,7 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         StringBuilder sb = new StringBuilder("speedUpLazyClassLoader\n");
         
-        ViewerHints viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
         BookTextPane bookTextPane = new BookTextPane(viewerHints);
         sb.append("    Viewer Loaded: " + (bookTextPane != null) + "\n");
         

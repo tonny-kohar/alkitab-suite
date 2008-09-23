@@ -1,3 +1,9 @@
+ver 1.5.1
+- Improved Installer
+- Fix Closeable Tab title space with the x button
+- Fix Navigation panel for Biblical Texts
+- Updated to use JSword 1.6 (20080920)
+
 ver 1.5
 - Add Public API for Bookshelf Popup Menu
 - Add popup menu "Open" for Bookshelf

@@ -119,11 +119,9 @@ public class BookNavigatorPane extends javax.swing.JPanel {
                     }
                 }
                 keyTree = new KeyTree(new BibleKeyTreeModel(BibleKeyTreeModel.LEVEL_VERSE));
-                //keyTree.setKey(key);
             } else {
                 Key key = book.getGlobalKeyList();
                 keyTree = new KeyTree(new DefaultKeyTreeModel(key));
-                //keyTree.setKey(key);
             }
             scrollPane.setViewportView(keyTree);
             keyTree.addTreeSelectionListener(treeSelectionListener);
