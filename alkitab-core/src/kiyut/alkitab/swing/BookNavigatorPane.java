@@ -79,10 +79,10 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         }
         
         this.bookViewer = bookViewer;
-        //updateKeyTree();
         
         if (bookViewer != null) {
             bookViewer.addBookChangeListener(bookChangeListener);
+            updateKeyTree();
         }
     }
     
