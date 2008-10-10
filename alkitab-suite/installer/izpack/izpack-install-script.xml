@@ -129,5 +129,10 @@
             <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/Robinson.zip" override="askfalse" unpack="true" /> -->
             <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Robinson" override="true" />
         </pack>
+        <pack name="Book: Institutes" required="no" parent="[Optional] Books" loose="true">
+            <description>Calvin's Institutes</description>
+            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/Institutes.zip" override="askfalse" unpack="true" /> -->
+            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Institutes" override="true" />
+        </pack>
     </packs>
 </installation>
