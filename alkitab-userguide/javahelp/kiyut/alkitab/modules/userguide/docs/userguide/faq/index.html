@@ -100,5 +100,29 @@
         <p><strong>Note: </strong>Strongs search requires bible translation that have strongs info eg: KJV</p>
         <p class="link-top"><a href="#top">top</a></p>
         
+        <h3><a name="faq-localization"></a>How do I enable localization ?</h3>
+        <p>Then language localization can be enabled by appending <i>--locale language[:country[:variant]]</i> 
+            to the startup command.<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp; --locale language[:country[:variant]]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; --locale in:ID (for Indonesian Locale)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; --locale zh:CN (for Chinese Locale)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; --locale fa (for Farsi Locale)<br>
+        </p>
+        <p>You can set this by supplying the command line parameter eg: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp; - (Unix/Linux) [install-folder]/bin/alkitab <strong>--locale in:ID</strong>
+        </p>
+        <p>Or you can set this on the [install-folder]/etc/alkitab.conf under default_options eg: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp; default_options="-J-Xms64m -J-Xmx256m .... <strong>--locale in:ID</strong>"
+        </p>
+        <p>Or you can change the desktop shortcut (Windows) by appending the locale:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; - right click on the shortcut choose properties<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; - on the shortcut tab and target field append the locale command at the end <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eg: "C:\Program Files\Kiyut\Alkitab-x_x\bin\alkitab.exe" <strong>--locale in:ID</strong>
+        </p>
+        <p><strong>Note: </strong>This is not bible translation, it is only a UI Localization.
+            Currently Alkitab Bible Study only have Indonesian Locale.
+        </p>
+        <p class="link-top"><a href="#top">top</a></p>
+        
     </body>
 </html>

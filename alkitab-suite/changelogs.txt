@@ -1,3 +1,7 @@
+ver 1.5.2
+- Fix Session Management with Navigator Panel
+- Add Calvin's Institutes to the installer
+
 ver 1.5.1
 - Improved Installer
 - Fix Closeable Tab title space with the x button
