@@ -1,6 +1,8 @@
-ver 1.5.2
+ver 2.0-beta1
 - Fix Session Management with Navigator Panel
 - Add Calvin's Institutes to the installer
+- Improved Installer
+- Updated to use Netbeans 6.5 Nightly (200810181401)
 
 ver 1.5.1
 - Improved Installer

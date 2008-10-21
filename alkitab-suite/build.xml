@@ -122,6 +122,7 @@
         <unzip src="${basedir}/../../redist-books/StrongsGreek.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsGreek"/>
         <unzip src="${basedir}/../../redist-books/StrongsHebrew.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsHebrew"/>
         <unzip src="${basedir}/../../redist-books/Robinson.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/Robinson"/>
+        <unzip src="${basedir}/../../redist-books/Institutes.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/Institutes"/>
 
         <copy todir="${nbdist-izpack.dir}">
             <fileset dir="installer/izpack" />

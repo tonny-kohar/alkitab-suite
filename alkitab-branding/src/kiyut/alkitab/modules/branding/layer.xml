@@ -139,7 +139,9 @@
         </file>
     </folder>
     <folder name="OptionsDialog">
-        <file name="Advanced_hidden"/>
+        <folder name="Advanced">
+            <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsAdvancedOption.instance_hidden"/>
+        </folder>
         <file name="General.instance_hidden"/>
         <file name="Keymaps.instance_hidden"/>
         <file name="BookViewerOptionCategory.instance">
@@ -156,7 +158,7 @@
         </folder>
     </folder>
     <folder name="Toolbars">
-        <file name="Standard.xml" url="alkitab-toolbar.xml" />
+        <file name="Standard.xml" url="alkitab-toolbar.xml"/>
         <file name="Clipboard_hidden"/>
         <file name="UndoRedo_hidden"/>
         <folder name="File">
