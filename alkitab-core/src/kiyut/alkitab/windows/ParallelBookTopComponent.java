@@ -87,7 +87,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     /** replaces this in object stream */
     @Override
     public Object writeReplace() throws ObjectStreamException {
-        return new ResolvableHelper(bookViewer);
+        return new ResolvableHelper(this);
     }
 
     final static class ResolvableHelper implements Serializable {
@@ -96,8 +96,11 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         private List<String> bookNames;
         private Key key;
         private boolean compareView;
+        private boolean focused;
 
-        public ResolvableHelper(ParallelBookViewerPane bookViewer) {
+        public ResolvableHelper(ParallelBookTopComponent tc) {
+            ParallelBookViewerPane bookViewer = tc.bookViewer;
+            
             if (bookViewer == null) { return; }
 
             List<Book> books = bookViewer.getBooks();
@@ -109,6 +112,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
             key = bookViewer.getKey();
             compareView = bookViewer.isCompareView();
+            this.focused = tc.isFocusOwner();
         }
 
         public Object readResolve() {
@@ -123,7 +127,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     }
 
                     try {
-                        restoreSession(result.bookViewer);
+                        restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
                         logger.warning("Unable to restore session");
@@ -135,10 +139,12 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             return result;
         }
 
-        private void restoreSession(final ParallelBookViewerPane bookViewer) {
+        private void restoreSession(ParallelBookTopComponent tc) {
             if (bookNames == null || key == null) {
                 return;
             }
+
+            ParallelBookViewerPane bookViewer = tc.bookViewer;
 
             if (key != null) {
                 bookViewer.setKey(key);
@@ -149,8 +155,11 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             bookViewer.compareView(compareView);
-
             bookViewer.refresh();
+
+            if (focused) {
+                tc.requestActive();
+            }
         }
     }
     
@@ -190,7 +199,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         bookViewer.addHyperlinkListener(new HyperlinkListener() {
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 ParallelBookTopComponent.this.hyperlinkUpdate(evt);
-                
             }
         });
         

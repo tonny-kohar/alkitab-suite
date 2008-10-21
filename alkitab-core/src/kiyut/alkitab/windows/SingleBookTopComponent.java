@@ -22,14 +22,12 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.options.BookViewerOptions;
-import kiyut.alkitab.swing.ParallelBookViewerPane;
 import kiyut.alkitab.swing.SingleBookViewerPane;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays {@link kiyut.alkitab.swing.SingleBookViewerPane SingleBookViewerPane}.
@@ -78,7 +76,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     /** replaces this in object stream */
     @Override
     public Object writeReplace() throws ObjectStreamException {
-        return new ResolvableHelper(bookViewer);
+        return new ResolvableHelper(this);
     }
     
     final static class ResolvableHelper implements Serializable {
@@ -87,8 +85,11 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         
         private List<String> bookNames;
         private Key key;
+        private boolean focused;
                 
-        public ResolvableHelper(SingleBookViewerPane bookViewer) {
+        public ResolvableHelper(SingleBookTopComponent tc) {
+            SingleBookViewerPane bookViewer = tc.bookViewer;
+            
             if (bookViewer == null) { return; }
         
             List<Book> books = bookViewer.getBooks();
@@ -99,6 +100,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             }
 
             key = bookViewer.getKey();
+            this.focused = tc.isFocusOwner();
         }
 
         public Object readResolve() {
@@ -113,7 +115,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                     }
 
                     try {
-                        restoreSession(result.bookViewer);
+                        restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
                         logger.warning("Unable to restore session");
@@ -125,10 +127,12 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             return result;
         }
         
-        private void restoreSession(final SingleBookViewerPane bookViewer) {
+        private void restoreSession(SingleBookTopComponent tc) {
             if (bookNames == null || key == null) {
                 return;
             }
+
+            SingleBookViewerPane bookViewer = tc.bookViewer;
 
             for (int i = 0; i < bookNames.size(); i++) {
                 bookViewer.setBook(bookNames.get(i));
@@ -139,6 +143,10 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             }
 
             bookViewer.refresh();
+
+            if (focused) {
+                tc.requestActive();
+            }
         }
     }
     
