@@ -111,6 +111,8 @@
         </folder>
     </folder>
     <folder name="Shortcuts">
+        <file name="D-4.shadow_hidden"/>
+        <file name="D-I.shadow_hidden"/>
         <file name="F1.shadow">
             <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
         </file>
@@ -137,6 +139,7 @@
         </file>
     </folder>
     <folder name="OptionsDialog">
+        <file name="Advanced_hidden"/>
         <file name="General.instance_hidden"/>
         <file name="Keymaps.instance_hidden"/>
         <file name="BookViewerOptionCategory.instance">
@@ -153,17 +156,15 @@
         </folder>
     </folder>
     <folder name="Toolbars">
-        <!-- <file name="Standard.xml" url="core-toolbar.xml"/> -->
-            <file name="Edit_hidden"/>
-            <file name="File_hidden"/>
-    </folder>
-    <folder name="UI">
-        <folder name="Services">
-            <folder name="IDEConfiguration">
-                <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
-                <file name="ServerAndExternalToolSettings_hidden"/>
-                <file name="System_hidden"/>
-            </folder>
+        <file name="Standard.xml" url="alkitab-toolbar.xml" />
+        <file name="Clipboard_hidden"/>
+        <file name="UndoRedo_hidden"/>
+        <folder name="File">
+            <file name="org-openide-actions-SaveAllAction.instance_hidden"/>
+            <file name="NewViewAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewViewAction.instance"/>
+                <attr name="position" intvalue="100"/>
+            </file>
         </folder>
     </folder>
     <folder name="Windows2">

@@ -98,13 +98,13 @@ public class BrandingModuleInstall extends ModuleInstall {
         sb.append("-------------------------------------------------------------------------------\n");
         
         logger.log(Level.INFO,sb.toString());
-        
+
         try {
             speedUpLazyClassLoader(logger);
         } catch (Exception ex) {
             // do nothing
         }
-        
+
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
                 
@@ -121,7 +121,7 @@ public class BrandingModuleInstall extends ModuleInstall {
                         if (BookViewerOptions.getInstance().isSessionPersistence()) {
                             return; 
                         }
-                        
+
                         // set active BookshelfTopComponent if opened
                         Set set = WindowManager.getDefault().getRegistry().getOpened();
                         TopComponent tc = null;
