@@ -112,8 +112,26 @@ public class BrandingModuleInstall extends ModuleInstall {
                     // if using Session Persistence do not set Bookshelf focus
                     return;
                 }
-                
-                final Frame mainWindow = WindowManager.getDefault().getMainWindow();
+
+                if (BookViewerOptions.getInstance().isSessionPersistence()) {
+                    return;
+                }
+
+                // set active BookshelfTopComponent if opened
+                Set set = WindowManager.getDefault().getRegistry().getOpened();
+                TopComponent tc = null;
+                Iterator it = set.iterator();
+                while (it.hasNext()) {
+                    tc = (TopComponent) it.next();
+                    if (tc instanceof BookshelfTopComponent) {
+                        if (tc.isOpened()) {
+                            requestActiveTopComponent(tc);
+                        }
+                        break;
+                    }
+                }
+
+                /*final Frame mainWindow = WindowManager.getDefault().getMainWindow();
                 mainWindow.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowOpened(WindowEvent evt) {
@@ -137,6 +155,7 @@ public class BrandingModuleInstall extends ModuleInstall {
                         }
                     }
                 });
+                 */
             }
         });
     }
