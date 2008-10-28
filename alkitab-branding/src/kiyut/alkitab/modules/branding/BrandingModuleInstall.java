@@ -2,9 +2,6 @@
 
 package kiyut.alkitab.modules.branding;
 
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -99,11 +96,11 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         logger.log(Level.INFO,sb.toString());
 
-        try {
+        /*try {
             speedUpLazyClassLoader(logger);
         } catch (Exception ex) {
             // do nothing
-        }
+        }*/
 
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
