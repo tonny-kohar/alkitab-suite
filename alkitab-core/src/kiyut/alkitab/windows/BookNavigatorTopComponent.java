@@ -9,10 +9,15 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 import kiyut.alkitab.swing.BookNavigatorPane;
 import kiyut.alkitab.api.BookViewer;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -41,6 +46,11 @@ public final class BookNavigatorTopComponent extends TopComponent {
     private Map<BookViewer,BookNavigatorPane> navigatorMap;
     
     private BookViewer bookViewer;
+
+    /** For bible reuse this component */
+    private BookNavigatorPane bibleNavPane;
+    private boolean displayUpdated = false;
+
 
     private BookNavigatorTopComponent() {
         initComponents();
@@ -102,7 +112,10 @@ public final class BookNavigatorTopComponent extends TopComponent {
     @Override
     public void componentOpened() {
         TopComponent.getRegistry().addPropertyChangeListener(tcPropertyChangeListener);
-        displayBookNavigator(bookViewer);
+
+        if (!displayUpdated) {
+            updateDisplay();
+        }
     }
 
     @Override
@@ -139,17 +152,15 @@ public final class BookNavigatorTopComponent extends TopComponent {
                 if (!(obj instanceof BookViewerTopComponent)) {
                     return;
                 }
-                
+
                 String propName = evt.getPropertyName();
-                if (!propName.equals(TopComponent.Registry.PROP_TC_CLOSED)) {
-                    return;
-                }
-                
-                BookViewerTopComponent tc = (BookViewerTopComponent)obj;
-                bookViewer = tc.getBookViewer();
-                unregisterBookViewer(bookViewer);
-                bookViewer = null;
+                if (propName.equals(TopComponent.Registry.PROP_TC_CLOSED)) {
+                    BookViewerTopComponent tc = (BookViewerTopComponent)obj;
+                    BookViewer bookViewer = tc.getBookViewer();
+                    unregisterBookViewer(bookViewer);
+                } 
             }
+
         };
         
         bookViewerLookupListener = new LookupListener() {
@@ -157,7 +168,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
                 bookViewerLookupListenerResultChanged(lookupEvent);
             }
         };
-        
+
         result = Utilities.actionsGlobalContext().lookupResult(BookViewer.class);
         result.addLookupListener(bookViewerLookupListener);
         //result.allInstances(); // needed to tell Nb that it is processed
@@ -172,40 +183,85 @@ public final class BookNavigatorTopComponent extends TopComponent {
             BookNavigatorPane navPane = navigatorMap.get(bookViewer);
             if (navPane == null) {
                 registerBookViewer(bookViewer);
+            } else {
+                updateDisplay();
             }
-            displayBookNavigator(bookViewer);
         } 
     }
     
     
-    private void registerBookViewer(BookViewer bookViewer) {
-        if (bookViewer == null) { return; }
-        BookNavigatorPane navPane = new BookNavigatorPane();
-        navPane.setBookViewer(bookViewer);
-        navigatorMap.put(bookViewer,navPane);
-        
-        //System.out.println("BookNavTC.registerBookViewer()");
+    private synchronized void registerBookViewer(final BookViewer bookViewer) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                while (navigatorMap.get(bookViewer) == null) {
+                    registerBookViewerImpl(bookViewer);
+                    if (bookViewer == null) {
+                        return;
+                    }
+                    if (bookViewer.getBooks().isEmpty()) {
+                        try {
+                            Thread.sleep(100); // sleep in case it is not ready yet
+                        } catch (InterruptedException ex) {
+                            // do nothing
+                        }
+                    }
+                }
+                updateDisplay();
+                //System.out.println("BookNavTC.registerBookViewer()");
+            }
+        });
     }
     
-    private void unregisterBookViewer(BookViewer bookViewer) {
-        BookNavigatorPane navPane = navigatorMap.remove(bookViewer);
-        if (navPane != null) {
-            navPane.setBookViewer(null);
+    private synchronized void unregisterBookViewer(BookViewer bookViewer) {
+        navigatorMap.remove(bookViewer);
+        //System.out.println("BookNavTC.unregisterBookViewer()");
+    }
+
+    private void registerBookViewerImpl(BookViewer bookViewer) {
+        if (navigatorMap.get(bookViewer) != null) {
+            return;
+        }
+
+        if (bookViewer.getBooks().isEmpty()) {
+            return;
+        }
+
+        Book book = bookViewer.getBooks().get(0);
+        BookCategory bookCategory = book.getBookCategory();
+
+        BookNavigatorPane navPane = null;
+
+        if (bookCategory.equals(BookCategory.BIBLE) || bookCategory.equals(BookCategory.COMMENTARY)) {
+            if (bibleNavPane == null) {
+                bibleNavPane = new BookNavigatorPane();
+            }
+            navPane = bibleNavPane;
+        } else {
+            navPane = new BookNavigatorPane();
+        }
+
+        if (navigatorMap.get(bookViewer) == null) {
+            navigatorMap.put(bookViewer, navPane);
+            navPane.setDisplayMode(book); // build nav structure
         }
     }
     
-    private void displayBookNavigator(BookViewer bookViewer) {
+    private void updateDisplay() {
+        displayUpdated = false;
+
         BookNavigatorPane navPane = navigatorMap.get(bookViewer);
         if (navPane == null) {
             return;
         }
-        
+
+        displayUpdated = true;
+        navPane.setBookViewer(bookViewer);
+
         this.removeAll();
-        navigatorMap.put(bookViewer,navPane);
         this.add(BorderLayout.CENTER,navPane);
         this.revalidate();
         this.repaint();
         
-        //System.out.println("BookNavTC.displayBookNavigator()");
+        //System.out.println("BookNavTC.updateDisplay()");
     }
 }

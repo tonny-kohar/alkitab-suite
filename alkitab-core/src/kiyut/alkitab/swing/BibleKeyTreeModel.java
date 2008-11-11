@@ -23,6 +23,9 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
     
     /** max level to be displayed by this model */
     protected int maxLevel;
+
+    protected int beginFilter = 1;
+    protected int endFilter = 99;
     
     public BibleKeyTreeModel() {
         this(LEVEL_ALL);
@@ -61,6 +64,10 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
             int count = BibleInfo.booksInBible();
             for (int i = 0; i < count; i++) {
                 b = i + 1;
+                if (!(b >= beginFilter && b <= endFilter)) {
+                    System.out.println("contine called: " + b);
+                    continue;
+                }
                 int ec = BibleInfo.chaptersInBook(b);
                 int ev = BibleInfo.versesInChapter(b, ec);
                 Verse start = new Verse(b, 1, 1);
@@ -104,5 +111,26 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
                 node.add(child);
             }
         }
+    }
+
+    /** Set the filter based on book index 1-66, default is display all books.
+     * @param begin begin index
+     * @param end end index
+     */
+    public void setFilter(int begin, int end) {
+        this.beginFilter = begin;
+        this.endFilter = end;
+
+        VerseRange range = VerseRange.getWholeBibleVerseRange();
+        DefaultKeyTreeNode rootNode = new DefaultKeyTreeNode(range);
+
+        try {
+            buildModel(rootNode,LEVEL_BOOK);
+        } catch (NoSuchVerseException ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.WARNING, ex.getMessage(),ex);
+        }
+        
+        setRoot(rootNode);
     }
 }

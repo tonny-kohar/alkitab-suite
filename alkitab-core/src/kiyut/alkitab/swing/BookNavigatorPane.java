@@ -2,13 +2,17 @@
 
 package kiyut.alkitab.swing;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import kiyut.alkitab.api.BookViewer;
-import java.util.List;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-import kiyut.alkitab.api.event.BookChangeEvent;
-import kiyut.alkitab.api.event.BookChangeListener;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.passage.Key;
@@ -18,16 +22,17 @@ import org.crosswire.jsword.passage.KeyUtil;
  * Panel which display book Key aka Table of Content. It display the content using
  * {@link kiyut.alkitab.swing.KeyTree KeyTree}
  * 
- * 
  */
 public class BookNavigatorPane extends javax.swing.JPanel {
-    
+    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+
     protected KeyTree keyTree;
     protected BookViewer bookViewer;
-    protected BookChangeListener bookChangeListener;
     protected TreeSelectionListener treeSelectionListener;
     protected Book book;
-    
+    protected boolean bibleDisplayMode = false;
+    protected FilterData[] filters;
+
     /** Creates new BookNavigatorPane */
     public BookNavigatorPane() {
         initComponents();
@@ -41,8 +46,31 @@ public class BookNavigatorPane extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        filterPane = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        filterCombo = new javax.swing.JComboBox();
         scrollPane = new javax.swing.JScrollPane();
+
+        filterPane.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setText(bundle.getString("CTL_Filter.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 12);
+        filterPane.add(jLabel1, gridBagConstraints);
+
+        filterCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Torah", "Poems", "Gospel" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        filterPane.add(filterCombo, gridBagConstraints);
 
         setLayout(new java.awt.BorderLayout());
         add(scrollPane, java.awt.BorderLayout.CENTER);
@@ -50,82 +78,69 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox filterCombo;
+    private javax.swing.JPanel filterPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
-        //keyTree = new KeyTree();
-        //scrollPane.setViewportView(keyTree); 
-        
         treeSelectionListener = new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent evt) {
                 keyValueChanged(evt);
             }
         };
-        
-        bookChangeListener = new BookChangeListener() {
-            public void bookChanged(BookChangeEvent evt) {
-                //System.out.println("BookNavigatorPane.bookChanged()");
-                updateKeyTree();
+
+        filterCombo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                filterActionPerformed(evt);
             }
-        };
+        });
+
+        String[] presets = bundle.getString("Filter.Preset").split("\\|");
+        filters = new FilterData[presets.length];
+        //rangeComboBox.setModel(new DefaultComboBoxModel(presets));
+        try {
+            for (int i = 0; i < presets.length; i++) {
+                String str = presets[i];
+                int indexOf = str.indexOf("[");
+                presets[i] = str.substring(0, indexOf).trim();
+                String[] strFilters = str.substring(indexOf + 1, str.length() - 1).split("\\-");
+                filters[i] = new FilterData(Integer.parseInt(strFilters[0]), Integer.parseInt(strFilters[1]));
+            }
+            filterCombo.setModel(new DefaultComboBoxModel(presets));
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.CONFIG, ex.getMessage(),ex);
+            filters = null;
+        }
     }
-    
+
     public void setBookViewer(BookViewer bookViewer) {
-        //System.out.println("BookNavigatorPane.setBookViewer()");
-        BookViewer old = this.bookViewer;
-        if (old != null) {
-            old.removeBookChangeListener(bookChangeListener);
-        }
-        
         this.bookViewer = bookViewer;
-        
-        if (bookViewer != null) {
-            bookViewer.addBookChangeListener(bookChangeListener);
-            updateKeyTree();
-        }
     }
-    
-    protected void updateKeyTree() {
-        boolean removeView = false;
-        
-        if (bookViewer == null) {
-            removeView = true;
+
+    public void setDisplayMode(Book book) {
+        bibleDisplayMode = false;
+        BookCategory bookCategory = book.getBookCategory();
+        if (bookCategory.equals(BookCategory.BIBLE) || bookCategory.equals(BookCategory.COMMENTARY)) {
+            keyTree = new KeyTree(new BibleKeyTreeModel(BibleKeyTreeModel.LEVEL_VERSE));
+            bibleDisplayMode = true;
         } else {
-            List<Book> books = bookViewer.getBooks();
-            if (books.isEmpty()) {
-                removeView = true;
-            }
-        }
-        
-        if (removeView) {
-            book = null;
-            scrollPane.setViewportView(keyTree);
-            if (keyTree != null) {
-                keyTree.removeTreeSelectionListener(treeSelectionListener);
-            }
-            return;
+            Key key = book.getGlobalKeyList();
+            keyTree = new KeyTree(new DefaultKeyTreeModel(key));
         }
 
-        Book theBook = bookViewer.getBooks().get(0);
-        if (!theBook.equals(book)) {
-            book = theBook;
-            BookCategory bookCategory = book.getBookCategory();
-            if (bookCategory.equals(BookCategory.BIBLE) || bookCategory.equals(BookCategory.COMMENTARY)) {
-                if (keyTree != null) {
-                    if (keyTree.getModel() instanceof BibleKeyTreeModel) {
-                        // for bible do not need to recreate the verse tree
-                        return;
-                    }
-                }
-                keyTree = new KeyTree(new BibleKeyTreeModel(BibleKeyTreeModel.LEVEL_VERSE));
-            } else {
-                Key key = book.getGlobalKeyList();
-                keyTree = new KeyTree(new DefaultKeyTreeModel(key));
-            }
-            scrollPane.setViewportView(keyTree);
-            keyTree.addTreeSelectionListener(treeSelectionListener);
+        if (bibleDisplayMode && filters != null) {
+            this.add(BorderLayout.NORTH,filterPane);
+        } else {
+            this.remove(filterPane);
         }
+
+        scrollPane.setViewportView(keyTree);
+        keyTree.addTreeSelectionListener(treeSelectionListener);
+
+        this.revalidate();
     }
     
     protected void keyValueChanged(TreeSelectionEvent evt) {
@@ -154,5 +169,34 @@ public class BookNavigatorPane extends javax.swing.JPanel {
             }
         }
     }
-    
+
+    protected void filterActionPerformed(ActionEvent evt) {
+        if (!bibleDisplayMode) { return; }
+        if (filters == null) { return; }
+        
+        int i = filterCombo.getSelectedIndex();
+
+        BibleKeyTreeModel model = (BibleKeyTreeModel)keyTree.getModel();
+        FilterData filterData = filters[i];
+        model.setFilter(filterData.getBeginFilter(), filterData.getEndFilter());
+        repaint();
+    }
+
+    private class FilterData {
+        private int beginFilter;
+        private int endFilter;
+
+        public FilterData(int beginFilter, int endFilter) {
+            this.beginFilter = beginFilter;
+            this.endFilter = endFilter;
+        }
+
+        public int getBeginFilter() {
+            return beginFilter;
+        }
+
+        public int getEndFilter() {
+            return endFilter;
+        }
+    }
 }
