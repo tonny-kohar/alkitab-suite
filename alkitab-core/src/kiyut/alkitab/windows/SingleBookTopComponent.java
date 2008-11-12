@@ -118,7 +118,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                         restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.warning("Unable to restore session");
+                        logger.fine("Unable to restore session.\n" + ex.getMessage());
                         result.close();
                     }
                 }
@@ -129,7 +129,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         
         private void restoreSession(SingleBookTopComponent tc) {
             if (bookNames == null || key == null) {
-                return;
+                throw new IllegalStateException("bookNames or key is null");
             }
 
             SingleBookViewerPane bookViewer = tc.bookViewer;
@@ -137,7 +137,11 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             for (int i = 0; i < bookNames.size(); i++) {
                 bookViewer.setBook(bookNames.get(i));
             }
-            
+
+            if (bookViewer.getBookCount() == 0) {
+                throw new IllegalStateException("bookViewer.getBookCount() == 0");
+            }
+
             if (key != null) {
                 bookViewer.setKey(key);
             }

@@ -1100,6 +1100,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     /** Return JComboBox with book initials sorted by Bible then Commentary 
      * @return JComboBox
      */
+    @SuppressWarnings("unchecked")
     protected JComboBox createBookComboBox() {
         List<Book> books = new ArrayList<Book>();
         List<String> bookInitials = new ArrayList<String>();

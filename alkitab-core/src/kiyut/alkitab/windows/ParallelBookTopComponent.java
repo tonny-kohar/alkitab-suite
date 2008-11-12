@@ -32,7 +32,6 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.ParallelBookViewerPane;
-import kiyut.alkitab.windows.BookViewerTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
@@ -130,7 +129,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                         restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.warning("Unable to restore session");
+                        logger.fine("Unable to restore session.\n" + ex.getMessage());
                         result.close();
                     }
                 }
@@ -141,7 +140,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
         private void restoreSession(ParallelBookTopComponent tc) {
             if (bookNames == null || key == null) {
-                return;
+                throw new IllegalStateException("bookNames or key is null");
             }
 
             ParallelBookViewerPane bookViewer = tc.bookViewer;
@@ -152,6 +151,10 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
             for (int i = 0; i < bookNames.size(); i++) {
                 bookViewer.addBook(bookNames.get(i));
+            }
+
+            if (bookViewer.getBookCount() == 0) {
+                throw new IllegalStateException("bookViewer.getBookCount() == 0");
             }
 
             bookViewer.compareView(compareView);

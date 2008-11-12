@@ -112,10 +112,21 @@ public final class BookNavigatorTopComponent extends TopComponent {
     @Override
     public void componentOpened() {
         TopComponent.getRegistry().addPropertyChangeListener(tcPropertyChangeListener);
+    }
 
-        if (!displayUpdated) {
-            updateDisplay();
-        }
+    @Override
+    public void componentActivated() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (!displayUpdated) {
+                    if (bookViewer == null) {
+                        
+                    }
+                    updateDisplay();
+                }
+            }
+        });
+        
     }
 
     @Override
@@ -189,25 +200,12 @@ public final class BookNavigatorTopComponent extends TopComponent {
         } 
     }
     
-    
     private synchronized void registerBookViewer(final BookViewer bookViewer) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                while (navigatorMap.get(bookViewer) == null) {
-                    registerBookViewerImpl(bookViewer);
-                    if (bookViewer == null) {
-                        return;
-                    }
-                    if (bookViewer.getBooks().isEmpty()) {
-                        try {
-                            Thread.sleep(100); // sleep in case it is not ready yet
-                        } catch (InterruptedException ex) {
-                            // do nothing
-                        }
-                    }
-                }
+                if (bookViewer == null) { return; }
+                registerBookViewerImpl(bookViewer);
                 updateDisplay();
-                //System.out.println("BookNavTC.registerBookViewer()");
             }
         });
     }

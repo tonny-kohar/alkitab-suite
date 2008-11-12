@@ -62,8 +62,6 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 12);
         filterPane.add(jLabel1, gridBagConstraints);
-
-        filterCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Torah", "Poems", "Gospel" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -99,7 +97,6 @@ public class BookNavigatorPane extends javax.swing.JPanel {
 
         String[] presets = bundle.getString("Filter.Preset").split("\\|");
         filters = new FilterData[presets.length];
-        //rangeComboBox.setModel(new DefaultComboBoxModel(presets));
         try {
             for (int i = 0; i < presets.length; i++) {
                 String str = presets[i];
@@ -182,7 +179,7 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         repaint();
     }
 
-    private class FilterData {
+    public class FilterData {
         private int beginFilter;
         private int endFilter;
 
