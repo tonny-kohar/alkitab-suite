@@ -30,7 +30,8 @@ public final class BookViewManager {
     public static BookViewManager getInstance() {
         return instance;
     }
-    
+
+    @SuppressWarnings("unchecked")
     private BookViewManager() {
         
         Lookup.Result<BookViewProvider> result = Lookup.getDefault().lookupResult(BookViewProvider.class);

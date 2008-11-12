@@ -9,9 +9,9 @@ import javax.swing.JComponent;
 import org.netbeans.spi.options.OptionsCategory;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
+import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
-import org.openide.util.Utilities;
 
 /**
  *
@@ -27,7 +27,7 @@ public class BookViewerOptionsCategory extends OptionsCategory {
 
         String iconPath = NbBundle.getMessage(BookViewerOptionsCategory.class, "ICON_BookViewerOptionsCategory");
         try {
-            icon = new ImageIcon(Utilities.loadImage(iconPath, true));
+            icon = new ImageIcon(ImageUtilities.loadImage(iconPath, true));
         } catch (Exception ex) {
             // do nothing
         }

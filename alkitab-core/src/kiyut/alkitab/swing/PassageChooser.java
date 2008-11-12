@@ -344,7 +344,8 @@ public class PassageChooser extends javax.swing.JPanel {
         public PassageListModel() {
             data = new ArrayList();
         }
-        
+
+        @SuppressWarnings("unchecked")
         public void setPassage(Passage passage) {
             fireIntervalRemoved(this, 0, getSize());
             

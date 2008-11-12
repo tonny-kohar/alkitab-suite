@@ -1091,6 +1091,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
     }
     
     /** Refresh default books {@code JComboBox} */
+    @SuppressWarnings("unchecked")
     protected void refreshDefaultBooks() {
         Comparator<Book> comparator = SwordUtilities.getBookInitialsComparator();
         List<Book> books = new ArrayList<Book>();
@@ -1126,6 +1127,7 @@ public class BookViewerOptionsPane extends AbstractOptionsPane {
      * @param books the list of books which is used to refresh
      * @param comparator the {@code Comparator} for books order or null
      */
+    @SuppressWarnings("unchecked")
     private void refreshDefaultBookComboBox(JComboBox comboBox, List<Book> books, Comparator comparator) {
         if (comparator != null) {
             Collections.sort(books, comparator);

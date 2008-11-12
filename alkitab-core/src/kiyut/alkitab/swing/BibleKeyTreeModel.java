@@ -12,7 +12,7 @@ import org.crosswire.jsword.passage.VerseRange;
 import org.crosswire.jsword.versification.BibleInfo;
 
 /**
- *
+ * TreeModel for Bible (book, chapter, verse)
  */
 public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel {
     
@@ -65,7 +65,6 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
             for (int i = 0; i < count; i++) {
                 b = i + 1;
                 if (!(b >= beginFilter && b <= endFilter)) {
-                    System.out.println("contine called: " + b);
                     continue;
                 }
                 int ec = BibleInfo.chaptersInBook(b);
@@ -103,7 +102,6 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
             int count = BibleInfo.versesInChapter(b,c);
             for (int i = 0; i < count; i++) {
                 v = i + 1;
-                //int ev = BibleInfo.versesInChapter(b, c);
                 Verse start = new Verse(b, c, v);
                 Verse end = start;
                 VerseRange childRange = new VerseRange(start, end);

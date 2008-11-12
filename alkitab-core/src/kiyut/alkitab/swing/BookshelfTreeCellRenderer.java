@@ -3,17 +3,14 @@
 package kiyut.alkitab.swing;
 
 import java.awt.Component;
-import java.awt.image.BufferedImage;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import kiyut.alkitab.util.ImageUtilities;
 import org.crosswire.jsword.book.Book;
 
 public class BookshelfTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -30,15 +27,11 @@ public class BookshelfTreeCellRenderer extends DefaultTreeCellRenderer {
             setOpenIcon(new ImageIcon(getClass().getResource(bundle.getString("ICON_Open"))));
             setClosedIcon(new ImageIcon(getClass().getResource(bundle.getString("ICON_Closed"))));
             setLeafIcon(new ImageIcon(getClass().getResource(bundle.getString("ICON_Leaf"))));
-            
-            // locked icon
-            BufferedImage bookImage = ImageIO.read(getClass().getResource(bundle.getString("ICON_Leaf")));
-            BufferedImage lockedImage = ImageIO.read(getClass().getResource(bundle.getString("ICON_locked")));
-            bookLockedIcon = new ImageIcon(ImageUtilities.createCompositeImage(bookImage, lockedImage));
+            bookLockedIcon = new ImageIcon(getClass().getResource(bundle.getString("ICON_Locked")));
             
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage());
+            logger.log(Level.CONFIG, ex.getMessage());
         }
     }
     

@@ -244,7 +244,8 @@ public final class DefinitionsTopComponent extends TopComponent {
             }
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     private String getValidBookName(String name, BookFilter filter) {
         boolean found = false;
         List<Book> books = Books.installed().getBooks(filter);

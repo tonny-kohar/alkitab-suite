@@ -10,8 +10,8 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
+import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
-import org.openide.util.Utilities;
 
 
 public final class NewViewAction extends AbstractAction {
@@ -20,7 +20,7 @@ public final class NewViewAction extends AbstractAction {
         super(NbBundle.getMessage(NewViewAction.class, "CTL_NewViewAction"));
         
         String iconPath = NbBundle.getMessage(NewViewAction.class, "ICON_NewViewAction");
-        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(iconPath, true)));
+        putValue(SMALL_ICON, new ImageIcon(ImageUtilities.loadImage(iconPath, true)));
     }
     
     public void actionPerformed(ActionEvent evt) {

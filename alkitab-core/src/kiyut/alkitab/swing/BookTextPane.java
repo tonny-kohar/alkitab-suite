@@ -36,7 +36,7 @@ import org.xml.sax.ContentHandler;
 /**
  * BookTextPane that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit.
  * This support parallel book.
- * 
+ *
  */
 public class BookTextPane extends JTextPane {
 
@@ -144,6 +144,7 @@ public class BookTextPane extends JTextPane {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void refreshImpl() {
         //System.out.println("BookTextPane refreshImpl()");
         
