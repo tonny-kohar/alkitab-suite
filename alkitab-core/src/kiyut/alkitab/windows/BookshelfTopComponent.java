@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.logging.Logger;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,6 +19,8 @@ import kiyut.alkitab.swing.BookshelfTree;
 import kiyut.alkitab.swing.BookshelfTreeModel;
 import kiyut.openide.util.NbUtilities;
 import org.crosswire.jsword.book.Book;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeAdapter;
 import org.openide.filesystems.FileEvent;
@@ -255,6 +258,45 @@ public final class BookshelfTopComponent extends TopComponent {
         }
 
         Book book = (Book)obj;
+
+        if (book.isLocked()) {
+            String title = NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBook.Title");
+            String msg = NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBook.Text");
+
+            Object[] args = {book.getName()};
+            msg = MessageFormat.format(msg, args);
+
+            boolean canceled = false;
+
+            NotifyDescriptor.InputLine d = new NotifyDescriptor.InputLine(msg, title, NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.QUESTION_MESSAGE);
+
+            String unlockKey = book.getUnlockKey();
+
+            while (!canceled) {
+                d.setInputText(unlockKey);
+                if (DialogDisplayer.getDefault().notify(d) == NotifyDescriptor.OK_OPTION) {
+                    unlockKey = d.getInputText();
+                    if (unlockKey != null && unlockKey.length() > 0) {
+                        boolean unlocked = book.unlock(unlockKey);
+                        //Books.installed().addBook(book);
+                        if (!unlocked) {
+                            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBookInvalidKey.Text"), NotifyDescriptor.ERROR_MESSAGE));
+                        }
+                        canceled = unlocked;
+                    }
+                } else {
+                    canceled = true;
+                }
+            }
+            
+        }
+
+        if (book.isLocked()) {
+            //JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InvalidSwordModuleSourceFile.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+
         SwordURI uri = SwordURI.createURI(book, null);
         if (uri != null) {
             BookViewManager.getInstance().openURI(uri, true);

@@ -3,7 +3,6 @@
 package kiyut.alkitab.swing;
 
 import java.awt.Component;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
