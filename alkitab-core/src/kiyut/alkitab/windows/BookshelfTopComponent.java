@@ -19,6 +19,7 @@ import kiyut.alkitab.swing.BookshelfTree;
 import kiyut.alkitab.swing.BookshelfTreeModel;
 import kiyut.openide.util.NbUtilities;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.passage.Key;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.filesystems.FileAttributeEvent;
@@ -258,41 +259,53 @@ public final class BookshelfTopComponent extends TopComponent {
         }
 
         Book book = (Book)obj;
+        boolean validKey = false;
 
-        if (book.isLocked()) {
-            String title = NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBook.Title");
-            String msg = NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBook.Text");
+        if (book.isLocked() || book.isEnciphered()) {
+            if (book.isEnciphered() && !book.isLocked()) {
+                // test the unlock key
+                validKey = isUnlockKeyValid(book);
+            }
 
-            Object[] args = {book.getName()};
-            msg = MessageFormat.format(msg, args);
+            if (!validKey) {
+                String title = NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBook.Title");
+                String msg = NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBook.Text");
 
-            boolean canceled = false;
+                Object[] args = {book.getName()};
+                msg = MessageFormat.format(msg, args);
 
-            NotifyDescriptor.InputLine d = new NotifyDescriptor.InputLine(msg, title, NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.QUESTION_MESSAGE);
+                boolean canceled = false;
 
-            String unlockKey = book.getUnlockKey();
+                NotifyDescriptor.InputLine d = new NotifyDescriptor.InputLine(msg, title,
+                    NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.QUESTION_MESSAGE);
 
-            while (!canceled) {
-                d.setInputText(unlockKey);
-                if (DialogDisplayer.getDefault().notify(d) == NotifyDescriptor.OK_OPTION) {
-                    unlockKey = d.getInputText();
-                    if (unlockKey != null && unlockKey.length() > 0) {
-                        boolean unlocked = book.unlock(unlockKey);
-                        //Books.installed().addBook(book);
-                        if (!unlocked) {
-                            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(BookshelfTopComponent.class, "MSG_UnlockBookInvalidKey.Text"), NotifyDescriptor.ERROR_MESSAGE));
+                String unlockKey = book.getUnlockKey();
+
+                while (!canceled) {
+                    d.setInputText(unlockKey);
+                    if (DialogDisplayer.getDefault().notify(d) == NotifyDescriptor.OK_OPTION) {
+                        unlockKey = d.getInputText();
+                        if (unlockKey != null && unlockKey.length() > 0) {
+                            boolean unlocked = book.unlock(unlockKey);
+                            validKey = isUnlockKeyValid(book);
+                            if (!(unlocked && validKey)) {
+                                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(
+                                        NbBundle.getMessage(BookshelfTopComponent.class, "MSG_InvalidUnlockKey.Text"),
+                                        NotifyDescriptor.ERROR_MESSAGE));
+                            }
+                            canceled = validKey;
                         }
-                        canceled = unlocked;
+                    } else {
+                        canceled = true;
                     }
-                } else {
-                    canceled = true;
                 }
             }
-            
+        } else {
+            validKey = true;
         }
 
-        if (book.isLocked()) {
-            //JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InvalidSwordModuleSourceFile.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.ERROR_MESSAGE);
+        if (!validKey) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(BookshelfTopComponent.class, "MSG_BookLocked.Text"), NotifyDescriptor.INFORMATION_MESSAGE));
             return;
         }
 
@@ -302,7 +315,34 @@ public final class BookshelfTopComponent extends TopComponent {
             BookViewManager.getInstance().openURI(uri, true);
         }
     }
-    
+
+    /** XXX workaround for unimplemented unlock key validation in JSword.
+     * Once it is implemented by JSword, remove this.
+     * The checking is implemented by trying to query book rawtext
+     * @return true if valid otherwise false
+     */
+    private boolean isUnlockKeyValid(Book book) {
+        boolean valid = false;
+
+        try {
+            Key key = book.getGlobalKeyList();
+            if (key == null) {
+                // weird key == null, assume it is valid
+                return true;
+            }
+            if (key.getCardinality() > 0) {
+                key = key.get(0);
+            }
+            
+            book.getRawText(key);
+            valid = true;
+        } catch (Exception ex) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
     /** Return the selected book or null
      *  @return the selected book or null
      */
