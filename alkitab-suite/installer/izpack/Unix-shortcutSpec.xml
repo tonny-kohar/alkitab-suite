@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 
 <shortcuts>
-    <notSupported/>
-    
-    <!-- <skipIfNotSupported/>
-    <programGroup defaultName="${app.title}/${app.title} ${app.version}" location="Applications"/>
-    
+    <!-- <notSupported/> -->
+    <skipIfNotSupported/>
+
+    <!-- Disable Program Group because does not conform with Ubuntu Menu Shortcut Entry -->
+    <!-- <programGroup defaultName="${app.title.full} ${app.version}" location="Applications"/> -->
+
     <shortcut
-        name="${app.title} ${app.version}"
+        name="${app.title.full}"
         type="Application"
-        programGroup="yes"
+        programGroup="no"
         desktop="yes"
         applications="no"
         startMenu="yes"
@@ -17,20 +18,19 @@
         target="$INSTALL_PATH/bin/${app.name}"
         commandLine=""
         workingDirectory="$INSTALL_PATH/bin"
-        description="${app.title} Launcher"
+        description="${app.title.full} Launcher"
+        categories="Religion;Bible;Application;Utility"
         iconFile="$INSTALL_PATH/${app.name}/${app.name}48.png"
         iconIndex="0"
         encoding="UTF-8"
         terminal="false"
-        KdeSubstUID="false"
         initialState="normal">
-            
         <createForPack name="${app.title.full}"/>
     </shortcut>
     
-    <shortcut
+    <!-- <shortcut
         name="Readme.html"
-        type="Application"
+        type="Link"
         programGroup="yes"
         desktop="no"
         applications="no"
@@ -38,7 +38,7 @@
         startup="no"
         target="$INSTALL_PATH/readme.html"
         commandLine=""
-        description="${app.title} Readme"
+        description="${app.title.full} Readme"
         terminal="false"
         KdeSubstUID="false"
         initialState="normal">
@@ -57,7 +57,7 @@
         target="$INSTALL_PATH/Uninstaller/uninstaller"
         commandLine=""
         workingDirectory="$INSTALL_PATH/Uninstaller"
-        description="${app.title} Uninstaller"
+        description="${app.title.full} Uninstaller"
         terminal="false"
         KdeSubstUID="false"
         initialState="normal">
