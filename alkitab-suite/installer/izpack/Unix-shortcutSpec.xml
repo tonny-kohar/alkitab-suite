@@ -8,7 +8,7 @@
     <!-- <programGroup defaultName="${app.title.full} ${app.version}" location="Applications"/> -->
 
     <shortcut
-        name="${app.title.full}"
+        name="${app.title.full} v${app.version}"
         type="Application"
         programGroup="no"
         desktop="yes"

@@ -1,8 +1,10 @@
-ver 2.0-beta1
+ver 2.0
 - Fix Session Management with Navigator Panel
+- Add Support for Locked Book
+- Add Filter for Navigator Panel (bible)
 - Add Calvin's Institutes to the installer
-- Improved Installer
-- Updated to use Netbeans 6.5 Nightly (200810181401)
+- Optimization reduce memory usage
+- Updated to use Netbeans 6.5
 
 ver 1.5.1
 - Improved Installer

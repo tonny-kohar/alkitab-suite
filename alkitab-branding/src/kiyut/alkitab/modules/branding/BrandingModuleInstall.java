@@ -3,27 +3,18 @@
 package kiyut.alkitab.modules.branding;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiyut.alkitab.Application;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
-import kiyut.alkitab.options.ViewerHintsOptions;
-import kiyut.alkitab.swing.BookTextPane;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.sword.SwordBookPath;
-import org.crosswire.jsword.passage.Key;
 import org.openide.modules.ModuleInstall;
 import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;

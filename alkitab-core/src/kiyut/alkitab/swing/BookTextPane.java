@@ -82,11 +82,18 @@ public class BookTextPane extends JTextPane {
         this.enableSourceText = enableSourceText;
 
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
-        Color color = UIManager.getColor("EditorPane.background");
-        if (color != null) {
-            if (!color.equals(getBackground())) {
-                setBackground(color);
+        try {
+            if (!System.getProperty("os.name").startsWith("windows")) {
+                Color color = UIManager.getColor("TextPane.background");
+                if (color != null) {
+                    if (!color.equals(getBackground())) {
+                        setBackground(color);
+                    }
+                }
             }
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.CONFIG,ex.getMessage(),ex);
         }
     }
 
@@ -225,6 +232,7 @@ public class BookTextPane extends JTextPane {
 
         setText(text);
         select(0, 0);
+        
     }
 
     public void setConverter(Converter converter) {

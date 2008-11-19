@@ -98,7 +98,7 @@
         
         <mkdir dir="${nbdist-izpack.dir}/packs" />
         
-        <echo message="create core app pack" />
+        <echo message="Create core app pack" />
         
         <!-- XXX Izpack Bug when loose=true and unpack=true
         <zip destfile="${nbdist-izpack.dir}/packs/${nbdist-izpack-app-core.pack}" basedir="${nbdist-app.dir}" />
@@ -117,7 +117,7 @@
             </fileset>
         </copy>
         
-        <echo message="copying book to be included with installer" />
+        <echo message="Copying books to be included with installer" />
         <unzip src="${basedir}/../../redist-books/KJV.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/KJV"/>
         <unzip src="${basedir}/../../redist-books/StrongsGreek.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsGreek"/>
         <unzip src="${basedir}/../../redist-books/StrongsHebrew.zip" dest="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsHebrew"/>
@@ -139,13 +139,11 @@
         <replace file="${nbdist-izpack.dir}/Win-shortcutSpec.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.title}" value="${app.title}" />
             <replacefilter token="$${app.version}" value="${app.version}" />
         </replace>
         <replace file="${nbdist-izpack.dir}/Unix-shortcutSpec.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.title}" value="${app.title}" />
             <replacefilter token="$${app.version}" value="${app.version}" />
         </replace>
         
@@ -175,12 +173,7 @@
             </zipfileset>
         </zip>
         
-        <echo message="cleaning and finalizing release" />
-        
-        <delete dir="${nbdist-app.dir}"/>
-        <delete dir="${nbdist-izpack.dir}"/>
-        
-        <echo message="release: ${nbdist-app-installer}" />
+        <echo message="Release: ${nbdist-app-installer}" />
         
         <echo message="=================" />
         <echo message="FINISH" />
