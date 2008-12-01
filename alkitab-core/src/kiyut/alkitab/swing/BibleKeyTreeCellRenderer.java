@@ -39,22 +39,19 @@ public class BibleKeyTreeCellRenderer extends DefaultTreeCellRenderer {
     
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-        Icon icon = bookClosedIcon;
-        
-        if (leaf) {
-            icon = verseIcon;
-        } else {
-            TreePath path = tree.getPathForRow(row);
-            if (path != null) {
-                if (path.getPathCount() == 2 && expanded) {
-                    icon = bookOpenIcon;
-                } else if (path.getPathCount() == 3) {
-                    icon = chapterIcon;
-                }
-            }
-        }
-        
         super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+
+        Icon icon = bookClosedIcon;
+
+        BibleKeyTreeNode node = (BibleKeyTreeNode) value;
+        int cat = node.getCategory();
+        if (cat == BibleKeyTreeNode.BIBLE && expanded) {
+            icon = bookOpenIcon;
+        } else if (cat == BibleKeyTreeNode.CHAPTER) {
+            icon = chapterIcon;
+        } else if (cat == BibleKeyTreeNode.VERSE) {
+            icon = verseIcon;
+        }
         
         if (icon != null) {
             setIcon(icon);

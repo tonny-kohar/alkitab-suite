@@ -141,6 +141,8 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     }
     
     protected void keyValueChanged(TreeSelectionEvent evt) {
+        if (bookViewer == null) { return; }
+
         TreePath treePath = evt.getPath();
         
         KeyTreeNode node = (KeyTreeNode)treePath.getLastPathComponent();
@@ -149,22 +151,23 @@ public class BookNavigatorPane extends javax.swing.JPanel {
             return;
         }
         
-        // XXX this parts is ugly, rewrite needed
-        if (bookViewer != null) {
-            if (keyTree.getModel() instanceof BibleKeyTreeModel) {
-                if (treePath.getPathCount() <= 2) {
-                    // this is book level, too big to be displayed
-                    return;
-                }
-                // convert the key into Passage
-                bookViewer.setKey(KeyUtil.getPassage(key));
-                bookViewer.refresh();
-            } else {
-                //System.out.println(obj.toString());
-                bookViewer.setKey(key);
-                bookViewer.refresh();
+        if (keyTree.getModel() instanceof BibleKeyTreeModel) {
+            BibleKeyTreeNode bibleNode = (BibleKeyTreeNode) node;
+            //if (bibleNode.getCategory() == BibleKeyTreeNode.BIBLE ||
+            //        bibleNode.getCategory() == BibleKeyTreeNode.BOOK) {
+            if (bibleNode.getCategory() == BibleKeyTreeNode.BIBLE) {
+                // this is bible or book level, too big to be displayed
+                return;
             }
+            // convert the key into Passage
+            bookViewer.setKey(KeyUtil.getPassage(key));
+            bookViewer.refresh();
+        } else {
+            //System.out.println(obj.toString());
+            bookViewer.setKey(key);
+            bookViewer.refresh();
         }
+        
     }
 
     protected void filterActionPerformed(ActionEvent evt) {

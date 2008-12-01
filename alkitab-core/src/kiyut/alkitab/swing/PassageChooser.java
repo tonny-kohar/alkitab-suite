@@ -319,7 +319,10 @@ public class PassageChooser extends javax.swing.JPanel {
         if (selection == null) { return; }
             
         for (int i = 0; i < selection.length; i++) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode)selection[i].getLastPathComponent();
+            BibleKeyTreeNode node = (BibleKeyTreeNode)selection[i].getLastPathComponent();
+            if (node.getCategory() == BibleKeyTreeNode.BIBLE) {
+                continue;
+            }
             VerseRange verseRange = (VerseRange)node.getUserObject();
             passage.add(verseRange);
         }

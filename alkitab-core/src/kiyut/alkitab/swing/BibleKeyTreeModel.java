@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.swing;
 
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.tree.DefaultTreeModel;
@@ -20,12 +21,12 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
     public static final int LEVEL_CHAPTER = 1;
     public static final int LEVEL_VERSE = 2;
     public static final int LEVEL_ALL = Integer.MAX_VALUE;
-    
-    /** max level to be displayed by this model */
+
+    /** max level to be displayed by this model, default is LEVEL_ALL */
     protected int maxLevel;
 
     protected int beginFilter = 1;
-    protected int endFilter = 99;
+    protected int endFilter = 66;
     
     public BibleKeyTreeModel() {
         this(LEVEL_ALL);
@@ -37,19 +38,8 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
     
     public BibleKeyTreeModel(int maxLevel) {
         super(null);
-        
         this.maxLevel = maxLevel;
-        
-        VerseRange range = VerseRange.getWholeBibleVerseRange();
-        
-        DefaultKeyTreeNode rootNode = new DefaultKeyTreeNode(range);
-        try {
-            buildModel(rootNode,LEVEL_BOOK);
-        } catch (NoSuchVerseException ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage(),ex);
-        }
-        setRoot(rootNode);
+        setFilter(1,66);
     }
     
     /** Recursive build this model 
@@ -59,20 +49,27 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
         if (maxLevel < level) {
             return;
         }
+        
         if (level == LEVEL_BOOK) {
-            int b = 1; // book
-            int count = BibleInfo.booksInBible();
-            for (int i = 0; i < count; i++) {
-                b = i + 1;
+            VerseRange range = (VerseRange)node.getUserObject();
+            Verse pStart = range.getStart();
+            Verse pEnd = range.getEnd();
+            
+            int b = 1;
+            
+            for (int i = pStart.getBook(); i <= pEnd.getBook(); i++) {
+                b = i;
+
                 if (!(b >= beginFilter && b <= endFilter)) {
                     continue;
                 }
+
                 int ec = BibleInfo.chaptersInBook(b);
                 int ev = BibleInfo.versesInChapter(b, ec);
                 Verse start = new Verse(b, 1, 1);
                 Verse end = new Verse(b, ec, ev);
                 VerseRange childRange = new VerseRange(start, end);
-                DefaultKeyTreeNode child = new DefaultKeyTreeNode(childRange);
+                BibleKeyTreeNode child = new BibleKeyTreeNode(childRange,BibleKeyTreeNode.BOOK);
                 node.add(child);
                 buildModel(child, LEVEL_CHAPTER);
 
@@ -89,7 +86,7 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
                 Verse start = new Verse(b, c, 1);
                 Verse end = new Verse(b, c, ev);
                 VerseRange childRange = new VerseRange(start, end);
-                DefaultKeyTreeNode child = new DefaultKeyTreeNode(childRange);
+                BibleKeyTreeNode child = new BibleKeyTreeNode(childRange,BibleKeyTreeNode.CHAPTER);
                 node.add(child);
                 buildModel(child, LEVEL_VERSE);
             }
@@ -105,7 +102,7 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
                 Verse start = new Verse(b, c, v);
                 Verse end = start;
                 VerseRange childRange = new VerseRange(start, end);
-                DefaultKeyTreeNode child = new DefaultKeyTreeNode(childRange);
+                BibleKeyTreeNode child = new BibleKeyTreeNode(childRange,BibleKeyTreeNode.VERSE);
                 node.add(child);
             }
         }
@@ -119,16 +116,53 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
         this.beginFilter = begin;
         this.endFilter = end;
 
-        VerseRange range = VerseRange.getWholeBibleVerseRange();
-        DefaultKeyTreeNode rootNode = new DefaultKeyTreeNode(range);
-
-        try {
-            buildModel(rootNode,LEVEL_BOOK);
-        } catch (NoSuchVerseException ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage(),ex);
+        // split OT and NT
+        boolean split = false;
+        if (begin <= 1 && end >= 66) {
+            split = true;
         }
-        
+
+        VerseRange range = VerseRange.getWholeBibleVerseRange();
+        BibleKeyTreeNode rootNode = new BibleKeyTreeNode(range, BibleKeyTreeNode.BIBLE);
+
+        if (!split) {
+            try {
+                buildModel(rootNode, LEVEL_BOOK);
+            } catch (NoSuchVerseException ex) {
+                Logger logger = Logger.getLogger(this.getClass().getName());
+                logger.log(Level.WARNING, ex.getMessage(), ex);
+            }
+            
+        } else {
+
+            ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
+
+            try {
+                Verse rStart = new Verse(1, 1, 1);
+                Verse rEnd = new Verse(39, 4, 6);
+                range = new VerseRange(rStart, rEnd);
+                BibleKeyTreeNode otNode = new BibleKeyTreeNode(range, BibleKeyTreeNode.BIBLE, bundle.getString("OldTestament.Text"));
+                buildModel(otNode, LEVEL_BOOK);
+                rootNode.add(otNode);
+
+            } catch (NoSuchVerseException ex) {
+                Logger logger = Logger.getLogger(this.getClass().getName());
+                logger.log(Level.WARNING, ex.getMessage(), ex);
+            }
+
+            try {
+                Verse rStart = new Verse(40, 1, 1);
+                Verse rEnd = new Verse(66, 22, 21);
+                range = new VerseRange(rStart, rEnd);
+                BibleKeyTreeNode ntNode = new BibleKeyTreeNode(range, BibleKeyTreeNode.BIBLE, bundle.getString("NewTestament.Text"));
+                buildModel(ntNode, LEVEL_BOOK);
+                rootNode.add(ntNode);
+            } catch (NoSuchVerseException ex) {
+                Logger logger = Logger.getLogger(this.getClass().getName());
+                logger.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        }
+
         setRoot(rootNode);
     }
 }
