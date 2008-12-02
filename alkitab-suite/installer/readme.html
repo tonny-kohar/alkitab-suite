@@ -12,7 +12,9 @@
             <li><a href="#what">What is it?</a></li>
             <li><a href="#what_new">What's New?</a></li>
             <li><a href="#requirements">System Requirements</a></li>
-            <li><a href="#install">Installation and Run</a></li>
+            <li><a href="#upgrade">Upgrading to newer version</a></li>
+            <li><a href="#install">Installing Application</a></li>
+            <li><a href="#run">Launching Application</a></li>
             <li><a href="#bug">Bug Reports and Feedback</a></li>
             <li><a href="#licensing">Licensing and legal issues</a></li>
         </ul>
@@ -23,8 +25,8 @@
         <blockquote> 
             <p>Alkitab Bible Study is free desktop based Bible Study tool. 
                 It features rich and user friendly Bible study tools. 
-                It support parallel view and powerful search capability. 
-                Alkitab is a front end to the sword project which is available 
+                It support parallel views and a powerful search capability.
+                Alkitab is a front end to the "sword project" which is available
                 for Windows, Unix/Linux, etc.
             </p>
             <p class="normaltext">Alkitab requires Java 1.5 or higher (<a href="http://www.java.com/getjava">http://www.java.com/getjava</a>).<br/>
@@ -32,10 +34,6 @@
                 eg: Microsoft Windows, Unix or Linux, etc.
             </p>
             <p>The latest news about Alkitab Bible Study can be found on <a href="http://www.kiyut.com">http://www.kiyut.com</a></p>
-            <p><strong>Note:</strong> You need to have Java 1.5 or higher, for 
-                installation and use. <br/>
-                You can download from Sun Java site (<a href="http://www.java.com/getjava">http://www.java.com/getjava</a>) 
-            </p>
         </blockquote>
         <p>&nbsp;</p>
         <p><a name="what_new"></a></p>
@@ -47,7 +45,7 @@
                 <li>Add Support for Locked Book</li>
                 <li>Add Filter for Navigator Panel (bible)</li>
                 <li>Add Calvin's Institutes to the installer</li>
-                <li>Optimization reduce memory usage</li>
+                <li>Optimization to reduce memory usage</li>
                 <li>Updated to use Netbeans 6.5</li>
             </ul>
             <p>ver 1.5.1</p>
@@ -68,6 +66,7 @@
             </ul>
         </blockquote> 
         <p>&nbsp;</p>
+        
         <p><a name="requirements"></a></p>
         <h2>System Requirements</h2>
         <blockquote> 
@@ -78,30 +77,35 @@
             </ul>
         </blockquote>
         <p>&nbsp;</p>
-        <p><a name="install"></a> 
-        </p>
-        <h2>Installation and Run</h2>
+
+        <p><a name="upgrade"></a></p>
+        <h2>Upgrading to newer version</h2>
+        <blockquote>
+            <p>You need to remove the older version, please use one of the following:</p>
+            <ul>
+                <li>Use the "[INSTALL-DIR]\Uninstaller\uninstaller"</li>
+                <li>Delete the older version folder eg: "C:\Program Files\Kiyut\Alkitab-xxx"</li>
+                <li>Rename the older version folder eg: "C:\Program Files\Kiyut\Alkitab-xxx"</li>
+            </ul>
+        </blockquote>
+        <p>&nbsp;</p>
+        
+        <p><a name="install"></a></p>
+        <h2>Installing Application</h2>
         <blockquote> 
             <p>To install the product, please do the following: </p>
-            <p><strong>Mac OSX:</strong> You can try the Mac OSX installer (experimental) which is available 
-                at <a href="http://www.kiyut.com/products/download.html#alkitab">http://www.kiyut.com/products/download.html</a> 
-                or you can follow the instruction below.
-            </p>
-            
             <ul>
                 <li>unzip the file</li>
-                <li>on Microsoft Windows double click setup.exe or setup.jar<br>
-                    on Linux/Unix run setup, if necessary chmod +x setup to make it executable<br>
-                    on Mac OSX run the Java setup by clicking on the setup.jar<br>
-                    other platform type "java -jar setup.jar"</li>
+                <li>on <strong>Microsoft Windows</strong> double click setup.exe or setup.jar<br/>
+                    on <strong>Linux/Unix</strong> run setup, if necessary chmod +x setup to make it executable<br/>
+                    on <strong>Mac OSX</strong> run the Java setup by clicking on the setup.jar<br/>
+                       &nbsp;&nbsp;&nbsp;&nbsp;or you can try the Mac OSX installer (experimental)
+                       which is available at <a href="http://www.kiyut.com/products/download.html#alkitab">http://www.kiyut.com/products/download.html</a> <br/>
+                    on <strong>other platform</strong> type "java -jar setup.jar"</li>
                 <li>follow the on screen instruction</li>
             </ul>
             
-            <p><strong>note: </strong>uninstall or remove the previous version if exist, simply delete the folder will be fine.
-                Or you need to install in different folder.
-            </p>
-            
-            <p>Alternatively, you also could install/run the Alkitab without GUI installer (Unix/Linux user): </p>
+            <p><strong>Alternatively</strong>, you also could install/run the Alkitab without GUI installer (Unix/Linux user): </p>
             <ul>
                 <li>unzip the file</li>
                 <li>copy the ../packs/Alkitab-xxx into a folder/directory of your choice</li>
@@ -111,26 +115,29 @@
             
             <p><strong>note: </strong>the installer wizard is basically just copying the folder as above into your preferred folder asked by the wizard
             and create icon shortcut.</p>
-            
-            <br/>
-            <p>To run the product after install: </p>
+        </blockquote>
+        <p>&nbsp;</p>
+
+        <p><a name="run"></a></p>
+        <h2>Launching Application</h2>
+        <blockquote>
             <ul>
-                <li>on Microsoft Windows just run Alkitab from Desktop Shortcut or Start Menu - All Programs - Kiyut - Alkitab<br/>
-                    on Mac OSX 
+                <li>on <strong>Microsoft Windows</strong> just run Alkitab from Desktop Shortcut or Start Menu - All Programs - Kiyut - Alkitab<br/>
+                    on <strong>Mac OSX</strong>
                     <ul>
                         <li>open the Terminal program (inside Applications folder - Utilities)</li>
                         <li>type "cd [INSTALL-DIR]/bin/" eg: cd /home/user-name/Kiyut/Alkitab/bin/</li>
                         <li>type "./alkitab"</li>
                         <li>or you can just run Alkitab by double click the file alkitab at "[INSTALL-DIR]/bin/alkitab" eg: /Applications/Kiyut/Alkitab/bin/alkitab and choose open with terminal</li>
                     </ul>
-                    on other platform run [INSTALL-DIR]/bin/alkitab, if necessary chmod +x alkitab to make it executable
+                    on <strong>other platform</strong> run [INSTALL-DIR]/bin/alkitab, if necessary <strong>chmod +x</strong> alkitab to make it executable
                 </li>
                 <li>enjoy the product</li>
             </ul>
         </blockquote>
         <p>&nbsp;</p>
-        <p><a name="bug"></a>  
-        </p>
+        
+        <p><a name="bug"></a></p>
         <h2>Bug Reports and Feedback</h2>
         <blockquote> 
             <p>For technical support, bug reports, feature requests, or any feedback, 
@@ -142,8 +149,8 @@
             </p>
         </blockquote>
         <blockquote> 
-            <p>Your feedback is important to us in order to get an idea of 
-                how to make Alkitab Bible Study better product for you. 
+            <p>Your feedback is important to us in order to get a better idea of
+                how to make <strong>Alkitab Bible Study</strong> a better product for you.
                 If you have an idea for a new feature, or a better way of doing something, 
                 please do not hesitate to drop us a note at 
                 <a href="mailto:support@kiyut.com">support@kiyut.com</a> 
