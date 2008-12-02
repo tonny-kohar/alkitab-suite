@@ -83,7 +83,7 @@ public class BookTextPane extends JTextPane {
 
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
         try {
-            if (!System.getProperty("os.name").startsWith("windows")) {
+            if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
                 Color color = UIManager.getColor("TextPane.background");
                 if (color != null) {
                     if (!color.equals(getBackground())) {
