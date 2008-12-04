@@ -2,7 +2,10 @@
 
 package kiyut.alkitab.modules.branding;
 
+import java.awt.ComponentOrientation;
+import java.awt.Frame;
 import java.io.File;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiyut.alkitab.Application;
@@ -88,8 +91,14 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         logger.log(Level.INFO,sb.toString());
 
+        
+
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
+                // set LTR or RTL
+                ComponentOrientation orient = ComponentOrientation.getOrientation(Locale.getDefault());
+                WindowManager.getDefault().getMainWindow().applyComponentOrientation(orient);
+
                 boolean session = BookViewerOptions.getInstance().isSessionPersistence();
 
                 if (!session) {
