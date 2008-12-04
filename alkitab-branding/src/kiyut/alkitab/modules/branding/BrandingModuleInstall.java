@@ -28,6 +28,8 @@ import org.openide.windows.WindowManager;
  * 
  */
 public class BrandingModuleInstall extends ModuleInstall {
+    private String orientationKey = "alkitab.orientation";
+
     @Override
     public  void restored() {
         super.restored();
@@ -55,8 +57,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         } catch (Exception ex) {
             logger.log(Level.WARNING,ex.getMessage(),ex);
         }
-        
-        
+
         StringBuilder sb = new StringBuilder("Sword Path Configuration\n");
         
         File[] files;
@@ -87,17 +88,26 @@ public class BrandingModuleInstall extends ModuleInstall {
         }
         
         sb.append("  Book Count: " + Books.installed().getBooks().size() + "\n");
+
+        String str = System.getProperty(orientationKey);
+        if (str == null) {
+            str = "ltr";
+        }
+        sb.append(orientationKey + ": " + str + "\n");
+
         sb.append("-------------------------------------------------------------------------------\n");
         
         logger.log(Level.INFO,sb.toString());
 
-        
-
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
-                // set LTR or RTL
-                ComponentOrientation orient = ComponentOrientation.getOrientation(Locale.getDefault());
-                WindowManager.getDefault().getMainWindow().applyComponentOrientation(orient);
+                String str = System.getProperty(orientationKey);
+                if (str != null) {
+                    // set experimental RTL support
+                    if (str.equalsIgnoreCase("rtl")) {
+                        WindowManager.getDefault().getMainWindow().applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                    }
+                }
 
                 boolean session = BookViewerOptions.getInstance().isSessionPersistence();
 
