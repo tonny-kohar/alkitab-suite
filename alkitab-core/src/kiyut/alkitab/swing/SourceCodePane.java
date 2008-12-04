@@ -3,16 +3,22 @@
 package kiyut.alkitab.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import kiyut.swing.dialog.DialogESC;
+import kiyut.swing.text.xml.XMLContext;
+import kiyut.swing.text.xml.XMLEditorKit;
 
 /**
  * Display the OSIS and HTML source for the the book
@@ -38,23 +44,23 @@ public class SourceCodePane extends javax.swing.JPanel {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        rawTextArea = new javax.swing.JTextArea();
+        rawEditorPane = new javax.swing.JEditorPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        osisTextArea = new javax.swing.JTextArea();
+        osisEditorPane = new javax.swing.JEditorPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        htmlTextArea = new javax.swing.JTextArea();
+        htmlEditorPane = new javax.swing.JEditorPane();
 
         setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setViewportView(rawTextArea);
+        jScrollPane1.setViewportView(rawEditorPane);
 
         jTabbedPane1.addTab(bundle.getString("CTL_Raw.Text"), jScrollPane1); // NOI18N
 
-        jScrollPane2.setViewportView(osisTextArea);
+        jScrollPane2.setViewportView(osisEditorPane);
 
         jTabbedPane1.addTab(bundle.getString("CTL_OSIS.Text"), jScrollPane2); // NOI18N
 
-        jScrollPane3.setViewportView(htmlTextArea);
+        jScrollPane3.setViewportView(htmlEditorPane);
 
         jTabbedPane1.addTab(bundle.getString("CTL_HTML.Text"), jScrollPane3); // NOI18N
 
@@ -63,16 +69,35 @@ public class SourceCodePane extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea htmlTextArea;
+    private javax.swing.JEditorPane htmlEditorPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea osisTextArea;
-    private javax.swing.JTextArea rawTextArea;
+    private javax.swing.JEditorPane osisEditorPane;
+    private javax.swing.JEditorPane rawEditorPane;
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
+        Dimension size = new Dimension(780,540);
+        this.setPreferredSize(size);
+
+        //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
+        Color background = osisEditorPane.getBackground();
+        try {
+            if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+                Color color = UIManager.getColor("TextPane.background");
+                if (color != null) {
+                    if (!color.equals(getBackground())) {
+                        background = color;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.CONFIG,ex.getMessage(),ex);
+        }
+
         int fontSize = 10;
         try {
             int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
@@ -83,24 +108,28 @@ public class SourceCodePane extends javax.swing.JPanel {
                 fontSize = 13;
             }*/
         } catch (Exception ex) {
-            // do nothing
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.CONFIG,ex.getMessage(),ex);
         }
-        
+
         Font font = new Font("Monospaced", Font.PLAIN, fontSize);
-        
-        initTextArea(rawTextArea, font);
-        initTextArea(osisTextArea, font);
-        initTextArea(htmlTextArea, font);
-    }
-    
-    private void initTextArea(JTextArea textArea, Font font) {
-        textArea.setFont(font);
-        textArea.setColumns(100);
-        textArea.setRows(30);
-        textArea.setTabSize(4);
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
+
+        rawEditorPane.setEditable(false);
+        rawEditorPane.setBackground(background);
+
+        XMLContext ctx = new XMLContext(font);
+        XMLEditorKit kit = new XMLEditorKit(ctx);
+        osisEditorPane.setEditorKitForContentType(XMLEditorKit.XML_MIME_TYPE, kit);
+        osisEditorPane.setContentType(XMLEditorKit.XML_MIME_TYPE);
+        osisEditorPane.setEditable(false);
+        osisEditorPane.setBackground(background);
+
+        ctx = new XMLContext(font);
+        kit = new XMLEditorKit(ctx);
+        htmlEditorPane.setEditorKitForContentType(XMLEditorKit.XML_MIME_TYPE, kit);
+        htmlEditorPane.setContentType(XMLEditorKit.XML_MIME_TYPE);
+        htmlEditorPane.setEditable(false);
+        htmlEditorPane.setBackground(background);
     }
     
     /** Show as Dialog 
@@ -137,12 +166,12 @@ public class SourceCodePane extends javax.swing.JPanel {
      * @param html the HTML text
      */
     public void setText(String raw, String osis, String html) {
-        rawTextArea.setText(raw);
-        osisTextArea.setText(osis);
-        htmlTextArea.setText(html);
+        rawEditorPane.setText(raw);
+        osisEditorPane.setText(osis);
+        htmlEditorPane.setText(html);
         
-        rawTextArea.setCaretPosition(0);
-        osisTextArea.setCaretPosition(0);
-        htmlTextArea.setCaretPosition(0);
+        rawEditorPane.setCaretPosition(0);
+        osisEditorPane.setCaretPosition(0);
+        htmlEditorPane.setCaretPosition(0);
     }
 }
