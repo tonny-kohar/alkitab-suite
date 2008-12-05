@@ -2,16 +2,14 @@
 
 package kiyut.alkitab.modules.branding;
 
-import java.awt.ComponentOrientation;
-import java.awt.Frame;
 import java.io.File;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiyut.alkitab.Application;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookViewerTopComponent;
@@ -28,18 +26,25 @@ import org.openide.windows.WindowManager;
  * 
  */
 public class BrandingModuleInstall extends ModuleInstall {
-    private String orientationKey = "alkitab.orientation";
+    
 
     @Override
     public  void restored() {
         super.restored();
-        
-        Logger logger = Logger.getLogger(this.getClass().getName());
-        
+
+        String orientationKey = "alkitab.orientation";
+        String strOrientation = System.getProperty(orientationKey);
+        if (strOrientation == null) {
+            strOrientation = "ltr";
+        }
+
         //System.setProperty("netbeans.buildnumber", Application.VERSION);
         System.setProperty("alkitab.buildnumber", Application.getBuildNumber());
         System.setProperty("alkitab.version", Application.getVersion());
-        
+        System.setProperty(orientationKey, strOrientation);
+
+        Logger logger = Logger.getLogger(this.getClass().getName());
+
         // override user.dir variable to the 
         IOUtilities.setUserDir(null);
         
@@ -93,7 +98,9 @@ public class BrandingModuleInstall extends ModuleInstall {
         if (str == null) {
             str = "ltr";
         }
-        sb.append(orientationKey + ": " + str + "\n");
+
+        // adding Orientation to the log
+        sb.append(orientationKey + ": " + strOrientation + "\n");
 
         sb.append("-------------------------------------------------------------------------------\n");
         
@@ -101,13 +108,7 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
-                String str = System.getProperty(orientationKey);
-                if (str != null) {
-                    // set experimental RTL support
-                    if (str.equalsIgnoreCase("rtl")) {
-                        WindowManager.getDefault().getMainWindow().applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-                    }
-                }
+                ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());
 
                 boolean session = BookViewerOptions.getInstance().isSessionPersistence();
 

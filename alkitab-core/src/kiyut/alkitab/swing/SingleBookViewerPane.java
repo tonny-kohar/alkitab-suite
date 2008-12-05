@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.swing;
 
+import java.awt.ComponentOrientation;
 import kiyut.alkitab.api.BookViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.api.event.BookChangeEvent;
 import kiyut.alkitab.options.ViewerHintsOptions;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
@@ -36,6 +38,8 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         this.viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
         initComponents();
         initCustom();
+
+        ComponentOrientationSupport.applyComponentOrientation(this);
     }
 
     /** This method is called from within the constructor to
@@ -46,7 +50,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
+        toolBar = new javax.swing.JToolBar();
         goPreviousButton = new javax.swing.JButton();
         goNextButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -54,39 +58,39 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
 
         setLayout(new java.awt.BorderLayout());
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
+        toolBar.setFloatable(false);
+        toolBar.setRollover(true);
 
         goPreviousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/previous.png"))); // NOI18N
         goPreviousButton.setToolTipText(bundle.getString("HINT_GoPrevious.Text")); // NOI18N
         goPreviousButton.setFocusable(false);
         goPreviousButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         goPreviousButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(goPreviousButton);
+        toolBar.add(goPreviousButton);
 
         goNextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/next.png"))); // NOI18N
         goNextButton.setToolTipText(bundle.getString("HINT_GoNext.Text")); // NOI18N
         goNextButton.setFocusable(false);
         goNextButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         goNextButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(goNextButton);
+        toolBar.add(goNextButton);
 
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/refresh.png"))); // NOI18N
         refreshButton.setToolTipText(bundle.getString("HINT_Refresh.Text")); // NOI18N
         refreshButton.setFocusable(false);
         refreshButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         refreshButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(refreshButton);
+        toolBar.add(refreshButton);
 
-        add(jToolBar1, java.awt.BorderLayout.NORTH);
+        add(toolBar, java.awt.BorderLayout.NORTH);
         add(bookScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane bookScrollPane;
     private javax.swing.JButton goNextButton;
     private javax.swing.JButton goPreviousButton;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {

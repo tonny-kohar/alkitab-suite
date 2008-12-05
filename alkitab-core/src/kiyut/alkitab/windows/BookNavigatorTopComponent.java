@@ -2,16 +2,13 @@
 
 package kiyut.alkitab.windows;
 
-import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.swing.BookNavigatorPane;

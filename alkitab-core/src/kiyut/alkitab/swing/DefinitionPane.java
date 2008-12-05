@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.ViewerHintsOptions;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.PreferredKey;
@@ -34,6 +35,8 @@ public class DefinitionPane extends javax.swing.JPanel {
         initComponents();
         initCustom();
         setBook(book);
+
+        ComponentOrientationSupport.applyComponentOrientation(this);
     }
     
     /** This method is called from within the constructor to

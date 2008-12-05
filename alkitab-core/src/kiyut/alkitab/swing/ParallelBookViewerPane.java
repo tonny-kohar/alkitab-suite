@@ -30,6 +30,7 @@ import kiyut.alkitab.api.event.BookChangeEvent;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.api.Indexer;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.jsword.book.Book;
@@ -73,6 +74,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     public ParallelBookViewerPane() {
         initComponents();
         initCustom();
+
+        ComponentOrientationSupport.applyComponentOrientation(this);
     }
     
     /** This method is called from within the constructor to
@@ -84,7 +87,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jToolBar4 = new javax.swing.JToolBar();
+        toolBar = new javax.swing.JToolBar();
         goBackButton = new javax.swing.JButton();
         goForwardButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -124,68 +127,68 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         setLayout(new java.awt.BorderLayout());
 
-        jToolBar4.setFloatable(false);
-        jToolBar4.setRollover(true);
+        toolBar.setFloatable(false);
+        toolBar.setRollover(true);
 
         goBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/left.png"))); // NOI18N
         goBackButton.setToolTipText(bundle.getString("HINT_GoBack.Text")); // NOI18N
         goBackButton.setFocusable(false);
         goBackButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         goBackButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(goBackButton);
+        toolBar.add(goBackButton);
 
         goForwardButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/right.png"))); // NOI18N
         goForwardButton.setToolTipText(bundle.getString("HINT_GoForward.Text")); // NOI18N
         goForwardButton.setFocusable(false);
         goForwardButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         goForwardButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(goForwardButton);
+        toolBar.add(goForwardButton);
 
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/refresh.png"))); // NOI18N
         refreshButton.setToolTipText(bundle.getString("HINT_Refresh.Text")); // NOI18N
         refreshButton.setFocusable(false);
         refreshButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         refreshButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(refreshButton);
-        jToolBar4.add(jSeparator1);
+        toolBar.add(refreshButton);
+        toolBar.add(jSeparator1);
 
         goPreviousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/previous.png"))); // NOI18N
         goPreviousButton.setToolTipText(bundle.getString("HINT_GoPrevious.Text")); // NOI18N
         goPreviousButton.setFocusable(false);
         goPreviousButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         goPreviousButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(goPreviousButton);
+        toolBar.add(goPreviousButton);
 
         goNextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/next.png"))); // NOI18N
         goNextButton.setToolTipText(bundle.getString("HINT_GoNext.Text")); // NOI18N
         goNextButton.setFocusable(false);
         goNextButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         goNextButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(goNextButton);
+        toolBar.add(goNextButton);
 
         expand1Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/expand1n.png"))); // NOI18N
         expand1Button.setToolTipText(bundle.getString("HINT_Expand1")); // NOI18N
         expand1Button.setFocusable(false);
         expand1Button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         expand1Button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(expand1Button);
+        toolBar.add(expand1Button);
 
         expand5Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/expand5n.png"))); // NOI18N
         expand5Button.setToolTipText(bundle.getString("HINT_Expand5")); // NOI18N
         expand5Button.setFocusable(false);
         expand5Button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         expand5Button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(expand5Button);
-        jToolBar4.add(jSeparator2);
+        toolBar.add(expand5Button);
+        toolBar.add(jSeparator2);
 
         viewerHintsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/viewer-hints.png"))); // NOI18N
         viewerHintsButton.setToolTipText(bundle.getString("HINT_ViewerHints.Text")); // NOI18N
         viewerHintsButton.setFocusable(false);
         viewerHintsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewerHintsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar4.add(viewerHintsButton);
+        toolBar.add(viewerHintsButton);
 
-        add(jToolBar4, java.awt.BorderLayout.NORTH);
+        add(toolBar, java.awt.BorderLayout.PAGE_START);
 
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
@@ -194,9 +197,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         jLabel1.setText(bundle.getString("CTL_Book.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 6);
         jPanel1.add(jLabel1, gridBagConstraints);
 
@@ -218,43 +220,39 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jToolBar1.add(removeBookButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jToolBar1, gridBagConstraints);
 
         booksComboPane.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         jPanel1.add(booksComboPane, gridBagConstraints);
 
         compareCheckBox.setText(bundle.getString("CTL_Compare.Text")); // NOI18N
         compareCheckBox.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
         jPanel1.add(compareCheckBox, gridBagConstraints);
 
         jLabel2.setText(bundle.getString("CTL_Search.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 6);
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel1.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText(bundle.getString("CTL_Passsage.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 6);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel1.add(jLabel3, gridBagConstraints);
 
         passagePane.setLayout(new java.awt.GridBagLayout());
@@ -265,10 +263,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jScrollPane1.setViewportView(passageTextArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         passagePane.add(jScrollPane1, gridBagConstraints);
@@ -291,19 +287,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jToolBar2.add(passageChooserButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
         gridBagConstraints.insets = new java.awt.Insets(1, 3, 0, 3);
         passagePane.add(jToolBar2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
@@ -318,10 +310,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jScrollPane2.setViewportView(searchTextArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         jPanel4.add(jScrollPane2, gridBagConstraints);
@@ -344,9 +334,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jToolBar3.add(advancedSearchButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
         gridBagConstraints.insets = new java.awt.Insets(1, 3, 0, 3);
         jPanel4.add(jToolBar3, gridBagConstraints);
 
@@ -360,12 +348,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         searchPane.add(jPanel5, "index-layout");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel1.add(searchPane, gridBagConstraints);
 
@@ -402,7 +388,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
-    private javax.swing.JToolBar jToolBar4;
     private javax.swing.JButton passageChooserButton;
     private javax.swing.JButton passageGoButton;
     private javax.swing.JPanel passagePane;
@@ -413,6 +398,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JPanel searchPane;
     private javax.swing.JTextArea searchTextArea;
     private javax.swing.JSplitPane splitPane;
+    private javax.swing.JToolBar toolBar;
     private javax.swing.JButton viewerHintsButton;
     // End of variables declaration//GEN-END:variables
  

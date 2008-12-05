@@ -10,7 +10,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreePath;
 
 /**
  *
@@ -33,7 +32,7 @@ public class BibleKeyTreeCellRenderer extends DefaultTreeCellRenderer {
             verseIcon = new ImageIcon(getClass().getResource(bundle.getString("ICON_Verse")));
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage());
+            logger.log(Level.CONFIG, ex.getMessage());
         }
     }
     

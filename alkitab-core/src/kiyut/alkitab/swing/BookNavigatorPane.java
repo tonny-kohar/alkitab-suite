@@ -9,10 +9,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import kiyut.alkitab.api.BookViewer;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
+import kiyut.alkitab.api.BookViewer;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.passage.Key;
@@ -57,16 +58,15 @@ public class BookNavigatorPane extends javax.swing.JPanel {
 
         jLabel1.setText(bundle.getString("CTL_Filter.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 12);
         filterPane.add(jLabel1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
         filterPane.add(filterCombo, gridBagConstraints);
 
@@ -129,7 +129,7 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         }
 
         if (bibleDisplayMode && filters != null) {
-            this.add(BorderLayout.NORTH,filterPane);
+            this.add(BorderLayout.PAGE_START,filterPane);
         } else {
             this.remove(filterPane);
         }
@@ -137,7 +137,12 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         scrollPane.setViewportView(keyTree);
         keyTree.addTreeSelectionListener(treeSelectionListener);
 
+        // XXX workaround for Sun Java Bug 4845945
+        // ComponentOrientation must be applied after the component visible
+        ComponentOrientationSupport.applyComponentOrientation(this);
+
         this.revalidate();
+        
     }
     
     protected void keyValueChanged(TreeSelectionEvent evt) {
