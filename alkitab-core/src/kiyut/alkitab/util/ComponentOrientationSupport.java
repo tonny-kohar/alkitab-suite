@@ -4,6 +4,7 @@ package kiyut.alkitab.util;
 
 import java.awt.ComponentOrientation;
 import java.awt.Container;
+import java.util.Locale;
 
 /**
  * Collection of Swing Utilities
@@ -19,6 +20,12 @@ public class ComponentOrientationSupport {
      * Return component orientation base on the value of
      * {@code System.getProperty("alkitab.orientation")} <br/>
      * If it is not specified it will return ComponentOrientation.LEFT_TO_RIGHT
+     * Possible value are:
+     * <code>
+     * - auto, automatic setting based on Locale.getDefault()
+     * - ltr, (Default) force to use Left to Right orientation
+     * - rtl, force to use Right to Left orientation
+     * </code>
      * @return ComponentOrientation
      */
     public static ComponentOrientation getComponentOrientation() {
@@ -27,8 +34,10 @@ public class ComponentOrientationSupport {
         String str = System.getProperty("alkitab.orientation");
 
         if (str != null) {
-            if (str.equalsIgnoreCase("rtl")) {
+            if (str.equals("rtl")) {
                 orient = ComponentOrientation.RIGHT_TO_LEFT;
+            } else if (str.equals("auto")) {
+                orient = ComponentOrientation.getOrientation(Locale.getDefault());
             }
         }
 

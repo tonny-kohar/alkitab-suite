@@ -36,6 +36,8 @@ public class BrandingModuleInstall extends ModuleInstall {
         String strOrientation = System.getProperty(orientationKey);
         if (strOrientation == null) {
             strOrientation = "ltr";
+        } else {
+            strOrientation = strOrientation.trim().toLowerCase();
         }
 
         //System.setProperty("netbeans.buildnumber", Application.VERSION);

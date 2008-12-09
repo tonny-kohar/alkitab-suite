@@ -3,6 +3,7 @@
 <toc version="2.0">
     <tocitem text="Alkitab User Guide">
         <tocitem text="Overview" target="kiyut.alkitab.modules.userguide"/>
+        <tocitem text="Bible" target="kiyut.alkitab.modules.userguide.bible"/>
         <tocitem text="FAQ" target="kiyut.alkitab.modules.userguide.faq"/>
         <tocitem text="Support" target="kiyut.alkitab.modules.userguide.support"/>
         <tocitem text="Legal Notices" target="kiyut.alkitab.modules.userguide.legal"/>

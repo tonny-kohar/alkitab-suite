@@ -1,3 +1,8 @@
+ver 2.1-beta1
+- Improved Navigator Panel
+- Add Syntax Highlight for View Source (OSIS and HTML)
+- Add option -J-Dalkitab.orientation=auto|ltr|rtl for experimental RTL support
+
 ver 2.0
 - Fix Session Management with Navigator Panel
 - Add Support for Locked Book

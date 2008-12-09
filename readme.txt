@@ -9,4 +9,4 @@ eg: ../alkitab-suite/alkitab-suite
 
 Now you can recompile, build, crete your own distribution, etc
 
-*Netbeans used is Netbeans 6.1
+*Netbeans used is Netbeans 6.5
