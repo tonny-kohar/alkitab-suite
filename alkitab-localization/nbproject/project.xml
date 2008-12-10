@@ -7,15 +7,23 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>kiyut.alkitab</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>2.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>kiyut.alkitab.modules.branding</code-name-base>
                     <run-dependency>
-                        <specification-version>1.3</specification-version>
+                        <specification-version>2.1</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>
                     <code-name-base>kiyut.alkitab.modules.userguide</code-name-base>
                     <run-dependency>
-                        <specification-version>1.3</specification-version>
+                        <specification-version>2.0</specification-version>
                     </run-dependency>
                 </dependency>
             </module-dependencies>
