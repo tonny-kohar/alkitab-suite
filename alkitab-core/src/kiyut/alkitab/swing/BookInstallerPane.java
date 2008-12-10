@@ -45,7 +45,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
     /** Creates new BookInstallerPane */
     public BookInstallerPane() {
         initComponents();
-        initCustomComponents();
+        initCustom();
     }
 
     /** This method is called from within the constructor to
@@ -201,7 +201,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
     private javax.swing.JTextField srcField;
     // End of variables declaration//GEN-END:variables
 
-    protected void initCustomComponents() {
+    protected void initCustom() {
         DefaultComboBoxModel model = (DefaultComboBoxModel)destComboBox.getModel();
         model.removeAllElements();
         

@@ -59,7 +59,7 @@ public final class ViewerHintsOptions extends AbstractOptions {
         hints.put(ViewerHints.TOOLTIP_POPUP, prefs.getBoolean(ViewerHints.TOOLTIP_POPUP.getName(), true));
     }
     
-    public void save() {
+    public void store() {
         Preferences prefs = getPreferences();
         Iterator<ViewerHints.Key> it =  hints.keySet().iterator();
         while(it.hasNext()) {

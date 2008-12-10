@@ -28,7 +28,7 @@ public class BookProperties extends javax.swing.JPanel {
     /** Creates new form BookProperties */
     public BookProperties() {
         initComponents();
-        initCustomComponents();
+        initCustom();
     }
 
     /** This method is called from within the constructor to
@@ -56,7 +56,7 @@ public class BookProperties extends javax.swing.JPanel {
     private javax.swing.JTextPane textPane;
     // End of variables declaration//GEN-END:variables
 
-    protected void initCustomComponents() {
+    protected void initCustom() {
         textPane.setEditable(false);
         textPane.setEditorKit(new HTMLEditorKit());
 

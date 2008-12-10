@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
     <folder name="Actions">
         <folder name="File">
@@ -31,8 +31,48 @@
         </folder>
     </folder>
     <folder name="OptionsDialog">
-        <file name="BookViewerOptionCategory.instance">
+        <!-- <file name="BookViewerOptionsCategory.instance">
             <attr name="instanceClass" stringvalue="kiyut.alkitab.options.BookViewerOptionsCategory"/>
+        </file>
+        -->
+        <folder name="BookViewerOptionsCategory">
+            <file name="kiyut-alkitab-options-GeneralAdvancedOptions.instance">
+                <attr name="position" intvalue="0"/>
+                <attr name="controller" newvalue="kiyut.alkitab.options.GeneralOptionsPanelController"/>
+                <attr name="displayName" bundlevalue="kiyut.alkitab.options.GeneralOptionsPanel#DisplayName"/>
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.options.AdvancedOption.createSubCategory"/>
+                <attr name="keywords" bundlevalue="kiyut.alkitab.options.GeneralOptionsPanel#Keywords"/>
+                <attr name="keywordsCategory" stringvalue="BookViewerOptionsCategory/null"/>
+                <attr name="toolTip" bundlevalue="kiyut.alkitab.options.GeneralOptionsPanel#Tooltip"/>
+            </file>
+            <file name="kiyut-alkitab-options-ViewerHintsAdvancedOptions.instance">
+                <attr name="position" intvalue="100"/>
+                <attr name="controller" newvalue="kiyut.alkitab.options.ViewerHintsOptionsPanelController"/>
+                <attr name="displayName" bundlevalue="kiyut.alkitab.options.ViewerHintsOptionsPanel#DisplayName"/>
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.options.AdvancedOption.createSubCategory"/>
+                <attr name="keywords" bundlevalue="kiyut.alkitab.options.ViewerHintsOptionsPanel#Keywords"/>
+                <attr name="keywordsCategory" stringvalue="BookViewerOptionsCategory/null"/>
+                <attr name="toolTip" bundlevalue="kiyut.alkitab.options.ViewerHintsOptionsPanel#Tooltip"/>
+            </file>
+            <file name="kiyut-alkitab-options-PathAdvancedOptions.instance">
+                <attr name="position" intvalue="200"/>
+                <attr name="controller" newvalue="kiyut.alkitab.options.PathOptionsPanelController"/>
+                <attr name="displayName" bundlevalue="kiyut.alkitab.options.PathOptionsPanel#DisplayName"/>
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.options.AdvancedOption.createSubCategory"/>
+                <attr name="keywords" bundlevalue="kiyut.alkitab.options.PathOptionsPanel#Keywords"/>
+                <attr name="keywordsCategory" stringvalue="BookViewerOptionsCategory/null"/>
+                <attr name="toolTip" bundlevalue="kiyut.alkitab.options.PathOptionsPanel#Tooltip"/>
+            </file>
+        </folder>
+        <file name="BookViewerOptionsCategory.instance">
+            <attr name="position" intvalue="0"/>
+            <attr name="advancedOptionsFolder" stringvalue="OptionsDialog/BookViewerOptionsCategory"/>
+            <attr name="categoryName" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.Name"/>
+            <attr name="iconBase" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.IconBase"/>
+            <attr name="instanceCreate" methodvalue="org.netbeans.spi.options.OptionsCategory.createCategory"/>
+            <attr name="keywords" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.Keywords"/>
+            <attr name="keywordsCategory" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.KeywordsCategory"/>
+            <attr name="title" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.Title"/>
         </file>
     </folder>
     <folder name="Services">

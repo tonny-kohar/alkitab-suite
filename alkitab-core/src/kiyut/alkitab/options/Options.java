@@ -8,9 +8,9 @@ package kiyut.alkitab.options;
  */
 public interface Options {
     
-    /** load the Options or User Preferences from backing store */
+    /** Load the Options or User Preferences from backing store */
     public void load();
     
-    /** Save the Options or User Preferences to backing store */
-    public void save();
+    /** Store the Options or User Preferences to backing store */
+    public void store();
 }

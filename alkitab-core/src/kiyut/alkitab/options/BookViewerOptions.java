@@ -95,7 +95,7 @@ public final class BookViewerOptions extends AbstractOptions {
         }
     }
     
-    public void save() {
+    public void store() {
         Preferences prefs = getPreferences();
         prefs.putBoolean(SESSION_PERSISTENCE, sessionPersistence);
         prefs.putInt(PARALLEL_BOOK_LIMIT, parallelBookLimit);
