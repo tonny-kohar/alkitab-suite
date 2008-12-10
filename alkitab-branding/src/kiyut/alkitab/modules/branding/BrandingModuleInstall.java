@@ -96,11 +96,6 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         sb.append("  Book Count: " + Books.installed().getBooks().size() + "\n");
 
-        String str = System.getProperty(orientationKey);
-        if (str == null) {
-            str = "ltr";
-        }
-
         // adding Orientation to the log
         sb.append(orientationKey + ": " + strOrientation + "\n");
 
@@ -115,8 +110,9 @@ public class BrandingModuleInstall extends ModuleInstall {
                 boolean session = BookViewerOptions.getInstance().isSessionPersistence();
 
                 if (!session) {
-                    // open KJV if exist
-                    Book book = Books.installed().getBook("KJV");
+                    // open preferred Bible if exist and available
+                    String prefsBible = BookViewerOptions.getInstance().getDefaultBible();
+                    Book book = Books.installed().getBook(prefsBible);
                     if (book != null) {
                         SwordURI uri = SwordURI.createURI(book, null);
                         if (uri != null) {
