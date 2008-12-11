@@ -306,6 +306,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         searchTextArea.setLineWrap(true);
+        searchTextArea.setToolTipText(bundle.getString("HINT_Search.Text")); // NOI18N
         searchTextArea.setWrapStyleWord(true);
         jScrollPane2.setViewportView(searchTextArea);
 
