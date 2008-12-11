@@ -3,8 +3,8 @@
 package kiyut.alkitab.swing;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import kiyut.alkitab.api.ViewerHints;
@@ -181,10 +181,10 @@ public class ViewerHintsPane extends javax.swing.JPanel {
 
     
     protected void initCustom() {
-        noVNumCheckBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        noVNumCheckBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent evt) {
                 boolean sel = noVNumCheckBox.isSelected();
-                for (int i=0; i<verseNumbersPane.getComponentCount(); i++) {
+                for (int i = 0; i < verseNumbersPane.getComponentCount(); i++) {
                     verseNumbersPane.getComponent(i).setEnabled(!sel);
                 }
             }
