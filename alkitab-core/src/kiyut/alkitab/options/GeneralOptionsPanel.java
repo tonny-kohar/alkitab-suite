@@ -2,8 +2,12 @@
 
 package kiyut.alkitab.options;
 
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.Window;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +18,9 @@ import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.SwingUtilities;
 import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.jsword.book.Book;
@@ -146,19 +152,17 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         fontPanel.setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 40;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
         fontPanel.add(fontComboBox, gridBagConstraints);
 
         fontSizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "20", "22", "24", "26", "28", "32", "36", "40", "44", "48" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         fontPanel.add(fontSizeComboBox, gridBagConstraints);
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
@@ -179,10 +183,9 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         jPanel11.add(fontItalicCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         fontPanel.add(jPanel11, gridBagConstraints);
 
@@ -514,6 +517,21 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         refreshAvailableFonts();
         refreshDefaultBooks();
+
+        // XXX workaround for NbPlatform OptionsDialog component orientation
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent evt) {
+                Window parent = SwingUtilities.getWindowAncestor(GeneralOptionsPanel.this);
+                ComponentOrientation cOrient = ComponentOrientationSupport.getComponentOrientation();
+                if (!cOrient.equals(parent.getComponentOrientation())) {
+                    ComponentOrientationSupport.applyComponentOrientation(parent);
+                    parent.invalidate();
+                    parent.validate();
+                    parent.repaint();
+                }
+            }
+        });
     }
 
     /** Refresh available fonts */
