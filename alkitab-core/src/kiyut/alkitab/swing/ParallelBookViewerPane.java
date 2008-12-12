@@ -44,6 +44,9 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
+import org.crosswire.jsword.passage.Verse;
+import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which able to display parallel book
@@ -679,7 +682,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 } else {
                     addBook(book.getInitials());
                 }
-            } 
+            }
         } else {
             Book book =  Books.installed().getBook(uri.getPath());
             if (book == null) { return; }
@@ -689,7 +692,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         if (!uri.getFragment().equals("")) {
             passageTextArea.setText(uri.getFragment());
             setKey(passageTextArea.getText());
-        } 
+        }
         refresh();
     }
     
@@ -727,33 +730,45 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         // try to display something, if this is first book displayed
         if (count == 0 && getKey() == null) {
-            Key tKey = book.getGlobalKeyList();
-            if (tKey == null) { return; }
-            if (tKey.getCardinality() > 0) {
-                tKey = tKey.get(0);
-                
-                String keyString = tKey.toString();
-                if (book.getBookCategory().equals(BookCategory.BIBLE)) {
-                    // display 1 chapter, remove the verses
-                    if (keyString.endsWith(":1")) {
-                        int index = keyString.indexOf(":1");
-                        if (index > 0) {
-                            keyString = keyString.substring(0,index);
-                        }
-                    }
-                }
-                
-                // Need to getValidKey, so history will work
-                // getValidKey will convert Verse to Passage
-                // see BookViewerHistory constructor
-                tKey = book.getValidKey(keyString);
-                
-                setKey(tKey);
-            }
+            initialView(book);
         }
         
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
+    }
+
+    /** This is only called if it is the first book displayed and have not specified
+     * any key to be displayed. Try to display something
+     * @param book Book
+     */
+    protected void initialView(Book book) {
+        Key initialKey = null;
+
+        BookCategory cat = book.getBookCategory();
+        if (BookCategory.BIBLE.equals(cat) || BookCategory.COMMENTARY.equals(cat)) {
+            // XXX workaround for book.getGlobalKeyList() bug with key,
+            // if the locale is not english eg: fa
+            // try to display the Gen 1 (chapter)
+
+            // note: need to getValidKey, so history will work
+            // getValidKey will convert Verse to Passage
+            // see BookViewerHistory constructor
+            initialKey = book.getValidKey("Gen 1");
+
+        } else {
+            initialKey = book.getGlobalKeyList();
+            if (initialKey != null) {
+                if (initialKey.getCardinality() > 0) {
+                    initialKey = initialKey.get(0);
+                }
+            }
+        }
+
+        if (initialKey == null) {
+            return;
+        }
+
+        setKey(initialKey);
     }
     
     /** Remove book at particular index.
