@@ -1,7 +1,10 @@
-ver 2.1-beta1
-- Improved Navigator Panel
+ver 2.1-beta2
 - Add Syntax Highlight for View Source (OSIS and HTML)
 - Add option -J-Dalkitab.orientation=auto|ltr|rtl for experimental RTL support
+- Add fa locale (Thanks Peter)
+- Improved Navigator Panel
+- Improved Public API for OptionsDialog
+- Improved documentation (Thanks Timothy)
 
 ver 2.0
 - Fix Session Management with Navigator Panel

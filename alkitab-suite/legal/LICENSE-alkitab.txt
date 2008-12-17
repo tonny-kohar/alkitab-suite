@@ -5,8 +5,8 @@ You are free to use this work in any way you wish.
 IMPORTANT
 
 This computer program also includes other components 
-developed by third party. Each component is governed 
-by its own license which may not under public domain
+developed by third parties. Each component is governed
+by its own license which may not be under public domain
 license.
 
 DISCLAIMER
