@@ -738,7 +738,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     /** This is only called if it is the first book displayed and have not specified
-     * any key to be displayed. Try to display something
+     * any key to be displayed. Try to display something eg: display Gen 1 for bible or commentary
      * @param book Book
      */
     protected void initialView(Book book) {
