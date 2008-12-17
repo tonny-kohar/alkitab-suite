@@ -17,17 +17,17 @@
         <ul>
             <li><a href="#faq-alkitab">What is Alkitab Bible Study ?</a></li>
             <li><a href="#faq-book-install">How do I install additional bible translations or books ?</a></li>
+            <li><a href="#faq-search-advance">How do I perform advanced search ?</a></li>
             <li><a href="#faq-search-strongs">How do I search for strongs ?</a></li>
             <li><a href="#faq-localization">How do I enable localization ?</a></li>
         </ul>
         
         <br>
         <h3><a name="faq-alkitab"></a>What is Alkitab Bible Study ?</h3>
-        <p>Alkitab Bible Study is a cross platform and open source bible software. 
-            It features rich and user friendly bible software which supports parallel view, 
-            commentaries, lexicons, dictionaries, glossaries, and daily devotions. 
-            It also come with powerful search capability. Alkitab is built using 
-            CrossWire JSword Engine and is an alternative front end to Bible Desktop.
+        <p>It is a cross platform, open source bible software program featuring a rich and user friendly GUI.
+          The interface supports: parallel views, commentaries, lexicons, dictionaries, glossaries, and daily devotions.
+          It also comes with a powerful search capability.
+          Alkitab is built using the CrossWire JSword Engine and is an alternative front end to the Bible Desktop.
         </p>
         <p>Alkitab is Indonesian word for Christian Holy Bible.</p>
         <p><strong>See Also</strong> (external link)<br>
@@ -74,18 +74,77 @@
                 </object>
             </li>
             <li>Open Alkitab Bible Study, goto Menu - Tools - Book Installer</li>
-            <li>Point the Source Field to the book that you downloaded (Raw ZIP)</li>
-            <li>Point the Destination to location you want to install the book</li>
+            <li>In the Source Field navigate to the older cantaining book that you downloaded (Raw ZIP)</li>
+            <li>Select the Destination location to install the book </li>
             <li>Click Install button</li>
         </ul>
-        <p>Alternatively you could install book using the following as well.</p>
+        <p>Alternatively you could install book using the following:</p>
         <ul>
-            <li>For Windows: extract the downloaded zip file and run the setup.exe<br>
-                For Raw ZIP: extract the downloaded zip file, then copy/move the following<br>
+            <li>For Windows: extract the downloaded zip file and run the setup.exe</li>
+            <li>For Raw ZIP: extract the downloaded zip file, then copy/move the following<br>
                 &nbsp;&nbsp;&nbsp; - mods.d folder <br>
                 &nbsp;&nbsp;&nbsp; - modules folder <br>
-                into the folder of your choice. Preferred location is [HOME-FOLDER]/.sword <br>
-                note: single folder could contains many books, you do not need to use multiple folders for multiple books
+                into the folder of your choice. (Preferred location is [HOME-FOLDER]/.sword)<br>
+                note: single folder could contains many books, you do not need to use multiple folders for multiple books eg<br>
+                <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                    <col width="43">
+                    <col width="42">
+                    <col width="43">
+                    <col width="43">
+                    <col width="85">
+                    <tbody>
+                        <tr valign="top">
+                            <td width="17%">FOLDER</td>
+                            <td colspan="4" width="83%">CONTENTS</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="17%">mods.d</td>
+                            <td colspan="4" width="83%">All the '... .conf' configuration files</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="17%">&nbsp;</td>
+                            <td colspan="3" width="50%">Subfolders</td>
+                            <td width="33%">Files</td>
+                        </tr>
+                        <tr valign="top">
+                            <td rowspan="3" width="17%">modules</td>
+                            <td width="17%">Genbook</td>
+                            <td width="17%">Rawgenbook</td>
+                            <td width="17%">General books</td>
+                            <td width="33%">Associated files</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" width="17%">lexdict</td>
+                            <td valign="top" width="17%">Rawld
+                                <p>contains all the lexicon folders</p>
+                            </td>
+                            <td valign="bottom" width="17%">
+                                <p>Strongsgreek</p>
+                                <p>strongshebrew</p>
+                                <p>etc</p>
+                            </td>
+                            <td valign="top" width="33%">All the ' .dat' files</td>
+                        </tr>
+                        <tr valign="top">
+                            <td width="17%">texts</td>
+                            <td width="17%">
+                                <p>Ztext</p>
+                                <p>contains all the bible versions</p>
+                            </td>
+                            <td width="17%">
+                                <p>asv</p>
+                                <p>etc</p>
+                                <p><br></p>
+                            </td>
+                            <td width="33%">
+                                <p>nt.bzs</p>
+                                <p>nt.bzv</p>
+                                <p>nt.bzz</p>
+                                <p>etc</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </li>
             <li>Open Alkitab, go to Menu - Tools - Options</li>
             <li>Go to Path tab, make sure the folder where you put the books is listed there eg:<br>
@@ -93,16 +152,26 @@
                 &nbsp;&nbsp;&nbsp; - [HOME-FOLDER]\.sword (C:\Document and Settings\[YOUR-NAME]\.sword)
             </li>
             <li>If not listed, just add the folder in the Additional Book Path by click the + (plus) button</li>
-            <li>Restart Alkitab (close and open again)</li>
+            <li>Restart Alkitab (close and open)</li>
         </ul>
         <p class="link-top"><a href="#top">top</a></p>
-        
+
+        <h3><a name="faq-search-advance"></a>How do I perform advanced search ?</h3>
+        <ul>
+            <li>You can use || to join phrases, for example "<code>balaam || balak</code>" finds passages containing Balak OR Balaam</li>
+            <li>Using &amp;&amp; requires both words, e.g. "<code>aaron &amp;&amp; moses</code>" finds passages containing both Aaron AND Moses</li>
+            <li>Using a ! removes words from the result e.g. "<code>lord ! jesus</code>" is passages containing Lord BUT NOT Jesus</li>
+            <li>Using ~2 widens the passage by 2 verses either side on any match. So "<code>amminadab ~1 perez</code>" finds verses containting Amminadab within 1 verse of mention of Perez.</li>
+            <li>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.</li>
+        </ul>
+        <p class="link-top"><a href="#top">top</a></p>
+
         <h3><a name="faq-search-strongs"></a>How do I search for strongs ?</h3>
         <p>You can search for strongs using the following syntax: <br>
             &nbsp;&nbsp;&nbsp; strong:Hxxx eg: strong:H430 (for Hebrew - Old Testament) <br>
             &nbsp;&nbsp;&nbsp; strong:Gxxx eg: strong:G2424 (for Greek - New Testament) <br>
         </p>
-        <p><strong>Note: </strong>Strongs search requires bible translation that have strongs info eg: KJV</p>
+        <p><strong>Note: </strong>Strongs search requires that bible translation is linked to strongs info eg: KJV</p>
         <p class="link-top"><a href="#top">top</a></p>
         
         <h3><a name="faq-localization"></a>How do I enable localization ?</h3>
@@ -125,7 +194,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eg: "C:\Program Files\Kiyut\Alkitab-x_x\bin\alkitab.exe" <strong>--locale in:ID</strong>
         </p>
         <p><strong>Note: </strong>This is not bible translation, it is only a UI Localization.
-            Currently Alkitab Bible Study only have Indonesian Locale.
+            Currently Alkitab Bible Study only have English (en), Indonesian (id), and Fasi (fa) locale.
         </p>
         <p class="link-top"><a href="#top">top</a></p>
         
