@@ -35,7 +35,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         String orientationKey = "alkitab.orientation";
         String strOrientation = System.getProperty(orientationKey);
         if (strOrientation == null) {
-            strOrientation = "ltr";
+            strOrientation = "auto";
         } else {
             strOrientation = strOrientation.trim().toLowerCase();
         }

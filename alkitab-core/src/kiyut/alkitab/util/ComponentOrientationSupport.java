@@ -22,22 +22,22 @@ public class ComponentOrientationSupport {
      * If it is not specified it will return ComponentOrientation.LEFT_TO_RIGHT
      * Possible value are:
      * <code>
-     * - auto, automatic setting based on Locale.getDefault()
-     * - ltr, (Default) force to use Left to Right orientation
+     * - auto (Default), automatic setting based on Locale.getDefault()
+     * - ltr, force to use Left to Right orientation
      * - rtl, force to use Right to Left orientation
      * </code>
      * @return ComponentOrientation
      */
     public static ComponentOrientation getComponentOrientation() {
-        ComponentOrientation orient = ComponentOrientation.LEFT_TO_RIGHT;
+        ComponentOrientation orient = ComponentOrientation.getOrientation(Locale.getDefault());
 
         String str = System.getProperty("alkitab.orientation");
 
         if (str != null) {
-            if (str.equals("rtl")) {
+            if (str.equals("ltr")) {
+                orient = ComponentOrientation.LEFT_TO_RIGHT;
+            } else if (str.equals("rtl")) {
                 orient = ComponentOrientation.RIGHT_TO_LEFT;
-            } else if (str.equals("auto")) {
-                orient = ComponentOrientation.getOrientation(Locale.getDefault());
             }
         }
 
