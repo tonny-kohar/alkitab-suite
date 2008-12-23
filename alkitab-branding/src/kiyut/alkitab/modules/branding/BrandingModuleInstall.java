@@ -126,7 +126,7 @@ public class BrandingModuleInstall extends ModuleInstall {
                         return;
                     }
 
-                    Mode mode = WindowManager.getDefault().findMode("editor");
+                    Mode mode = WindowManager.getDefault().findMode("editor"); //NOI18N
                     if (mode != null) {
                         TopComponent selectedTC = mode.getSelectedTopComponent();
                         if (selectedTC != null) {

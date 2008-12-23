@@ -35,7 +35,7 @@
         <jar jarfile="${locale.dir}/kiyut-alkitab_${app.name}.jar" compress="${build.package.compress}">
             <fileset dir="build/classes">
                 <include name="**/kiyut/alkitab/**/*_*.properties"/>
-                <exclude name="**/kiyut/alkitab/modules/**" />
+                <exclude name="**/kiyut/alkitab/modules/localization**" />
             </fileset>
         </jar>
         
