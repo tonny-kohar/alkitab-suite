@@ -2,6 +2,10 @@
 
 package kiyut.alkitab.swing;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import javax.swing.AbstractListModel;
 import org.crosswire.jsword.passage.Key;
 
@@ -10,6 +14,9 @@ import org.crosswire.jsword.passage.Key;
  * 
  */
 public class KeyListModel extends AbstractListModel {
+    private final ScheduledExecutorService scheduler =  Executors.newScheduledThreadPool(1);
+    protected boolean searchCancelled = false;
+    protected int searchResult = -1;
     protected Key keyList;
     
     public KeyListModel()  {
@@ -52,5 +59,4 @@ public class KeyListModel extends AbstractListModel {
         if (keyList == null) { return null; }
         return keyList.get(index);
     }
-
 }

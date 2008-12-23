@@ -22,7 +22,7 @@ import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
-import kiyut.alkitab.swing.DefinitionPane;
+import kiyut.alkitab.swing.DictionaryPane;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
@@ -35,7 +35,7 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.DefinitionPane DefinitionPane}.
+ * Top component which displays {@link kiyut.alkitab.swing.DictionaryPane DictionaryPane}.
  */
 public final class DefinitionsTopComponent extends TopComponent {
 
@@ -154,12 +154,12 @@ public final class DefinitionsTopComponent extends TopComponent {
             public void propertyChange(PropertyChangeEvent evt) {
                 JTabbedPane pane = (JTabbedPane)evt.getSource();
                 Object obj = evt.getNewValue();
-                if (obj == null || !(obj instanceof DefinitionPane)) {
+                if (obj == null || !(obj instanceof DictionaryPane)) {
                     return;
                 }
-                DefinitionPane defPane = (DefinitionPane)obj;
-                defPane.removeHyperlinkListener(hyperlinkListener);
-                pane.remove(defPane);
+                DictionaryPane dicPane = (DictionaryPane)obj;
+                dicPane.removeHyperlinkListener(hyperlinkListener);
+                pane.remove(dicPane);
             }
         });
         this.add(BorderLayout.CENTER, tabbedPane);
@@ -213,21 +213,21 @@ public final class DefinitionsTopComponent extends TopComponent {
         
         // find if the dictionary already opened or not
         for (int i=0; i<tabbedPane.getTabCount(); i++) {
-            DefinitionPane defPane = (DefinitionPane)tabbedPane.getComponentAt(i);
-            if (defPane.getBook().getInitials().equals(book.getInitials())) {
+            DictionaryPane dicPane = (DictionaryPane)tabbedPane.getComponentAt(i);
+            if (dicPane.getBook().getInitials().equals(book.getInitials())) {
                 index = i;
                 break;
             }
         }
         
         if (index == -1) {
-            DefinitionPane defPane = new DefinitionPane(book);
-            defPane.addHyperlinkListener(hyperlinkListener);
-            defPane.setName(book.getInitials());
+            DictionaryPane dicPane = new DictionaryPane(book);
+            dicPane.addHyperlinkListener(hyperlinkListener);
+            dicPane.setName(book.getInitials());
             
             // do not use addTab, there is bug for space between title and x button
-            //tabbedPane.addTab(book.getInitials() + "   ", null, defPane, book.getName());
-            tabbedPane.add(defPane);
+            //tabbedPane.addTab(book.getInitials() + "   ", null, dicPane, book.getName());
+            tabbedPane.add(dicPane);
             index = tabbedPane.getTabCount() - 1;
             tabbedPane.setToolTipTextAt(index, book.getName());
         }
@@ -236,11 +236,11 @@ public final class DefinitionsTopComponent extends TopComponent {
         
         String keyString = uri.getFragment();
         if (keyString != null && !keyString.equals("")) {
-            DefinitionPane defPane = (DefinitionPane)tabbedPane.getSelectedComponent();
-            Book theBook = defPane.getBook();
+            DictionaryPane dicPane = (DictionaryPane)tabbedPane.getSelectedComponent();
+            Book theBook = dicPane.getBook();
             if (book != null) {
                 Key key = theBook.getValidKey(keyString);
-                defPane.setKey(key);
+                dicPane.setKey(key);
             }
         }
     }
@@ -301,8 +301,8 @@ public final class DefinitionsTopComponent extends TopComponent {
             int i = tabbedPane.getSelectedIndex();
             if (i < 0) { return; }
             
-            DefinitionPane defPane = (DefinitionPane)tabbedPane.getComponentAt(i);
-            defPane.viewSource();
+            DictionaryPane dicPane = (DictionaryPane)tabbedPane.getComponentAt(i);
+            dicPane.viewSource();
         }
     }
 }

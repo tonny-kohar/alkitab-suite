@@ -2,8 +2,11 @@
 
 package kiyut.alkitab.swing;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -19,8 +22,6 @@ import org.crosswire.jsword.passage.PreferredKey;
  * 
  */
 public class DefinitionPane extends javax.swing.JPanel {
-    
-    //protected Book book;
     
     protected BookTextPane bookTextPane;
     protected ViewerHints<ViewerHints.Key,Object> viewerHints;
@@ -49,22 +50,22 @@ public class DefinitionPane extends javax.swing.JPanel {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         bookScrollPane = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        indexPane = new javax.swing.JPanel();
         indexScrollPane = new javax.swing.JScrollPane();
-        keyList = new javax.swing.JList();
+        indexList = new javax.swing.JList();
 
         setLayout(new java.awt.BorderLayout());
 
         jSplitPane1.setResizeWeight(1.0);
         jSplitPane1.setLeftComponent(bookScrollPane);
 
-        jPanel1.setLayout(new java.awt.BorderLayout(0, 3));
+        indexPane.setLayout(new java.awt.BorderLayout(0, 3));
 
-        indexScrollPane.setViewportView(keyList);
+        indexScrollPane.setViewportView(indexList);
 
-        jPanel1.add(indexScrollPane, java.awt.BorderLayout.CENTER);
+        indexPane.add(indexScrollPane, java.awt.BorderLayout.CENTER);
 
-        jSplitPane1.setRightComponent(jPanel1);
+        jSplitPane1.setRightComponent(indexPane);
 
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -72,10 +73,10 @@ public class DefinitionPane extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane bookScrollPane;
+    protected javax.swing.JList indexList;
+    protected javax.swing.JPanel indexPane;
     private javax.swing.JScrollPane indexScrollPane;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JList keyList;
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
@@ -84,11 +85,11 @@ public class DefinitionPane extends javax.swing.JPanel {
         
         //getActionMap().setParent(bookTextPane.getActionMap());
         
-        keyList.setPrototypeCellValue("DICTIONARY INDEX TEXT");
-        keyList.setModel(new KeyListModel());
-        keyList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        indexList.setPrototypeCellValue("DICTIONARY INDEX TEXT");
+        indexList.setModel(new KeyListModel());
+        indexList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        keyList.addListSelectionListener(new ListSelectionListener() {
+        indexList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent evt) {
                 keyValueChanged(evt);
             }
@@ -105,7 +106,7 @@ public class DefinitionPane extends javax.swing.JPanel {
             }
             
             Key key = book.getGlobalKeyList();
-            ((KeyListModel)keyList.getModel()).setKey(key);
+            ((KeyListModel)indexList.getModel()).setKey(key);
             
             Key prefKey = null;
             if (book instanceof PreferredKey) {
@@ -118,8 +119,8 @@ public class DefinitionPane extends javax.swing.JPanel {
                  if (index < 0) { index = 0; }
             } 
             
-            if (keyList.getModel().getSize() > index) {
-                keyList.setSelectedIndex(index);
+            if (indexList.getModel().getSize() > index) {
+                indexList.setSelectedIndex(index);
             }
         } else {
             bookTextPane.getBooks().clear();
@@ -171,9 +172,9 @@ public class DefinitionPane extends javax.swing.JPanel {
     
     protected void keyValueChanged(ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) { return; }
-        int index = keyList.getSelectedIndex();
+        int index = indexList.getSelectedIndex();
         if (index == -1) { return; }
-        Key key = (Key)keyList.getModel().getElementAt(index);
+        Key key = (Key)indexList.getModel().getElementAt(index);
         // XXX bug on JSword ?, if using string it will not find the key
         // eg: Daily Devotional
         /*System.out.println("key: " + key.toString());

@@ -382,7 +382,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
             }
             
             if (!modulesDir || !modsDir) {
-                throw new RuntimeException("Invalid Sword Module raw zip file."); // NO18N
+                throw new RuntimeException("Invalid Sword Module raw zip file."); // NOI18N
             }
             
             

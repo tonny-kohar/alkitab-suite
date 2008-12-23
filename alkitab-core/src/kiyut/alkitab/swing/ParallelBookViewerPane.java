@@ -1135,7 +1135,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         SeparatorComboBox comboBox = new SeparatorComboBox(bookInitials.toArray());
-        comboBox.setPrototypeDisplayValue("BOOKINITIALS"); //NO18N
+        comboBox.setPrototypeDisplayValue("BOOKINITIALS"); //NOI18N
         return comboBox;
     }
 }
