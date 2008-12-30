@@ -57,6 +57,7 @@
             <file name="master-help.xml" url="alkitab-master-help.xml">
                 <attr name="position" intvalue="0"/>
             </file>
+            <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow_hidden"/>
         </folder>
         <folder name="Tools">
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
