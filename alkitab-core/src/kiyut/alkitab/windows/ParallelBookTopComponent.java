@@ -5,6 +5,7 @@ package kiyut.alkitab.windows;
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
@@ -20,6 +21,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -50,6 +52,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private static final String PREFERRED_ID = "ParallelBookTopComponent";
     private ParallelBookViewerPane bookViewer;
     private Point linkToolTipLocation;
+    private Timer linkToolTipTimer;
+    private SwordURI linkToolTipSwordURI;
 
     public ParallelBookTopComponent() {
         initComponents();
@@ -206,6 +210,15 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         });
         
         linkToolTipLocation = new Point();
+
+        linkToolTipTimer = new Timer(500, new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                showToolTip(linkToolTipSwordURI);
+            }
+        });
+
+        linkToolTipTimer.setRepeats(false);
+        linkToolTipTimer.setCoalesce(true);
         
         bookViewer.getViewerComponent().addMouseMotionListener(new MouseMotionListener() {
             public void mouseDragged(MouseEvent evt) { 
@@ -261,8 +274,11 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             BookViewManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
-            showToolTip(swordURI);
+            linkToolTipSwordURI = swordURI;
+            linkToolTipTimer.restart();
+            //showToolTip(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.EXITED)) {
+            linkToolTipTimer.stop();
             hideToolTip();
         }
     }
@@ -293,7 +309,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
         BookToolTipFactory.getInstance().getToolTip().show(book, key, comp, p.x, p.y);
     }
-    
+
     private void hideToolTip() {
         BookToolTipFactory.getInstance().getToolTip().hide();
     }
@@ -314,6 +330,16 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
         if (bookName.equals("")) {
             switch (swordURI.getType()) {
+                /*case BIBLE:
+                    bookName = BookViewerOptions.getInstance().getDefaultBible();
+                    if (bookName == null) {
+                        List books = Books.installed().getBooks(BookFilters.getBibles());
+                        if (!books.isEmpty()) {
+                            bookName = ((Book) books.get(0)).getInitials();
+                        }
+                    }
+                    break;
+                 */
                 case GREEK_STRONGS:
                     bookName = BookViewerOptions.getInstance().getDefaultGreekStrongs();
                     if (bookName == null) {
