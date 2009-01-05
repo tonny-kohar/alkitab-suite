@@ -60,7 +60,7 @@ public final class BookViewerOptions extends AbstractOptions {
     /** 
      * <strong>note: </strong> The following books are the default
      * KJV, StrongsGreek, StrongsHebrew, Robinson, ot1nt2 unless it is overwrite by the user. <br/>
-     * Why those books? Because they included with the installer
+     * Why those books? Because they included with the installer :)
      */
     public void load() {
         Preferences prefs = getPreferences();

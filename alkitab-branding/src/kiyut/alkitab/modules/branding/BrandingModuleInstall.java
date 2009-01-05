@@ -60,7 +60,8 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         File[] paths = viewerOpts.getBookPaths();
         try {
-            SwordUtilities.setAugmentPath(paths);
+            //SwordUtilities.setAugmentPath(paths);
+            SwordBookPath.setAugmentPath(paths);
         } catch (Exception ex) {
             logger.log(Level.WARNING,ex.getMessage(),ex);
         }

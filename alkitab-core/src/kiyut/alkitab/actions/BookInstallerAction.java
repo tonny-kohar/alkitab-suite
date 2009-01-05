@@ -34,8 +34,13 @@ public final class BookInstallerAction extends AbstractAction {
                 Frame owner = WindowManager.getDefault().getMainWindow();
                 BookInstallerPane installerPane = new BookInstallerPane();
                 installerPane.showDialog(owner);
-                
+
                 if (installerPane.isBookInstalled()) {
+                    BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
+                    tc.reload();
+                }
+
+                /*if (installerPane.isBookInstalled()) {
                     boolean pathOK = false;
                     
                     BookViewerOptions viewerOpts = BookViewerOptions.getInstance();
@@ -52,7 +57,7 @@ public final class BookInstallerAction extends AbstractAction {
                         BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
                         tc.reload();
                     }
-                }
+                }*/
             }
         });
     }    

@@ -136,12 +136,12 @@
             <replacefilter token="$${app-core.pack}" value="${nbdist-izpack-app-core.pack}" />
             <replacefilter token="$${packs.dir}" value="${nbdist-izpack-packs.dir}" />
         </replace>
-        <replace file="${nbdist-izpack.dir}/Win-shortcutSpec.xml">
+        <replace file="${nbdist-izpack.dir}/shortcutSpecWindows.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
             <replacefilter token="$${app.version}" value="${app.version}" />
         </replace>
-        <replace file="${nbdist-izpack.dir}/Unix-shortcutSpec.xml">
+        <replace file="${nbdist-izpack.dir}/shortcutSpecUnix.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
             <replacefilter token="$${app.version}" value="${app.version}" />

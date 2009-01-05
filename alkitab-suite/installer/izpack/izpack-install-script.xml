@@ -24,12 +24,12 @@
         <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
         <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
     </variables>
-    
-    <dynamicvariables>
-        <!-- <variable name="SWORD_PATH" value="${USER_HOME}${FILE_SEPARATOR}.sword"/> -->
-        <!-- <variable name="UserPathPanelVariable" value="${USER_HOME}${FILE_SEPARATOR}.sword" /> -->
+
+    <!-- <dynamicvariables>
+        <variable name="UserPathPanelVariable" value="${ENV[APPDATA]}${FILE_SEPARATOR}Sword"/>
     </dynamicvariables>
-    
+    -->
+
     <!--
         The gui preferences indication.
         Sets the installer window to 640x480. It will not be able to change the size.
@@ -39,7 +39,8 @@
         <modifier key="useButtonIcons" value="no"/>
         <modifier key="useLabelIcons" value="no"/>
         <modifier key="allYGap" value="3"/>
-        <modifier key="layoutAnchor" value="NORTHWEST"/>    
+        <modifier key="allXGap" value="3"/>
+        <modifier key="layoutAnchor" value="NORTHWEST"/>
         <modifier key="useHeadingPanel" value="yes"/>
         <modifier key="headingLineCount" value="1"/>
         <modifier key="headingFontSize" value="1.5"/>
@@ -62,13 +63,14 @@
     -->
     <resources>
         <res id="LicencePanel.licence" src="LICENSE-alkitab.txt"/>
-        <res id="shortcutSpec.xml" src="Win-shortcutSpec.xml"/>
-        <res id="Unix_shortcutSpec.xml" src="Unix-shortcutSpec.xml"/>
+        <res id="shortcutSpec.xml" src="shortcutSpecWindows.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="shortcutSpecUnix.xml"/>
         <res id="Installer.image" src="installer-image.png"/>
         <res id="Heading.image" src="heading-image.png"/>
         <res id="XInfoPanel.info" src="XInfoPanel.txt"/>
         <res id="packsLang.xml" src="packsLang.xml" type="xml"/>
         <res id="UserPathPanel.dir" src="UserPathPanel.txt"/>
+        <res id="UserPathPanel.dir.windows" src="UserPathPanelWindows.txt"/>
     </resources>
     
     <!-- The native libraries to add -->

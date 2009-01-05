@@ -179,6 +179,7 @@ public class SwordUtilities {
      * whether specified in the param or not. If not specified it will 
      * add the [user.home]/.sword in the last entry
      * @param paths an arrays of path
+     * @deprecated do not use this, please use SwordBookPath.setAugmentPath() directly
      */
     public static void setAugmentPath(File[] paths) throws BookException {
         boolean defPathFound = false;
