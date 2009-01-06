@@ -37,7 +37,7 @@ public class NbUtilities {
      */
     public static void createMenu(JComponent menu, String folderName) {
         if (menu == null || folderName == null) {
-            throw new IllegalArgumentException("argument menu or folderName should not be null"); // NO18N
+            throw new IllegalArgumentException("argument menu or folderName should not be null"); // NOI18N
         }
         
         FileSystem fs = Repository.getDefault().getDefaultFileSystem();

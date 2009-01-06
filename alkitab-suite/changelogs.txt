@@ -1,10 +1,15 @@
-ver 2.1-beta2
+ver 2.1
+- Add Defintions/Dictionary searching
 - Add Syntax Highlight for View Source (OSIS and HTML)
+- Add delay 500 milisecond for Tooltip popup
 - Add option -J-Dalkitab.orientation=auto|ltr|rtl for experimental RTL support
-- Add fa locale (Thanks Peter)
+- Add Farsi (fa) locale (Thanks Peter von Kaehne)
+- Add Vietnamese (vi) locale (Thanks Daniel Owens)
+- Fix Menu Mnemonic
 - Improved Navigator Panel
 - Improved Public API for OptionsDialog
-- Improved documentation (Thanks Timothy)
+- Improved Sword Module location
+- Improved documentation (Thanks Timothy Cooper)
 
 ver 2.0
 - Fix Session Management with Navigator Panel

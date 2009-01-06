@@ -73,7 +73,7 @@ public class DefaultBookToolTip implements BookToolTip {
         hide(); // hide the prev popup if any is opened
         
         if (book == null || key == null) {
-            throw new IllegalArgumentException("book or key should not be null"); //NO18N
+            throw new IllegalArgumentException("book or key should not be null"); //NOI18N
         }
         
         List<Book> books = bookTextPane.getBooks();

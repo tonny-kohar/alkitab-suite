@@ -1,11 +1,12 @@
 Just something on my minds that could improve Alkitab Bible Study, 
 in no particular order
-- [API] Open more public API for plugins/extension
-- [GUI] Bookshelf popup menu (Open in new view or in current view) (Done)
+- [API] Open more public API for plugins/extension (On going progress)
 - [GUI] Alternative HTML viewer: xhtml (flying sourcer), XULEmbed, JDIC native browser, JWebPane (preferred, but not available yet)
-- [GUI] Defintions/Dictionary searching
 - [i18n] Internationalization or Localization for Alkitab Bible Study,
   in_ID = Indonesian (Done)
+  fa = Farsi (Done, thanks Peter von Kaehne)
+  vi = Vietnamese (Done, thanks Daniel Owens)
 - [Installer] Mac OSX dmg, need community help to build the dmg installer
 - [SWORD] Indonesian Bible Translation, require LAI (http://www.alkitab.or.id) permission,
-  LAI is the copyright owner. (In Progress)
+  LAI is the copyright owner. (Done, Rejected by LAI)
+- [SWORD] Indonesian Bible Translation, create my own translation :)
