@@ -18,6 +18,7 @@ public class DictionaryPane extends DefinitionPane {
 
     protected JTextField searchField;
     protected SearchTask searchTask = new SearchTask();
+    protected boolean searching = false;
 
     public DictionaryPane(Book book) {
         super(book);
@@ -29,7 +30,7 @@ public class DictionaryPane extends DefinitionPane {
             @Override
             public void keyTyped(KeyEvent evt) {
                 SwingUtilities.invokeLater(searchTask);
-            };
+            }
 
             @Override
             public void keyPressed(KeyEvent evt) {
@@ -44,15 +45,38 @@ public class DictionaryPane extends DefinitionPane {
         });
     }
 
+    @Override
+    public void setKey(Key key) {
+        super.setKey(key);
+        if (key == null) { return; }
+
+        // clear the searchField
+        if (!searching && searchField != null) {
+            searchField.setText(null);
+        }
+    }
+
     public class SearchTask implements Runnable {
         public void run() {
+            searching = true;
+            try {
+                searchImpl();
+            } finally {
+                searching = false;
+            }
+        }
+
+        protected synchronized void searchImpl() {
             Book book = getBook();
             Key key = book.getValidKey(searchField.getText());
-            int i = ((KeyListModel) indexList.getModel()).getKey().indexOf(key);
+
+            KeyListModel keyListModel = (KeyListModel)indexList.getModel();
+            int i = keyListModel.getKey().indexOf(key);
+
             //System.out.println("nearest: " + i);
             if (i != -1) {
-                indexList.setSelectedIndex(i);
-                indexList.ensureIndexIsVisible(i);
+                key = keyListModel.getKey().get(i);
+                setKey(key);
             }
         }
     }

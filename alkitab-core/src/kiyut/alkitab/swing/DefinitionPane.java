@@ -121,6 +121,7 @@ public class DefinitionPane extends javax.swing.JPanel {
             
             if (indexList.getModel().getSize() > index) {
                 indexList.setSelectedIndex(index);
+                indexList.ensureIndexIsVisible(index);
             }
         } else {
             bookTextPane.getBooks().clear();
@@ -139,8 +140,18 @@ public class DefinitionPane extends javax.swing.JPanel {
         if (key == null) { return; }
         bookTextPane.setKey(key);
         bookTextPane.refresh(true);
+
+        // synchronize the List and the View
+        int i = ((KeyListModel) indexList.getModel()).getKey().indexOf(key);
+
+        if (i >= 0) {
+            if (indexList.getSelectedIndex() != i) {
+                indexList.setSelectedIndex(i);
+            }
+            indexList.ensureIndexIsVisible(i);
+        }
     }
-    
+
     /*public void setKey(keyString) {
         Book book = getBook();
         if (book == null) { return; }
@@ -183,8 +194,7 @@ public class DefinitionPane extends javax.swing.JPanel {
         System.out.println("   : " + key.getOsisRef());
          */
         //bookTextPane.setViewKey(key.toString());
-        bookTextPane.setKey(key);
-        bookTextPane.refresh(true);
+        setKey(key);
         //System.out.println("DefinitionPane.keyValueChanged" + key);
     }
 }
