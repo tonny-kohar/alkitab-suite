@@ -44,9 +44,6 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
-import org.crosswire.jsword.passage.Verse;
-import org.crosswire.jsword.passage.VerseRange;
-import org.crosswire.jsword.versification.BibleInfo;
 
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which able to display parallel book
@@ -57,23 +54,25 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
     
     protected BookTextPane bookTextPane;
-    
+
+    /** just a flag indicating searching mode */
+    protected boolean searching;
+
     protected ActionListener bookComboActionListener;
     
     protected HistoryManager historyManager;
+
+    /** just a flag indicating history is in progress */
+    protected boolean historyInProgress;
     
     protected volatile boolean unindexedBooks; 
     protected volatile boolean indexInProgress;  
     //protected List<Progress> indexJobs;
     //protected IndexWorkListener indexWorkListener;
-    
-    protected boolean historyInProgress;
-    
+
     protected ChangeListener indexChangeListener;
     
-    /** Creates new ParallelBookViewerPane. 
-     * 
-     */
+    /** Creates new ParallelBookViewerPane. */
     public ParallelBookViewerPane() {
         initComponents();
         initCustom();
@@ -525,6 +524,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 } else {
                     setKey(passageTextArea.getText());
                     refresh();
+
                 }
             }
         });
@@ -889,6 +889,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         bookTextPane.setKey(displayKey);
+
+        if (!searching) {
+            searchTextArea.setText(null);
+        }
     }
     
     public Key getKey() {
@@ -1039,6 +1043,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * @see #search(String,boolean,int)
      */
     protected void search(String searchString, boolean ranked, int searchLimit) {
+        searching = true;
+        try {
+            searchImpl(searchString, ranked, searchLimit);
+        } finally {
+            searching = false;
+        }
+    }
+
+    private void searchImpl(String searchString, boolean ranked, int searchLimit) {
         if (searchString == null || searchString.length() == 0) {
             return;
         }
