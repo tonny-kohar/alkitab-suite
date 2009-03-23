@@ -4,14 +4,9 @@ package kiyut.alkitab.actions;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.BookInstallerPane;
-import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;

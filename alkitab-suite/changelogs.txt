@@ -1,3 +1,9 @@
+ver 2.2
+- Synchronize Parallel View passage and search text field
+- Synchronize Dictionary view and index list
+- Updated to use JSword 1.6 (20090322)
+- Fix indexing bug (JSword)
+
 ver 2.1
 - Add Defintions/Dictionary searching
 - Add Syntax Highlight for View Source (OSIS and HTML)

@@ -1,5 +1,4 @@
 /* This work has been placed into the public domain. */
-
 package kiyut.alkitab.api;
 
 import org.openide.nodes.AbstractNode;
@@ -22,18 +21,18 @@ public class BookViewerNode extends AbstractNode {
 
     protected InstanceContent instanceContent = null;
     protected BookViewer bookViewer;
-    
+
     public BookViewerNode(BookViewer bookViewer) {
         this(new InstanceContent(), bookViewer);
     }
-    
-    private BookViewerNode(InstanceContent instanceContent,BookViewer bookViewer) {
-        super(Children.LEAF,new AbstractLookup(instanceContent));
+
+    private BookViewerNode(InstanceContent instanceContent, BookViewer bookViewer) {
+        super(Children.LEAF, new AbstractLookup(instanceContent));
         this.instanceContent = instanceContent;
         instanceContent.add(bookViewer);
         this.bookViewer = bookViewer;
     }
-    
+
     public void closed() {
         //System.out.println("BookViewerNode.closed()");
         //bookViewer.closed();
