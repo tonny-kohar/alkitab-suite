@@ -390,7 +390,15 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         return book;
     }
     
-     protected class ReindexAction extends AbstractAction {
+    public void requestFocusForPassageComponent() {
+        bookViewer.requestFocusForPassageComponent();
+    }
+
+    public void requestFocusForSearchComponent() {
+        bookViewer.requestFocusForSearchComponent();
+    }
+
+    protected class ReindexAction extends AbstractAction {
         public ReindexAction() {
             putValue(Action.NAME, NbBundle.getMessage(ReindexAction.class, "CTL_ReindexAction"));
         }

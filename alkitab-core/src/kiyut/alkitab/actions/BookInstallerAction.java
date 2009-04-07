@@ -12,7 +12,7 @@ import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
 /**
- * Open Book Installer Dialog
+ * This action will open book installer dialog.
  * 
  */
 public final class BookInstallerAction extends AbstractAction {

@@ -7,15 +7,27 @@
             <file name="org-netbeans-core-actions-JumpNextAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-JumpPrevAction.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-templates-TemplatesAction.instance_hidden"/>
+            <file name="org-netbeans-progress-module-CancelAction.instance_hidden"/>
+            <file name="org-openide-actions-EditAction.instance_hidden"/>
+            <file name="org-openide-actions-FileSystemRefreshAction.instance_hidden"/>
+            <file name="org-openide-actions-InstantiateAction.instance_hidden"/>
+            <file name="org-openide-actions-MoveDownAction.instance_hidden"/>
+            <file name="org-openide-actions-MoveUpAction.instance_hidden"/>
+            <file name="org-openide-actions-NewAction.instance_hidden"/>
+            <file name="org-openide-actions-NewTemplateAction.instance_hidden"/>
+            <file name="org-openide-actions-OpenAction.instance_hidden"/>
             <file name="org-openide-actions-PageSetupAction.instance_hidden"/>
+            <file name="org-openide-actions-PopupAction.instance_hidden"/>
             <file name="org-openide-actions-PrintAction.instance_hidden"/>
+            <file name="org-openide-actions-RenameAction.instance_hidden"/>
+            <file name="org-openide-actions-ReorderAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAllAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAsAction.instance_hidden"/>
         </folder>
         <folder name="View">
             <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
-            <file name="org-netbeans-core-actions-LogAction.instance_hidden"/>
+            <!-- <file name="org-netbeans-core-actions-LogAction.instance_hidden"/> -->
             <file name="org.netbeans.modules.image.CustomZoomAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.ZoomInAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.ZoomOutAction.instance_hidden"/>
@@ -27,6 +39,7 @@
             <file name="org-netbeans-core-actions-PreviousViewCallbackAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-ViewRuntimeTabAction.instance_hidden"/>
             <file name="org-netbeans-core-output2-OutputWindowAction.instance_hidden"/>
+            <file name="org-netbeans-core-windows-actions-CloneDocumentAction.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-Add.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-Remove.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-View.instance_hidden"/>
@@ -78,6 +91,7 @@
             <file name="Separator2.instance_hidden"/>
             <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-LogAction.instance_hidden"/>
+            <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
         </folder>
         <folder name="Window">
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
@@ -122,6 +136,12 @@
         <file name="D-Q.shadow">
             <attr name="originalFile" stringvalue="Actions/System/org-netbeans-core-actions-SystemExit.instance"/>
         </file>
+        <file name="D-G.shadow">
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-PassageAction.instance"/>
+        </file>
+        <file name="D-F.shadow">
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-SearchAction.instance"/>
+        </file>
         <file name="DO-1.shadow">
             <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookshelfAction.instance"/>
         </file>
@@ -143,7 +163,6 @@
             <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsAdvancedOption.instance_hidden"/>
         </folder>
         <file name="General.instance_hidden"/>
-        <file name="Keymaps.instance_hidden"/>
         <file name="BookViewerOptionCategory.instance">
             <attr name="position" intvalue="0"/>
         </file>

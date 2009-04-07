@@ -1,3 +1,13 @@
+ver 2.3
+- Add Configurable Keymap (shortcut) for Options Dialog
+- Add Ctrl-G for request focus on Passage Field
+- Add Ctrl-F for request foucs on Search Field
+- *Add Ctrl-Left for Go Back (History)
+- *Add Ctrl-Right for Go Forward (History)
+- *Add Ctrl-??? for Go Previous Page 
+- *Add Ctrl-??? for Go Next Page
+
+
 ver 2.2
 - Synchronize Parallel View passage and search text field
 - Synchronize Dictionary view and index list
@@ -13,7 +23,7 @@ ver 2.1
 - Add Vietnamese (vi) locale (Thanks Daniel Owens)
 - Fix Menu Mnemonic
 - Improved Navigator Panel
-- Improved Public API for OptionsDialog
+- Improved Public API for Options Dialog
 - Improved Sword Module location
 - Improved documentation (Thanks Timothy Cooper)
 

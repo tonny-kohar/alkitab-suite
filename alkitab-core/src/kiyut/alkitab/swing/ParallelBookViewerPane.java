@@ -1028,6 +1028,16 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         refresh();
     }
 
+    public void requestFocusForPassageComponent() {
+        passageTextArea.selectAll();
+        passageTextArea.requestFocusInWindow();
+    }
+
+    public void requestFocusForSearchComponent() {
+        searchTextArea.selectAll();
+        searchTextArea.requestFocusInWindow();
+    }
+
     /** Search the specified String which is not ranked
      * @param searchString String to search
      * @see #search(String,boolean,int)

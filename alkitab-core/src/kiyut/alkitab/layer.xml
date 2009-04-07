@@ -7,6 +7,14 @@
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.NewViewAction"/>
             </file>
         </folder>
+        <folder name="Navigate">
+            <file name="kiyut-alkitab-actions-PassageAction.instance">
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.PassageAction"/>
+            </file>
+            <file name="kiyut-alkitab-actions-SearchAction.instance">
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.SearchAction"/>
+            </file>
+        </folder>
         <folder name="Tools">
             <file name="kiyut-alkitab-actions-BookInstallerAction.instance">
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookInstallerAction"/>
@@ -31,10 +39,6 @@
         </folder>
     </folder>
     <folder name="OptionsDialog">
-        <!-- <file name="BookViewerOptionsCategory.instance">
-            <attr name="instanceClass" stringvalue="kiyut.alkitab.options.BookViewerOptionsCategory"/>
-        </file>
-        -->
         <folder name="BookViewerOptionsCategory">
             <file name="kiyut-alkitab-options-GeneralAdvancedOptions.instance">
                 <attr name="position" intvalue="0"/>
