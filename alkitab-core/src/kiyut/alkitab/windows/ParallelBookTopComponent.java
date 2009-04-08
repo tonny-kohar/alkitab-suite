@@ -541,14 +541,12 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
     public class FocusPassageComponentDelegateAction extends AbstractAction {
         public void actionPerformed(ActionEvent evt) {
-            System.out.println("focusPassage called");
             bookViewer.requestFocusForPassageComponent();
         }
     }
 
     public class FocusSearchComponentDelegateAction extends AbstractAction {
         public void actionPerformed(ActionEvent evt) {
-            System.out.println("focusSearch called");
             bookViewer.requestFocusForSearchComponent();
         }
     }
