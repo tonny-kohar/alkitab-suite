@@ -8,11 +8,41 @@
             </file>
         </folder>
         <folder name="Navigate">
-            <file name="kiyut-alkitab-actions-PassageAction.instance">
-                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.PassageAction"/>
+            <file name="kiyut-alkitab-actions-GoBackAction.instance">
+                <attr name="position" intvalue="0"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.GoBackAction"/>
             </file>
-            <file name="kiyut-alkitab-actions-SearchAction.instance">
-                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.SearchAction"/>
+            <file name="kiyut-alkitab-actions-GoForwardAction.instance">
+                <attr name="position" intvalue="10"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.GoForwardAction"/>
+            </file>
+            <file name="kiyut-alkitab-actions-GoPreviousAction.instance">
+                <attr name="position" intvalue="100"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.GoPreviousAction"/>
+            </file>
+            <file name="kiyut-alkitab-actions-GoNextAction.instance">
+                <attr name="position" intvalue="110"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.GoNextAction"/>
+            </file>
+            <file name="kiyut-alkitab-actions-Expand1Action.instance">
+                <attr name="position" intvalue="210"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.Expand1Action"/>
+            </file>
+            <file name="kiyut-alkitab-actions-Expand5Action.instance">
+                <attr name="position" intvalue="250"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.Expand5Action"/>
+            </file>
+            <file name="kiyut-alkitab-actions-FocusPassageComponentAction.instance">
+                <attr name="position" intvalue="500"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.FocusPassageComponentAction"/>
+            </file>
+            <file name="kiyut-alkitab-actions-FocusSearchComponentAction.instance">
+                <attr name="position" intvalue="510"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.FocusSearchComponentAction"/>
+            </file>
+            <file name="kiyut-alkitab-actions-ViewerHintsAction.instance">
+                <attr name="position" intvalue="600"/>
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.ViewerHintsAction"/>
             </file>
         </folder>
         <folder name="Tools">

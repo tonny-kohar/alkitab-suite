@@ -2,11 +2,10 @@ ver 2.3
 - Add Configurable Keymap (shortcut) for Options Dialog
 - Add Ctrl-G for request focus on Passage Field
 - Add Ctrl-F for request foucs on Search Field
-- *Add Ctrl-Left for Go Back (History)
-- *Add Ctrl-Right for Go Forward (History)
-- *Add Ctrl-??? for Go Previous Page 
-- *Add Ctrl-??? for Go Next Page
-
+- *Add alt-Left for Go Back (History)
+- *Add alt-Right for Go Forward (History)
+- *Add alt-PgUp for Go Previous Page
+- *Add alt-PgDown for Go Next Page
 
 ver 2.2
 - Synchronize Parallel View passage and search text field

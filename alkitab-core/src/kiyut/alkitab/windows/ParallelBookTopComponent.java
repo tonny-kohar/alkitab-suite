@@ -19,27 +19,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
+import kiyut.alkitab.actions.Expand1Action;
+import kiyut.alkitab.actions.Expand5Action;
+import kiyut.alkitab.actions.FocusPassageComponentAction;
+import kiyut.alkitab.actions.FocusSearchComponentAction;
+import kiyut.alkitab.actions.GoBackAction;
+import kiyut.alkitab.actions.GoForwardAction;
+import kiyut.alkitab.actions.GoNextAction;
+import kiyut.alkitab.actions.GoPreviousAction;
+import kiyut.alkitab.actions.ViewerHintsAction;
 import kiyut.alkitab.api.BookToolTipFactory;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.api.BookViewManager;
+import kiyut.alkitab.api.History;
+import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.api.Indexer;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.ParallelBookViewerPane;
+import kiyut.alkitab.swing.ViewerHintsPane;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.RestrictionType;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
+import org.openide.util.actions.CallbackSystemAction;
+import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 
 /**
@@ -55,6 +74,12 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private Timer linkToolTipTimer;
     private SwordURI linkToolTipSwordURI;
 
+    private Action goBackDelegateAction;
+    private Action goForwardDelegateAction;
+    private Action goPreviousDelegateAction;
+    private Action goNextDelegateAction;
+    
+
     public ParallelBookTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(ParallelBookTopComponent.class, "CTL_ParallelBookTopComponent"));
@@ -62,6 +87,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 //        setIcon(Utilities.loadImage(ICON_PATH, true));
 
         initCustom();
+
+        ComponentOrientationSupport.applyComponentOrientation(this);
     }
 
     /** This method is called from within the constructor to
@@ -175,6 +202,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         if (bookViewer != null) {
             bookViewer.dispose();
         }
+        super.componentClosed();
     }
 
     @Override
@@ -190,7 +218,13 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     
     /** If you override this, please make sure to call super.initCustom() */
     protected void initCustom() {
-        bookViewer = new ParallelBookViewerPane();
+        bookViewer = new ParallelBookViewerPane() {
+            @Override
+            public void refresh() {
+                super.refresh();
+                updateHistoryAction();
+            }
+        };
         add(BorderLayout.CENTER, (JComponent) bookViewer);
 
         bookViewerNode = new BookViewerNode(bookViewer);
@@ -230,19 +264,47 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
         });
         
-        /*
-        // Init action map: cut,copy,delete,paste actions.
-        javax.swing.ActionMap tcActionMap = getActionMap();
-        javax.swing.ActionMap bookViewerActionMap = ((JComponent)bookViewer).getActionMap();
-        tcActionMap.setParent(bookViewerActionMap);
+        JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
+        add(BorderLayout.NORTH, toolBar);
+
+        ActionMap actionMap = getActionMap();
+
+        CallbackSystemAction goBackAction = SystemAction.get(GoBackAction.class);
+        CallbackSystemAction goForwardAction = SystemAction.get(GoForwardAction.class);
+        CallbackSystemAction goPreviousAction = SystemAction.get(GoPreviousAction.class);
+        CallbackSystemAction goNextAction = SystemAction.get(GoNextAction.class);
+        CallbackSystemAction expand1Action = SystemAction.get(Expand1Action.class);
+        CallbackSystemAction expand5Action = SystemAction.get(Expand5Action.class);
+        CallbackSystemAction viewerHintsAction = SystemAction.get(ViewerHintsAction.class);
+        CallbackSystemAction focusPassageComponentAction = SystemAction.get(FocusPassageComponentAction.class);
+        CallbackSystemAction focusSearchComponentAction = SystemAction.get(FocusSearchComponentAction.class);
+
+        goBackDelegateAction = new GoBackDelegateAction();
+        goForwardDelegateAction = new GoForwardDelegateAction();
+        goPreviousDelegateAction = new GoPreviousDelegateAction();
+        goNextDelegateAction = new GoNextDelegateAction();
+
+        actionMap.put(goBackAction.getActionMapKey(), goBackDelegateAction);
+        actionMap.put(goForwardAction.getActionMapKey(), goForwardDelegateAction);
+        actionMap.put(goPreviousAction.getActionMapKey(), goPreviousDelegateAction);
+        actionMap.put(goNextAction.getActionMapKey(), goNextDelegateAction);
+        actionMap.put(expand1Action.getActionMapKey(), new Expand1DelegateAction());
+        actionMap.put(expand5Action.getActionMapKey(), new Expand5DelegateAction());
+        actionMap.put(viewerHintsAction.getActionMapKey(), new ViewerHintsDelegateAction());
+        actionMap.put(focusPassageComponentAction.getActionMapKey(), new FocusPassageComponentDelegateAction());
+        actionMap.put(focusSearchComponentAction.getActionMapKey(), new FocusSearchComponentDelegateAction());
         
-        /*
-        // this is not needed
-        CallbackSystemAction callCopyAction = (CallbackSystemAction)SystemAction.get(CopyAction.class);
-        tcActionMap.put(callCopyAction.getActionMapKey(), bookViewerActionMap.get(HTMLEditorKit.copyAction));
-        bookViewerActionMap.get(HTMLEditorKit.copyAction).setEnabled(true);
-         */
-        
+        toolBar.add(goBackAction.getToolbarPresenter());
+        toolBar.add(goForwardAction.getToolbarPresenter());
+        toolBar.addSeparator();
+        toolBar.add(goPreviousAction.getToolbarPresenter());
+        toolBar.add(goNextAction.getToolbarPresenter());
+        toolBar.add(expand1Action.getToolbarPresenter());
+        toolBar.add(expand5Action.getToolbarPresenter());
+        toolBar.addSeparator();
+        toolBar.add(viewerHintsAction.getToolbarPresenter());
+
     }
     
     public void openURI(SwordURI uri) {
@@ -390,15 +452,27 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         return book;
     }
     
-    public void requestFocusForPassageComponent() {
-        bookViewer.requestFocusForPassageComponent();
+    /**
+     * Update history related UI action state eg: setEnabled(true/false)
+     * This methods is called after {@link kiyut.alkitab.api.BookViewer#refresh()} called
+     */
+    protected void updateHistoryAction() {
+        HistoryManager historyManager = bookViewer.getHistoryManager();
+
+        goBackDelegateAction.setEnabled(historyManager.hasBack());
+        goForwardDelegateAction.setEnabled(historyManager.hasForward());
+
+        History hist = historyManager.current();
+        if (hist == null) {
+            goPreviousDelegateAction.setEnabled(false);
+            goNextDelegateAction.setEnabled(false);
+        } else {
+            goPreviousDelegateAction.setEnabled(hist.hasPrevious());
+            goNextDelegateAction.setEnabled(hist.hasNext());
+        }
     }
 
-    public void requestFocusForSearchComponent() {
-        bookViewer.requestFocusForSearchComponent();
-    }
-
-    protected class ReindexAction extends AbstractAction {
+    public class ReindexAction extends AbstractAction {
         public ReindexAction() {
             putValue(Action.NAME, NbBundle.getMessage(ReindexAction.class, "CTL_ReindexAction"));
         }
@@ -413,6 +487,69 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             if (books != null) {
                 Indexer.getInstance().createIndex(books, true);
             }
+        }
+    }
+
+    public class GoBackDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.goBack();
+        }
+    }
+
+    public class GoForwardDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.goForward();
+        }
+    }
+
+    public class GoNextDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.goNext();
+        }
+    }
+
+    public class GoPreviousDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.goPrevious();
+        }
+    }
+
+    public class Expand1DelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.blur(1,RestrictionType.NONE);
+        }
+    }
+
+    public class Expand5DelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.blur(5,RestrictionType.NONE);
+        }
+    }
+
+    public class ViewerHintsDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            ViewerHintsPane hintsPane = new ViewerHintsPane();
+            hintsPane.setViewerHints(bookViewer.getViewerHints());
+            int choice = hintsPane.showDialog(ParallelBookTopComponent.this);
+            if (choice != JOptionPane.OK_OPTION) {
+                return;
+            }
+            hintsPane.updateViewerHintsValue();
+            bookViewer.refresh();
+        }
+    }
+
+    public class FocusPassageComponentDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            System.out.println("focusPassage called");
+            bookViewer.requestFocusForPassageComponent();
+        }
+    }
+
+    public class FocusSearchComponentDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            System.out.println("focusSearch called");
+            bookViewer.requestFocusForSearchComponent();
         }
     }
 }

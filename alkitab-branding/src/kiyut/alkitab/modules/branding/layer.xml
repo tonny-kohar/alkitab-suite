@@ -43,7 +43,6 @@
             <file name="org-netbeans-modules-favorites-Add.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-Remove.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-View.instance_hidden"/>
-            <file name="org-netbeans-modules-options-keymap-ExportShortcutsToHTMLAction.instance_hidden"/>
             <file name="org-netbeans-progress-module-ProgressListAction.instance_hidden"/>
         </folder>
     </folder>
@@ -137,10 +136,22 @@
             <attr name="originalFile" stringvalue="Actions/System/org-netbeans-core-actions-SystemExit.instance"/>
         </file>
         <file name="D-G.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-PassageAction.instance"/>
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-FocusPassageComponentAction.instance"/>
         </file>
         <file name="D-F.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-SearchAction.instance"/>
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-FocusSearchComponentAction.instance"/>
+        </file>
+        <file name="O-LEFT.shadow">
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoBackAction.instance"/>
+        </file>
+        <file name="O-RIGHT.shadow">
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoForwardAction.instance"/>
+        </file>
+        <file name="O-PAGE_UP.shadow">
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoPreviousAction.instance"/>
+        </file>
+        <file name="O-PAGE_DOWN.shadow">
+            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoNextAction.instance"/>
         </file>
         <file name="DO-1.shadow">
             <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookshelfAction.instance"/>

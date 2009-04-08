@@ -4,6 +4,7 @@ package kiyut.alkitab.windows;
 
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.ObjectStreamException;
@@ -12,21 +13,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.JComponent;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
+import kiyut.alkitab.actions.GoNextAction;
+import kiyut.alkitab.actions.GoPreviousAction;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
+import kiyut.alkitab.api.History;
+import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.swing.SingleBookViewerPane;
+import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
 import org.openide.util.NbBundle;
+import org.openide.util.actions.CallbackSystemAction;
+import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 
 /**
@@ -40,6 +52,9 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     private static final String PREFERRED_ID = "SingleBookTopComponent";
     
     private SingleBookViewerPane bookViewer;
+
+    private Action goPreviousDelegateAction;
+    private Action goNextDelegateAction;
     
     public SingleBookTopComponent() {
         initComponents();
@@ -48,6 +63,8 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
 //        setIcon(Utilities.loadImage(ICON_PATH, true));
         
         initCustom();
+
+        ComponentOrientationSupport.applyComponentOrientation(this);
     }
 
     /** This method is called from within the constructor to
@@ -156,7 +173,13 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     
     /** If you override this, please make sure to call super.initCustom() */
     protected void initCustom() {
-        bookViewer = new SingleBookViewerPane();
+        bookViewer = new SingleBookViewerPane() {
+            @Override
+            public void refresh() {
+                super.refresh();
+                updateHistoryAction();
+            }
+        };
         add(BorderLayout.CENTER,(JComponent)bookViewer);
         
         bookViewerNode = new BookViewerNode(bookViewer);
@@ -181,7 +204,24 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         javax.swing.ActionMap bookViewerActionMap = ((JComponent)bookViewer).getActionMap();
         tcActionMap.setParent(bookViewerActionMap);
         */
-        
+
+        JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
+        add(BorderLayout.NORTH, toolBar);
+
+        ActionMap actionMap = getActionMap();
+
+        CallbackSystemAction goPreviousAction = SystemAction.get(GoPreviousAction.class);
+        CallbackSystemAction goNextAction = SystemAction.get(GoNextAction.class);
+
+        goPreviousDelegateAction = new GoPreviousDelegateAction();
+        goNextDelegateAction = new GoNextDelegateAction();
+
+        actionMap.put(goPreviousAction.getActionMapKey(), goPreviousDelegateAction);
+        actionMap.put(goNextAction.getActionMapKey(), goNextDelegateAction);
+
+        toolBar.add(goPreviousAction.getToolbarPresenter());
+        toolBar.add(goNextAction.getToolbarPresenter());
     }
     
     public void openURI(SwordURI uri) {
@@ -215,6 +255,35 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             //StatusDisplayer.getDefault().setStatusText(uri);
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
+        }
+    }
+
+    /**
+     * Update history related UI action state eg: setEnabled(true/false)
+     * This methods is called after {@link kiyut.alkitab.api.BookViewer#refresh()} called
+     */
+    protected void updateHistoryAction() {
+        HistoryManager historyManager = bookViewer.getHistoryManager();
+
+        History hist = historyManager.current();
+        if (hist == null) {
+            goPreviousDelegateAction.setEnabled(false);
+            goNextDelegateAction.setEnabled(false);
+        } else {
+            goPreviousDelegateAction.setEnabled(hist.hasPrevious());
+            goNextDelegateAction.setEnabled(hist.hasNext());
+        }
+    }
+
+    public class GoNextDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.goNext();
+        }
+    }
+
+    public class GoPreviousDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.goPrevious();
         }
     }
 }

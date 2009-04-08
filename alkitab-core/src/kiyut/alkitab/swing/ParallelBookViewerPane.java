@@ -51,7 +51,7 @@ import org.crosswire.jsword.passage.RestrictionType;
  */
 public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
-    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
+    protected ResourceBundle bundle = ResourceBundle.getBundle(ParallelBookViewerPane.class.getName());
     
     protected BookTextPane bookTextPane;
 
@@ -71,13 +71,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     //protected IndexWorkListener indexWorkListener;
 
     protected ChangeListener indexChangeListener;
-    
+
     /** Creates new ParallelBookViewerPane. */
     public ParallelBookViewerPane() {
         initComponents();
         initCustom();
-
-        ComponentOrientationSupport.applyComponentOrientation(this);
     }
     
     /** This method is called from within the constructor to
@@ -89,17 +87,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        toolBar = new javax.swing.JToolBar();
-        goBackButton = new javax.swing.JButton();
-        goForwardButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
-        goPreviousButton = new javax.swing.JButton();
-        goNextButton = new javax.swing.JButton();
-        expand1Button = new javax.swing.JButton();
-        expand5Button = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        viewerHintsButton = new javax.swing.JButton();
         splitPane = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -128,69 +115,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         bookScrollPane = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.BorderLayout());
-
-        toolBar.setFloatable(false);
-        toolBar.setRollover(true);
-
-        goBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/left.png"))); // NOI18N
-        goBackButton.setToolTipText(bundle.getString("HINT_GoBack.Text")); // NOI18N
-        goBackButton.setFocusable(false);
-        goBackButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        goBackButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(goBackButton);
-
-        goForwardButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/right.png"))); // NOI18N
-        goForwardButton.setToolTipText(bundle.getString("HINT_GoForward.Text")); // NOI18N
-        goForwardButton.setFocusable(false);
-        goForwardButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        goForwardButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(goForwardButton);
-
-        refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/refresh.png"))); // NOI18N
-        refreshButton.setToolTipText(bundle.getString("HINT_Refresh.Text")); // NOI18N
-        refreshButton.setFocusable(false);
-        refreshButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        refreshButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(refreshButton);
-        toolBar.add(jSeparator1);
-
-        goPreviousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/previous.png"))); // NOI18N
-        goPreviousButton.setToolTipText(bundle.getString("HINT_GoPrevious.Text")); // NOI18N
-        goPreviousButton.setFocusable(false);
-        goPreviousButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        goPreviousButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(goPreviousButton);
-
-        goNextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/next.png"))); // NOI18N
-        goNextButton.setToolTipText(bundle.getString("HINT_GoNext.Text")); // NOI18N
-        goNextButton.setFocusable(false);
-        goNextButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        goNextButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(goNextButton);
-
-        expand1Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/expand1n.png"))); // NOI18N
-        expand1Button.setToolTipText(bundle.getString("HINT_Expand1")); // NOI18N
-        expand1Button.setFocusable(false);
-        expand1Button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        expand1Button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(expand1Button);
-
-        expand5Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/expand5n.png"))); // NOI18N
-        expand5Button.setToolTipText(bundle.getString("HINT_Expand5")); // NOI18N
-        expand5Button.setFocusable(false);
-        expand5Button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        expand5Button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(expand5Button);
-        toolBar.add(jSeparator2);
-
-        viewerHintsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/viewer-hints.png"))); // NOI18N
-        viewerHintsButton.setToolTipText(bundle.getString("HINT_ViewerHints.Text")); // NOI18N
-        viewerHintsButton.setFocusable(false);
-        viewerHintsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        viewerHintsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolBar.add(viewerHintsButton);
-
-        add(toolBar, java.awt.BorderLayout.PAGE_START);
 
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
@@ -371,12 +295,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JScrollPane bookScrollPane;
     private javax.swing.JPanel booksComboPane;
     private javax.swing.JCheckBox compareCheckBox;
-    private javax.swing.JButton expand1Button;
-    private javax.swing.JButton expand5Button;
-    private javax.swing.JButton goBackButton;
-    private javax.swing.JButton goForwardButton;
-    private javax.swing.JButton goNextButton;
-    private javax.swing.JButton goPreviousButton;
     private javax.swing.JButton indexButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -386,8 +304,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
@@ -395,14 +311,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JButton passageGoButton;
     private javax.swing.JPanel passagePane;
     private javax.swing.JTextArea passageTextArea;
-    private javax.swing.JButton refreshButton;
     private javax.swing.JButton removeBookButton;
     private javax.swing.JButton searchGoButton;
     private javax.swing.JPanel searchPane;
     private javax.swing.JTextArea searchTextArea;
     private javax.swing.JSplitPane splitPane;
-    private javax.swing.JToolBar toolBar;
-    private javax.swing.JButton viewerHintsButton;
     // End of variables declaration//GEN-END:variables
  
     protected void initCustom() {
@@ -558,62 +471,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 Indexer.getInstance().createIndex(books,true);
             }
         });
-        
-        goBackButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                goBack();
-            }
-        });
-        
-        goForwardButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                goForward();
-            }
-        });
-        
-        refreshButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                refresh();
-            }
-        });
-        
-        goPreviousButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                goPrevious();
-            }
-        });
-        
-        goNextButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                goNext();
-            }
-        });
-        
-        expand1Button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                blur(1,RestrictionType.NONE);
-            }
-        });
-        
-        expand5Button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                blur(5,RestrictionType.NONE);
-            }
-        });
-        
-        viewerHintsButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                ViewerHintsPane hintsPane = new ViewerHintsPane();
-                hintsPane.setViewerHints(viewerHints);
-                int choice = hintsPane.showDialog(ParallelBookViewerPane.this);
-                if (choice != JOptionPane.OK_OPTION) {
-                    return;
-                }
-                hintsPane.updateViewerHintsValue();
-                refresh();
-            }
-        });
-        
+
         indexChangeListener = new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 checkIndexStatus();
@@ -622,6 +480,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         Indexer.getInstance().addChangeListener(indexChangeListener);
     }
+
     
     /** cleanup resource and this component should not be used after a call to this */
     public void dispose() {
@@ -902,25 +761,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     public void refresh() {
         //System.out.println("ParallelBookViewerPane.refresh()");
         bookTextPane.refresh(true);
-        updateHistoryUI();
     }
-    
-    /** Update history related UI component state eg: setEnabled(true/false) 
-     * This methods is called after {@link #refresh()} called
-     */
-    protected void updateHistoryUI() {
-        goBackButton.setEnabled(historyManager.hasBack());
-        goForwardButton.setEnabled(historyManager.hasForward());
-        
-        History hist = historyManager.current();
-        if (hist == null) {
-            goPreviousButton.setEnabled(false);
-            goNextButton.setEnabled(false);
-        } else {
-            goPreviousButton.setEnabled(hist.hasPrevious());
-            goNextButton.setEnabled(hist.hasNext());
-        }
-        
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
     }
     
     public synchronized void goBack() {

@@ -11,7 +11,6 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
-import kiyut.alkitab.util.SwordUtilities;
 import kiyut.alkitab.windows.BookViewerTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
@@ -103,6 +102,11 @@ public class BrandingModuleInstall extends ModuleInstall {
         sb.append("-------------------------------------------------------------------------------\n");
         
         logger.log(Level.INFO,sb.toString());
+
+        /*for (KeymapManager m : KeymapModel.getKeymapManagerInstances()) {
+            String res = m.getCurrentProfile();
+            System.out.println(res);
+        }*/
 
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
