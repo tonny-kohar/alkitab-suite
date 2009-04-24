@@ -103,11 +103,6 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         logger.log(Level.INFO,sb.toString());
 
-        /*for (KeymapManager m : KeymapModel.getKeymapManagerInstances()) {
-            String res = m.getCurrentProfile();
-            System.out.println(res);
-        }*/
-
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
                 ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());

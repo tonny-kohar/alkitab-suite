@@ -12,8 +12,3 @@ in no particular order
 - [SWORD] Indonesian Bible Translation, create my own translation :)
 - Search highlight
 - Configurable font and font color
-- Shortcut for
-   Ctrl-G for goto a passage (like IDE :)))
-   Ctrl-F for find/search
-   Ctrl-< (think the less-than-sign), or Backspace key (popularized by browser) for back
-   Ctrl-> (think the great-than-sign) for forward

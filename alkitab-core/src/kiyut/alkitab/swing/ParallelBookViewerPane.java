@@ -30,7 +30,6 @@ import kiyut.alkitab.api.event.BookChangeEvent;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.api.Indexer;
-import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.jsword.book.Book;
