@@ -515,6 +515,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         defaultDictionaryComboBox.setModel(new DefaultComboBoxModel());
         defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel());
 
+        fontSizeComboBox.setPrototypeDisplayValue("99");
+
         refreshAvailableFonts();
         refreshDefaultBooks();
 
