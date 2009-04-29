@@ -7,7 +7,6 @@ import java.awt.ComponentOrientation;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,8 +20,6 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.SwingHTMLConverter;
 import kiyut.alkitab.api.ViewerHints;
 import org.crosswire.common.xml.Converter;
-import org.crosswire.common.xml.FormatType;
-import org.crosswire.common.xml.PrettySerializingContentHandler;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.common.xml.XMLUtil;
@@ -30,8 +27,6 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.Verse;
-import org.xml.sax.ContentHandler;
 
 /**
  * BookTextPane that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit.
@@ -49,11 +44,6 @@ public class BookTextPane extends JTextPane {
     
     protected ViewerHints<ViewerHints.Key,Object> viewerHints;
     
-    /** Default is true */
-    protected boolean enableSourceText;
-    protected String rawText;
-    protected String osisText;
-
     /** Creates new BookTextPane. 
      * By default it is using empty TransfomerHints
      * 
@@ -79,7 +69,6 @@ public class BookTextPane extends JTextPane {
         setConverter(new SwingHTMLConverter());
         setViewerHints(viewerHints);
         this.compareView = false;
-        this.enableSourceText = enableSourceText;
 
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
         try {
@@ -115,6 +104,14 @@ public class BookTextPane extends JTextPane {
 
     public boolean isCompareView() {
         return this.compareView;
+    }
+
+    public void setConverter(Converter converter) {
+        this.converter = converter;
+    }
+
+    public Converter getConverter() {
+        return this.converter;
     }
 
     public List<Book> getBooks() {
@@ -167,50 +164,13 @@ public class BookTextPane extends JTextPane {
             clear();
             return;
         }
-        
+
         boolean ltr = bmd.isLeftToRight();
         applyComponentOrientation(ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
         String text = null;
         try {
-            
-            if (enableSourceText) {
-                // Raw Text
-                StringBuilder sb = new StringBuilder();
-                Iterator<Key> iter = key.iterator();
-                while (iter.hasNext()) {
-                    Key curKey = iter.next();
-
-                    // XXX JSword Bug? Non bible key getOsisID end up in endless loop
-                    String osisID = null;
-                    if (curKey instanceof Verse) {
-                        osisID = curKey.getOsisID();
-                    }
-                    //System.out.println("BookTextPane.refreshImpl osisID: " + osisID);
-                    for (int i = 0; i < books.size(); i++) {
-                        Book book = books.get(i);
-                        if (sb.length() > 0) {
-                            sb.append("\n");
-                        }
-                        sb.append(book.getInitials());
-                        if (osisID != null) {
-                            sb.append(':' + osisID);
-                        }
-                        sb.append(" - " + book.getRawText(curKey));
-                    }
-                }
-
-                rawText = sb.toString();
-            }
-            
             SAXEventProvider osissep = bookData.getSAXEventProvider();
-            
-            // OSIS Text
-            ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
-            osissep.provideSAXEvents(osis);
-            if (enableSourceText) {
-                osisText = osis.toString();
-            }
             
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
             htmlsep.setParameter("direction", ltr ? "ltr" : "rtl");
@@ -233,22 +193,6 @@ public class BookTextPane extends JTextPane {
         setText(text);
         select(0, 0);
         
-    }
-
-    public void setConverter(Converter converter) {
-        this.converter = converter;
-    }
-    
-    public String getRawText() {
-        return rawText;
-    }
-    
-    public String getOSISText() {
-        return osisText;
-    }
-    
-    public String getHTMLText() {
-        return getText();
     }
 
     /** 
@@ -274,8 +218,6 @@ public class BookTextPane extends JTextPane {
     }
     
     protected void clear() {
-        rawText = null;
-        osisText = null;
         setText(null);
     }
 }

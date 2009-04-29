@@ -6,6 +6,8 @@ import kiyut.alkitab.api.BookViewer;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.History;
@@ -102,9 +104,14 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     }
     
     public void viewSource() {
-        SourceCodePane sourcePane = new SourceCodePane();
-        sourcePane.setText(bookTextPane.getRawText(), bookTextPane.getOSISText(), bookTextPane.getHTMLText());
-        sourcePane.showDialog(this,true);
+        try {
+            SourceViewerPane sourcePane = new SourceViewerPane();
+            sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            sourcePane.showDialog(this,true);
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
     }
 
     public void openURI(SwordURI uri) {

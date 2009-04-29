@@ -33,7 +33,7 @@
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Raw">
                 <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="kiyut/alkitab/swing/SourceCodePane.properties" key="CTL_Raw.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="kiyut/alkitab/swing/SourceViewerPane.properties" key="CTL_Raw.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                 </Property>
               </JTabbedPaneConstraints>
             </Constraint>
@@ -53,7 +53,7 @@
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="OSIS">
                 <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="kiyut/alkitab/swing/SourceCodePane.properties" key="CTL_OSIS.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="kiyut/alkitab/swing/SourceViewerPane.properties" key="CTL_OSIS.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                 </Property>
               </JTabbedPaneConstraints>
             </Constraint>
@@ -73,7 +73,7 @@
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="HTML">
                 <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="kiyut/alkitab/swing/SourceCodePane.properties" key="CTL_HTML.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="kiyut/alkitab/swing/SourceViewerPane.properties" key="CTL_HTML.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                 </Property>
               </JTabbedPaneConstraints>
             </Constraint>

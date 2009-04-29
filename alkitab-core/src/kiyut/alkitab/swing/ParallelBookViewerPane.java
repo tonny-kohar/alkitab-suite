@@ -702,9 +702,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     public void viewSource() {
-        SourceCodePane sourcePane = new SourceCodePane();
-        sourcePane.setText(bookTextPane.getRawText(), bookTextPane.getOSISText(), bookTextPane.getHTMLText());
-        sourcePane.showDialog(this,true);
+        try {
+            SourceViewerPane sourcePane = new SourceViewerPane();
+            //sourcePane.setText(bookTextPane.getRawText(), bookTextPane.getOSISText(), bookTextPane.getHTMLText());
+            sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            sourcePane.showDialog(this,true);
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
     }
     
     public void compareView(boolean compare) {

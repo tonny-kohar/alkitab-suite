@@ -10,26 +10,41 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.net.URI;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import kiyut.alkitab.api.ViewerHints;
 import kiyut.swing.dialog.DialogESC;
 import kiyut.swing.text.xml.XMLContext;
 import kiyut.swing.text.xml.XMLEditorKit;
+import org.crosswire.common.xml.Converter;
+import org.crosswire.common.xml.FormatType;
+import org.crosswire.common.xml.PrettySerializingContentHandler;
+import org.crosswire.common.xml.SAXEventProvider;
+import org.crosswire.common.xml.TransformingSAXEventProvider;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookMetaData;
+import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.Verse;
+import org.xml.sax.ContentHandler;
 
 /**
  * Display the OSIS and HTML source for the the book
  * 
  */
-public class SourceCodePane extends javax.swing.JPanel {
+public class SourceViewerPane extends javax.swing.JPanel {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
     
-    /** Creates new SourceCodePane */
-    public SourceCodePane() {
+    /** Creates new SourceViewerPane */
+    public SourceViewerPane() {
         initComponents();
         initCustom();
     }
@@ -159,17 +174,88 @@ public class SourceCodePane extends javax.swing.JPanel {
         
         dialog.setVisible(true);
     }
-    
-    /** Setting the text to be displayed 
-     * @param raw the raw text
-     * @param osis the OSIS text
-     * @param html the HTML text
+
+
+    /** Init this component with the source text
      */
-    public void setText(String raw, String osis, String html) {
+    @SuppressWarnings("unchecked")
+    public void initSource(List<Book> books, Key key, Converter converter, ViewerHints<ViewerHints.Key,Object> viewerHints, boolean compareView) throws Exception {
+        if (books.isEmpty() || key == null) {
+            return;
+        }
+
+        BookData bookData = new BookData(books.toArray(new Book[books.size()]), key, compareView);
+        BookMetaData bmd = bookData.getFirstBook().getBookMetaData();
+        if (bmd == null) {
+            return;
+        }
+
+        boolean ltr = bmd.isLeftToRight();
+
+        String rawText = null;
+
+        /////////////
+        // Raw Text
+        StringBuilder sb = new StringBuilder();
+        Iterator<Key> iter = key.iterator();
+        while (iter.hasNext()) {
+            Key curKey = iter.next();
+
+            // XXX JSword Bug? Non bible key getOsisID end up in endless loop
+            String osisID = null;
+            if (curKey instanceof Verse) {
+                osisID = curKey.getOsisID();
+            }
+            //System.out.println("BookTextPane.refreshImpl osisID: " + osisID);
+            for (int i = 0; i < books.size(); i++) {
+                Book book = books.get(i);
+                if (sb.length() > 0) {
+                    sb.append("\n");
+                }
+                sb.append(book.getInitials());
+                if (osisID != null) {
+                    sb.append(':' + osisID);
+                }
+                sb.append(" - " + book.getRawText(curKey));
+            }
+        }
+
+        rawText = sb.toString();
+
+        ///////////////
+        // OSIS Text
+
+        SAXEventProvider osissep = bookData.getSAXEventProvider();
+
+        ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
+        osissep.provideSAXEvents(osis);
+
+        //////////////
+        // HTML Text
+
+        TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+
+        htmlsep.setParameter("direction", ltr ? "ltr" : "rtl");
+
+        URI uri = bmd.getLocation();
+        String uriString = uri == null ? "" : uri.toURL().toString();
+
+        ViewerHints<ViewerHints.Key, Object> thisViewerHints = new ViewerHints<ViewerHints.Key, Object>(viewerHints);
+        thisViewerHints.put(ViewerHints.BASE_URL, uriString);
+
+        thisViewerHints.updateProvider(htmlsep);
+
+        ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
+        htmlsep.provideSAXEvents(html);
+
+        initSource(rawText, osis.toString(), html.toString());
+    }
+
+    public void initSource(String raw, String osis, String html) {
         rawEditorPane.setText(raw);
         osisEditorPane.setText(osis);
         htmlEditorPane.setText(html);
-        
+
         rawEditorPane.setCaretPosition(0);
         osisEditorPane.setCaretPosition(0);
         htmlEditorPane.setCaretPosition(0);

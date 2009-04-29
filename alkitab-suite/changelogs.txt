@@ -1,3 +1,6 @@
+ver x
+- Improve Speed and Memory Usage (refactor SourceViewer)
+
 ver 2.3-beta1
 - Add Configurable Keymap (shortcut) for Options Dialog
 - Add Ctrl-G for request focus on Passage Field
