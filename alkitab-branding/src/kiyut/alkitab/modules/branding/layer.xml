@@ -58,8 +58,8 @@
             <file name="org-openide-actions-SaveAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAllAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAsAction.shadow_hidden"/>
-            <file name="NewViewAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewViewAction.instance"/>
+            <file name="NewTabAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewTabAction.instance"/>
                 <attr name="position" intvalue="100"/>
             </file>
         </folder>
@@ -129,8 +129,8 @@
         <file name="F1.shadow">
             <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
         </file>
-        <file name="D-N.shadow">
-            <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewViewAction.instance"/>
+        <file name="D-T.shadow">
+            <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewTabAction.instance"/>
         </file>
         <file name="D-Q.shadow">
             <attr name="originalFile" stringvalue="Actions/System/org-netbeans-core-actions-SystemExit.instance"/>

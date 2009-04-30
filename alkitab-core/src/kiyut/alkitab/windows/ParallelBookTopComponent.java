@@ -269,6 +269,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         add(BorderLayout.NORTH, toolBar);
 
         ActionMap actionMap = getActionMap();
+        //bookViewer.getActionMap().setParent(actionMap);
 
         CallbackSystemAction goBackAction = SystemAction.get(GoBackAction.class);
         CallbackSystemAction goForwardAction = SystemAction.get(GoForwardAction.class);

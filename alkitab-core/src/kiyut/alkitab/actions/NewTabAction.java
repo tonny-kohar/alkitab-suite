@@ -14,12 +14,12 @@ import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
 
 
-public final class NewViewAction extends AbstractAction {
+public final class NewTabAction extends AbstractAction {
     
-    public NewViewAction() {
-        super(NbBundle.getMessage(NewViewAction.class, "CTL_NewViewAction"));
+    public NewTabAction() {
+        super(NbBundle.getMessage(NewTabAction.class, "CTL_NewTabAction"));
         
-        String iconPath = NbBundle.getMessage(NewViewAction.class, "ICON_NewViewAction");
+        String iconPath = NbBundle.getMessage(NewTabAction.class, "ICON_NewTabAction");
         putValue(SMALL_ICON, new ImageIcon(ImageUtilities.loadImage(iconPath, true)));
     }
     

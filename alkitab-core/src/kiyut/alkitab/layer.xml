@@ -3,8 +3,8 @@
 <filesystem>
     <folder name="Actions">
         <folder name="File">
-            <file name="kiyut-alkitab-actions-NewViewAction.instance">
-                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.NewViewAction"/>
+            <file name="kiyut-alkitab-actions-NewTabAction.instance">
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.NewTabAction"/>
             </file>
         </folder>
         <folder name="Navigate">
