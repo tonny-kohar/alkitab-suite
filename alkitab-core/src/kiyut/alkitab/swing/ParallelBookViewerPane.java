@@ -467,7 +467,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         indexButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 List<Book> books = bookTextPane.getBooks();
-                Indexer.getInstance().createIndex(books,true);
+                if (!books.isEmpty()) {
+                    Indexer.getInstance().createIndex(books.get(0),true);
+                }
             }
         });
 
@@ -578,7 +580,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         comboBox.setSelectedItem(bookName);
         
         bookTextPane.getBooks().add(book);
-        checkIndexStatus();
+        if (bookTextPane.getBooks().size() == 1) {
+            checkIndexStatus();
+        }
 
         booksComboPane.add(comboBox);
         booksComboPane.revalidate();
@@ -648,7 +652,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         booksComboPane.repaint();
 
         bookTextPane.getBooks().remove(index);
-        checkIndexStatus();
+        if (index == 0) {
+            checkIndexStatus();
+        }
         
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
@@ -666,7 +672,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
 
         bookTextPane.getBooks().set(index, book);
-        checkIndexStatus();
+        if (index == 0) {
+            checkIndexStatus();
+        }
 
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
@@ -674,14 +682,23 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     protected synchronized void checkIndexStatus() {
         unindexedBooks = false;
+
+        // check only first book
         List<Book> books = bookTextPane.getBooks();
-        for (int i=0; i<books.size(); i++) {
+        if (!books.isEmpty()) {
+            IndexStatus status = books.get(0).getIndexStatus();
+            if (!status.equals(IndexStatus.DONE)) {
+                unindexedBooks = true;
+            }
+        }
+
+        /*for (int i=0; i<books.size(); i++) {
             IndexStatus status = books.get(i).getIndexStatus();
             if (!status.equals(IndexStatus.DONE)) {
                 unindexedBooks = true;
                 break;
             }
-        }
+        }*/
         
         CardLayout cl = (CardLayout)searchPane.getLayout();
         if (unindexedBooks) {

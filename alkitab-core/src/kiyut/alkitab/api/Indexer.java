@@ -116,6 +116,30 @@ public final class Indexer {
         progress.createIndex(books, reindex);
     }
 
+    /**
+     * Only convenience method to create index for single book
+     * @param book the Book to be Indexed
+     *  @see createIndex(List<Book>, boolean)
+     *  @see createIndex(Book, boolean)
+     */
+    public void createIndex(Book book) {
+        createIndex(book, false);
+    }
+
+    /**
+     *  Only convenience method to create index for single book
+     *  @param book the Book to be Indexed
+     *  @param reindex flag for reindex
+     *  @see createIndex(List<Book>, boolean)
+     */
+    public void createIndex(Book book, boolean reindex) {
+        List<Book> books = new ArrayList<Book>(1);
+        books.add(book);
+
+        IndexerProgress progress = new IndexerProgress();
+        progress.createIndex(books, reindex);
+    }
+
     public void removeIndex(Book book) throws BookException {
         IndexManagerFactory.getIndexManager().deleteIndex(book);
     }

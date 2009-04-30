@@ -485,8 +485,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
             
             List<Book> books = bookViewer.getBooks();
-            if (books != null) {
-                Indexer.getInstance().createIndex(books, true);
+            if (!books.isEmpty()) {
+                Indexer.getInstance().createIndex(books.get(0), true);
             }
         }
     }
