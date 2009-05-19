@@ -12,3 +12,4 @@ in no particular order
 - [SWORD] Indonesian Bible Translation, create my own translation :)
 - Search highlight
 - Configurable font and font color
+- History Viewer

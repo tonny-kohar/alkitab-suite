@@ -1,5 +1,5 @@
 ver x
-- Improve Speed and Memory Usage (refactor SourceViewer)
+- Improve Speed and Memory Usage (refactor SourceViewer, index only single book)
 
 ver 2.3-beta1
 - Add Configurable Keymap (shortcut) for Options Dialog

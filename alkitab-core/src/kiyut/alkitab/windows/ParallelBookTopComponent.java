@@ -393,7 +393,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
         if (bookName.equals("")) {
             switch (swordURI.getType()) {
-                /*case BIBLE:
+                case BIBLE:
                     bookName = BookViewerOptions.getInstance().getDefaultBible();
                     if (bookName == null) {
                         List books = Books.installed().getBooks(BookFilters.getBibles());
@@ -402,7 +402,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                         }
                     }
                     break;
-                 */
                 case GREEK_STRONGS:
                     bookName = BookViewerOptions.getInstance().getDefaultGreekStrongs();
                     if (bookName == null) {
