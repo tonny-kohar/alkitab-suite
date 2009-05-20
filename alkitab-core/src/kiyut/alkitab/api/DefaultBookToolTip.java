@@ -79,6 +79,8 @@ public class DefaultBookToolTip implements BookToolTip {
         bookTextPane.setBackground(UIManager.getColor("info"));
         bookTextPane.setForeground(UIManager.getColor("infoText"));
         
+        
+        // no longer need border because now it is contained in JScrollPane
         /*Border border = UIManager.getBorder("Tooltip.border");
         if (border == null) {
             border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(76,79,83)), BorderFactory.createEmptyBorder(6,6,6,6));
@@ -86,17 +88,11 @@ public class DefaultBookToolTip implements BookToolTip {
         bookTextPane.setBorder(border);
          */
 
-        /*Dimension prefSize = new Dimension();
-        prefSize.setSize(500, 500d/PHI);
-        bookTextPane.setPreferredSize(prefSize);
-         */
 
         //bookTextPane.putClientProperty(JEditorPane.W3C_LENGTH_UNITS, Boolean.TRUE);
 
         scrollPane = new JScrollPane(bookTextPane);
-        //Dimension size = new Dimension();
-        //size.setSize(300, 300d/PHI);
-        //scrollPane.setPreferredSize(size);
+        
     }
     
     public void show(Book book, Key key, Component owner, int x, int y) {
@@ -115,45 +111,46 @@ public class DefaultBookToolTip implements BookToolTip {
         bookTextPane.refresh(false);
 
         // XXX workaround for pack/panel prefSize problem
-        //bookTextPane.revalidate();
+        // Note: it still have bug regarding the size
+
         bookTextPane.setSize(new Dimension(0,0));
         bookTextPane.setPreferredSize(null);
         scrollPane.setPreferredSize(null);
         bookTextPane.revalidate();
+        bookTextPane.setVisible(true);
 
         // use Golden Ratio to specify the prefSize
-        Dimension size = bookTextPane.getSize();
+        Dimension size = bookTextPane.getPreferredSize();
         if (size.width == 0 || size.height == 0) {
-            size = bookTextPane.getPreferredSize();
+            size = bookTextPane.getSize();
         }
-        if (size.getWidth() >= 500) {
-            size.setSize(500, 500d/PHI);
-            //bookTextPane.setSize(prefSize);
-            bookTextPane.setPreferredSize(size);
-            scrollPane.setPreferredSize(size);
-            bookTextPane.revalidate();
-            System.out.println("ok");
+
+
+        int adjust = 25; // some adjustment to for estimating scroll bar size ~25px
+        double maxW = 500-adjust;
+        double maxH = maxW/PHI;
+        if (size.getWidth() > maxW)  {
+            if (size.getHeight() < maxH) {
+                maxH = size.getHeight();
+            }
         } else {
-            //bookTextPane.setPreferredSize(null);
-            //scrollPane.setPreferredSize(null);
-            System.out.println("else " + size);
-            /*int w = scrollPane.getPreferredSize().width;
-            if (size.width < w) {
-                w = size.width;
-            }
-            int h = scrollPane.getPreferredSize().height;
-            if (size.height < h) {
-                h = size.height;
-            }
-            size.setSize(w,h);
-            scrollPane.setPreferredSize(size);
-             */
-         
+            maxW = size.getWidth();
         }
-        //bookTextPane.revalidate();
-        //scrollPane.revalidate();
+        
+        if (size.getHeight() > maxH)  {
+            if (size.getWidth() < maxW) {
+                maxW = size.getWidth();
+            }
+        } else {
+            maxH = size.getHeight();
+        }
 
-
+        size.setSize(maxW, maxH);
+        bookTextPane.setPreferredSize(size);
+        scrollPane.setPreferredSize(new Dimension(size.width + adjust, size.height + adjust));
+        
+        bookTextPane.revalidate();
+            
         prefPoint.setLocation(x,y);
         getPreferredLocation(owner, prefPoint);
         

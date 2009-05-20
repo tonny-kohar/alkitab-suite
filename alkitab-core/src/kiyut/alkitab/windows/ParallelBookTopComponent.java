@@ -6,8 +6,11 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.ObjectStreamException;
@@ -73,6 +76,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private Point linkToolTipLocation;
     private Timer linkToolTipTimer;
     private SwordURI linkToolTipSwordURI;
+    private boolean linkToolTipForceVisible;
 
     private Action goBackDelegateAction;
     private Action goForwardDelegateAction;
@@ -254,13 +258,39 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         linkToolTipTimer.setRepeats(false);
         linkToolTipTimer.setCoalesce(true);
         
-        bookViewer.getViewerComponent().addMouseMotionListener(new MouseMotionListener() {
-            public void mouseDragged(MouseEvent evt) { 
-                //do nothing
-            }
-
+        bookViewer.getViewerComponent().addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
             public void mouseMoved(MouseEvent evt) {
                 linkToolTipLocation.setLocation(evt.getX(), evt.getY());
+
+                // force to have focus in order to make key event work, if ctrl is pressed
+                int modifiers = evt.getModifiersEx();
+                if ((modifiers & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
+                    if (!bookViewer.getViewerComponent().isFocusOwner()) {
+                        if (bookViewer.getViewerComponent().requestFocusInWindow()) {
+                            linkToolTipForceVisible = true;
+                        }
+                    }
+                }
+            }
+        });
+
+        linkToolTipForceVisible = false;
+        bookViewer.getViewerComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_CONTROL) {
+                    //System.out.println("ctrl pressed");
+                    linkToolTipForceVisible = true;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_CONTROL) {
+                    //System.out.println("ctrl released");
+                    linkToolTipForceVisible = false;
+                }
             }
         });
         
@@ -374,7 +404,9 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     }
 
     private void hideToolTip() {
-        BookToolTipFactory.getInstance().getToolTip().hide();
+        if (!linkToolTipForceVisible) {
+            BookToolTipFactory.getInstance().getToolTip().hide();
+        }
     }
 
     /** Return the book from the preferences. If not defined in preferences,
