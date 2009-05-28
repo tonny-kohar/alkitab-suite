@@ -60,11 +60,11 @@ public class PassageChooser extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jToolBar1 = new javax.swing.JToolBar();
-        addButton = new javax.swing.JButton();
-        removeButton = new javax.swing.JButton();
         keyScrollPane = new javax.swing.JScrollPane();
         keyTree = new KeyTree();
+        jPanel3 = new javax.swing.JPanel();
+        addButton = new javax.swing.JButton();
+        removeButton = new javax.swing.JButton();
         listScrollPane = new javax.swing.JScrollPane();
         passageList = new javax.swing.JList();
         jPanel2 = new javax.swing.JPanel();
@@ -90,28 +90,6 @@ public class PassageChooser extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel3, gridBagConstraints);
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setOrientation(1);
-        jToolBar1.setRollover(true);
-
-        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/right.png"))); // NOI18N
-        addButton.setToolTipText(bundle.getString("HINT_AddVerses.Text")); // NOI18N
-        addButton.setFocusPainted(false);
-        addButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jToolBar1.add(addButton);
-
-        removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/left.png"))); // NOI18N
-        removeButton.setToolTipText(bundle.getString("HINT_RemoveVerses.Text")); // NOI18N
-        removeButton.setFocusPainted(false);
-        removeButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jToolBar1.add(removeButton);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(6, 8, 6, 8);
-        jPanel1.add(jToolBar1, gridBagConstraints);
-
         keyScrollPane.setPreferredSize(new java.awt.Dimension(230, 430));
         keyScrollPane.setViewportView(keyTree);
 
@@ -124,6 +102,26 @@ public class PassageChooser extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel1.add(keyScrollPane, gridBagConstraints);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
+
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/right.png"))); // NOI18N
+        addButton.setToolTipText(bundle.getString("HINT_AddVerses.Text")); // NOI18N
+        addButton.setFocusPainted(false);
+        addButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanel3.add(addButton);
+
+        removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/left.png"))); // NOI18N
+        removeButton.setToolTipText(bundle.getString("HINT_RemoveVerses.Text")); // NOI18N
+        removeButton.setFocusPainted(false);
+        removeButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanel3.add(removeButton);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
+        jPanel1.add(jPanel3, gridBagConstraints);
 
         listScrollPane.setPreferredSize(new java.awt.Dimension(230, 100));
         listScrollPane.setViewportView(passageList);
@@ -187,8 +185,8 @@ public class PassageChooser extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JScrollPane keyScrollPane;
     private javax.swing.JTree keyTree;
     private javax.swing.JScrollPane listScrollPane;
@@ -337,7 +335,26 @@ public class PassageChooser extends javax.swing.JPanel {
             VerseRange verseRange = (VerseRange)selection[i];
             passage.remove(verseRange);
         }
+
+        int leadIndex = passageList.getSelectionModel().getLeadSelectionIndex();
+        
         updatePassage();
+
+        // try to position the selection
+        if (leadIndex > 0) {
+            leadIndex--;
+        } 
+
+        //System.out.println("index: " + leadIndex);
+
+        if (leadIndex > passageListModel.getSize()-1) {
+            leadIndex = passageListModel.getSize()-1;
+        }
+
+        if (leadIndex >= 0) {
+            passageList.setSelectedIndex(leadIndex);
+            passageList.repaint();
+        }
     }
     
     public class PassageListModel extends AbstractListModel {
