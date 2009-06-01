@@ -5,9 +5,11 @@ package kiyut.alkitab.actions;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.swing.BookInstallerPane;
 import kiyut.alkitab.windows.BookshelfTopComponent;
+import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
@@ -19,7 +21,9 @@ public final class BookInstallerAction extends AbstractAction {
 
     public BookInstallerAction() {
         super(NbBundle.getMessage(BookInstallerAction.class, "CTL_BookInstallerAction"));
-//        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(BookInstallerAction.ICON_PATH, true)));
+
+        String iconPath = NbBundle.getMessage(BookInstallerAction.class, "ICON_BookInstallerAction");
+        putValue(SMALL_ICON, new ImageIcon(ImageUtilities.loadImage(iconPath, true)));
     }
     
     
