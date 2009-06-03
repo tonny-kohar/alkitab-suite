@@ -15,8 +15,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.Document;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.SwingHTMLConverter;

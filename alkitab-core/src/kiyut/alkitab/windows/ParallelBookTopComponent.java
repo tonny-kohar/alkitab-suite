@@ -31,6 +31,8 @@ import javax.swing.Timer;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.Keymap;
 import kiyut.alkitab.actions.Expand1Action;
 import kiyut.alkitab.actions.Expand5Action;
 import kiyut.alkitab.actions.FocusPassageComponentAction;
@@ -59,6 +61,7 @@ import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.openide.awt.StatusDisplayer;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
 import org.openide.util.actions.SystemAction;
@@ -325,7 +328,12 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         actionMap.put(viewerHintsAction.getActionMapKey(), new ViewerHintsDelegateAction());
         actionMap.put(focusPassageComponentAction.getActionMapKey(), new FocusPassageComponentDelegateAction());
         actionMap.put(focusSearchComponentAction.getActionMapKey(), new FocusSearchComponentDelegateAction());
-        
+
+        // XXX workaround for HTMLEditorKit keybinding for CTRL-T
+        Keymap gKeymap = Lookup.getDefault().lookup(Keymap.class);
+        JTextComponent textComponent = (JTextComponent)bookViewer.getViewerComponent();
+        textComponent.getKeymap().setResolveParent(gKeymap);
+
         toolBar.add(goBackAction.getToolbarPresenter());
         toolBar.add(goForwardAction.getToolbarPresenter());
         toolBar.addSeparator();
