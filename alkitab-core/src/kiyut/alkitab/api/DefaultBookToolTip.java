@@ -2,8 +2,6 @@
 
 package kiyut.alkitab.api;
 
-import kiyut.alkitab.swing.*;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -11,14 +9,13 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import kiyut.alkitab.options.ViewerHintsOptions;
+import kiyut.alkitab.swing.BookTextPane;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 

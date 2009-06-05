@@ -14,8 +14,7 @@ import org.openide.awt.Actions;
 import org.openide.awt.Mnemonics;
 import org.openide.cookies.InstanceCookie;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileSystem;
-import org.openide.filesystems.Repository;
+import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataFolder;
 import org.openide.loaders.DataObject;
 import org.openide.util.actions.BooleanStateAction;
@@ -40,8 +39,9 @@ public class NbUtilities {
             throw new IllegalArgumentException("argument menu or folderName should not be null"); // NOI18N
         }
         
-        FileSystem fs = Repository.getDefault().getDefaultFileSystem();
-        FileObject fo = fs.getRoot().getFileObject(folderName);
+        //FileSystem fs = Repository.getDefault().getDefaultFileSystem();
+        //FileObject fo = fs.getRoot().getFileObject(folderName);
+        FileObject fo = FileUtil.getConfigRoot().getFileObject(folderName);
 
         if (fo == null) {
             return;

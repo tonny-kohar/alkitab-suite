@@ -27,8 +27,7 @@ import org.openide.filesystems.FileChangeAdapter;
 import org.openide.filesystems.FileEvent;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileRenameEvent;
-import org.openide.filesystems.FileSystem;
-import org.openide.filesystems.Repository;
+import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -202,8 +201,9 @@ public final class BookshelfTopComponent extends TopComponent {
             }
         });
         
-        FileSystem fs = Repository.getDefault().getDefaultFileSystem();
-        FileObject fo = fs.getRoot().getFileObject(popupMenuFolderName);
+        //FileSystem fs = Repository.getDefault().getDefaultFileSystem();
+        //FileObject fo = fs.getRoot().getFileObject(popupMenuFolderName);
+        FileObject fo = FileUtil.getConfigRoot().getFileObject(popupMenuFolderName);
         
         // add listener to monitor layer.xml popup menu change
         fo.addFileChangeListener(new FileChangeAdapter() {
