@@ -114,9 +114,9 @@ public class BookViewerHistory implements History {
         return false;
     }
     
-    public void blur(int by, RestrictionType restrict) {
+    public History blur(int by, RestrictionType restrict) {
         if (!(key instanceof Passage)) {
-            return;
+            return null;
         }
         
         Verse oldCurrentVerse = null;
@@ -130,19 +130,22 @@ public class BookViewerHistory implements History {
         
         Key tKey = (Key)key.clone();
         tKey.blur(by, restrict);
+
+        BookViewerHistory history = new BookViewerHistory(tKey);
         
-        key = tKey;
+        /*key = tKey;
         keyList.clear();
         buildPassageKey(key);
+         */
         
-        
+        int tIndex = 0;
         boolean found = false;
         if (oldCurrentVerse != null) {
             Passage tPass;
-            for (int i = 0; i < keyList.size(); i++) {
-                tPass = (Passage) keyList.get(i);
+            for (int i = 0; i < history.keyList.size(); i++) {
+                tPass = (Passage) history.keyList.get(i);
                 if (tPass.contains(oldCurrentVerse)) {
-                    index = i;
+                    tIndex = i;
                     found = true;
                     break;
                 }
@@ -150,7 +153,10 @@ public class BookViewerHistory implements History {
         }
         
         if (!found) {
-            index = 0;
+            tIndex = 0;
         }
+        history.index = tIndex;
+
+        return history;
     }
 }

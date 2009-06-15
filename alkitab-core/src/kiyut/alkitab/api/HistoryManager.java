@@ -2,10 +2,16 @@
 
 package kiyut.alkitab.api;
 
+import org.crosswire.jsword.passage.RestrictionType;
+
 /**
- * History manager that manage/ consolidate the {@link History} 
- * from a variety of sources, and able to go back or forward one at the time.
+ * History manager that manage or consolidate the {@link History}
+ * for single viewer instance, and able to go back or forward
+ * one at the time.
  * It works similar to java.util.Iterator
+ *
+ * <strong>note:</strong> this is not Global History. 
+ * It is intended for single viewer history only
  * 
  */
 public interface HistoryManager {
@@ -29,6 +35,16 @@ public interface HistoryManager {
      * @param history {@link History}
      */
     public void add(History history);
+
+    /** Expand / blur the current history by.
+     * The result will be automatically managed by this HistoryManager
+     * by creating a new entry for the current and move the existing to back list
+     * <strong>note: </strong> only applicable to verse/passage key type
+     * @param by The number of verses/keys to widen by
+     * @param restrict The RestrictionType
+     * @return the history if blur is success or null if failed
+     */
+    public History blur(int by, RestrictionType restrict);
     
     /** Return current {@link History} */
     public History current();

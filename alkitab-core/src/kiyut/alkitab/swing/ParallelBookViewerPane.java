@@ -22,6 +22,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
+import kiyut.alkitab.api.GlobalHistory;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.api.SwordURI;
@@ -882,7 +883,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         historyInProgress = true;
         try {
-            hist.blur(by, restrict);
+            hist = historyManager.blur(by, restrict);
             bookTextPane.setKey(hist.current());
             passageTextArea.setText(hist.getKey().getName());
             passageTextArea.setCaretPosition(0);
@@ -890,6 +891,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             historyInProgress = false;
         }
         refresh();
+        
     }
 
     public void requestFocusForPassageComponent() {

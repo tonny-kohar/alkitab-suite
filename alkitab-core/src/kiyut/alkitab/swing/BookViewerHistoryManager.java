@@ -2,10 +2,12 @@
 
 package kiyut.alkitab.swing;
 
-import kiyut.alkitab.api.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import kiyut.alkitab.api.History;
+import kiyut.alkitab.api.HistoryManager;
+import org.crosswire.jsword.passage.RestrictionType;
 
 /**
  * 
@@ -61,6 +63,20 @@ public class BookViewerHistoryManager implements HistoryManager {
         while(backList.size() > limit) {
             backList.remove(backList.size() - 1);
         }
+
+        //GlobalHistory.getInstance().add(history.getKey().toString());
+    }
+
+    public History blur(int by, RestrictionType restrict) {
+        History curr = current();
+        if (curr != null) {
+            History hist = curr.blur(by, restrict);
+            if (hist != null) {
+                add(hist);
+                return current();
+            }
+        }
+        return null;
     }
     
     public History current() {

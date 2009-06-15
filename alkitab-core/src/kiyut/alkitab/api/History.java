@@ -40,6 +40,7 @@ public interface History {
      * <strong>note: </strong> only applicable to verse/passage key type
      * @param by The number of verses/keys to widen by
      * @param restrict The RestrictionType
+     * @return new History or null if it is not verse or passage key type
      */
-    public void blur(int by, RestrictionType restrict);
+    public History blur(int by, RestrictionType restrict);
 }
