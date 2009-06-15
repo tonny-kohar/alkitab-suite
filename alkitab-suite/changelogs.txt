@@ -1,5 +1,5 @@
 ver x
-- Improve Speed and Memory Usage (refactor SourceViewer, index only single book)
+- Improved Speed and Memory Usage (refactor SourceViewer, index only single book)
 - Improved Tooltip, now able to display bible verse
 - Fix some regression (eg: keybinding issues)
 

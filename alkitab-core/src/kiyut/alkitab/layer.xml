@@ -66,6 +66,9 @@
             <file name="kiyut-alkitab-actions-DefinitionsAction.instance">
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.DefinitionsAction"/>
             </file>
+            <file name="kiyut-alkitab-actions-HistoryAction.instance">
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.HistoryAction"/>
+            </file>
         </folder>
     </folder>
     <folder name="OptionsDialog">

@@ -38,8 +38,10 @@
             <file name="org-netbeans-core-actions-NextViewCallbackAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-PreviousViewCallbackAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-ViewRuntimeTabAction.instance_hidden"/>
+            <file name="org-netbeans-core-io-ui-IOWindowAction.instance_hidden"/>
             <file name="org-netbeans-core-output2-OutputWindowAction.instance_hidden"/>
             <file name="org-netbeans-core-windows-actions-CloneDocumentAction.instance_hidden"/>
+            <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-Add.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-Remove.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-View.instance_hidden"/>
@@ -100,7 +102,7 @@
             <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
             <file name="ViewFavoritesTabAction.shadow_hidden"/>
             <file name="ViewRuntimeTabAction.shadow_hidden"/>
-            <file name="org-netbeans-core-actions-GlobalPropertiesAction.shadow_hidden"/>
+            <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow_hidden"/>
             <file name="BookshelfAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookshelfAction.instance"/>
                 <attr name="position" intvalue="100"/>
@@ -121,11 +123,17 @@
                 <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DefinitionsAction.instance"/>
                 <attr name="position" intvalue="140"/>
             </file>
+            <file name="HistoryAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-HistoryAction.instance"/>
+                <attr name="position" intvalue="150"/>
+            </file>
         </folder>
     </folder>
     <folder name="Shortcuts">
         <file name="D-4.shadow_hidden"/>
+        <file name="D-F12.shadow_hidden"/>
         <file name="D-I.shadow_hidden"/>
+        <file name="DS-DELETE.shadow_hidden"/>
         <file name="F1.shadow">
             <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
         </file>
@@ -141,6 +149,7 @@
         <file name="D-F.shadow">
             <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-FocusSearchComponentAction.instance"/>
         </file>
+        <file name="O-F12.shadow_hidden"/>
         <file name="O-LEFT.shadow">
             <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoBackAction.instance"/>
         </file>
@@ -168,6 +177,23 @@
         <file name="DO-5.shadow">
             <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DefinitionsAction.instance"/>
         </file>
+        <file name="DS-H.shadow">
+            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-HistoryAction.instance"/>
+        </file>
+        <file name="S-Escape.shadow">
+            <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-MaximizeWindowAction.instance"/>
+        </file>
+        <file name="S-F4.shadow">
+            <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-DocumentsAction.instance"/>
+        </file>
+        <file name="D-W.shadow">
+            <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-CloseWindowAction.instance"/>
+        </file>
+        <file name="DS-W.shadow">
+            <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-CloseAllDocumentsAction.instance"/>
+        </file>
+        <file name="SD-F12.shadow_hidden"/>
+        <file name="SO-F12.shadow_hidden"/>
     </folder>
     <folder name="OptionsDialog">
         <folder name="Advanced">
@@ -205,19 +231,21 @@
             <file name="BookNavigatorTopComponent.settings" url="nbres:/kiyut/alkitab/windows/BookNavigatorTopComponent.settings"/>
             <file name="DefinitionsTopComponent.settings" url="nbres:/kiyut/alkitab/windows/DefinitionsTopComponent.settings"/>
             <file name="DailyDevotionsTopComponent.settings" url="nbres:/kiyut/alkitab/windows/DailyDevotionsTopComponent.settings"/>
+            <file name="HistoryTopComponent.settings" url="nbres:/kiyut/alkitab/windows/HistoryTopComponent.settings"/>
         </folder> 
         <folder name="Modes">
+            <file name="properties_hidden"/>
             <folder name="explorer">
                 <file name="favorites.wstcref_hidden"/>
                 <file name="runtime.wstcref_hidden"/>
-            </folder>
-            <file name="properties_hidden"/>
-            <folder name="explorer">
                 <file name="BookshelfTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/BookshelfTopComponent.wstcref">
                     <attr name="position" intvalue="100"/>
                  </file>
                 <file name="BookNavigatorTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/BookNavigatorTopComponent.wstcref">
                     <attr name="position" intvalue="110"/>
+                 </file>
+                 <file name="HistoryTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/HistoryTopComponent.wstcref">
+                    <attr name="position" intvalue="120"/>
                  </file>
             </folder>
             <folder name="output">
