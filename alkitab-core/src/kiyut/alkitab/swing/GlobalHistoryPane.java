@@ -3,11 +3,14 @@
 package kiyut.alkitab.swing;
 
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListDataEvent;
@@ -38,23 +41,24 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPane = new javax.swing.JScrollPane();
         historyList = new javax.swing.JList();
 
         setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setViewportView(historyList);
+        scrollPane.setViewportView(historyList);
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(scrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList historyList;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
+        historyList.setPrototypeCellValue("1234567890123456789012345678901234567890");
         listModel = new HistoryListModel();
         historyList.setModel(listModel);
         historyList.setCellRenderer(new HistoryCellRenderer());
@@ -64,16 +68,29 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() < 2) { return; }
-                
-                int index = historyList.getSelectedIndex();
-                if (index < 0) { return; }
-
-                String str = GlobalHistory.getInstance().getHistory(index).getHistory();
-                SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, "", str);
-                BookViewManager.getInstance().openURI(uri, false);
+                viewHistory();
             }
         });
 
+        historyList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    viewHistory();
+                }
+            }
+        });
+    }
+
+    protected void viewHistory() {
+        int index = historyList.getSelectedIndex();
+        if (index < 0) {
+            return;
+        }
+
+        String str = GlobalHistory.getInstance().getHistory(index).getHistory();
+        SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, "", str);
+        BookViewManager.getInstance().openURI(uri, false);
     }
 
     private class HistoryListModel extends AbstractListModel {
