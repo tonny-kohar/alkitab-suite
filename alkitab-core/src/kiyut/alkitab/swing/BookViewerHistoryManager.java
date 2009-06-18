@@ -63,8 +63,6 @@ public class BookViewerHistoryManager implements HistoryManager {
         while(backList.size() > limit) {
             backList.remove(backList.size() - 1);
         }
-
-        //GlobalHistory.getInstance().add(history.getKey().toString());
     }
 
     public History blur(int by, RestrictionType restrict) {

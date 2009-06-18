@@ -766,6 +766,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             BookViewerHistory hist = new BookViewerHistory(key);
             historyManager.add(hist);
             displayKey = hist.current();
+
+            // TODO
+            GlobalHistory.getInstance().add(hist.getKey().toString());
         }
         
         bookTextPane.setKey(displayKey);

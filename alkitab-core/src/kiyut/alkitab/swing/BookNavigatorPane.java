@@ -158,9 +158,8 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         
         if (keyTree.getModel() instanceof BibleKeyTreeModel) {
             BibleKeyTreeNode bibleNode = (BibleKeyTreeNode) node;
-            //if (bibleNode.getCategory() == BibleKeyTreeNode.BIBLE ||
-            //        bibleNode.getCategory() == BibleKeyTreeNode.BOOK) {
-            if (bibleNode.getCategory() == BibleKeyTreeNode.BIBLE) {
+            if (bibleNode.getCategory() == BibleKeyTreeNode.BIBLE ||
+                    bibleNode.getCategory() == BibleKeyTreeNode.BOOK) {
                 // this is bible or book level, too big to be displayed
                 return;
             }

@@ -123,8 +123,8 @@
                 <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DefinitionsAction.instance"/>
                 <attr name="position" intvalue="140"/>
             </file>
-            <file name="HistoryAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-HistoryAction.instance"/>
+            <file name="GlobalHistoryAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-GlobalHistoryAction.instance"/>
                 <attr name="position" intvalue="150"/>
             </file>
         </folder>
@@ -178,7 +178,7 @@
             <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DefinitionsAction.instance"/>
         </file>
         <file name="DS-H.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-HistoryAction.instance"/>
+            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-GlobalHistoryAction.instance"/>
         </file>
         <file name="S-Escape.shadow">
             <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-MaximizeWindowAction.instance"/>
@@ -231,7 +231,7 @@
             <file name="BookNavigatorTopComponent.settings" url="nbres:/kiyut/alkitab/windows/BookNavigatorTopComponent.settings"/>
             <file name="DefinitionsTopComponent.settings" url="nbres:/kiyut/alkitab/windows/DefinitionsTopComponent.settings"/>
             <file name="DailyDevotionsTopComponent.settings" url="nbres:/kiyut/alkitab/windows/DailyDevotionsTopComponent.settings"/>
-            <file name="HistoryTopComponent.settings" url="nbres:/kiyut/alkitab/windows/HistoryTopComponent.settings"/>
+            <file name="GlobalHistoryTopComponent.settings" url="nbres:/kiyut/alkitab/windows/GlobalHistoryTopComponent.settings"/>
         </folder> 
         <folder name="Modes">
             <file name="properties_hidden"/>
@@ -244,7 +244,7 @@
                 <file name="BookNavigatorTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/BookNavigatorTopComponent.wstcref">
                     <attr name="position" intvalue="110"/>
                  </file>
-                 <file name="HistoryTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/HistoryTopComponent.wstcref">
+                 <file name="GlobalHistoryTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/GlobalHistoryTopComponent.wstcref">
                     <attr name="position" intvalue="120"/>
                  </file>
             </folder>

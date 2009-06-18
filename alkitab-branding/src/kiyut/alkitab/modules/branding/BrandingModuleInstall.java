@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import kiyut.alkitab.Application;
 import kiyut.alkitab.api.BookViewManager;
+import kiyut.alkitab.api.GlobalHistory;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
@@ -140,6 +141,9 @@ public class BrandingModuleInstall extends ModuleInstall {
     
     @Override
     public boolean closing() {
+
+        GlobalHistory.getInstance().save();
+
         if (BookViewerOptions.getInstance().isSessionPersistence()) {
             return super.closing();
         }

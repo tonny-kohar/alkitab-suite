@@ -139,22 +139,22 @@ public class BookViewerHistory implements History {
          */
         
         int tIndex = 0;
-        boolean found = false;
+        //boolean found = false;
         if (oldCurrentVerse != null) {
             Passage tPass;
             for (int i = 0; i < history.keyList.size(); i++) {
                 tPass = (Passage) history.keyList.get(i);
                 if (tPass.contains(oldCurrentVerse)) {
                     tIndex = i;
-                    found = true;
+                    //found = true;
                     break;
                 }
             }
         }
         
-        if (!found) {
+        /*if (!found) {
             tIndex = 0;
-        }
+        }*/
         history.index = tIndex;
 
         return history;

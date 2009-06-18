@@ -4,6 +4,6 @@
 <settings version="1.0">
     <module name="kiyut.alkitab" spec="2.3"/>
     <instanceof class="org.openide.windows.TopComponent"/>
-    <instanceof class="kiyut.alkitab.windows.HistoryTopComponent"/>
-    <instance class="kiyut.alkitab.windows.HistoryTopComponent" method="getDefault"/>
+    <instanceof class="kiyut.alkitab.windows.GlobalHistoryTopComponent"/>
+    <instance class="kiyut.alkitab.windows.GlobalHistoryTopComponent" method="getDefault"/>
 </settings>

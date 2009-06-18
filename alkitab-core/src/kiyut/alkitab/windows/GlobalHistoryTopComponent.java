@@ -2,7 +2,9 @@
 
 package kiyut.alkitab.windows;
 
+import java.awt.BorderLayout;
 import java.util.logging.Logger;
+import kiyut.alkitab.swing.GlobalHistoryPane;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -10,22 +12,25 @@ import org.openide.windows.WindowManager;
 
 
 /**
- * Top component which displays something.
+ * Top component which displays {@link kiyut.alkitab.swing.GlobalHistoryPane GlobalHistoryPane}.
  */
 
-public final class HistoryTopComponent extends TopComponent {
-    private static HistoryTopComponent instance;
+public final class GlobalHistoryTopComponent extends TopComponent {
+    private static GlobalHistoryTopComponent instance;
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
 
-    private static final String PREFERRED_ID = "HistoryTopComponent";
+    private static final String PREFERRED_ID = "GlobalHistoryTopComponent";
 
-    public HistoryTopComponent() {
+    private GlobalHistoryPane historyPane;
+
+    public GlobalHistoryTopComponent() {
         initComponents();
-        setName(NbBundle.getMessage(HistoryTopComponent.class, "CTL_HistoryTopComponent"));
-        setToolTipText(NbBundle.getMessage(HistoryTopComponent.class, "HINT_HistoryTopComponent"));
+        setName(NbBundle.getMessage(GlobalHistoryTopComponent.class, "CTL_GlobalHistoryTopComponent"));
+        setToolTipText(NbBundle.getMessage(GlobalHistoryTopComponent.class, "HINT_GlobalHistoryTopComponent"));
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
+        initCustom();
     }
 
     /** This method is called from within the constructor to
@@ -36,16 +41,7 @@ public final class HistoryTopComponent extends TopComponent {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -55,27 +51,27 @@ public final class HistoryTopComponent extends TopComponent {
      * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
      * To obtain the singleton instance, use {@link #findInstance}.
      */
-    public static synchronized HistoryTopComponent getDefault() {
+    public static synchronized GlobalHistoryTopComponent getDefault() {
         if (instance == null) {
-            instance = new HistoryTopComponent();
+            instance = new GlobalHistoryTopComponent();
         }
         return instance;
     }
 
     /**
-     * Obtain the HistoryTopComponent instance. Never call {@link #getDefault} directly!
+     * Obtain the GlobalHistoryTopComponent instance. Never call {@link #getDefault} directly!
      */
-    public static synchronized HistoryTopComponent findInstance() {
+    public static synchronized GlobalHistoryTopComponent findInstance() {
         TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
         if (win == null) {
-            Logger.getLogger(HistoryTopComponent.class.getName()).warning(
+            Logger.getLogger(GlobalHistoryTopComponent.class.getName()).warning(
                     "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
             return getDefault();
         }
-        if (win instanceof HistoryTopComponent) {
-            return (HistoryTopComponent) win;
+        if (win instanceof GlobalHistoryTopComponent) {
+            return (GlobalHistoryTopComponent) win;
         }
-        Logger.getLogger(HistoryTopComponent.class.getName()).warning(
+        Logger.getLogger(GlobalHistoryTopComponent.class.getName()).warning(
                 "There seem to be multiple components with the '" + PREFERRED_ID +
                 "' ID. That is a potential source of errors and unexpected behavior.");
         return getDefault();
@@ -104,7 +100,7 @@ public final class HistoryTopComponent extends TopComponent {
     }
 
     Object readProperties(java.util.Properties p) {
-        HistoryTopComponent singleton = HistoryTopComponent.getDefault();
+        GlobalHistoryTopComponent singleton = GlobalHistoryTopComponent.getDefault();
         singleton.readPropertiesImpl(p);
         return singleton;
     }
@@ -118,4 +114,9 @@ public final class HistoryTopComponent extends TopComponent {
     protected String preferredID() {
         return PREFERRED_ID;
     }
+
+     private void initCustom() {
+         historyPane = new GlobalHistoryPane();
+         this.add(historyPane, BorderLayout.CENTER);
+     }
 }
