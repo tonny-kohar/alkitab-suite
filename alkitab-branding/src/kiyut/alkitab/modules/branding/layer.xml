@@ -200,9 +200,10 @@
             <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsAdvancedOption.instance_hidden"/>
         </folder>
         <file name="General.instance_hidden"/>
-        <file name="BookViewerOptionCategory.instance">
+        <!-- <file name="BookViewerOptionCategory.instance">
             <attr name="position" intvalue="0"/>
         </file>
+        -->
     </folder>
     <folder name="Services">
         <folder name="AutoupdateType">

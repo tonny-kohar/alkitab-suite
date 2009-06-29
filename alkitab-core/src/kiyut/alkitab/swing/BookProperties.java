@@ -2,11 +2,13 @@
 
 package kiyut.alkitab.swing;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
 import javax.swing.text.html.HTMLEditorKit;
 import kiyut.alkitab.api.SwingHTMLConverter;
 import kiyut.alkitab.api.ViewerHints;
@@ -73,6 +75,21 @@ public class BookProperties extends javax.swing.JPanel {
         this.setPreferredSize(dim);
         
         setName(bundle.getString("CTL_Name.Text"));
+
+        //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
+        try {
+            if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+                Color color = UIManager.getColor("TextPane.background");
+                if (color != null) {
+                    if (!color.equals(getBackground())) {
+                        textPane.setBackground(color);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.CONFIG,ex.getMessage(),ex);
+        }
         
     }
     

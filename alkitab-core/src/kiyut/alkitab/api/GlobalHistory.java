@@ -70,7 +70,6 @@ public class GlobalHistory {
             List<Element> children = doc.getRootElement().getChildren();
             for (int i = 0; i < children.size(); i++) {
                 Element elt = children.get(i);
-                System.out.println("....go here");
                 data.add(new Entry(Long.parseLong(elt.getAttributeValue(MILLIS)), elt.getTextTrim()));
             }
 
@@ -138,7 +137,10 @@ public class GlobalHistory {
         }
 
         if (history == null) { return; }
-        if (history.isEmpty()) { return; }
+
+        // java 6 only
+        //if (history.isEmpty()) { return; }
+        if (history.length() == 0) { return; }
 
         data.add(0,new Entry (System.currentTimeMillis(), history));
         fireIntervalAdded(0, 0);

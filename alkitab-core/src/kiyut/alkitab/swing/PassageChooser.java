@@ -3,6 +3,7 @@
 package kiyut.alkitab.swing;
 
 import java.awt.Component;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -16,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.crosswire.jsword.passage.Key;
@@ -62,7 +62,7 @@ public class PassageChooser extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         keyScrollPane = new javax.swing.JScrollPane();
         keyTree = new KeyTree();
-        jPanel3 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         listScrollPane = new javax.swing.JScrollPane();
@@ -103,25 +103,31 @@ public class PassageChooser extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel1.add(keyScrollPane, gridBagConstraints);
 
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
+        jToolBar1.setFloatable(false);
+        jToolBar1.setOrientation(1);
+        jToolBar1.setRollover(true);
 
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/right.png"))); // NOI18N
         addButton.setToolTipText(bundle.getString("HINT_AddVerses.Text")); // NOI18N
         addButton.setFocusPainted(false);
-        addButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanel3.add(addButton);
+        addButton.setFocusable(false);
+        addButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(addButton);
 
         removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/left.png"))); // NOI18N
         removeButton.setToolTipText(bundle.getString("HINT_RemoveVerses.Text")); // NOI18N
         removeButton.setFocusPainted(false);
-        removeButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanel3.add(removeButton);
+        removeButton.setFocusable(false);
+        removeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(removeButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        jPanel1.add(jPanel3, gridBagConstraints);
+        jPanel1.add(jToolBar1, gridBagConstraints);
 
         listScrollPane.setPreferredSize(new java.awt.Dimension(230, 100));
         listScrollPane.setViewportView(passageList);
@@ -185,8 +191,8 @@ public class PassageChooser extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JScrollPane keyScrollPane;
     private javax.swing.JTree keyTree;
     private javax.swing.JScrollPane listScrollPane;
@@ -209,6 +215,11 @@ public class PassageChooser extends javax.swing.JPanel {
         passage = (Passage)keyFactory.createEmptyKeyList();
         
         summaryLabel.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
+
+         // XXX workaround for Windows Plaf for button margin
+        Insets insets = new Insets(2, 2, 2, 2);
+        addButton.setMargin(insets);
+        removeButton.setMargin(insets);
         
         /*
          Disable this, UI Gesture does not match, because double click is tree expand

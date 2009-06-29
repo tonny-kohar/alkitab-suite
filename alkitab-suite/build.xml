@@ -85,6 +85,9 @@
         </replace>
         
         <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
+            <!-- new since Nb 6.7 -->
+            <replacefilter token="$${APPNAME}" value="${app.name}" />
+            
             <replacefilter token="/dev" value="/${app.version}" />
             <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
         </replace>

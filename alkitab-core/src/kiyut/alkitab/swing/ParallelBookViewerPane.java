@@ -3,6 +3,7 @@
 package kiyut.alkitab.swing;
 
 import java.awt.CardLayout;
+import java.awt.Insets;
 import javax.swing.event.ChangeEvent;
 import kiyut.alkitab.api.BookViewer;
 import java.awt.event.ActionEvent;
@@ -90,7 +91,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         splitPane = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
         addBookButton = new javax.swing.JButton();
         removeBookButton = new javax.swing.JButton();
         booksComboPane = new javax.swing.JPanel();
@@ -100,14 +101,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         passagePane = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         passageTextArea = new javax.swing.JTextArea();
-        jPanel3 = new javax.swing.JPanel();
+        jToolBar2 = new javax.swing.JToolBar();
         passageGoButton = new javax.swing.JButton();
         passageChooserButton = new javax.swing.JButton();
         searchPane = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         searchTextArea = new javax.swing.JTextArea();
-        jPanel6 = new javax.swing.JPanel();
+        jToolBar3 = new javax.swing.JToolBar();
         searchGoButton = new javax.swing.JButton();
         advancedSearchButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -128,23 +129,28 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 6);
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
 
         addBookButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/plus.png"))); // NOI18N
         addBookButton.setToolTipText(bundle.getString("HINT_AddBook.Text")); // NOI18N
         addBookButton.setFocusable(false);
-        jPanel2.add(addBookButton);
+        addBookButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addBookButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(addBookButton);
 
         removeBookButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/minus.png"))); // NOI18N
         removeBookButton.setToolTipText(bundle.getString("HINT_RemoveBook.Text")); // NOI18N
         removeBookButton.setFocusable(false);
-        jPanel2.add(removeBookButton);
+        removeBookButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeBookButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(removeBookButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jPanel2, gridBagConstraints);
+        jPanel1.add(jToolBar1, gridBagConstraints);
 
         booksComboPane.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -191,28 +197,29 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.weighty = 1.0;
         passagePane.add(jScrollPane1, gridBagConstraints);
 
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
 
         passageGoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/go.png"))); // NOI18N
         passageGoButton.setToolTipText(bundle.getString("HINT_PassageGo.Text")); // NOI18N
         passageGoButton.setFocusable(false);
         passageGoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         passageGoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel3.add(passageGoButton);
+        jToolBar2.add(passageGoButton);
 
         passageChooserButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/edit.png"))); // NOI18N
         passageChooserButton.setToolTipText(bundle.getString("HINT_PassageChooser.Text")); // NOI18N
         passageChooserButton.setFocusable(false);
         passageChooserButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         passageChooserButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel3.add(passageChooserButton);
+        jToolBar2.add(passageChooserButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        passagePane.add(jPanel3, gridBagConstraints);
+        passagePane.add(jToolBar2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
@@ -240,28 +247,29 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.weighty = 1.0;
         jPanel4.add(jScrollPane2, gridBagConstraints);
 
-        jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
+        jToolBar3.setFloatable(false);
+        jToolBar3.setRollover(true);
 
         searchGoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/go.png"))); // NOI18N
         searchGoButton.setToolTipText(bundle.getString("HINT_PassageGo.Text")); // NOI18N
         searchGoButton.setFocusable(false);
         searchGoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         searchGoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel6.add(searchGoButton);
+        jToolBar3.add(searchGoButton);
 
         advancedSearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/edit.png"))); // NOI18N
         advancedSearchButton.setToolTipText(bundle.getString("HINT_AdvancedSearch.Text")); // NOI18N
         advancedSearchButton.setFocusable(false);
         advancedSearchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         advancedSearchButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel6.add(advancedSearchButton);
+        jToolBar3.add(advancedSearchButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        jPanel4.add(jPanel6, gridBagConstraints);
+        jPanel4.add(jToolBar3, gridBagConstraints);
 
         searchPane.add(jPanel4, "search-layout");
 
@@ -298,13 +306,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JButton passageChooserButton;
     private javax.swing.JButton passageGoButton;
     private javax.swing.JPanel passagePane;
@@ -331,6 +339,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         bookScrollPane.setViewportView(bookTextPane);
         
         //getActionMap().setParent(bookTextPane.getActionMap());
+
+        // XXX workaround for Windows Plaf for button margin
+        Insets insets = new Insets(0, 0, 0, 0);
+        addBookButton.setMargin(insets);
+        removeBookButton.setMargin(insets);
+        passageGoButton.setMargin(insets);
+        passageChooserButton.setMargin(insets);
+        searchGoButton.setMargin(insets);
+        advancedSearchButton.setMargin(insets);
         
         addBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

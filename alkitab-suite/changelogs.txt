@@ -1,17 +1,18 @@
-ver x
-- Improved Speed and Memory Usage (refactor SourceViewer, index only single book)
-- Improved Tooltip, now able to display bible verse
-- Fix some regression (eg: keybinding issues)
-
-ver 2.3-beta1
-- Add Configurable Keymap (shortcut) for Options Dialog
+ver 2.3
+- Add Configurable Keymap (shortcut)
 - Add Ctrl-G for request focus on Passage Field
 - Add Ctrl-F for request foucs on Search Field
 - Add alt-Left for Go Back (History)
 - Add alt-Right for Go Forward (History)
 - Add alt-PgUp for Go Previous Page
 - Add alt-PgDown for Go Next Page
+- Add basic history viewer
 - Improved Installer
+- Improved Speed and Memory Usage (refactor SourceViewer, index only single book)
+- Improved Tooltip, now able to display bible verse
+- Fix some regression (keybinding issues) for beta1
+- Fix some regression (history issues) for beta1
+- Updated to use Netbeans 6.7
 
 ver 2.2
 - Synchronize Parallel View passage and search text field

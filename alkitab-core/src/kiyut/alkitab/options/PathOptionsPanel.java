@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.options;
 
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -39,7 +40,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         bookPathList = new javax.swing.JList();
-        jPanel2 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
         addPathButton = new javax.swing.JButton();
         removePathButton = new javax.swing.JButton();
         moveUpPathButton = new javax.swing.JButton();
@@ -84,41 +85,42 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
         jPanel1.add(jScrollPane1, gridBagConstraints);
 
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 2));
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
 
         addPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/plus.png"))); // NOI18N
         addPathButton.setToolTipText(bundle.getString("CTL_AddPath.Text")); // NOI18N
         addPathButton.setFocusable(false);
         addPathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addPathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel2.add(addPathButton);
+        jToolBar1.add(addPathButton);
 
         removePathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/minus.png"))); // NOI18N
         removePathButton.setToolTipText(bundle.getString("CTL_RemovePath.Text")); // NOI18N
         removePathButton.setFocusable(false);
         removePathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removePathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel2.add(removePathButton);
+        jToolBar1.add(removePathButton);
 
         moveUpPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/up.png"))); // NOI18N
         moveUpPathButton.setToolTipText(bundle.getString("CTL_MoveUpPath.Text")); // NOI18N
         moveUpPathButton.setFocusable(false);
         moveUpPathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         moveUpPathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel2.add(moveUpPathButton);
+        jToolBar1.add(moveUpPathButton);
 
         moveDownPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/down.png"))); // NOI18N
         moveDownPathButton.setToolTipText(bundle.getString("CTL_MoveDownPath.Text")); // NOI18N
         moveDownPathButton.setFocusable(false);
         moveDownPathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         moveDownPathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel2.add(moveDownPathButton);
+        jToolBar1.add(moveDownPathButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jPanel2, gridBagConstraints);
+        jPanel1.add(jToolBar1, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel11, bundle.getString("CTL_DownloadPath.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -245,11 +247,11 @@ final class PathOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton moveDownPathButton;
     private javax.swing.JButton moveUpPathButton;
     private javax.swing.JButton removePathButton;
@@ -258,6 +260,13 @@ final class PathOptionsPanel extends javax.swing.JPanel {
     private void initCustom() {
         bookPathList.setModel(new DefaultListModel());
         bookPathList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // XXX workaround for Windows Plaf for button margin
+        Insets insets = new Insets(0, 0, 0, 0);
+        addPathButton.setMargin(insets);
+        removePathButton.setMargin(insets);
+        moveUpPathButton.setMargin(insets);
+        moveDownPathButton.setMargin(insets);
 
         addPathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

@@ -1,4 +1,6 @@
-Just something on my minds that could improve Alkitab Bible Study, 
+Just something on my minds or from the user feedback
+that could improve Alkitab Bible Study
+
 in no particular order
 - [API] Open more public API for plugins/extension (On going progress)
 - [GUI] Alternative HTML viewer: xhtml (flying sourcer), XULEmbed, JDIC native browser, JWebPane (preferred, but not available yet)
@@ -13,3 +15,4 @@ in no particular order
 - Search highlight
 - Configurable font and font color
 - History Viewer
+- Synchronized Book Viewer (aka each tab show the same passage)
