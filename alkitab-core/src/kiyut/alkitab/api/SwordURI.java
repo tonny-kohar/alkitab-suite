@@ -163,7 +163,7 @@ public class SwordURI {
      * @param book the book initials or book name
      * @param fragment the fragment
      * @return {@code SwordURI} or null if fail to construct
-     * @see createURI(Book,String)
+     * @see #createURI(Book,String)
      */
     public static SwordURI createURI(String scheme, String book, String fragment) {
         // TODO improve implementation for various condition

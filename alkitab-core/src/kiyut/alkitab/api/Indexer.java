@@ -99,7 +99,7 @@ public final class Indexer {
      * It will indexing the books which does not have index yet. 
      * It is the same as createIndex(books,false)
      * @param books List of Books to be indexed
-     * @see createIndex(List<Book>, boolean)
+     * @see #createIndex(List, boolean)
      */
     public void createIndex(List<Book> books) {
         createIndex(books, false);
@@ -109,7 +109,7 @@ public final class Indexer {
      * It will indexing/re-indexing the books. This methods also block the GUI using SwingFX
      * @param books List of Books to be indexed
      * @param reindex flag for reindex
-     * @see createIndex(List<Book>)
+     * @see #createIndex(List)
      */
     public void createIndex(List<Book> books, boolean reindex) {
         IndexerProgress progress = new IndexerProgress();
@@ -119,8 +119,8 @@ public final class Indexer {
     /**
      * Only convenience method to create index for single book
      * @param book the Book to be Indexed
-     *  @see createIndex(List<Book>, boolean)
-     *  @see createIndex(Book, boolean)
+     *  @see #createIndex(List, boolean)
+     *  @see #createIndex(Book, boolean)
      */
     public void createIndex(Book book) {
         createIndex(book, false);
@@ -130,7 +130,7 @@ public final class Indexer {
      *  Only convenience method to create index for single book
      *  @param book the Book to be Indexed
      *  @param reindex flag for reindex
-     *  @see createIndex(List<Book>, boolean)
+     *  @see #createIndex(List, boolean)
      */
     public void createIndex(Book book, boolean reindex) {
         List<Book> books = new ArrayList<Book>(1);

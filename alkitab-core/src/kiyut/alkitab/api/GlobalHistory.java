@@ -126,23 +126,34 @@ public class GlobalHistory {
         modified = false;
     }
 
-    public void add(String history) {
-        
+    /** Add the passed passage into history.
+     * @param passage the passage as String
+     * @see #add(String,String)
+     */
+    public void add(String passage) {
+        add(passage, null);
+    }
+
+    /** Add the passed passage and search into history
+     * @param passage the passage as String
+     * @param search the search String or {@code null}
+     */
+    public void add(String passage, String search) {
         // check last entry
         if (!data.isEmpty()) {
             Entry last = data.get(0);
-            if (last.getHistory().equalsIgnoreCase(history)) {
+            if (last.getHistory().equalsIgnoreCase(passage)) {
                 return;
             }
         }
 
-        if (history == null) { return; }
+        if (passage == null) { return; }
 
         // java 6 only
         //if (history.isEmpty()) { return; }
-        if (history.length() == 0) { return; }
+        if (passage.length() == 0) { return; }
 
-        data.add(0,new Entry (System.currentTimeMillis(), history));
+        data.add(0,new Entry (System.currentTimeMillis(), passage));
         fireIntervalAdded(0, 0);
 
         int first = -1;

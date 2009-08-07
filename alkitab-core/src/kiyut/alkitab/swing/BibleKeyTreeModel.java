@@ -43,7 +43,8 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
     }
     
     /** Recursive build this model 
-     * @param key the {@code Key}
+     * @param node the {@code KeyTreeNode}
+     * @param level one of the: LEVEL_BOOK, LEVEL_CHAPTER, LEVEL_VERSE
      */
     protected void buildModel(DefaultKeyTreeNode node, int level) throws NoSuchVerseException {
         if (maxLevel < level) {

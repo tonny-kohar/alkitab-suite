@@ -166,7 +166,7 @@ public class DefaultBookToolTip implements BookToolTip {
     /** Return preferred popup location based on ScreenSize, etc so it does not overlap 
      * with cursor and Screen Size.
      * @param owner Component mouse coordinates are relative to, maybe null
-     * @param prefPoint inital prefPoint location that will be adjusted based on various factor
+     * @param point inital prefPoint location that will be adjusted based on various factor
      */
     protected Point getPreferredLocation(Component owner, Point point) {
         int adjust = 20; // some pixel adjustment for cursor prefSize

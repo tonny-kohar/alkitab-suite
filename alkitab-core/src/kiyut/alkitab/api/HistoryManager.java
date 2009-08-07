@@ -12,6 +12,8 @@ import org.crosswire.jsword.passage.RestrictionType;
  *
  * <strong>note:</strong> this is not Global History. 
  * It is intended for single viewer history only
+ *
+ * @see kiyut.alkitab.api.GlobalHistory
  * 
  */
 public interface HistoryManager {
@@ -31,7 +33,6 @@ public interface HistoryManager {
     public void setLimit(int limit);
     
     /** Add history.
-     * Please check {@link #isInProgress()} state before add a history
      * @param history {@link History}
      */
     public void add(History history);

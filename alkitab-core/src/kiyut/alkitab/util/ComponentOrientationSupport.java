@@ -45,7 +45,7 @@ public class ComponentOrientationSupport {
     }
 
     /** Apply the getComponentOrientation to the specified container
-     * @param containter Container
+     * @param container Container
      */
     public static void applyComponentOrientation(Container container) {
         container.applyComponentOrientation(getComponentOrientation());
