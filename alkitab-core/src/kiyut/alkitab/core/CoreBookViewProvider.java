@@ -60,6 +60,12 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
     
     @Override
     public void openURI(SwordURI uri, boolean newView) {
+        openURI(uri,null,newView);
+    }
+
+    @Override
+    public void openURI(SwordURI uri, String info, boolean newView) {
+    
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (uri == null) { 
             logger.log(Level.WARNING, "openURI(uri," + newView + "): uri is null" );
@@ -76,14 +82,14 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
         switch (uri.getType()) {
             case BIBLE:
             case COMMENTARY:
-                openBible(uri, newView);
+                openBible(uri, info, newView);
                 break;
             case DAILY_DEVOTION:
-                openDailyDevotion(uri, newView);
+                openDailyDevotion(uri, info, newView);
                 break;
             case GENERAL_BOOK:
             case MAPS:
-                openGeneralBook(uri, newView);
+                openGeneralBook(uri, info, newView);
                 break;
             case DICTIONARY:
             case GLOSSARY:
@@ -91,7 +97,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
             case HEBREW_STRONGS:
             case GREEK_MORPH:
             case HEBREW_MORPH:
-                openDefinition(uri, newView);
+                openDefinition(uri, info, newView);
                 break;
             default:
                 break;
@@ -99,7 +105,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
         }
     }
     
-    protected void openBible(final SwordURI uri, boolean newView) {
+    protected void openBible(final SwordURI uri, final String info, boolean newView) {
         BookViewerTopComponent tc = null;
         if (bookViewerTC != null) {
             tc = bookViewerTC;
@@ -116,35 +122,35 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                finalTC.openURI(uri);
+                finalTC.openURI(uri, info);
             }
         });
     }
     
     
-    protected void openDefinition(final SwordURI uri, boolean newView) {
+    protected void openDefinition(final SwordURI uri, final String info, boolean newView) {
         DefinitionsTopComponent tc = DefinitionsTopComponent.findInstance();
         tc.open();
         tc.requestActive();
-        tc.openURI(uri);
+        tc.openURI(uri, info);
     }
     
-    protected void openDailyDevotion(final SwordURI uri, boolean newView) {
+    protected void openDailyDevotion(final SwordURI uri, final String info, boolean newView) {
         DailyDevotionsTopComponent tc = DailyDevotionsTopComponent.findInstance();
         tc.open();
         tc.requestActive();
-        tc.openURI(uri);
+        tc.openURI(uri, info);
     }
     
     /** openGeneralBook. this methods ignore the value of newView. It always open new View*/
-    protected void openGeneralBook(final SwordURI uri, boolean newView) {
+    protected void openGeneralBook(final SwordURI uri, final String info, boolean newView) {
         final SingleBookTopComponent tc = new SingleBookTopComponent();
         tc.open();
         tc.requestActive();
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                tc.openURI(uri);
+                tc.openURI(uri, info);
             }
         });
     }

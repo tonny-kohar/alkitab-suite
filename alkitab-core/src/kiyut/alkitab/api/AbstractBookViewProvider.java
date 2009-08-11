@@ -11,6 +11,11 @@ package kiyut.alkitab.api;
 public abstract class AbstractBookViewProvider implements BookViewProvider {
     
     public void openURI(SwordURI uri, boolean newView) {
+        openURI(uri,null,newView);
+    }
+    
+    public void openURI(SwordURI uri, String info, boolean newView) {
         // do nothing
     }
+
 }

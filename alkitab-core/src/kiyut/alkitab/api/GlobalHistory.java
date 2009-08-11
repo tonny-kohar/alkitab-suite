@@ -22,12 +22,16 @@ import org.jdom.output.XMLOutputter;
 /**
  * Global History Manager and persist the data between session.
  * It is not complete and stable yet (still experimental), so it might change.
- * Currently it is only for verse or passage
+ * Currently it is only for verse or text
  *
  * 
  */
 public class GlobalHistory {
+    private static String ENTRY = "entry";
     private static String MILLIS = "millis";
+    private static String TEXT = "text";
+    private static String SEARCH = "search";
+
     private static String FILENAME = "history.xml";
 
     private static GlobalHistory instance; // The single instance
@@ -68,9 +72,33 @@ public class GlobalHistory {
             SAXBuilder builder = new SAXBuilder();
             Document doc = builder.build(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             List<Element> children = doc.getRootElement().getChildren();
+            String text;
+            String search;
+            Element child;
+
             for (int i = 0; i < children.size(); i++) {
                 Element elt = children.get(i);
-                data.add(new Entry(Long.parseLong(elt.getAttributeValue(MILLIS)), elt.getTextTrim()));
+
+                text = null;
+                search = null;
+
+                child = elt.getChild(TEXT);
+                if (child != null) {
+                    text = child.getTextTrim();
+                }
+
+                child = elt.getChild(SEARCH);
+                if (child != null) {
+                    search = child.getTextTrim();
+                    if (search.length() == 0) {
+                        search = null;
+                    }
+                }
+
+                // just precautuion to make sure the entry is not null
+                if (text != null) {
+                    data.add(new Entry(Long.parseLong(elt.getAttributeValue(MILLIS)), text, search));
+                }
             }
 
         } catch (Exception ex) {
@@ -103,9 +131,19 @@ public class GlobalHistory {
         
         for (int i=0; i<data.size(); i++) {
             Entry entry = data.get(i);
-            Element elt = new Element("entry");
+            Element elt = new Element(ENTRY);
             elt.setAttribute(MILLIS, Long.toString(entry.getMillis()));
-            elt.setText(entry.getHistory());
+
+            Element childElt = new Element(TEXT);
+            childElt.setText(entry.getText());
+            elt.addContent(childElt);
+
+            childElt = new Element(SEARCH);
+            if (entry.getSearch() != null) {
+                childElt.setText(entry.getSearch());
+            } 
+            elt.addContent(childElt);
+
             root.addContent(elt);
         }
 
@@ -126,34 +164,34 @@ public class GlobalHistory {
         modified = false;
     }
 
-    /** Add the passed passage into history.
-     * @param passage the passage as String
+    /** Add the passed text into text.
+     * @param text the passage as String
      * @see #add(String,String)
      */
-    public void add(String passage) {
-        add(passage, null);
+    public void add(String text) {
+        add(text, null);
     }
 
-    /** Add the passed passage and search into history
-     * @param passage the passage as String
+    /** Add the passed text and search into text
+     * @param text the passage as String
      * @param search the search String or {@code null}
      */
-    public void add(String passage, String search) {
+    public void add(String text, String search) {
         // check last entry
         if (!data.isEmpty()) {
             Entry last = data.get(0);
-            if (last.getHistory().equalsIgnoreCase(passage)) {
+            if (last.getText().equalsIgnoreCase(text)) {
                 return;
             }
         }
 
-        if (passage == null) { return; }
+        if (text == null) { return; }
 
         // java 6 only
-        //if (history.isEmpty()) { return; }
-        if (passage.length() == 0) { return; }
+        //if (text.isEmpty()) { return; }
+        if (text.length() == 0) { return; }
 
-        data.add(0,new Entry (System.currentTimeMillis(), passage));
+        data.add(0,new Entry (System.currentTimeMillis(), text, search));
         fireIntervalAdded(0, 0);
 
         int first = -1;
@@ -217,19 +255,25 @@ public class GlobalHistory {
 
     public class Entry {
         private long millis;
-        private String history;
+        private String text;
+        private String search;
 
-        public Entry(long millis, String history) {
+        public Entry(long millis, String text, String search) {
             this.millis = millis;
-            this.history = history;
+            this.text = text;
+            this.search = search;
         }
 
         public long getMillis() {
             return millis;
         }
 
-        public String getHistory() {
-            return history;
+        public String getText() {
+            return text;
+        }
+
+        public String getSearch() {
+            return search;
         }
     }
 }

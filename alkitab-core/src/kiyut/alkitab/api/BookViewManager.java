@@ -50,20 +50,21 @@ public final class BookViewManager {
     
     /** Open URI with new view is false
      * @param uri {@link SwordURI} to be opened
-     * @see #openURI(SwordURI,boolean)
+     * @see #openURI(SwordURI,String,boolean)
      */
     public void openURI(SwordURI uri) {
-        openURI(uri,false);
+        openURI(uri,null, false);
     }
     
      /** Open URI
-     * @param uri {@link SwordURI} to be opened
-     * @param newView only Hints indicating it will be opened in new view or replace existing view
-     */
-    public void openURI(SwordURI uri, boolean newView) {
+      * @param uri {@link SwordURI} to be opened
+      * @param info optional additional info eg: search term, etc
+      * @param newView only Hints indicating it will be opened in new view or replace existing view
+      */
+    public void openURI(SwordURI uri, String info, boolean newView) {
         Iterator<? extends BookViewProvider> it = bookViewProviders.iterator();
         while (it.hasNext()) {
-            it.next().openURI(uri, newView);
+            it.next().openURI(uri, info, newView);
         }
     }
 }

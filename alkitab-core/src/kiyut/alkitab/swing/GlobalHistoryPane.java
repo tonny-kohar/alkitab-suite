@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListDataEvent;
@@ -88,9 +87,10 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
             return;
         }
 
-        String str = GlobalHistory.getInstance().getHistory(index).getHistory();
+        GlobalHistory.Entry hist = GlobalHistory.getInstance().getHistory(index);
+        String str = hist.getText();
         SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, "", str);
-        BookViewManager.getInstance().openURI(uri, false);
+        BookViewManager.getInstance().openURI(uri, hist.getSearch(), false);
     }
 
     private class HistoryListModel extends AbstractListModel {
@@ -125,7 +125,12 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             GlobalHistory.Entry entry = GlobalHistory.getInstance().getHistory(index);
             if (entry != null ) {
-                String display = entry.getHistory();
+                String display = null;
+                if (entry.getSearch() != null) {
+                    display = "search: " + entry.getSearch() + " (" + entry.getText() + ")";
+                } else {
+                    display = entry.getText();
+                }
                 value = display;
             }
             return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

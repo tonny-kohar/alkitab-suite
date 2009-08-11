@@ -346,8 +346,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
     }
     
-    public void openURI(SwordURI uri) {
-        bookViewer.openURI(uri);
+    public void openURI(SwordURI uri, String info) {
+        bookViewer.openURI(uri, info);
     }
     
     public BookViewer getBookViewer() {

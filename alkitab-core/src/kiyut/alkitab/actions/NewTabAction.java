@@ -32,6 +32,6 @@ public final class NewTabAction extends AbstractAction {
 
         SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, name, null);
      
-        BookViewManager.getInstance().openURI(uri, true);
+        BookViewManager.getInstance().openURI(uri, null, true);
     }
 }

@@ -115,6 +115,10 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     }
 
     public void openURI(SwordURI uri) {
+        openURI(uri, null);
+    }
+
+    public void openURI(SwordURI uri, String info) {
         Book book = Books.installed().getBook(uri.getPath());
         setBook(book);
         refresh();

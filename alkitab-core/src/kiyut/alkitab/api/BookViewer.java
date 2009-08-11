@@ -61,8 +61,16 @@ public interface BookViewer {
     
     /** Open the specified {@code SwordURI}
      * @param uri the {@code SwordURI} to be opened
+     * @see openURI(SwordURI,String)
      */
     public void openURI(SwordURI uri);
+
+    /** Open the specified {@code SwordURI}
+     * @param uri the {@code SwordURI} to be opened
+     * @param info optional additional info eg: search term, etc
+     * @see openURI(SwordURI)
+     */
+    public void openURI(SwordURI uri, String info);
     
     /** Return {@link kiyut.alkitab.api.ViewerHints ViewerHints} used by this BookViewer.
      * This method should not return null, it could return empty {@link kiyut.alkitab.api.ViewerHints ViewerHints}

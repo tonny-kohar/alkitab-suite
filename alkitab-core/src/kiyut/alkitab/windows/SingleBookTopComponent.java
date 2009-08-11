@@ -224,7 +224,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         toolBar.add(goNextAction.getToolbarPresenter());
     }
     
-    public void openURI(SwordURI uri) {
+    public void openURI(SwordURI uri, String info) {
         bookViewer.openURI(uri);
     }
     

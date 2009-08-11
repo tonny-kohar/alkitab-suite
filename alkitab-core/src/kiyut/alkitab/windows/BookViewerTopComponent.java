@@ -25,7 +25,7 @@ public abstract class BookViewerTopComponent extends TopComponent {
     
     public abstract BookViewer getBookViewer();
     
-    public abstract void openURI(SwordURI uri);
+    public abstract void openURI(SwordURI uri, String info);
 
     @Override
     public void componentActivated() {

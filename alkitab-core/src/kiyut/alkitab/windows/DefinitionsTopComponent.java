@@ -175,10 +175,10 @@ public final class DefinitionsTopComponent extends TopComponent {
         String name = opts.getDefaultDictionary();
         if (name == null) { return; }
         SwordURI uri = SwordURI.createURI(SwordURI.DICTIONARY_SCHEME, name, null);
-        openURI(uri);
+        openURI(uri, null);
     }
     
-    public void openURI(SwordURI uri) {
+    public void openURI(SwordURI uri, String info) {
         if (uri.getType() != SwordURI.Type.DICTIONARY 
                 && uri.getType() != SwordURI.Type.GLOSSARY
                 && uri.getType() != SwordURI.Type.GREEK_STRONGS

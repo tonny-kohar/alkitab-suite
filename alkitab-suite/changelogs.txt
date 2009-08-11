@@ -1,3 +1,6 @@
+ver 2.4
+- Add search capture for Global History
+
 ver 2.3
 - Add Configurable Keymap (shortcut)
 - Add Ctrl-G for request focus on Passage Field

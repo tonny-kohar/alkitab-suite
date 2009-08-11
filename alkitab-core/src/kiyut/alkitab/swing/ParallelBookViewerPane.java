@@ -59,6 +59,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     /** just a flag indicating searching mode */
     protected boolean searching;
 
+    private String searchString;
+
     protected ActionListener bookComboActionListener;
     
     protected HistoryManager historyManager;
@@ -543,6 +545,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
     
     public void openURI(SwordURI uri) {
+        openURI(uri, null);
+    }
+
+    public void openURI(SwordURI uri, String info) {
         //System.out.println("ParallelBookViewerPane.openURI()");
         
         if (uri.getPath().equals("")) {
@@ -564,10 +570,20 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             if (book == null) { return; }
             addBook(book.getInitials());
         }
-        
-        if (!uri.getFragment().equals("")) {
-            passageTextArea.setText(uri.getFragment());
-            setKey(passageTextArea.getText());
+
+        try {
+            if (info != null) {
+                searchString = info;
+                searching = true;
+            }
+
+            if (!uri.getFragment().equals("")) {
+                //passageTextArea.setText(uri.getFragment());
+                //setKey(passageTextArea.getText());
+                setKey(uri.getFragment());
+            }
+        } finally {
+            searching = false;
         }
         refresh();
     }
@@ -774,9 +790,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         if (key == null) {
             throw new IllegalArgumentException("argument key can't be null");
         }
-        
-        passageTextArea.setText(key.getName());
-        passageTextArea.setCaretPosition(0);
+
+        if (!searching) {
+            searchString = null;
+        }
 
         Key displayKey = key;
         if (!historyInProgress) {
@@ -784,15 +801,16 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             historyManager.add(hist);
             displayKey = hist.current();
 
-            // TODO
-            GlobalHistory.getInstance().add(hist.getKey().toString());
+            // XXX, need to refactor this
+            GlobalHistory.getInstance().add(hist.getKey().toString(), searchString);
         }
         
         bookTextPane.setKey(displayKey);
 
-        if (!searching) {
-            searchTextArea.setText(null);
-        }
+        passageTextArea.setText(key.getName());
+        passageTextArea.setCaretPosition(0);
+
+        searchTextArea.setText(searchString);
     }
     
     public Key getKey() {
@@ -1003,7 +1021,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             String msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
+        this.searchString = searchString;
         setKey(results);
         refresh();
     }

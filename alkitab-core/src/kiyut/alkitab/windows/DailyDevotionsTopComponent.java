@@ -171,10 +171,10 @@ public final class DailyDevotionsTopComponent extends TopComponent {
         String name = opts.getDefaultDailyDevotions();
         if (name == null) { return; }
         SwordURI uri = SwordURI.createURI(SwordURI.DAILY_DEVOTION_SCHEME, name, null);
-        openURI(uri);
+        openURI(uri, null);
     }
     
-    public void openURI(SwordURI uri) {
+    public void openURI(SwordURI uri, String info) {
         if (uri.getType() != SwordURI.Type.DAILY_DEVOTION) { return; }
             
         Book daily =  Books.installed().getBook(uri.getPath());

@@ -312,7 +312,7 @@ public final class BookshelfTopComponent extends TopComponent {
 
         SwordURI uri = SwordURI.createURI(book, null);
         if (uri != null) {
-            BookViewManager.getInstance().openURI(uri, true);
+            BookViewManager.getInstance().openURI(uri, null, true);
         }
     }
 

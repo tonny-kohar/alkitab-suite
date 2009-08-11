@@ -14,5 +14,9 @@ in no particular order
 - [SWORD] Indonesian Bible Translation, create my own translation :)
 - Search highlight
 - Configurable font and font color
-- History Viewer
 - Synchronized Book Viewer (aka each tab show the same passage)
+- Improved History Viewer
+  * clear history (request from Max Carlton)
+  * history grouping (Today, Yesterday, Last 3 Days, Last 6 Days, ...)
+  * try to capture search string as part of history
+  * any other ideas ?
