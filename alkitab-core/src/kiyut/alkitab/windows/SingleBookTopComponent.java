@@ -31,7 +31,7 @@ import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.options.BookViewerOptions;
-import kiyut.alkitab.swing.SingleBookViewerPane;
+import kiyut.alkitab.bookviewer.SingleBookViewerPane;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;

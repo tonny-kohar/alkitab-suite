@@ -15,7 +15,7 @@ import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import kiyut.alkitab.options.ViewerHintsOptions;
-import kiyut.alkitab.swing.BookTextPane;
+import kiyut.alkitab.bookviewer.BookTextPane;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 

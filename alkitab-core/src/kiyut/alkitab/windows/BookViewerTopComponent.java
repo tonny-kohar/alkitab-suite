@@ -53,7 +53,7 @@ public abstract class BookViewerTopComponent extends TopComponent {
         return actionList.toArray(new Action[0]);
     }
     
-    protected class ViewSourceAction extends AbstractAction {
+    public class ViewSourceAction extends AbstractAction {
         public ViewSourceAction() {
             putValue(Action.NAME, NbBundle.getMessage(ViewSourceAction.class, "CTL_ViewSourceAction"));
         }

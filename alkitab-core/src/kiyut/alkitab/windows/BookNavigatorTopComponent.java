@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.swing.BookNavigatorPane;
+import kiyut.alkitab.navigator.BookNavigatorPane;
 import kiyut.alkitab.api.BookViewer;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;

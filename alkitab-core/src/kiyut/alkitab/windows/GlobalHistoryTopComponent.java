@@ -4,7 +4,7 @@ package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
 import java.util.logging.Logger;
-import kiyut.alkitab.swing.GlobalHistoryPane;
+import kiyut.alkitab.history.GlobalHistoryPane;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;

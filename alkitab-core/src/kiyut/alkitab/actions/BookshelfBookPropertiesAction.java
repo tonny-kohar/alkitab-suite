@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.swing.BookProperties;
+import kiyut.alkitab.bookshelf.BookProperties;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.openide.util.NbBundle;

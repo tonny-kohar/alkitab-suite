@@ -98,7 +98,7 @@
             <Component class="javax.swing.JButton" name="addPathButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/kiyut/alkitab/swing/plus.png"/>
+                  <Image iconType="3" name="/kiyut/alkitab/bookviewer/plus.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="kiyut/alkitab/options/PathOptionsPanel.properties" key="CTL_AddPath.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
@@ -111,7 +111,7 @@
             <Component class="javax.swing.JButton" name="removePathButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/kiyut/alkitab/swing/minus.png"/>
+                  <Image iconType="3" name="/kiyut/alkitab/bookviewer/minus.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="kiyut/alkitab/options/PathOptionsPanel.properties" key="CTL_RemovePath.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
@@ -124,7 +124,7 @@
             <Component class="javax.swing.JButton" name="moveUpPathButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/kiyut/alkitab/swing/up.png"/>
+                  <Image iconType="3" name="/kiyut/alkitab/options/up.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="kiyut/alkitab/options/PathOptionsPanel.properties" key="CTL_MoveUpPath.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
@@ -137,7 +137,7 @@
             <Component class="javax.swing.JButton" name="moveDownPathButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/kiyut/alkitab/swing/down.png"/>
+                  <Image iconType="3" name="/kiyut/alkitab/options/down.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="kiyut/alkitab/options/PathOptionsPanel.properties" key="CTL_MoveDownPath.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>

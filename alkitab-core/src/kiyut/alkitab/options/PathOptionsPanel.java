@@ -88,28 +88,28 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        addPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/plus.png"))); // NOI18N
+        addPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/bookviewer/plus.png"))); // NOI18N
         addPathButton.setToolTipText(bundle.getString("CTL_AddPath.Text")); // NOI18N
         addPathButton.setFocusable(false);
         addPathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addPathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(addPathButton);
 
-        removePathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/minus.png"))); // NOI18N
+        removePathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/bookviewer/minus.png"))); // NOI18N
         removePathButton.setToolTipText(bundle.getString("CTL_RemovePath.Text")); // NOI18N
         removePathButton.setFocusable(false);
         removePathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         removePathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(removePathButton);
 
-        moveUpPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/up.png"))); // NOI18N
+        moveUpPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/options/up.png"))); // NOI18N
         moveUpPathButton.setToolTipText(bundle.getString("CTL_MoveUpPath.Text")); // NOI18N
         moveUpPathButton.setFocusable(false);
         moveUpPathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         moveUpPathButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(moveUpPathButton);
 
-        moveDownPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/swing/down.png"))); // NOI18N
+        moveDownPathButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/options/down.png"))); // NOI18N
         moveDownPathButton.setToolTipText(bundle.getString("CTL_MoveDownPath.Text")); // NOI18N
         moveDownPathButton.setFocusable(false);
         moveDownPathButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

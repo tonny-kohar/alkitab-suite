@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.swing.BookInstallerPane;
+import kiyut.alkitab.installer.BookInstallerPane;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;

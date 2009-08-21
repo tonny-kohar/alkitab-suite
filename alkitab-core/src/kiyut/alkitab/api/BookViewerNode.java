@@ -14,7 +14,7 @@ import org.openide.util.lookup.InstanceContent;
  * The drawback is the API will be very thight with Netbeans Platform RCP, but more integrated into
  * Netbeans Platform.
  * 
- * So which one to choose ? Currently it is using the the first approach
+ * So which one to choose ? Currently it is using the first approach
  * 
  */
 public class BookViewerNode extends AbstractNode {
@@ -37,5 +37,6 @@ public class BookViewerNode extends AbstractNode {
         //System.out.println("BookViewerNode.closed()");
         //bookViewer.closed();
         instanceContent.remove(bookViewer);
+        this.bookViewer = null;
     }
 }

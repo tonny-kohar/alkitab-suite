@@ -22,7 +22,7 @@ import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
-import kiyut.alkitab.swing.DictionaryPane;
+import kiyut.alkitab.bookviewer.DictionaryPane;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
