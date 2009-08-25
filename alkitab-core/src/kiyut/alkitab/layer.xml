@@ -50,6 +50,11 @@
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookInstallerAction"/>
             </file>
         </folder>
+        <folder name="View">
+            <file name="kiyut-alkitab-actions-SynchronizeViewAction.instance">
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.SynchronizeViewAction"/>
+            </file>
+        </folder>
         <folder name="Window">
             <file name="kiyut-alkitab-actions-BookshelfAction.instance">
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfAction"/>

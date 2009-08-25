@@ -2,6 +2,8 @@
 
 package kiyut.alkitab.api;
 
+import org.crosswire.jsword.passage.Key;
+
 /**
  * The abstract implementation of SwordProvider.
  * All methods is implemented as empty methods, only the class is marked as abstract,
@@ -15,6 +17,10 @@ public abstract class AbstractBookViewProvider implements BookViewProvider {
     }
     
     public void openURI(SwordURI uri, String info, boolean newView) {
+        // do nothing
+    }
+
+    public void synchronizeView(Key key) {
         // do nothing
     }
 

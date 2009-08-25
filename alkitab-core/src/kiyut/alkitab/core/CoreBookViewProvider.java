@@ -4,6 +4,7 @@ package kiyut.alkitab.core;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -15,6 +16,7 @@ import kiyut.alkitab.windows.SingleBookTopComponent;
 import kiyut.alkitab.windows.DailyDevotionsTopComponent;
 import kiyut.alkitab.windows.DefinitionsTopComponent;
 import kiyut.alkitab.windows.ParallelBookTopComponent;
+import org.crosswire.jsword.passage.Key;
 import org.openide.windows.TopComponent;
 
 /**
@@ -153,5 +155,23 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
                 tc.openURI(uri, info);
             }
         });
+    }
+
+    @Override
+    public void synchronizeView(Key key) {
+        Iterator<TopComponent> it = TopComponent.getRegistry().getOpened().iterator();
+        while (it.hasNext()) {
+            Object obj = it.next();
+            if (obj.equals(bookViewerTC)) {
+                continue;
+            }
+
+            if (obj instanceof ParallelBookTopComponent) {
+                ParallelBookTopComponent tc = (ParallelBookTopComponent)obj;
+                tc.getBookViewer().setKey(key);
+                tc.getBookViewer().refresh();
+            }
+        }
+
     }
 }

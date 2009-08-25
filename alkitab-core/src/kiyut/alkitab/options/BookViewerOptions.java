@@ -26,6 +26,7 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     private static final String SESSION_PERSISTENCE = "session-persistence";
+    private static final String SYNCHRONIZE_VIEW = "synchronize-view";
     private static final String PARALLEL_BOOK_LIMIT = "parallel-book-limit";
     private static final String VERSES_LIMIT = "verses-limit";
     private static final String DEFAULT_SEARCH_LIMIT = "default-search-limit";
@@ -38,10 +39,11 @@ public final class BookViewerOptions extends AbstractOptions {
     private static final String BOOK_PATHS = "book-paths";
     private static final String DOWNLOAD_PATH = "download-path";
     
+    private boolean sessionPersistence;
+    private boolean synchronizeView;
     private int parallelBookLimit;
     private int defaultSearchLimit;
     private int versesLimit;
-    private boolean sessionPersistence;
     private String defaultBible;
     private String defaultDictionary;
     private String defaultDailyDevotions;
@@ -66,6 +68,7 @@ public final class BookViewerOptions extends AbstractOptions {
         Preferences prefs = getPreferences();
 
         sessionPersistence = prefs.getBoolean(SESSION_PERSISTENCE, false);
+        synchronizeView = prefs.getBoolean(SYNCHRONIZE_VIEW, false);
         parallelBookLimit = prefs.getInt(PARALLEL_BOOK_LIMIT, 5);
         defaultSearchLimit = prefs.getInt(DEFAULT_SEARCH_LIMIT, 50);
         versesLimit = prefs.getInt(VERSES_LIMIT, 176); // default 176, because Psalm 119 (176 verses)
@@ -161,7 +164,20 @@ public final class BookViewerOptions extends AbstractOptions {
     public boolean isSessionPersistence() {
         return this.sessionPersistence;
     }
-    
+
+    public void setSynchronizeView(boolean b) {
+        this.synchronizeView = b;
+
+        // special case, this is handled independenly from the above store methods,
+        // because it is not managed by OptionPane
+        Preferences prefs = getPreferences();
+        prefs.putBoolean(SYNCHRONIZE_VIEW, synchronizeView);
+    }
+
+    public boolean isSynchronizeView() {
+        return this.synchronizeView;
+    }
+
     public void setParallelBookLimit(int limit) {
         if (limit < 2) {
             throw new IllegalArgumentException("limit should >= 2");

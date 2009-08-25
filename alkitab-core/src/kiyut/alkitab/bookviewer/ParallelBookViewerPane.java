@@ -22,6 +22,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
+import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.GlobalHistory;
 import kiyut.alkitab.api.History;
@@ -403,16 +404,18 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                     return;
                 }
                 Key key = passageChooser.getKey();
-                setKey(key);
-                refresh();
+                viewPassage(key);
+                //setKey(key);
+                //refresh();
             }
         });
         
         passageGoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 String str = passageTextArea.getText();
-                setKey(str);
-                refresh();
+                viewPassage(str);
+                //setKey(str);
+                //refresh();
             }
         });
         
@@ -454,8 +457,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 if (ctrlDown) {
                     passageChooserButton.doClick();
                 } else {
-                    setKey(passageTextArea.getText());
-                    refresh();
+                    viewPassage(passageTextArea.getText());
+                    
 
                 }
             }
@@ -479,7 +482,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                     advancedSearchButton.doClick();
                 } else {
                     search(searchTextArea.getText());
-                    refresh();
+                    //refresh();
                 }
             }
         });
@@ -649,7 +652,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             // note: need to getValidKey, so history will work
             // getValidKey will convert Verse to Passage
             // see BookViewerHistory constructor
-            initialKey = book.getValidKey("Gen 1");
+            
+            if (BookViewManager.getInstance().isSynchronizeView()) {
+                initialKey = BookViewManager.getInstance().getSynchronizeKey();
+            }
+
+            if (initialKey == null) {
+                initialKey = book.getValidKey("Gen 1");
+            }
 
         } else {
             initialKey = book.getGlobalKeyList();
@@ -793,6 +803,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             throw new IllegalArgumentException("argument key can't be null");
         }
 
+        Key curKey = bookTextPane.getKey();
+        if (curKey != null) {
+            if (curKey.toString().equals(key.toString())) {
+                return;
+            }
+        }
+
         if (!searching) {
             searchString = null;
         }
@@ -805,6 +822,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
             // XXX, need to refactor this
             GlobalHistory.getInstance().add(hist.getKey().toString(), searchString);
+
+            BookViewManager.getInstance().synchronizeView(key);
         }
         
         bookTextPane.setKey(displayKey);
@@ -942,6 +961,24 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     public void requestFocusForSearchComponent() {
         searchTextArea.selectAll();
         searchTextArea.requestFocusInWindow();
+    }
+
+    /** Display the specified passage
+     * @param key the passage key to display
+     * @see #viewPassage(String)
+     */
+    protected void viewPassage(Key key) {
+        setKey(key);
+        refresh();
+    }
+
+    /** Display the specified passage
+     * @param passage the passage to display
+     * @see #viewPassage(Key)
+     */
+    protected void viewPassage(String passage) {
+        setKey(passage);
+        refresh();
     }
 
     /** Search the specified String which is not ranked

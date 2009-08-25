@@ -85,7 +85,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private Action goForwardDelegateAction;
     private Action goPreviousDelegateAction;
     private Action goNextDelegateAction;
-    
+
 
     public ParallelBookTopComponent() {
         initComponents();
@@ -203,7 +203,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
         }
     }
-    
+
     @Override
     public void componentClosed() {
         if (bookViewer != null) {
@@ -260,7 +260,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
         linkToolTipTimer.setRepeats(false);
         linkToolTipTimer.setCoalesce(true);
-        
+        linkToolTipForceVisible = false;
+
         bookViewer.getViewerComponent().addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent evt) {
@@ -278,7 +279,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
         });
 
-        linkToolTipForceVisible = false;
+        
         bookViewer.getViewerComponent().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent evt) {
@@ -296,7 +297,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 }
             }
         });
-        
+
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         add(BorderLayout.NORTH, toolBar);
@@ -365,19 +366,21 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         }
 
         if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {
+            //System.out.println("System.out.println ParallelBookTopComponent.hyperlinkUpdate ACTIVATED");
             String fragment = swordURI.getFragment();
             if (fragment.length() > 0) {
                 if (fragment.charAt(0) == '#') {
                     return;
                 }
             }
-
             BookViewManager.getInstance().openURI(swordURI);
+
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
             linkToolTipSwordURI = swordURI;
             linkToolTipTimer.restart();
             //showToolTip(swordURI);
+            
         } else if (eventType.equals(HyperlinkEvent.EventType.EXITED)) {
             linkToolTipTimer.stop();
             hideToolTip();

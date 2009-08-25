@@ -93,6 +93,10 @@
             <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-LogAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
+            <file name="SynchronizeViewAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/View/kiyut-alkitab-actions-SynchronizeViewAction.instance"/>
+                <attr name="position" intvalue="1000"/>
+            </file>
         </folder>
         <folder name="Window">
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
