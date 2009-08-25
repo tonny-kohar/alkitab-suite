@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.4" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="sessionPersistenceGroup">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -277,6 +281,9 @@
               <SubComponents>
                 <Component class="javax.swing.JRadioButton" name="sessionPersistenceEnabledRadio">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="sessionPersistenceGroup"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_Enabled.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                     </Property>
@@ -289,6 +296,9 @@
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="sessionPersistenceDisabledRadio">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="sessionPersistenceGroup"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_Disabled.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                     </Property>

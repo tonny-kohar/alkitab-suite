@@ -2,6 +2,7 @@ ver 2.4-beta1
 - Add search capture for Global History
 - Add Synchronize View
 - Big refactor
+- Fix session management
 
 ver 2.3
 - Add Configurable Keymap (shortcut)

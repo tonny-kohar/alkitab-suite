@@ -47,6 +47,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        sessionPersistenceGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -199,6 +200,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         jPanel10.setLayout(new java.awt.GridBagLayout());
 
+        sessionPersistenceGroup.add(sessionPersistenceEnabledRadio);
         org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceEnabledRadio, bundle.getString("CTL_Enabled.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -207,6 +209,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
         jPanel10.add(sessionPersistenceEnabledRadio, gridBagConstraints);
 
+        sessionPersistenceGroup.add(sessionPersistenceDisabledRadio);
         org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceDisabledRadio, bundle.getString("CTL_Disabled.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -506,6 +509,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox parallelBookLimitComboBox;
     private javax.swing.JRadioButton sessionPersistenceDisabledRadio;
     private javax.swing.JRadioButton sessionPersistenceEnabledRadio;
+    private javax.swing.ButtonGroup sessionPersistenceGroup;
     private javax.swing.JComboBox versesPerTabComboBox;
     // End of variables declaration//GEN-END:variables
 
