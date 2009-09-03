@@ -1,6 +1,7 @@
 ver 2.4-beta1
 - Add search capture for Global History
 - Add Synchronize View
+- Add alkitab.icns for Mac OSX 
 - Big refactor
 - Fix session management
 

@@ -209,10 +209,8 @@
             <fileset dir="legal"/>
         </copy>
 
-        <!-- TODO icon/icns for Mac is not ready yet
         <delete file="${nbdist-resources.dir}/${app.name}.icns"/>
         <copy tofile="${nbdist-resources.dir}/${app.name}.icns" file="installer/icons/${app.name}.icns" />
-        -->
         
         <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
             <replacefilter token="/dev" value="/${app.version}" />
