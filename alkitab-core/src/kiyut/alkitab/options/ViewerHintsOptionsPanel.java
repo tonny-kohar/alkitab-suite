@@ -27,6 +27,7 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        verseButtonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         noVNumCheckBox = new javax.swing.JCheckBox();
         verseNumbersPane = new javax.swing.JPanel();
@@ -58,6 +59,7 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
 
         verseNumbersPane.setLayout(new java.awt.GridBagLayout());
 
+        verseButtonGroup.add(vNumRadioButton);
         org.openide.awt.Mnemonics.setLocalizedText(vNumRadioButton, bundle.getString("CTL_VNum.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -65,6 +67,7 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         verseNumbersPane.add(vNumRadioButton, gridBagConstraints);
 
+        verseButtonGroup.add(cvNumRadioButton);
         org.openide.awt.Mnemonics.setLocalizedText(cvNumRadioButton, bundle.getString("CTL_CVNum.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -73,6 +76,7 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         verseNumbersPane.add(cvNumRadioButton, gridBagConstraints);
 
+        verseButtonGroup.add(bcvNumRadioButton);
         org.openide.awt.Mnemonics.setLocalizedText(bcvNumRadioButton, bundle.getString("CTL_BCVNum.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -230,6 +234,7 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox tooltipPopupCheckBox;
     private javax.swing.JCheckBox vLineCheckBox;
     private javax.swing.JRadioButton vNumRadioButton;
+    private javax.swing.ButtonGroup verseButtonGroup;
     private javax.swing.JPanel verseNumbersPane;
     private javax.swing.JCheckBox xRefCheckBox;
     // End of variables declaration//GEN-END:variables
