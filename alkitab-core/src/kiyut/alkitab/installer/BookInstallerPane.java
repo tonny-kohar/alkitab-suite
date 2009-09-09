@@ -4,7 +4,6 @@ package kiyut.alkitab.installer;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -151,7 +150,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        progressLabel.setText("   ");
+        progressLabel.setText("   "); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
