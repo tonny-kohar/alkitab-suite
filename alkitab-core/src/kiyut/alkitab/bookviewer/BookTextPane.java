@@ -166,6 +166,10 @@ public class BookTextPane extends JTextPane {
         boolean ltr = bmd.isLeftToRight();
         applyComponentOrientation(ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
+
+        // Note: any source code change here, please update SourceViewerPane source code as well
+        // TODO: due to the above, need to refactor, so both things use the same code base
+
         String text = null;
         try {
             SAXEventProvider osissep = bookData.getSAXEventProvider();

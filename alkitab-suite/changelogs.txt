@@ -1,9 +1,12 @@
 ver 2.4-beta1
-- Add search capture for Global History
+- Add search text capture for Global History
 - Add Synchronize View
-- Add alkitab.icns for Mac OSX 
-- Big refactor
+- Add alkitab.icns for Mac OSX
+- Add basic configurable font for each book (in Bookshelf)
+- Some refactoring
 - Fix session management
+- Fix regression Option Panel
+- Updated to use Netbeans 6.7.1
 
 ver 2.3
 - Add Configurable Keymap (shortcut)

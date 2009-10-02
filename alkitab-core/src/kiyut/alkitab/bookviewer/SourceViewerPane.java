@@ -19,11 +19,13 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import kiyut.alkitab.api.BookFontStore;
 import kiyut.alkitab.api.SwingHTMLConverter;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.swing.dialog.DialogESC;
 import kiyut.swing.text.xml.XMLContext;
 import kiyut.swing.text.xml.XMLEditorKit;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
@@ -241,6 +243,10 @@ public class SourceViewerPane extends javax.swing.JPanel {
         URI uri = bmd.getLocation();
         String uriString = uri == null ? "" : uri.toURL().toString();
         htmlSEP.setParameter(SwingHTMLConverter.BASE_URL, uriString);
+
+        // set the font, overrides default if needed
+        String fontSpec = GuiConvert.font2String(BookFontStore.getInstance().getFont(bookData.getFirstBook()));
+        htmlSEP.setParameter(SwingHTMLConverter.FONT, fontSpec);
 
         ViewerHints<ViewerHints.Key, Object> thisViewerHints = new ViewerHints<ViewerHints.Key, Object>(viewerHints);
 

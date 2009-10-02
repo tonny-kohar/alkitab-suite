@@ -131,6 +131,10 @@
                     <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfOpenSelectedAction"/>
                     <attr name="position" intvalue="10"/>
                 </file>
+                <file name="kiyut-alkitab-actions-BookshelfChangeFontAction.instance">
+                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfChangeFontAction"/>
+                    <attr name="position" intvalue="100"/>
+                </file>
                 <file name="kiyut-alkitab-actions-BookshelfBookPropertiesAction.instance">
                     <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfBookPropertiesAction"/>
                     <attr name="position" intvalue="1000"/>
