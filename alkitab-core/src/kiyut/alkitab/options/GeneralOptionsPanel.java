@@ -13,16 +13,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.api.BookFontStore;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
@@ -365,33 +364,13 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         setDefaultBookComboBox(defaultHebrewStrongsComboBox, bookViewerOpts.getDefaultHebrewStrongs());
         setDefaultBookComboBox(defaultGreekMorphComboBox, bookViewerOpts.getDefaultGreekMorph());
 
-        ViewerHints<ViewerHints.Key,Object> hints = ViewerHintsOptions.getInstance().getViewerHints();
-
-        String fontDef = hints.get(ViewerHints.FONT).toString();
-        String[] fontDefs = fontDef.split(",");
-        if (fontDefs.length < 3) {
-            // invalid font definitions, set default; SansSerif,0,13";
-            fontComboBox.setSelectedIndex(1);
-            fontSizeComboBox.setSelectedItem(Integer.toString(13));
-            fontBoldCheckBox.setSelected(false);
-            fontItalicCheckBox.setSelected(false);
-        } else {
-            fontComboBox.setSelectedItem(fontDefs[0]);
-            fontSizeComboBox.setSelectedItem(fontDefs[2]);
-            try {
-                int style = Integer.valueOf(fontDefs[1]);
-                if (style == Font.PLAIN) {
-                    fontBoldCheckBox.setSelected(false);
-                    fontItalicCheckBox.setSelected(false);
-                } else {
-                    fontBoldCheckBox.setSelected((style & Font.BOLD) != 0);
-                    fontItalicCheckBox.setSelected((style & Font.ITALIC) != 0);
-                }
-            } catch (Exception ex) {
-                Logger logger = Logger.getLogger(this.getClass().getName());
-                logger.log(Level.CONFIG, ex.getMessage(),ex );
-            }
-        }
+        BookFontStore fontStore = BookFontStore.getInstance();
+        String fontDef = fontStore.getDefaultFont();
+        Font font = GuiConvert.string2Font(fontDef);
+        fontComboBox.setSelectedItem(font.getName());
+        fontSizeComboBox.setSelectedItem(font.getSize()+"");
+        fontBoldCheckBox.setSelected(font.isBold());
+        fontItalicCheckBox.setSelected(font.isItalic());
     }
 
     void store() {
@@ -457,17 +436,18 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
             bookViewerOpts.setDefaultGreekMorph(null);
         }
 
-        ViewerHintsOptions viewerHintsOpts = ViewerHintsOptions.getInstance();
-        ViewerHints<ViewerHints.Key,Object> hints = viewerHintsOpts.getViewerHints();
+        // default font stuff
         int style = Font.PLAIN;
         style = fontBoldCheckBox.isSelected() ? style | Font.BOLD : style;
         style = fontItalicCheckBox.isSelected() ? style | Font.ITALIC : style;
-        String fontDefs = fontComboBox.getSelectedItem().toString() + "," + style + "," + fontSizeComboBox.getSelectedItem().toString();
-        hints.put(ViewerHints.FONT, fontDefs);
+        int size = Integer.parseInt(fontSizeComboBox.getSelectedItem().toString());
+        Font font = new Font(fontComboBox.getSelectedItem().toString(), style, size);
+
+        BookFontStore fontStore = BookFontStore.getInstance();
+        fontStore.setDefaultFont(GuiConvert.font2String(font));
         //System.out.println(fontDefs + "   TEST ONLY");
 
         bookViewerOpts.store();
-        viewerHintsOpts.store();
     }
 
     boolean valid() {

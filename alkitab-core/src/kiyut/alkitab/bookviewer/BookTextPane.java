@@ -16,9 +16,11 @@ import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
+import kiyut.alkitab.api.BookFontStore;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.SwingHTMLConverter;
 import kiyut.alkitab.api.ViewerHints;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
@@ -168,18 +170,22 @@ public class BookTextPane extends JTextPane {
         try {
             SAXEventProvider osissep = bookData.getSAXEventProvider();
             
-            TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
-            htmlsep.setParameter("direction", ltr ? "ltr" : "rtl");
+            TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
+            htmlSEP.setParameter(SwingHTMLConverter.DIRECTION, ltr ? "ltr" : "rtl");
             
             URI uri = bmd.getLocation();
             //String uriString = uri == null ? "" : NetUtil.getAsFile(uri).getCanonicalPath();
             String uriString = uri == null ? "" : uri.toURL().toString();
-            viewerHints.put(ViewerHints.BASE_URL, uriString);
+            htmlSEP.setParameter(SwingHTMLConverter.BASE_URL, uriString);
             
-            viewerHints.updateProvider(htmlsep);
+            // set the font, overrides default if needed
+            String fontSpec = GuiConvert.font2String(BookFontStore.getInstance().getFont(bookData.getFirstBook()));
+            htmlSEP.setParameter(SwingHTMLConverter.FONT, fontSpec);
+
+            viewerHints.updateProvider(htmlSEP);
             
             // HTML Text
-            text = XMLUtil.writeToString(htmlsep);
+            text = XMLUtil.writeToString(htmlSEP);
             
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());

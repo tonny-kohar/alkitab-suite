@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import kiyut.alkitab.api.SwingHTMLConverter;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.swing.dialog.DialogESC;
 import kiyut.swing.text.xml.XMLContext;
@@ -233,20 +234,20 @@ public class SourceViewerPane extends javax.swing.JPanel {
         //////////////
         // HTML Text
 
-        TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider) converter.convert(osissep);
+        TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
 
-        htmlsep.setParameter("direction", ltr ? "ltr" : "rtl");
+        htmlSEP.setParameter(SwingHTMLConverter.DIRECTION, ltr ? "ltr" : "rtl");
 
         URI uri = bmd.getLocation();
         String uriString = uri == null ? "" : uri.toURL().toString();
+        htmlSEP.setParameter(SwingHTMLConverter.BASE_URL, uriString);
 
         ViewerHints<ViewerHints.Key, Object> thisViewerHints = new ViewerHints<ViewerHints.Key, Object>(viewerHints);
-        thisViewerHints.put(ViewerHints.BASE_URL, uriString);
 
-        thisViewerHints.updateProvider(htmlsep);
+        thisViewerHints.updateProvider(htmlSEP);
 
         ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
-        htmlsep.provideSAXEvents(html);
+        htmlSEP.provideSAXEvents(html);
 
         initSource(rawText, osis.toString(), html.toString());
     }

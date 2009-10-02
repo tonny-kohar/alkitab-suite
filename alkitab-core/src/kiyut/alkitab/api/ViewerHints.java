@@ -25,9 +25,8 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
     public static final ViewerHints.Key NOTES = new BooleanKey("Notes");
     public static final ViewerHints.Key XREF = new BooleanKey("XRef");
     //public static final ViewerHints.Key DIRECTION = new StringKey("direction");
-    public static final ViewerHints.Key FONT = new StringKey("font");
-    public static final ViewerHints.Key BASE_URL = new URLKey("baseURL");
-    public static final ViewerHints.Key CSS = new URLKey("css");
+    //public static final ViewerHints.Key BASE_URL = new URLKey("baseURL");
+    //public static final ViewerHints.Key CSS = new URLKey("css");
     public static final ViewerHints.Key TOOLTIP_POPUP = new BooleanKey("TooltipPopup");
     
     private static final ViewerHints.Key[] KEYS = {
@@ -42,10 +41,9 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
         HEADINGS,
         NOTES,
         XREF,
-        BASE_URL,
+        /*BASE_URL,*/
         /*DIRECTION,*/
-        FONT,
-        CSS,
+        /*CSS,*/
         TOOLTIP_POPUP,
     };
     
@@ -81,7 +79,8 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
         return v;
     }
     
-    /** Update the supplied provider parameter, with this ViewerHints 
+    /** Update the supplied provider parameter, with this ViewerHints <br/>
+     * note: this does not handle FontStore
      * @param provider the {@code TransformingSAXEventProvider}
      */
     public void updateProvider(TransformingSAXEventProvider provider) {
@@ -91,8 +90,6 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
                 provider.setParameter(KEYS[i].getName(), obj.toString());
             }
         }
-        
-        
     }
     
     /**
@@ -143,9 +140,9 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
         }
     }
     
-    public static class URLKey extends StringKey {
+    /*public static class URLKey extends StringKey {
         public URLKey(String name) {
             super(name);
         }
-    }
+    } */
 }

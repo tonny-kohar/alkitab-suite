@@ -2,11 +2,8 @@
 
 package kiyut.alkitab.options;
 
-import java.awt.Font;
-import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.prefs.Preferences;
-import javax.swing.UIManager;
 import kiyut.alkitab.api.ViewerHints;
 
 /**
@@ -55,7 +52,6 @@ public final class ViewerHintsOptions extends AbstractOptions {
         //hints.put(ViewerHints.BASE_URL, "");
         //hints.put(ViewerHints.CSS, "");
         //hints.put(ViewerHints.DIRECTION, "");
-        hints.put(ViewerHints.FONT, prefs.get(ViewerHints.FONT.getName(), createDefaultFont()));
         hints.put(ViewerHints.TOOLTIP_POPUP, prefs.getBoolean(ViewerHints.TOOLTIP_POPUP.getName(), true));
     }
     
@@ -75,26 +71,5 @@ public final class ViewerHintsOptions extends AbstractOptions {
     
     public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
         return hints;
-    }
-    
-    protected String createDefaultFont() {
-        Font font = UIManager.getFont("EditorPane.font");
-        if (font == null) {
-            // serif,0,14
-            return "SansSerif,0,13";
-        }
-        
-        int fontSize = font.getSize();
-        
-        // XXX is this correct way to scale font based on DPI?
-        if (fontSize < 12) {
-            int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-            fontSize = (int)Math.round((double)fontSize * dpi / 72.0);
-        }
-        
-        //System.out.println(font.getFamily() + " " + fontSize + " " + dpi);
-        
-        return font.getFamily() + ",0," + fontSize;
-        
     }
 }

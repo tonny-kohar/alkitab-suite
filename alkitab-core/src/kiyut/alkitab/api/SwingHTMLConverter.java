@@ -18,6 +18,11 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  */
 public class SwingHTMLConverter implements Converter {
 
+    public static String DIRECTION = "direction";
+    public static String BASE_URL = "baseURL";
+    public static String FONT = "font";
+    //public static String CSS = "css";
+
     /** The xsl path , by default it is kiyut/alkitab/modules/jsword/xsl/simple.xsl */
     private static String xslPath = "kiyut/alkitab/modules/jsword/xsl/simple.xsl"; 
     
