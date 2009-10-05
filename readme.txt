@@ -8,4 +8,17 @@ eg: ../alkitab-suite/alkitab-suite
 
 Now you can recompile, build, crete your own distribution, etc
 
-*Netbeans used is Netbeans 6.7
+note: alkitab-suite is the main project (aka the container project),
+all other projects are sub-project (module) for this alkitab-suite.
+eg:
+alkitab-suite (Main Container Project)
+|- alkitab-core
+|- alkitab-branding
+|- alkitab-localization
+|- alkitab-user-guide
+|- JSword
+|- etc
+
+The main source code is under alkitab-core
+
+*Netbeans used is Netbeans 6.7.1

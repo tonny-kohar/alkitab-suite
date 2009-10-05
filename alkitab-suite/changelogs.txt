@@ -6,6 +6,7 @@ ver 2.4-beta1
 - Some refactoring
 - Fix session management
 - Fix regression Option Panel
+- Updated to use JSword 1.6 (20091003)
 - Updated to use Netbeans 6.7.1
 
 ver 2.3
