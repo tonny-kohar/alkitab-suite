@@ -823,9 +823,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             // XXX, need to refactor this
             GlobalHistory.getInstance().add(hist.getKey().toString(), searchString);
 
-            BookViewManager.getInstance().synchronizeView(key);
+            //BookViewManager.getInstance().synchronizeView(key);
         }
-        
+
+        BookViewManager.getInstance().synchronizeView(key);
         bookTextPane.setKey(displayKey);
 
         passageTextArea.setText(key.getName());
@@ -940,7 +941,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        historyInProgress = true;
+        /*historyInProgress = true;
         try {
             hist = historyManager.blur(by, restrict);
             bookTextPane.setKey(hist.current());
@@ -949,7 +950,16 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } finally {
             historyInProgress = false;
         }
-        reload();
+        reload();*/
+
+        try {
+            hist = historyManager.blur(by, restrict);
+            setKey(hist.current());
+            reload();
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
         
     }
 
