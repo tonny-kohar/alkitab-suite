@@ -139,7 +139,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     public void setKey(Key key) {
         if (key == null) { return; }
         bookTextPane.setKey(key);
-        bookTextPane.refresh(true);
+        bookTextPane.reload(true);
 
         // synchronize the List and the View
         int i = ((KeyListModel) indexList.getModel()).getKey().indexOf(key);

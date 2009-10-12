@@ -123,7 +123,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     public void openURI(SwordURI uri, String info) {
         Book book = Books.installed().getBook(uri.getPath());
         setBook(book);
-        refresh();
+        reload();
     }
 
     public void setBook(String bookName) {
@@ -186,8 +186,8 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         return bookTextPane.getKey();
     }
 
-    public void refresh() {
-        bookTextPane.refresh(true);
+    public void reload() {
+        bookTextPane.reload(true);
     }
 
     public HistoryManager getHistoryManager() {
@@ -205,7 +205,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         }
         
         bookTextPane.setKey(hist.previous());
-        refresh();
+        reload();
     }
 
     public void goNext() {
@@ -219,7 +219,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         }
         
         bookTextPane.setKey(hist.next());
-        refresh();
+        reload();
     }
     
     /** For single book viewer, this method do nothing 

@@ -49,8 +49,8 @@ public interface BookViewer {
      */
     public Key getKey();
     
-    /** Redisplay or refresh content */
-    public void refresh();
+    /** Reload or refresh content */
+    public void reload();
     
     /** Display the source (raw,OSIS,HTML) of the currently viewed book */
     public void viewSource();

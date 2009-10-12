@@ -2,7 +2,6 @@
 
 package kiyut.alkitab.windows;
 
-import kiyut.alkitab.windows.BookViewerTopComponent;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -24,6 +23,7 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.actions.GoNextAction;
 import kiyut.alkitab.actions.GoPreviousAction;
+import kiyut.alkitab.actions.ReloadAction;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
@@ -33,6 +33,7 @@ import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.SingleBookViewerPane;
 import kiyut.alkitab.util.ComponentOrientationSupport;
+import kiyut.alkitab.windows.ParallelBookTopComponent.ReloadDelegateAction;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
@@ -163,7 +164,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                 bookViewer.setKey(key);
             }
 
-            bookViewer.refresh();
+            bookViewer.reload();
 
             if (focused) {
                 tc.requestActive();
@@ -175,8 +176,8 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     protected void initCustom() {
         bookViewer = new SingleBookViewerPane() {
             @Override
-            public void refresh() {
-                super.refresh();
+            public void reload() {
+                super.reload();
                 updateHistoryAction();
             }
         };
@@ -213,15 +214,18 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
 
         CallbackSystemAction goPreviousAction = SystemAction.get(GoPreviousAction.class);
         CallbackSystemAction goNextAction = SystemAction.get(GoNextAction.class);
+        CallbackSystemAction reloadAction = SystemAction.get(ReloadAction.class);
 
         goPreviousDelegateAction = new GoPreviousDelegateAction();
         goNextDelegateAction = new GoNextDelegateAction();
 
         actionMap.put(goPreviousAction.getActionMapKey(), goPreviousDelegateAction);
         actionMap.put(goNextAction.getActionMapKey(), goNextDelegateAction);
+        actionMap.put(reloadAction.getActionMapKey(), new ReloadDelegateAction());;
 
         toolBar.add(goPreviousAction.getToolbarPresenter());
         toolBar.add(goNextAction.getToolbarPresenter());
+        toolBar.add(reloadAction.getToolbarPresenter());
     }
     
     public void openURI(SwordURI uri, String info) {
@@ -286,4 +290,11 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             bookViewer.goPrevious();
         }
     }
+
+    public class ReloadDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.reload();
+        }
+    }
+
 }

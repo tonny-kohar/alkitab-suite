@@ -169,7 +169,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
             if (obj instanceof ParallelBookTopComponent) {
                 ParallelBookTopComponent tc = (ParallelBookTopComponent)obj;
                 tc.getBookViewer().setKey(key);
-                tc.getBookViewer().refresh();
+                tc.getBookViewer().reload();
             }
         }
 

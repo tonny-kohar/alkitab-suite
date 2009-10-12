@@ -51,6 +51,9 @@
             </file>
         </folder>
         <folder name="View">
+            <file name="kiyut-alkitab-actions-ReloadAction.instance">
+                <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.ReloadAction"/>
+            </file>
             <file name="kiyut-alkitab-actions-SynchronizeViewAction.instance">
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.SynchronizeViewAction"/>
             </file>

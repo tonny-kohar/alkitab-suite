@@ -41,6 +41,7 @@ import kiyut.alkitab.actions.GoBackAction;
 import kiyut.alkitab.actions.GoForwardAction;
 import kiyut.alkitab.actions.GoNextAction;
 import kiyut.alkitab.actions.GoPreviousAction;
+import kiyut.alkitab.actions.ReloadAction;
 import kiyut.alkitab.actions.ViewerHintsAction;
 import kiyut.alkitab.api.BookToolTipFactory;
 import kiyut.alkitab.api.BookViewer;
@@ -85,7 +86,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private Action goForwardDelegateAction;
     private Action goPreviousDelegateAction;
     private Action goNextDelegateAction;
-
 
     public ParallelBookTopComponent() {
         initComponents();
@@ -196,7 +196,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             bookViewer.compareView(compareView);
-            bookViewer.refresh();
+            bookViewer.reload();
 
             if (focused) {
                 tc.requestActive();
@@ -227,8 +227,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     protected void initCustom() {
         bookViewer = new ParallelBookViewerPane() {
             @Override
-            public void refresh() {
-                super.refresh();
+            public void reload() {
+                super.reload();
                 updateHistoryAction();
             }
         };
@@ -311,6 +311,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         CallbackSystemAction goNextAction = SystemAction.get(GoNextAction.class);
         CallbackSystemAction expand1Action = SystemAction.get(Expand1Action.class);
         CallbackSystemAction expand5Action = SystemAction.get(Expand5Action.class);
+        CallbackSystemAction reloadAction = SystemAction.get(ReloadAction.class);
         CallbackSystemAction viewerHintsAction = SystemAction.get(ViewerHintsAction.class);
         CallbackSystemAction focusPassageComponentAction = SystemAction.get(FocusPassageComponentAction.class);
         CallbackSystemAction focusSearchComponentAction = SystemAction.get(FocusSearchComponentAction.class);
@@ -326,6 +327,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         actionMap.put(goNextAction.getActionMapKey(), goNextDelegateAction);
         actionMap.put(expand1Action.getActionMapKey(), new Expand1DelegateAction());
         actionMap.put(expand5Action.getActionMapKey(), new Expand5DelegateAction());
+        actionMap.put(reloadAction.getActionMapKey(), new ReloadDelegateAction());
         actionMap.put(viewerHintsAction.getActionMapKey(), new ViewerHintsDelegateAction());
         actionMap.put(focusPassageComponentAction.getActionMapKey(), new FocusPassageComponentDelegateAction());
         actionMap.put(focusSearchComponentAction.getActionMapKey(), new FocusSearchComponentDelegateAction());
@@ -343,6 +345,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         toolBar.add(expand1Action.getToolbarPresenter());
         toolBar.add(expand5Action.getToolbarPresenter());
         toolBar.addSeparator();
+        toolBar.add(reloadAction.getToolbarPresenter());
         toolBar.add(viewerHintsAction.getToolbarPresenter());
 
     }
@@ -569,6 +572,12 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         }
     }
 
+    public class ReloadDelegateAction extends AbstractAction {
+        public void actionPerformed(ActionEvent evt) {
+            bookViewer.reload();
+        }
+    }
+
     public class ViewerHintsDelegateAction extends AbstractAction {
         public void actionPerformed(ActionEvent evt) {
             ViewerHintsPane hintsPane = new ViewerHintsPane();
@@ -578,7 +587,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 return;
             }
             hintsPane.updateViewerHintsValue();
-            bookViewer.refresh();
+            bookViewer.reload();
         }
     }
 

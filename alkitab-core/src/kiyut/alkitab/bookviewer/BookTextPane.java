@@ -127,27 +127,27 @@ public class BookTextPane extends JTextPane {
     /** Redisplay or refresh content, equivalent with calling {@code refresh(false)}
      * @see #refresh(boolean)
      */
-    public void refresh() {
-        refresh(false);
+    public void reload() {
+        reload(false);
     }
 
     /** Redisplay or refresh content 
      * @param invokeLater using Event Dispatch Thread
      */
-    public void refresh(boolean invokeLater) {
+    public void reload(boolean invokeLater) {
         if (invokeLater) {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    refreshImpl();
+                    reloadImpl();
                 }
             });
         } else {
-            refreshImpl();
+            reloadImpl();
         }
     }
 
     @SuppressWarnings("unchecked")
-    protected void refreshImpl() {
+    protected void reloadImpl() {
         //System.out.println("BookTextPane refreshImpl()");
         
         if (books.isEmpty() || key == null) {

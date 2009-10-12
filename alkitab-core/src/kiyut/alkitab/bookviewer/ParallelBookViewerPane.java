@@ -357,14 +357,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         addBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 addBook(null);
-                refresh();
+                reload();
             }
         });
         
         removeBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 removeBook(booksComboPane.getComponentCount()-1);
-                refresh();
+                reload();
             }
         });
         
@@ -384,14 +384,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
                 String bookName = comboBox.getSelectedItem().toString();
                 setBook(index, bookName);
-                refresh();
+                reload();
             }
         };
         
         compareCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 compareView(compareCheckBox.isSelected());
-                refresh();
+                reload();
             }
         });
         
@@ -590,7 +590,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } finally {
             searching = false;
         }
-        refresh();
+        reload();
     }
     
     /** Add Book
@@ -838,9 +838,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         return bookTextPane.getKey();
     }
 
-    public void refresh() {
+    public void reload() {
         //System.out.println("ParallelBookViewerPane.refresh()");
-        bookTextPane.refresh(true);
+        bookTextPane.reload(true);
     }
 
     public HistoryManager getHistoryManager() {
@@ -865,7 +865,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             historyInProgress = false;
         }
         
-        refresh();
+        reload();
     }
     
     public synchronized void goForward() {
@@ -884,7 +884,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } finally {
             historyInProgress = false;
         }
-        refresh();
+        reload();
     }
     
     public synchronized void goPrevious() {
@@ -904,7 +904,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             historyInProgress = false;
         }
         
-        refresh();
+        reload();
     }
     
     public synchronized void goNext() {
@@ -923,7 +923,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } finally {
             historyInProgress = false;
         }
-        refresh();
+        reload();
     }
     
     /** Expand/Widen currently displayed passage by
@@ -949,7 +949,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } finally {
             historyInProgress = false;
         }
-        refresh();
+        reload();
         
     }
 
@@ -969,7 +969,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      */
     protected void viewPassage(Key key) {
         setKey(key);
-        refresh();
+        reload();
     }
 
     /** Display the specified passage
@@ -978,7 +978,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      */
     protected void viewPassage(String passage) {
         setKey(passage);
-        refresh();
+        reload();
     }
 
     /** Search the specified String which is not ranked
@@ -1063,7 +1063,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         this.searchString = searchString;
         setKey(results);
-        refresh();
+        reload();
     }
     
     /** Return JComboBox with book initials sorted by Bible then Commentary 

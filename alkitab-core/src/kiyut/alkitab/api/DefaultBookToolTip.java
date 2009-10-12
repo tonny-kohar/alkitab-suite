@@ -105,7 +105,7 @@ public class DefaultBookToolTip implements BookToolTip {
         books.add(book);
         bookTextPane.setKey(key);
 
-        bookTextPane.refresh(false);
+        bookTextPane.reload(false);
 
         // XXX workaround for pack/panel prefSize problem
         // Note: it still have bug regarding the size

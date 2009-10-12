@@ -165,11 +165,11 @@ public class BookNavigatorPane extends javax.swing.JPanel {
             }
             // convert the key into Passage
             bookViewer.setKey(KeyUtil.getPassage(key));
-            bookViewer.refresh();
+            bookViewer.reload();
         } else {
             //System.out.println(obj.toString());
             bookViewer.setKey(key);
-            bookViewer.refresh();
+            bookViewer.reload();
         }
         
     }
