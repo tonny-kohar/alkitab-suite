@@ -7,13 +7,13 @@ import java.awt.Container;
 import java.util.Locale;
 
 /**
- * Collection of Swing Utilities
+ * Component Orientation Support
  * 
  */
 public class ComponentOrientationSupport {
 
     private ComponentOrientationSupport() {
-        throw new Error("SwingUtilities is a utility class for static methods"); // NOI18N
+        throw new Error("ComponentOrientationSupport is a utility class for static methods"); // NOI18N
     }
 
     /** 

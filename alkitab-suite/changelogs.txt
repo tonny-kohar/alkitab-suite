@@ -1,3 +1,6 @@
+ver 2.4
+- Fix regression Synchronize View with history
+
 ver 2.4-beta1
 - Add search text capture for Global History
 - Add Synchronize View
