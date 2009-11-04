@@ -1,3 +1,6 @@
+ver 2.4.1
+- Updated to use Robinson Module 2.0 dated 2009-09-02
+
 ver 2.4
 - Fix regression Synchronize View with history
 
