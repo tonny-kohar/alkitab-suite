@@ -7,27 +7,38 @@
             <suite-component/>
             <module-dependencies/>
             <public-packages>
-                <package>net.sf.snowball</package>
-                <package>net.sf.snowball.ext</package>
                 <package>org.apache.lucene</package>
                 <package>org.apache.lucene.analysis</package>
+                <package>org.apache.lucene.analysis.ar</package>
                 <package>org.apache.lucene.analysis.br</package>
                 <package>org.apache.lucene.analysis.cjk</package>
                 <package>org.apache.lucene.analysis.cn</package>
+                <package>org.apache.lucene.analysis.cn.smart</package>
+                <package>org.apache.lucene.analysis.cn.smart.hhmm</package>
+                <package>org.apache.lucene.analysis.compound</package>
+                <package>org.apache.lucene.analysis.compound.hyphenation</package>
                 <package>org.apache.lucene.analysis.cz</package>
                 <package>org.apache.lucene.analysis.de</package>
                 <package>org.apache.lucene.analysis.el</package>
+                <package>org.apache.lucene.analysis.fa</package>
                 <package>org.apache.lucene.analysis.fr</package>
+                <package>org.apache.lucene.analysis.miscellaneous</package>
                 <package>org.apache.lucene.analysis.ngram</package>
                 <package>org.apache.lucene.analysis.nl</package>
                 <package>org.apache.lucene.analysis.payloads</package>
+                <package>org.apache.lucene.analysis.position</package>
+                <package>org.apache.lucene.analysis.query</package>
+                <package>org.apache.lucene.analysis.reverse</package>
                 <package>org.apache.lucene.analysis.ru</package>
+                <package>org.apache.lucene.analysis.shingle</package>
                 <package>org.apache.lucene.analysis.sinks</package>
                 <package>org.apache.lucene.analysis.snowball</package>
                 <package>org.apache.lucene.analysis.standard</package>
                 <package>org.apache.lucene.analysis.th</package>
+                <package>org.apache.lucene.analysis.tokenattributes</package>
                 <package>org.apache.lucene.document</package>
                 <package>org.apache.lucene.index</package>
+                <package>org.apache.lucene.messages</package>
                 <package>org.apache.lucene.queryParser</package>
                 <package>org.apache.lucene.search</package>
                 <package>org.apache.lucene.search.function</package>
@@ -35,18 +46,25 @@
                 <package>org.apache.lucene.search.spans</package>
                 <package>org.apache.lucene.store</package>
                 <package>org.apache.lucene.util</package>
+                <package>org.apache.lucene.util.cache</package>
+                <package>org.tartarus.snowball</package>
+                <package>org.tartarus.snowball.ext</package>
             </public-packages>
             <class-path-extension>
-                <runtime-relative-path>ext/lucene-core-2.3.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/lucene-core-2.3.2.jar</binary-origin>
+                <runtime-relative-path>ext/lucene-analyzers-2.9.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-analyzers-2.9.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/lucene-analyzers-2.3.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/lucene-analyzers-2.3.2.jar</binary-origin>
+                <runtime-relative-path>ext/lucene-core-2.9.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-core-2.9.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/lucene-snowball-2.3.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/lucene-snowball-2.3.2.jar</binary-origin>
+                <runtime-relative-path>ext/lucene-smartcn-2.9.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-smartcn-2.9.0.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-snowball-2.9.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-snowball-2.9.0.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
