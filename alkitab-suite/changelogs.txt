@@ -1,3 +1,7 @@
+ver x.x
+- Update Indonesian localization from in_ID to in
+- Updated to use JSword 1.6 (20091108)
+
 ver 2.4.1
 - Updated to use Robinson Module 2.0 dated 2009-09-02
 
