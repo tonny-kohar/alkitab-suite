@@ -17,6 +17,9 @@ import org.crosswire.jsword.passage.RestrictionType;
 public interface History {
     /** Return original key assigned to this History object */
     public Key getKey();
+
+    /** Return original search string assigned to this History object, can be null */
+    public String getSearch();
     
     /** Return the current key in this iteration */
     public Key current();

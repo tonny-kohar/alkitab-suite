@@ -816,7 +816,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         Key displayKey = key;
         if (!historyInProgress) {
-            BookViewerHistory hist = new BookViewerHistory(key);
+            BookViewerHistory hist = new BookViewerHistory(key,searchString);
             historyManager.add(hist);
             displayKey = hist.current();
 
@@ -857,6 +857,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         try {
             History hist = historyManager.back();
             setKey(hist.getKey());
+            searchTextArea.setText(hist.getSearch());
         
             if (hist.getKey() instanceof Passage) {
                 bookTextPane.setKey(hist.current());
@@ -878,6 +879,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         try {
             History hist = historyManager.forward();
             setKey(hist.getKey());
+            searchTextArea.setText(hist.getSearch());
         
             if (hist.getKey() instanceof Passage) {
                 bookTextPane.setKey(hist.current());

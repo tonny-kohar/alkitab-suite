@@ -10,7 +10,7 @@ import kiyut.alkitab.api.HistoryManager;
 import org.crosswire.jsword.passage.RestrictionType;
 
 /**
- * 
+ * Implementation of HistoryManager
  */
 public class BookViewerHistoryManager implements HistoryManager {
     /** Default 100 */

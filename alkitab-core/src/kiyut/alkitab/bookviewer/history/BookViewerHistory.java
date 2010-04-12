@@ -20,9 +20,11 @@ public class BookViewerHistory implements History {
     protected List<Key> keyList;
     protected int index;
     protected int verseLimit;
+    protected String search;
 
-    public BookViewerHistory(Key key) {
+    public BookViewerHistory(Key key, String search) {
         this.key = key;
+        this.search = search;
 
         keyList = new ArrayList<Key>();
         index = 0;
@@ -60,10 +62,14 @@ public class BookViewerHistory implements History {
         }
     }
     
-    
     public Key getKey() {
         return this.key;
     }
+
+    public String getSearch() {
+        return this.search;
+    }
+
 
     public Key current() {
         //System.out.println(index + " size: " + keyList.size());
@@ -131,7 +137,7 @@ public class BookViewerHistory implements History {
         Key tKey = (Key)key.clone();
         tKey.blur(by, restrict);
 
-        BookViewerHistory history = new BookViewerHistory(tKey);
+        BookViewerHistory history = new BookViewerHistory(tKey, null);
         
         /*key = tKey;
         keyList.clear();

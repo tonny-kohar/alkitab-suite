@@ -152,7 +152,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         if (tKey.getCardinality() > 0) {
-            History hist = new BookViewerHistory(tKey);
+            History hist = new BookViewerHistory(tKey,null);
             historyManager.add(hist);
             bookTextPane.setKey(hist.current());
         }
