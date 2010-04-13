@@ -788,6 +788,16 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     public boolean isCompareView() {
         return bookTextPane.isCompareView();
     }
+
+    /** This only set the search field with the param and do nothing aka
+     *  does not perform searching. <br/>
+     * Do not use this API, this will be refactored soon.
+     * @param searchString the search text
+     */
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+        searchTextArea.setText(searchString);
+    }
     
     protected void setKey(String keyString) {
         Key key = null;

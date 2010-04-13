@@ -132,6 +132,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         private static final long serialVersionUID = 1L;
         private List<String> bookNames;
         private Key key;
+        private String searchString;
         private boolean compareView;
         private boolean focused;
 
@@ -148,6 +149,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             key = bookViewer.getKey();
+            searchString = bookViewer.getHistoryManager().current().getSearch();
             compareView = bookViewer.isCompareView();
             this.focused = tc.isFocusOwner();
         }
@@ -185,6 +187,10 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
             if (key != null) {
                 bookViewer.setKey(key);
+            }
+
+            if (searchString != null) {
+                bookViewer.setSearchString(searchString);
             }
 
             for (int i = 0; i < bookNames.size(); i++) {
