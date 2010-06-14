@@ -177,15 +177,12 @@ public final class BookshelfTopComponent extends TopComponent {
                 if (popupMenu == null) {
                     return;
                 }
-                
+
                 TreePath treePath = booksTree.getSelectionPath();
-                if (treePath == null) {
-                    return;
-                }
+                //TreePath treePath = booksTree.getPathForLocation(evt.getX(), evt.getY());
+                if (treePath == null) { return; }
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
-                if (!node.isLeaf()) {
-                    return;
-                }
+                if (!node.isLeaf()) { return; }
 
                 popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
             }
@@ -201,8 +198,6 @@ public final class BookshelfTopComponent extends TopComponent {
             }
         });
         
-        //FileSystem fs = Repository.getDefault().getDefaultFileSystem();
-        //FileObject fo = fs.getRoot().getFileObject(popupMenuFolderName);
         FileObject fo = FileUtil.getConfigRoot().getFileObject(popupMenuFolderName);
         
         // add listener to monitor layer.xml popup menu change
@@ -221,10 +216,6 @@ public final class BookshelfTopComponent extends TopComponent {
             public void fileAttributeChanged(FileAttributeEvent fe) { popupMenuValid = false; }
         });
 
-        if (fo != null) {
-            // initialize here to speed up
-            createPopupMenu();
-        }
     }
     
     private void createPopupMenu() {
@@ -359,5 +350,9 @@ public final class BookshelfTopComponent extends TopComponent {
         }
         
         return (Book)obj;
+    }
+
+    public BookshelfTree getBookshelf() {
+        return booksTree;
     }
 }

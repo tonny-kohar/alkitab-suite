@@ -743,6 +743,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 break;
             }
         }*/
+
+        //System.out.println("index state: " + unindexedBooks);
         
         CardLayout cl = (CardLayout)searchPane.getLayout();
         if (unindexedBooks) {
@@ -790,7 +792,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     /** This only set the search field with the param and do nothing aka
-     *  does not perform searching. <br/>
+     * does not perform searching. <br/>
+     * It is used for persistence session <br/>
      * Do not use this API, this will be refactored soon.
      * @param searchString the search text
      */
@@ -1048,8 +1051,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         try {
             results =  books.get(0).find(new DefaultSearchRequest(searchString, modifier));
         } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage(), ex);
+            //Logger logger = Logger.getLogger(this.getClass().getName());
+            //logger.log(Level.WARNING, ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), bundle.getString("MSG_SearchHits.Title"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         
