@@ -158,18 +158,18 @@
 
         <h3><a name="faq-search-advance"></a>How do I perform advanced search ?</h3>
         <ul>
-            <li>You can use || to join phrases, for example "<code>balaam || balak</code>" finds passages containing Balak OR Balaam</li>
-            <li>Using &amp;&amp; requires both words, e.g. "<code>aaron &amp;&amp; moses</code>" finds passages containing both Aaron AND Moses</li>
-            <li>Using a ! removes words from the result e.g. "<code>lord ! jesus</code>" is passages containing Lord BUT NOT Jesus</li>
-            <li>Using ~2 widens the passage by 2 verses either side on any match. So "<code>amminadab ~1 perez</code>" finds verses containting Amminadab within 1 verse of mention of Perez.</li>
+            <li>You can use || to join phrases, for example &quot;<code>balaam || balak</code>&quot; finds passages containing Balak OR Balaam</li>
+            <li>Using &amp;&amp; requires both words, e.g. &quot;<code>aaron &amp;&amp; moses</code>&quot; finds passages containing both Aaron AND Moses</li>
+            <li>Using a ! removes words from the result e.g. &quot;<code>lord ! jesus</code>&quot; is passages containing Lord BUT NOT Jesus</li>
+            <li>Using ~2 widens the passage by 2 verses either side on any match. So &quot;<code>amminadab ~1 perez</code>&quot; finds verses containting Amminadab within 1 verse of mention of Perez.</li>
             <li>Using +[Gen-Exo] at the beginning will restrict a search to that range of verses.</li>
         </ul>
         <p class="link-top"><a href="#top">top</a></p>
 
         <h3><a name="faq-search-strongs"></a>How do I search for strongs ?</h3>
         <p>You can search for strongs using the following syntax: <br>
-            &nbsp;&nbsp;&nbsp; strong:Hxxx eg: strong:H430 (for Hebrew - Old Testament) <br>
-            &nbsp;&nbsp;&nbsp; strong:Gxxx eg: strong:G2424 (for Greek - New Testament) <br>
+            &nbsp;&nbsp;&nbsp; strong:hxxx eg: strong:h430 (for Hebrew - Old Testament) <br>
+            &nbsp;&nbsp;&nbsp; strong:gxxx eg: strong:g2424 (for Greek - New Testament) <br>
         </p>
         <p><strong>Note: </strong>Strongs search requires that bible translation is linked to strongs info eg: KJV</p>
         <p class="link-top"><a href="#top">top</a></p>
@@ -178,23 +178,23 @@
         <p>Then language localization can be enabled by appending <i>--locale language[:country[:variant]]</i> 
             to the startup command.<br><br>
             &nbsp;&nbsp;&nbsp;&nbsp; --locale language[:country[:variant]]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp; --locale in (for Indonesian Locale)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp; --locale in:ID (for Indonesian Locale)<br>
             &nbsp;&nbsp;&nbsp;&nbsp; --locale fa (for Farsi Locale)<br>
             &nbsp;&nbsp;&nbsp;&nbsp; --locale vi (for Vietnamese Locale)<br>
         </p>
         <p>You can set this by supplying the command line parameter eg: <br>
-            &nbsp;&nbsp;&nbsp;&nbsp; - (Unix/Linux) [install-folder]/bin/alkitab <strong>--locale in</strong>
+            &nbsp;&nbsp;&nbsp;&nbsp; - (Unix/Linux) [install-folder]/bin/alkitab <strong>--locale in:ID</strong>
         </p>
         <p>Or you can set this on the [install-folder]/etc/alkitab.conf under default_options eg: <br>
-            &nbsp;&nbsp;&nbsp;&nbsp; default_options="-J-Xms64m -J-Xmx256m .... <strong>--locale in</strong>"
+            &nbsp;&nbsp;&nbsp;&nbsp; default_options=&quot;--branding alkitab -J-client .... <strong>--locale in:ID</strong>&quot;
         </p>
         <p>Or you can change the desktop shortcut (Windows) by appending the locale:<br>
             &nbsp;&nbsp;&nbsp;&nbsp; - right click on the shortcut choose properties<br>
             &nbsp;&nbsp;&nbsp;&nbsp; - on the shortcut tab and target field append the locale command at the end <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eg: "C:\Program Files\Kiyut\Alkitab-x_x\bin\alkitab.exe" <strong>--locale in</strong>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eg: &quot;C:\Program Files\Kiyut\Alkitab-x_x\bin\alkitab.exe&quot; <strong>--locale in:ID</strong>
         </p>
         <p><strong>Note: </strong>This is not bible translation, it is only a UI Localization.
-            Currently Alkitab Bible Study have English (en), Indonesian (in), Farsi (fa), and Vietnamese (vi) locale.
+            Currently Alkitab Bible Study have English (en), Indonesian (in:ID), Farsi (fa), and Vietnamese (vi) locale.
         </p>
         <p class="link-top"><a href="#top">top</a></p>
         

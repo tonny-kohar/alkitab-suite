@@ -21,4 +21,4 @@ alkitab-suite (Main Container Project)
 
 The main source code is under alkitab-core
 
-*Netbeans used is Netbeans 6.7.1
+*Netbeans used is Netbeans 6.9

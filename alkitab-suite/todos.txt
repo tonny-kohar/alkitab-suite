@@ -12,11 +12,12 @@ in no particular order
 - [SWORD] Indonesian Bible Translation, require LAI (http://www.alkitab.or.id) permission,
   LAI is the copyright owner. (Done, Rejected by LAI)
 - [SWORD] Indonesian Bible Translation, create my own translation :)
+  http://www.kiyut.com/products/alkitab/translation/index.html (in progress)
 - Search highlight
 - Configurable font and font color
 - Synchronized Book Viewer (aka each tab show the same passage)
 - Improved History Viewer
   * clear history (request from Max Carlton)
   * history grouping (Today, Yesterday, Last 3 Days, Last 6 Days, ...)
-  * try to capture search string as part of history
+  * try to capture search string as part of history [done]
   * any other ideas ?

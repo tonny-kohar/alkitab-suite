@@ -26,7 +26,6 @@ import org.openide.windows.WindowManager;
  * 
  */
 public class BrandingModuleInstall extends ModuleInstall {
-    
 
     @Override
     public  void restored() {
@@ -45,64 +44,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         System.setProperty("alkitab.version", Application.getVersion());
         System.setProperty(orientationKey, strOrientation);
 
-        Logger logger = Logger.getLogger(this.getClass().getName());
-
-        // override user.dir variable to the 
-        IOUtilities.setUserDir(null);
-        
-        BookViewerOptions viewerOpts = BookViewerOptions.getInstance();
-        
-        // download path need to listed first
-        File path = viewerOpts.getDownloadPath();
-        if (path != null) {
-            SwordBookPath.setDownloadDir(path);
-        }
-        
-        File[] paths = viewerOpts.getBookPaths();
-        try {
-            //SwordUtilities.setAugmentPath(paths);
-            SwordBookPath.setAugmentPath(paths);
-        } catch (Exception ex) {
-            logger.log(Level.WARNING,ex.getMessage(),ex);
-        }
-
-        StringBuilder sb = new StringBuilder("Sword Path Configuration\n");
-        
-        File[] files;
-        File file;
-        
-        sb.append("  AugmentPath:\n");
-        files = SwordBookPath.getAugmentPath();
-        for (int i=0; i<files.length; i++) {
-            sb.append("\t" + files[i].toString() + "\n");
-        }
-        
-        sb.append("  DownloadDir:\n");
-        file = SwordBookPath.getDownloadDir();
-        if (file != null) {
-            sb.append("\t" + file.toString() + "\n");
-        }
-        
-        sb.append("  SwordDownloadDir:\n");
-        file = SwordBookPath.getSwordDownloadDir();
-        if (file != null) {
-            sb.append("\t" + file.toString() + "\n");
-        }
-        
-        sb.append("  SwordPath:\n");
-        files = SwordBookPath.getSwordPath();
-        for (int i=0; i<files.length; i++) {
-            sb.append("\t" + files[i].toString() + "\n");
-        }
-        
-        sb.append("  Book Count: " + Books.installed().getBooks().size() + "\n");
-
-        // adding Orientation to the log
-        sb.append(orientationKey + ": " + strOrientation + "\n");
-
-        sb.append("-------------------------------------------------------------------------------\n");
-        
-        logger.log(Level.INFO,sb.toString());
+        configureSwordPath();
 
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             public void run() {
@@ -158,5 +100,75 @@ public class BrandingModuleInstall extends ModuleInstall {
         }
         
         return super.closing();
+    }
+
+    private void configureSwordPath() {
+        Logger logger = Logger.getLogger(this.getClass().getName());
+
+        // override user.dir variable to the
+        IOUtilities.setUserDir(null);
+
+        //System.err.println("test blash balsh");
+        //System.err.println("why not printed out");
+        //System.err.println(this.getClass().getName());
+        //System.err.println(this.getClass().getPackage().getName());
+        //Books.installed();
+
+        // disable jsword logger reapplying configuration for JSword > 20100619
+        //org.crosswire.common.util.Logger.setDisableReadConfiguration(true);
+
+        BookViewerOptions viewerOpts = BookViewerOptions.getInstance();
+
+        // download path need to listed first
+        File path = viewerOpts.getDownloadPath();
+        if (path != null) {
+            SwordBookPath.setDownloadDir(path);
+        }
+
+        File[] paths = viewerOpts.getBookPaths();
+        try {
+            //SwordUtilities.setAugmentPath(paths);
+            SwordBookPath.setAugmentPath(paths);
+        } catch (Exception ex) {
+            logger.log(Level.WARNING,ex.getMessage(),ex);
+        }
+
+        StringBuilder sb = new StringBuilder("Sword Path Configuration\n");
+
+        File[] files;
+        File file;
+
+        sb.append("  AugmentPath:\n");
+        files = SwordBookPath.getAugmentPath();
+        for (int i=0; i<files.length; i++) {
+            sb.append("\t").append(files[i].toString()).append("\n");
+        }
+
+        sb.append("  DownloadDir:\n");
+        file = SwordBookPath.getDownloadDir();
+        if (file != null) {
+            sb.append("\t").append(file.toString()).append("\n");
+        }
+
+        sb.append("  SwordDownloadDir:\n");
+        file = SwordBookPath.getSwordDownloadDir();
+        if (file != null) {
+            sb.append("\t").append(file.toString()).append("\n");
+        }
+
+        sb.append("  SwordPath:\n");
+        files = SwordBookPath.getSwordPath();
+        for (int i=0; i<files.length; i++) {
+            sb.append("\t").append(files[i].toString()).append("\n");
+        }
+
+        sb.append("  Book Count: ").append(Books.installed().getBooks().size()).append("\n");
+
+        // adding Orientation to the log
+        //sb.append(orientationKey + ": " + strOrientation + "\n");
+
+        sb.append("-------------------------------------------------------------------------------\n");
+
+        logger.log(Level.INFO,sb.toString());
     }
 }
