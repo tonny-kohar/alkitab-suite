@@ -4,12 +4,15 @@ package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -198,7 +201,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             if (bookViewer.getBookCount() == 0) {
-                throw new IllegalStateException("bookViewer.getBookCount() == 0");
+                throw new IllegalStateException("bookViewer.getBookCount() == 0"); 
             }
 
             bookViewer.compareView(compareView);
@@ -273,33 +276,32 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             public void mouseMoved(MouseEvent evt) {
                 linkToolTipLocation.setLocation(evt.getX(), evt.getY());
 
-                // force to have focus in order to make key event work, if ctrl is pressed
-                int modifiers = evt.getModifiersEx();
-                if ((modifiers & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
-                    if (!bookViewer.getViewerComponent().isFocusOwner()) {
-                        if (bookViewer.getViewerComponent().requestFocusInWindow()) {
-                            linkToolTipForceVisible = true;
-                        }
-                    }
+                int onMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+                if ((evt.getModifiers() & onMask) == onMask) {
+                    linkToolTipForceVisible = true;
+                } else {
+                    hideToolTip();
                 }
             }
         });
 
-        
-        bookViewer.getViewerComponent().addKeyListener(new KeyAdapter() {
+        bookViewer.getViewerComponent().addMouseListener(new MouseAdapter() {
             @Override
-            public void keyPressed(KeyEvent evt) {
-                if (evt.getKeyCode() == KeyEvent.VK_CONTROL) {
-                    //System.out.println("ctrl pressed");
+            public void mousePressed(MouseEvent evt) {
+                if (SwingUtilities.isMiddleMouseButton(evt)) {
                     linkToolTipForceVisible = true;
-                }
-            }
 
-            @Override
-            public void keyReleased(KeyEvent evt) {
-                if (evt.getKeyCode() == KeyEvent.VK_CONTROL) {
-                    //System.out.println("ctrl released");
-                    linkToolTipForceVisible = false;
+                    MouseEvent redirEvt = new MouseEvent(evt.getComponent(),
+                                MouseEvent.MOUSE_CLICKED,
+                                evt.getWhen(),
+                                evt.getModifiersEx(),
+                                evt.getX(),
+                                evt.getY(),
+                                evt.getClickCount(),
+                                evt.isPopupTrigger(),
+                                MouseEvent.BUTTON1);
+                    
+                    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(redirEvt);
                 }
             }
         });
@@ -382,17 +384,24 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     return;
                 }
             }
-            BookViewManager.getInstance().openURI(swordURI);
-
-        } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
-            StatusDisplayer.getDefault().setStatusText(swordURI.toString());
-            linkToolTipSwordURI = swordURI;
-            linkToolTipTimer.restart();
-            //showToolTip(swordURI);
-            
-        } else if (eventType.equals(HyperlinkEvent.EventType.EXITED)) {
+            // in this part linkTooltip will force to open new Tab if true
+            BookViewManager.getInstance().openURI(swordURI,null,linkToolTipForceVisible);
             linkToolTipTimer.stop();
             hideToolTip();
+
+        } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
+            if (!linkToolTipForceVisible) {
+                StatusDisplayer.getDefault().setStatusText(swordURI.toString());
+                linkToolTipSwordURI = swordURI;
+                linkToolTipTimer.restart();
+                //showToolTip(swordURI);
+            }
+            
+        } else if (eventType.equals(HyperlinkEvent.EventType.EXITED)) {
+            if (!linkToolTipForceVisible) {
+                linkToolTipTimer.stop();
+                hideToolTip();
+            }
         }
     }
 
@@ -424,9 +433,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     }
 
     private void hideToolTip() {
-        if (!linkToolTipForceVisible) {
-            BookToolTipFactory.getInstance().getToolTip().hide();
-        }
+        BookToolTipFactory.getInstance().getToolTip().hide();
+        linkToolTipForceVisible = false;
     }
 
     /** Return the book from the preferences. If not defined in preferences,

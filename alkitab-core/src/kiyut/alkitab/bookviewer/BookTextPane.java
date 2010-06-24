@@ -224,5 +224,5 @@ public class BookTextPane extends JTextPane {
     
     protected void clear() {
         setText(null);
-    }
+    }   
 }
