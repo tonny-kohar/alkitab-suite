@@ -14,13 +14,13 @@
         </authors>
         <uninstaller>yes</uninstaller>
         <!-- combine this later with ProcessPanel for set prefs during install -->
-        <javaversion>1.5</javaversion>
+        <javaversion>1.6</javaversion>
     </info>
     
     
     <variables>
         <variable name="APP_TITLE_FULL" value="${app.title.full}"/>
-        <variable name="JVM_REQ" value="Java 1.5 or higher."/>
+        <variable name="JVM_REQ" value="Java 6 Update 13 or higher."/>
         <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
         <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
     </variables>

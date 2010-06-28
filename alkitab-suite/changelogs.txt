@@ -5,7 +5,6 @@ ver 2.5
   * add middle click (or Ctrl/Command click) to open link in new tab
   * add Ctrl/Command to hold the popup
 - Improved startup speed
-- Update Indonesian localization from in_ID to in
 - Updated to use Netbeans 6.9
 
 
