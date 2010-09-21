@@ -186,8 +186,6 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
         hintsVal = hints.get(ViewerHints.HEADINGS);
         headingsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
         hintsVal = hints.get(ViewerHints.NOTES);
-        hintsVal = hints.get(ViewerHints.XREF);
-        xRefCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
         notesCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
         hintsVal = hints.get(ViewerHints.STRONGS_NUMBERS);
         strongsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
@@ -195,6 +193,8 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
         morphCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
         hintsVal = hints.get(ViewerHints.TOOLTIP_POPUP);
         tooltipPopupCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
+        hintsVal = hints.get(ViewerHints.XREF);
+        xRefCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
     }
 
     void store() {
@@ -208,10 +208,10 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
         hints.put(ViewerHints.START_VERSE_ON_NEWLINE, vLineCheckBox.isSelected());
         hints.put(ViewerHints.HEADINGS, headingsCheckBox.isSelected());
         hints.put(ViewerHints.NOTES, notesCheckBox.isSelected());
-        hints.put(ViewerHints.XREF, xRefCheckBox.isSelected());
         hints.put(ViewerHints.STRONGS_NUMBERS, strongsCheckBox.isSelected());
         hints.put(ViewerHints.MORPH, morphCheckBox.isSelected());
         hints.put(ViewerHints.TOOLTIP_POPUP, tooltipPopupCheckBox.isSelected());
+        hints.put(ViewerHints.XREF, xRefCheckBox.isSelected());
 
         viewerHintsOpts.store();
     }
