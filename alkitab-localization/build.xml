@@ -14,7 +14,7 @@
     
     <!-- Update the source for localization, it is only for Alkitab -->
     <!-- Netbeans properties file need to be update/copied manually -->
-    <target name="update-source" description="Update locale source" depends="init">
+    <target name="locale-update-source" description="Update locale source" depends="init">
         <copy todir="." preservelastmodified="false" verbose="true" overwrite="true">
             <fileset dir="${update-source.basedir}">
                 <include name="src/**/*.properties"/>
@@ -26,6 +26,17 @@
                 -->
             </fileset>
         </copy>
+    </target>
+
+    <!-- Remove the original the source for localization, it is only for Alkitab -->
+    <!-- Netbeans properties file need to be update/copied manually -->
+    <target name="locale-remove-source" description="remove original locale source" depends="init">
+        <delete>
+            <!-- only for directory kiyut/alkitab/* -->
+            <fileset dir="src/kiyut">
+                <exclude name="**/*_*.properties"/>
+            </fileset>
+        </delete>
     </target>
     
     <target name="jar" depends="build-init,projectized-common.jar">
