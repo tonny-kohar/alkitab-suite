@@ -35,6 +35,7 @@
             <!-- only for directory kiyut/alkitab/* -->
             <fileset dir="src/kiyut">
                 <exclude name="**/*_*.properties"/>
+                <exclude name="alkitab/modules/localization/**" />
             </fileset>
         </delete>
     </target>
