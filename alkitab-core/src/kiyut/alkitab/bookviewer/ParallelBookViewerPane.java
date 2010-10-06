@@ -160,7 +160,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         booksComboPane.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
@@ -178,14 +177,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 6);
         jPanel1.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText(bundle.getString("CTL_Passsage.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 6);
         jPanel1.add(jLabel3, gridBagConstraints);
 
         passagePane.setLayout(new java.awt.GridBagLayout());

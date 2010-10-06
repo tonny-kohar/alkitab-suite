@@ -23,6 +23,7 @@ public final class NewTabAction extends AbstractAction {
         putValue(SMALL_ICON, new ImageIcon(ImageUtilities.loadImage(iconPath, true)));
     }
     
+    @Override
     public void actionPerformed(ActionEvent evt) {
         String name = null;
         Book book =  Books.installed().getBook(BookViewerOptions.getInstance().getDefaultBible());
