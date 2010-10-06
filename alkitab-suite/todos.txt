@@ -21,3 +21,4 @@ in no particular order
   * history grouping (Today, Yesterday, Last 3 Days, Last 6 Days, ...)
   * try to capture search string as part of history [done]
   * any other ideas ?
+- Daily Devotional (setting arbitary start date)

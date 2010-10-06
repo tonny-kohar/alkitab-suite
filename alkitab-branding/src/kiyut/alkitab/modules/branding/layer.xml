@@ -204,6 +204,7 @@
     <folder name="OptionsDialog">
         <folder name="Advanced">
             <file name="Ant.instance_hidden"/>
+            <file name="Diff.instance_hidden"/>
             <file name="FormEditor.instance_hidden"/>
             <file name="Maven.instance_hidden"/>
             <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsAdvancedOption.instance_hidden"/>
