@@ -7,7 +7,7 @@ import java.util.prefs.Preferences;
 import org.crosswire.jsword.book.sword.SwordBookPath;
 
 /**
- *
+ * Implementation of Book Viewer Options
  * 
  */
 public final class BookViewerOptions extends AbstractOptions {
@@ -64,6 +64,7 @@ public final class BookViewerOptions extends AbstractOptions {
      * KJV, StrongsGreek, StrongsHebrew, Robinson, ot1nt2 unless it is overwrite by the user. <br/>
      * Why those books? Because they included with the installer :)
      */
+    @Override
     public void load() {
         Preferences prefs = getPreferences();
 
@@ -97,6 +98,7 @@ public final class BookViewerOptions extends AbstractOptions {
         }
     }
     
+    @Override
     public void store() {
         Preferences prefs = getPreferences();
         prefs.putBoolean(SESSION_PERSISTENCE, sessionPersistence);
@@ -149,7 +151,7 @@ public final class BookViewerOptions extends AbstractOptions {
             } else {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < bookPaths.length; i++) {
-                    sb.append(bookPaths[i].getPath() + File.pathSeparator);
+                    sb.append(bookPaths[i].getPath()).append(File.pathSeparator);
                 }
                 sb.deleteCharAt(sb.length() - 1);
                 prefs.put(BOOK_PATHS, sb.toString());

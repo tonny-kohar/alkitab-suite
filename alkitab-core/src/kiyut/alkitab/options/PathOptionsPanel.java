@@ -54,10 +54,9 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         currentConfigTextPane = new javax.swing.JTextPane();
         jLabel15 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(24, 24, 24, 24));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel14, bundle.getString("CTL_RequireRestart.Text")); // NOI18N
@@ -269,6 +268,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         moveDownPathButton.setMargin(insets);
 
         addPathButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 JFileChooser fc = IOUtilities.getFileChooser();
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -296,6 +296,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         });
 
         removePathButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 int i = bookPathList.getSelectedIndex();
                 if (i < 0) {
@@ -306,6 +307,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         });
 
         moveUpPathButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 int i = bookPathList.getSelectedIndex();
                 if (i <= 0) {
@@ -319,6 +321,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         });
 
         moveDownPathButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt)  {
                 if (bookPathList.getModel().getSize() < 2) { return; }
                 int i = bookPathList.getSelectedIndex();
@@ -336,6 +339,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         });
 
         browseDownloadPathButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 JFileChooser fc = IOUtilities.getFileChooser();
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -353,7 +357,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         StringBuilder sb = new StringBuilder();
         File[] files = SwordBookPath.getSwordPath();
         for (int i=0; i<files.length; i++) {
-            sb.append(files[i].toString() + "\n");
+            sb.append(files[i].toString()).append("\n");
         }
         currentConfigTextPane.setText(sb.toString());
     }
