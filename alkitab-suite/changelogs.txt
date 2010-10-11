@@ -1,3 +1,9 @@
+ver 2.6-beta1
+- Improved UI
+- Fix regression book font
+- Updated Locale and Change from in_ID to in
+- Updated to use Netbeans 6.9.1
+
 ver 2.5
 - Improved history
 - Add reindex to Bookshelf
@@ -6,7 +12,6 @@ ver 2.5
   * add Ctrl/Command to hold the popup
 - Improved startup speed
 - Updated to use Netbeans 6.9
-
 
 ver 2.4.1
 - Updated to use Robinson Module 2.0 dated 2009-09-02
