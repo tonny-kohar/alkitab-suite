@@ -329,7 +329,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     // End of variables declaration//GEN-END:variables
  
     protected void initCustom() {
-        this.viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
         unindexedBooks = false;
         indexInProgress = false;
         
@@ -338,7 +337,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         historyManager = new BookViewerHistoryManager();
                
         //splitPane.setOneTouchExpandable(true);
-        
+
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
         bookTextPane = new BookTextPane(viewerHints);
         bookScrollPane.setViewportView(bookTextPane);
         
@@ -354,6 +354,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         advancedSearchButton.setMargin(insets);
         
         addBookButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 addBook(null);
                 reload();
@@ -361,6 +362,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         removeBookButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 removeBook(booksComboPane.getComponentCount()-1);
                 reload();
@@ -368,6 +370,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         bookComboActionListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 JComboBox comboBox = (JComboBox) evt.getSource();
                 int index = -1;
@@ -388,6 +391,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         };
         
         compareCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 compareView(compareCheckBox.isSelected());
                 reload();
@@ -395,6 +399,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         passageChooserButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 PassageChooser passageChooser = new PassageChooser();
                 passageChooser.setPassage(passageTextArea.getText());
@@ -410,6 +415,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         passageGoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 String str = passageTextArea.getText();
                 viewPassage(str);
@@ -419,6 +425,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         advancedSearchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 SearchPane searchPane = new SearchPane();
                 searchPane.setRanked(false);
@@ -435,6 +442,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         searchGoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 search(searchTextArea.getText());
             }
@@ -487,6 +495,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
         
         indexButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 List<Book> books = bookTextPane.getBooks();
                 if (!books.isEmpty()) {
@@ -496,6 +505,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         });
 
         indexChangeListener = new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent evt) {
                 checkIndexStatus();
             }
@@ -536,22 +546,36 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         return sb.toString();
     }
     
+    @Override
     public JComponent getViewerComponent() {
         return bookTextPane;
     }
-    
+
+    @Override
+    public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
+        return bookTextPane.getViewerHints();
+    }
+
+    public void setViewerHints(ViewerHints<ViewerHints.Key,Object> viewerHints) {
+        bookTextPane.setViewerHints(viewerHints);
+    }
+
+    @Override
     public void addHyperlinkListener(HyperlinkListener listener) {
         bookTextPane.addHyperlinkListener(listener);
     }
     
+    @Override
     public void removeHyperlinkListener(HyperlinkListener listener) {
         bookTextPane.removeHyperlinkListener(listener);
     }
     
+    @Override
     public void openURI(SwordURI uri) {
         openURI(uri, null);
     }
 
+    @Override
     public void openURI(SwordURI uri, String info) {
         //System.out.println("ParallelBookViewerPane.openURI()");
         
@@ -754,15 +778,18 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         searchPane.revalidate();
     }
     
+    @Override
     public List<Book> getBooks() {
         List<Book> srcBooks = bookTextPane.getBooks();
         return Collections.unmodifiableList(srcBooks);
     }
 
+    @Override
     public int getBookCount() {
         return bookTextPane.getBooks().size();
     }
 
+    @Override
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
@@ -775,6 +802,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
     }
     
+    @Override
     public void compareView(boolean compare) {
         bookTextPane.setCompareView(compare);
         if (compare != compareCheckBox.isSelected()) {
@@ -810,6 +838,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         } 
     }
     
+    @Override
     public void setKey(Key key) {
         if (key == null) {
             throw new IllegalArgumentException("argument key can't be null");
@@ -847,10 +876,12 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         searchTextArea.setText(searchString);
     }
     
+    @Override
     public Key getKey() {
         return bookTextPane.getKey();
     }
 
+    @Override
     public void reload() {
         //System.out.println("ParallelBookViewerPane.refresh()");
         bookTextPane.reload(true);

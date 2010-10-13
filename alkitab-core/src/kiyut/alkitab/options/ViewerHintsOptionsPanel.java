@@ -46,7 +46,7 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(24, 24, 24, 24));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(18, 18, 18, 18));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         org.openide.awt.Mnemonics.setLocalizedText(noVNumCheckBox, bundle.getString("CTL_NoVNum.Text")); // NOI18N

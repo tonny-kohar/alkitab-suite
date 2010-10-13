@@ -33,7 +33,6 @@ import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.SingleBookViewerPane;
 import kiyut.alkitab.util.ComponentOrientationSupport;
-import kiyut.alkitab.windows.ParallelBookTopComponent.ReloadDelegateAction;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.openide.awt.StatusDisplayer;
@@ -125,6 +124,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             final SingleBookTopComponent result = new SingleBookTopComponent();
             
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     if (!BookViewerOptions.getInstance().isSessionPersistence()) {
                         // just a fallback mechanism in case ModuleInstall fail to handle
@@ -136,7 +136,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                         restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.fine("Unable to restore session.\n" + ex.getMessage());
+                        logger.log(Level.FINE, "Unable to restore session.\n{0}", ex.getMessage());
                         result.close();
                     }
                 }
@@ -186,6 +186,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         bookViewerNode = new BookViewerNode(bookViewer);
         
         bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 String name = (String)evt.getNewValue();
                 setName(name);
@@ -194,6 +195,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         });
         
         bookViewer.addHyperlinkListener(new HyperlinkListener() {
+            @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 SingleBookTopComponent.this.hyperlinkUpdate(evt);
                 
@@ -228,10 +230,12 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         toolBar.add(reloadAction.getToolbarPresenter());
     }
     
+    @Override
     public void openURI(SwordURI uri, String info) {
         bookViewer.openURI(uri);
     }
     
+    @Override
     public BookViewer getBookViewer() {
         return bookViewer;
     }
@@ -243,7 +247,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         
         if (swordURI == null) {
             Logger logger = Logger.getLogger(DefinitionsTopComponent.class.getName());
-            logger.log(Level.WARNING, "invalid SwordURI: " + uri);
+            logger.log(Level.WARNING, "invalid SwordURI: {0}", uri);
             
         }
         
@@ -280,18 +284,21 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     }
 
     public class GoNextDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.goNext();
         }
     }
 
     public class GoPreviousDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.goPrevious();
         }
     }
 
     public class ReloadDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.reload();
         }

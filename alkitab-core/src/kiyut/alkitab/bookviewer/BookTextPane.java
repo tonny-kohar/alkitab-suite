@@ -59,6 +59,7 @@ public class BookTextPane extends JTextPane {
         setEditable(false);
         setEditorKit(new HTMLEditorKit());
         addHyperlinkListener(new HyperlinkListener() {
+            @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 BookTextPane.this.hyperlinkUpdate(evt);
             }
@@ -137,6 +138,7 @@ public class BookTextPane extends JTextPane {
     public void reload(boolean invokeLater) {
         if (invokeLater) {
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     reloadImpl();
                 }

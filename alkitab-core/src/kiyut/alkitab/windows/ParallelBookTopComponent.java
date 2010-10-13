@@ -7,12 +7,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -58,6 +54,7 @@ import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.ParallelBookViewerPane;
 import kiyut.alkitab.bookviewer.ViewerHintsPane;
+import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -161,6 +158,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             final ParallelBookTopComponent result = new ParallelBookTopComponent();
 
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     if (!BookViewerOptions.getInstance().isSessionPersistence()) {
                         // just a fallback mechanism in case ModuleInstall fail to handle
@@ -172,7 +170,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                         restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.fine("Unable to restore session.\n" + ex.getMessage());
+                        logger.log(Level.FINE, "Unable to restore session.\n{0}", ex.getMessage());
                         result.close();
                     }
                 }
@@ -246,6 +244,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         bookViewerNode = new BookViewerNode(bookViewer);
 
         bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 String name = (String) evt.getNewValue();
                 setName(name);
@@ -254,6 +253,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         });
         
         bookViewer.addHyperlinkListener(new HyperlinkListener() {
+            @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 ParallelBookTopComponent.this.hyperlinkUpdate(evt);
             }
@@ -262,6 +262,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         linkToolTipLocation = new Point();
 
         linkToolTipTimer = new Timer(500, new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 showToolTip(linkToolTipSwordURI);
             }
@@ -358,10 +359,12 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
     }
     
+    @Override
     public void openURI(SwordURI uri, String info) {
         bookViewer.openURI(uri, info);
     }
     
+    @Override
     public BookViewer getBookViewer() {
         return bookViewer;
     }
@@ -373,7 +376,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         
         if (swordURI == null) {
             Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-            logger.log(Level.WARNING, "invalid SwordURI: " + uri);
+            logger.log(Level.WARNING, "invalid SwordURI: {0}", uri);
         }
 
         if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {
@@ -537,6 +540,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             putValue(Action.NAME, NbBundle.getMessage(ReindexAction.class, "CTL_ReindexAction"));
         }
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             BookViewer bookViewer = getBookViewer();
             if (bookViewer == null) {
@@ -551,48 +555,56 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     }
 
     public class GoBackDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.goBack();
         }
     }
 
     public class GoForwardDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.goForward();
         }
     }
 
     public class GoNextDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.goNext();
         }
     }
 
     public class GoPreviousDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.goPrevious();
         }
     }
 
     public class Expand1DelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.blur(1,RestrictionType.NONE);
         }
     }
 
     public class Expand5DelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.blur(5,RestrictionType.NONE);
         }
     }
 
     public class ReloadDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.reload();
         }
     }
 
     public class ViewerHintsDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             ViewerHintsPane hintsPane = new ViewerHintsPane();
             hintsPane.setViewerHints(bookViewer.getViewerHints());
@@ -606,12 +618,14 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     }
 
     public class FocusPassageComponentDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.requestFocusForPassageComponent();
         }
     }
 
     public class FocusSearchComponentDelegateAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             bookViewer.requestFocusForSearchComponent();
         }

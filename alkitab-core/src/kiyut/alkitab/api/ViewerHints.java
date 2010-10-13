@@ -12,7 +12,7 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  * 
  */
 public class ViewerHints<K,V> extends HashMap<K,V> {
-    
+
     public static final ViewerHints.Key START_VERSE_ON_NEWLINE = new BooleanKey("VLine");
     public static final ViewerHints.Key STRONGS_NUMBERS = new BooleanKey("Strongs");
     public static final ViewerHints.Key MORPH = new BooleanKey("Morph");
@@ -115,10 +115,12 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
             this.name = name;
         }
         
+        @Override
         public boolean accept(Object v) {
             return (v != null && v instanceof Boolean);
         }
         
+        @Override
         public String getName() {
             return name;
         }
@@ -131,10 +133,12 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
             this.name = name;
         }
         
+        @Override
         public boolean accept(Object v) {
             return (v != null && v instanceof String);
         }
         
+        @Override
         public String getName() {
             return name;
         }

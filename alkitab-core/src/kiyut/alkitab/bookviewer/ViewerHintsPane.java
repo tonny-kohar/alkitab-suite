@@ -2,11 +2,14 @@
 
 package kiyut.alkitab.bookviewer;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ResourceBundle;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import kiyut.alkitab.api.ViewerHints;
 
 /**
@@ -182,6 +185,7 @@ public class ViewerHintsPane extends javax.swing.JPanel {
     
     protected void initCustom() {
         noVNumCheckBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent evt) {
                 boolean sel = noVNumCheckBox.isSelected();
                 for (int i = 0; i < verseNumbersPane.getComponentCount(); i++) {
@@ -195,7 +199,11 @@ public class ViewerHintsPane extends javax.swing.JPanel {
      * @param parentComponent {@code Component}
      */
     public int showDialog(Component parentComponent) {
-        int choice = JOptionPane.showConfirmDialog(parentComponent,this,bundle.getString("CTL_Title.Text"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        JPanel pane = new JPanel();
+        pane.setLayout(new BorderLayout());
+        pane.setBorder(BorderFactory.createEmptyBorder(12, 12, 6, 12));
+        pane.add(this,BorderLayout.CENTER);
+        int choice = JOptionPane.showConfirmDialog(parentComponent,pane,bundle.getString("CTL_Title.Text"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         return choice;
     }
     

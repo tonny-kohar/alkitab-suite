@@ -34,7 +34,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     
     /** Creates new SingleBookViewerPane */
     public SingleBookViewerPane() {
-        this.viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        //this.viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
         initComponents();
         initCustom();
     }
@@ -57,6 +57,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
         bookTextPane = new BookTextPane(viewerHints);
         bookScrollPane.setViewportView(bookTextPane);
         historyManager = new BookViewerHistoryManager();
@@ -84,27 +85,38 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         return book.getInitials();
     }
     
+    @Override
     public JComponent getViewerComponent() {
         return bookTextPane;
     }
 
+    @Override
+    public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
+        return bookTextPane.getViewerHints();
+    }
+
+    @Override
     public void addHyperlinkListener(HyperlinkListener listener) {
         bookTextPane.addHyperlinkListener(listener);
     }
 
+    @Override
     public void removeHyperlinkListener(HyperlinkListener listener) {
         bookTextPane.removeHyperlinkListener(listener);
     }
 
+    @Override
     public List<Book> getBooks() {
         List<Book> srcBooks = bookTextPane.getBooks();
         return Collections.unmodifiableList(srcBooks);
     }
 
+    @Override
     public int getBookCount() {
         return bookTextPane.getBooks().size();
     }
     
+    @Override
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
@@ -116,10 +128,12 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         }
     }
 
+    @Override
     public void openURI(SwordURI uri) {
         openURI(uri, null);
     }
 
+    @Override
     public void openURI(SwordURI uri, String info) {
         Book book = Books.installed().getBook(uri.getPath());
         setBook(book);
@@ -158,6 +172,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         }
     }
     
+    @Override
     public void setKey(Key key) {
         // find the key in history
         History hist = historyManager.current();
@@ -182,10 +197,12 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         bookTextPane.setKey(keyHist);
     }
 
+    @Override
     public Key getKey() {
         return bookTextPane.getKey();
     }
 
+    @Override
     public void reload() {
         bookTextPane.reload(true);
     }
@@ -225,6 +242,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     /** For single book viewer, this method do nothing 
      * {@inheritDoc}
      */
+    @Override
     public void compareView(boolean compare) {
         // do nothing
     }
