@@ -58,7 +58,6 @@ public class ViewerHintsPane extends javax.swing.JPanel {
         morphCheckBox = new javax.swing.JCheckBox();
         tooltipPopupCheckBox = new javax.swing.JCheckBox();
         xRefCheckBox = new javax.swing.JCheckBox();
-        jPanel5 = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -154,13 +153,6 @@ public class ViewerHintsPane extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         add(xRefCheckBox, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(jPanel5, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -168,7 +160,6 @@ public class ViewerHintsPane extends javax.swing.JPanel {
     private javax.swing.JRadioButton bcvNumRadioButton;
     private javax.swing.JRadioButton cvNumRadioButton;
     private javax.swing.JCheckBox headingsCheckBox;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JCheckBox morphCheckBox;
     private javax.swing.JCheckBox noVNumCheckBox;
     private javax.swing.JCheckBox notesCheckBox;
@@ -201,7 +192,7 @@ public class ViewerHintsPane extends javax.swing.JPanel {
     public int showDialog(Component parentComponent) {
         JPanel pane = new JPanel();
         pane.setLayout(new BorderLayout());
-        pane.setBorder(BorderFactory.createEmptyBorder(12, 12, 6, 12));
+        pane.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
         pane.add(this,BorderLayout.CENTER);
         int choice = JOptionPane.showConfirmDialog(parentComponent,pane,bundle.getString("CTL_Title.Text"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         return choice;
