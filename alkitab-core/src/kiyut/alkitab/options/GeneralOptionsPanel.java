@@ -85,7 +85,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 6, 12));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 6, 10));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
@@ -185,6 +185,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         fontPanel.add(jPanel11, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -225,7 +226,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 12, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanel1.add(jPanel4, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel8, bundle.getString("CTL_DefaultBook.Text")); // NOI18N
@@ -326,7 +327,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(8, 12, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(8, 10, 0, 0);
         jPanel1.add(jPanel9, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 3;
@@ -339,6 +340,73 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox defaultBibleComboBox;
+    private javax.swing.JComboBox defaultDailyDevotionsComboBox;
+    private javax.swing.JComboBox defaultDictionaryComboBox;
+    private javax.swing.JComboBox defaultGreekMorphComboBox;
+    private javax.swing.JComboBox defaultGreekStrongsComboBox;
+    private javax.swing.JComboBox defaultHebrewStrongsComboBox;
+    private javax.swing.JComboBox defaultSearchLimitComboBox;
+    private javax.swing.JCheckBox fontBoldCheckBox;
+    private javax.swing.JComboBox fontComboBox;
+    private javax.swing.JCheckBox fontItalicCheckBox;
+    private javax.swing.JPanel fontPanel;
+    private javax.swing.JComboBox fontSizeComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JComboBox parallelBookLimitComboBox;
+    private javax.swing.JRadioButton sessionPersistenceDisabledRadio;
+    private javax.swing.JRadioButton sessionPersistenceEnabledRadio;
+    private javax.swing.ButtonGroup sessionPersistenceGroup;
+    private javax.swing.JComboBox versesPerTabComboBox;
+    // End of variables declaration//GEN-END:variables
+
+    private void initCustom() {
+        fontComboBox.setModel(new DefaultComboBoxModel());
+        defaultBibleComboBox.setModel(new DefaultComboBoxModel());
+        defaultDictionaryComboBox.setModel(new DefaultComboBoxModel());
+        defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel());
+
+        fontSizeComboBox.setPrototypeDisplayValue("99");
+        defaultBibleComboBox.setPrototypeDisplayValue("KJV - King James Version (1769) ...");
+
+        refreshAvailableFonts();
+        refreshDefaultBooks();
+
+        // XXX workaround for NbPlatform OptionsDialog component orientation
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent evt) {
+                Window parent = SwingUtilities.getWindowAncestor(GeneralOptionsPanel.this);
+                ComponentOrientation cOrient = ComponentOrientationSupport.getComponentOrientation();
+                if (!cOrient.equals(parent.getComponentOrientation())) {
+                    ComponentOrientationSupport.applyComponentOrientation(parent);
+                    parent.invalidate();
+                    parent.validate();
+                    parent.repaint();
+                }
+            }
+        });
+    }
 
     void load() {
         BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
@@ -450,72 +518,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
     boolean valid() {
         return true;
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox defaultBibleComboBox;
-    private javax.swing.JComboBox defaultDailyDevotionsComboBox;
-    private javax.swing.JComboBox defaultDictionaryComboBox;
-    private javax.swing.JComboBox defaultGreekMorphComboBox;
-    private javax.swing.JComboBox defaultGreekStrongsComboBox;
-    private javax.swing.JComboBox defaultHebrewStrongsComboBox;
-    private javax.swing.JComboBox defaultSearchLimitComboBox;
-    private javax.swing.JCheckBox fontBoldCheckBox;
-    private javax.swing.JComboBox fontComboBox;
-    private javax.swing.JCheckBox fontItalicCheckBox;
-    private javax.swing.JPanel fontPanel;
-    private javax.swing.JComboBox fontSizeComboBox;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox parallelBookLimitComboBox;
-    private javax.swing.JRadioButton sessionPersistenceDisabledRadio;
-    private javax.swing.JRadioButton sessionPersistenceEnabledRadio;
-    private javax.swing.ButtonGroup sessionPersistenceGroup;
-    private javax.swing.JComboBox versesPerTabComboBox;
-    // End of variables declaration//GEN-END:variables
-
-    private void initCustom() {
-        fontComboBox.setModel(new DefaultComboBoxModel());
-        defaultBibleComboBox.setModel(new DefaultComboBoxModel());
-        defaultDictionaryComboBox.setModel(new DefaultComboBoxModel());
-        defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel());
-
-        fontSizeComboBox.setPrototypeDisplayValue("99");
-
-        refreshAvailableFonts();
-        refreshDefaultBooks();
-
-        // XXX workaround for NbPlatform OptionsDialog component orientation
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent evt) {
-                Window parent = SwingUtilities.getWindowAncestor(GeneralOptionsPanel.this);
-                ComponentOrientation cOrient = ComponentOrientationSupport.getComponentOrientation();
-                if (!cOrient.equals(parent.getComponentOrientation())) {
-                    ComponentOrientationSupport.applyComponentOrientation(parent);
-                    parent.invalidate();
-                    parent.validate();
-                    parent.repaint();
-                }
-            }
-        });
     }
 
     /** Refresh available fonts */

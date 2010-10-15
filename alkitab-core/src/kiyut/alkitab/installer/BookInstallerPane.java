@@ -89,7 +89,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 6);
         jPanel1.add(jLabel1, gridBagConstraints);
 
         jLabel2.setText(bundle.getString("CTL_Destination.Text")); // NOI18N
@@ -97,7 +97,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 12);
+        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 6);
         jPanel1.add(jLabel2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -130,7 +130,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel1.add(overwriteCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
