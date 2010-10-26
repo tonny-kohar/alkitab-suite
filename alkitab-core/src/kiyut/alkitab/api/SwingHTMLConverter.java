@@ -26,6 +26,7 @@ public class SwingHTMLConverter implements Converter {
     /** The xsl path , by default it is kiyut/alkitab/modules/jsword/xsl/simple.xsl */
     private static String xslPath = "kiyut/alkitab/modules/jsword/xsl/simple.xsl"; 
     
+    @Override
     public SAXEventProvider convert(SAXEventProvider xmlsep) throws TransformerException {
         try {
             String path = xslPath;

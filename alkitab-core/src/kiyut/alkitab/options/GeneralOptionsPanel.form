@@ -101,7 +101,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                  <GridBagConstraints gridX="-1" gridY="4" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="8" insetsLeft="0" insetsBottom="0" insetsRight="6" anchor="23" weightX="0.0" weightY="0.0"/>
+                  <GridBagConstraints gridX="-1" gridY="4" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="6" insetsLeft="0" insetsBottom="0" insetsRight="6" anchor="23" weightX="0.0" weightY="0.0"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -153,7 +153,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="12">
-                    <StringItem index="0" value="unlimited"/>
+                    <StringItem index="0" value="Unlimited"/>
                     <StringItem index="1" value="10"/>
                     <StringItem index="2" value="20"/>
                     <StringItem index="3" value="30"/>
@@ -238,7 +238,7 @@
                     <Component class="javax.swing.JCheckBox" name="fontBoldCheckBox">
                       <Properties>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_FontBold.Tex" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_FontBold.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -278,7 +278,7 @@
                       <ComponentRef name="sessionPersistenceGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_Enabled.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_SessionEnabled.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -293,7 +293,7 @@
                       <ComponentRef name="sessionPersistenceGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_Disabled.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_SessionDisabled.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -304,6 +304,36 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="jLabel10">
+              <Properties>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="kiyut/alkitab/options/GeneralOptionsPanel.properties" key="CTL_Background.Text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                  <GridBagConstraints gridX="-1" gridY="5" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="6" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="backgroundCombo">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="5">
+                    <StringItem index="0" value="Default"/>
+                    <StringItem index="1" value="Light White"/>
+                    <StringItem index="2" value="Light Yellow"/>
+                    <StringItem index="3" value="Light Gray"/>
+                    <StringItem index="4" value="Custom ..."/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                  <GridBagConstraints gridX="-1" gridY="5" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="6" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+                </Constraint>
+              </Constraints>
+            </Component>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel8">

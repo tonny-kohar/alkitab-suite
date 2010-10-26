@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.options;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.prefs.Preferences;
 import org.crosswire.jsword.book.sword.SwordBookPath;
@@ -24,9 +25,13 @@ public final class BookViewerOptions extends AbstractOptions {
     public static BookViewerOptions getInstance() {
         return instance;
     }
-    
-    private static final String SESSION_PERSISTENCE = "session-persistence";
-    private static final String SYNCHRONIZE_VIEW = "synchronize-view";
+
+    /*
+     * TODO
+     *  make all public and available from propertyChangeListener
+     */
+    public static final String SESSION_PERSISTENCE = "session-persistence";
+    public static final String SYNCHRONIZE_VIEW = "synchronize-view";
     private static final String PARALLEL_BOOK_LIMIT = "parallel-book-limit";
     private static final String VERSES_LIMIT = "verses-limit";
     private static final String DEFAULT_SEARCH_LIMIT = "default-search-limit";
@@ -38,6 +43,7 @@ public final class BookViewerOptions extends AbstractOptions {
     private static final String DEFAULT_GREEK_MORPH = "default-greek-morph";
     private static final String BOOK_PATHS = "book-paths";
     private static final String DOWNLOAD_PATH = "download-path";
+    public static final String BACKGROUND = "background";
     
     private boolean sessionPersistence;
     private boolean synchronizeView;
@@ -52,6 +58,7 @@ public final class BookViewerOptions extends AbstractOptions {
     private String defaultGreekMorph;
     private File[] bookPaths;
     private File downloadPath;
+    private Color background;
     
     protected BookViewerOptions() {
         nodeName = "bookviewer";
@@ -79,6 +86,9 @@ public final class BookViewerOptions extends AbstractOptions {
         defaultGreekStrongs = prefs.get(DEFAULT_GREEK_STRONGS, "StrongsGreek");
         defaultHebrewStrongs = prefs.get(DEFAULT_HEBREW_STRONGS, "StrongsHebrew");
         defaultGreekMorph = prefs.get(DEFAULT_GREEK_MORPH, "Robinson");
+
+        String value = prefs.get(BACKGROUND, null);
+        background = OptionsUtilities.stringToColor(value, null);
         
         downloadPath = SwordBookPath.getDownloadDir();
         String path = prefs.get(DOWNLOAD_PATH, null);
@@ -105,6 +115,12 @@ public final class BookViewerOptions extends AbstractOptions {
         prefs.putInt(PARALLEL_BOOK_LIMIT, parallelBookLimit);
         prefs.putInt(DEFAULT_SEARCH_LIMIT, defaultSearchLimit);
         prefs.putInt(VERSES_LIMIT, versesLimit);
+
+        if (background != null) {
+            prefs.put(BACKGROUND, OptionsUtilities.colorToString(background));
+        } else {
+            prefs.remove(BACKGROUND);
+        }
         
         if (defaultBible != null) {
             prefs.put(DEFAULT_BIBLE, defaultBible);
@@ -160,7 +176,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
  
     public void setSessionPersistence(boolean b) {
+        boolean old = this.sessionPersistence;
         this.sessionPersistence = b;
+        firePropertyChange(SESSION_PERSISTENCE, old, this.sessionPersistence);
     }
     
     public boolean isSessionPersistence() {
@@ -168,7 +186,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
 
     public void setSynchronizeView(boolean b) {
+        boolean old = this.synchronizeView;
         this.synchronizeView = b;
+        firePropertyChange(SYNCHRONIZE_VIEW, old, this.synchronizeView);
 
         // special case, this is handled independenly from the above store methods,
         // because it is not managed by OptionPane
@@ -184,7 +204,10 @@ public final class BookViewerOptions extends AbstractOptions {
         if (limit < 2) {
             throw new IllegalArgumentException("limit should >= 2");
         }
+
+        int old = this.parallelBookLimit;
         this.parallelBookLimit = limit;
+        firePropertyChange(PARALLEL_BOOK_LIMIT, old, this.parallelBookLimit);
     }
     
     public int getParallelBookLimit() {
@@ -198,7 +221,11 @@ public final class BookViewerOptions extends AbstractOptions {
         if (limit < 0) {
             throw new IllegalArgumentException("negative limit is not allowed");
         }
+
+
+        int old = this.defaultSearchLimit;
         this.defaultSearchLimit = limit;
+        firePropertyChange(DEFAULT_SEARCH_LIMIT, old, this.defaultSearchLimit);
     }
     
     /** Return default search limit. Zero (0) is unlimited */
@@ -212,7 +239,11 @@ public final class BookViewerOptions extends AbstractOptions {
         if (limit < 0) {
             throw new IllegalArgumentException("negative limit is not allowed");
         }
+
+
+        int old = this.versesLimit;
         this.versesLimit = limit;
+        firePropertyChange(VERSES_LIMIT, old, this.versesLimit);
     }
     
     /** Return verses display limit. Zero (0) is unlimited */
@@ -221,7 +252,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setDefaultBible(String initials) {
+        String old = this.defaultBible;
         this.defaultBible = initials;
+        firePropertyChange(DEFAULT_BIBLE, old, this.defaultBible);
     }
     
     public String getDefaultBible() {
@@ -229,7 +262,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setDefaultDictionary(String initials) {
+        String old = this.defaultDictionary;
         this.defaultDictionary = initials;
+        firePropertyChange(DEFAULT_DICTIONARY, old, this.defaultDictionary);
     }
     
     public String getDefaultDictionary() {
@@ -237,7 +272,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setDefaultDailyDevotions(String initials) {
+        String old = this.defaultDailyDevotions;
         this.defaultDailyDevotions = initials;
+        firePropertyChange(DEFAULT_DAILY_DEVOTIONS, old, this.defaultDailyDevotions);
     }
     
     public String getDefaultDailyDevotions() {
@@ -245,7 +282,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setDefaultGreekStrongs(String initials) {
+        String old = this.defaultGreekStrongs;
         this.defaultGreekStrongs = initials;
+        firePropertyChange(DEFAULT_GREEK_STRONGS, old, this.defaultGreekStrongs);
     }
     
     public String getDefaultGreekStrongs() {
@@ -253,7 +292,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
 
     public void setDefaultHebrewStrongs(String initials) {
+        String old = this.defaultHebrewStrongs;
         this.defaultHebrewStrongs = initials;
+        firePropertyChange(DEFAULT_HEBREW_STRONGS, old, this.defaultHebrewStrongs);
     }
     
     public String getDefaultHebrewStrongs() {
@@ -261,7 +302,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setDefaultGreekMorph(String initials) {
+        String old = this.defaultGreekMorph;
         this.defaultGreekMorph = initials;
+        firePropertyChange(DEFAULT_GREEK_MORPH, old, this.defaultGreekMorph);
     }
     
     public String getDefaultGreekMorph() {
@@ -269,7 +312,9 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setDownloadPath(File path) {
+        File old = this.downloadPath;
         this.downloadPath = path;
+        firePropertyChange(DOWNLOAD_PATH, old, this.downloadPath);
     }
     
     public File getDownloadPath() {
@@ -277,10 +322,23 @@ public final class BookViewerOptions extends AbstractOptions {
     }
     
     public void setBookPaths(File[] paths) {
+        File[] old = this.bookPaths;
         this.bookPaths = paths;
+        firePropertyChange(BOOK_PATHS, old, this.bookPaths);
     }
     
     public File[] getBookPaths() {
         return this.bookPaths;
+    }
+
+    /** if set to null means use default */
+    public void setBackground(Color color) {
+        Color old = this.background;
+        this.background = color;
+        firePropertyChange(BACKGROUND, old, this.background);
+    }
+
+    public Color getBackground() {
+        return background;
     }
 }

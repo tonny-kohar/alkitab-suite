@@ -92,6 +92,7 @@ public class DefaultBookToolTip implements BookToolTip {
         
     }
     
+    @Override
     public void show(Book book, Key key, Component owner, int x, int y) {
         hide(); // hide the prev popup if any is opened
         
@@ -156,6 +157,7 @@ public class DefaultBookToolTip implements BookToolTip {
         popup.show();
     }
     
+    @Override
     public void hide() {
         if (popup != null) {
             popup.hide();

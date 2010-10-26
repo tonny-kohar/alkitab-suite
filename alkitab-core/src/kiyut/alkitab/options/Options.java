@@ -2,6 +2,8 @@
 
 package kiyut.alkitab.options;
 
+import java.beans.PropertyChangeListener;
+
 /**
  * Options (Preferences) Interface
  * 
@@ -13,4 +15,8 @@ public interface Options {
     
     /** Store the Options or User Preferences to backing store */
     public void store();
+
+    public void addPropertyChangeListener(PropertyChangeListener listener);
+    
+    public void removePropertyChangeListener(PropertyChangeListener listener);
 }

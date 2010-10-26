@@ -69,20 +69,34 @@ public class BookTextPane extends JTextPane {
         setViewerHints(viewerHints);
         this.compareView = false;
 
+        // force setBackground for linux GTK bug workaround.
+        // please see this class setBackground override
+        setBackground(null);
+    }
+
+    @Override
+    public void setBackground(Color bg) {
+        if (bg != null) {
+            super.setBackground(bg);
+            return;
+        }
+
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
         try {
             if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
                 Color color = UIManager.getColor("TextPane.background");
                 if (color != null) {
                     if (!color.equals(getBackground())) {
-                        setBackground(color);
+                        bg = color;
                     }
                 }
-            }
+            } 
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.CONFIG,ex.getMessage(),ex);
         }
+        
+        super.setBackground(bg);
     }
 
     public void setViewerHints(ViewerHints<ViewerHints.Key,Object> viewerHints) {

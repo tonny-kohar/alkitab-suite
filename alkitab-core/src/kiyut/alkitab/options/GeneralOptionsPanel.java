@@ -2,12 +2,15 @@
 
 package kiyut.alkitab.options;
 
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.api.BookFontStore;
@@ -30,6 +34,14 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
     private final GeneralOptionsPanelController controller;
     private ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+
+    private static final Color LIGHT_YELLOW = OptionsUtilities.stringToColor("#FFFFE1");
+    private static final Color LIGHT_WHITE = OptionsUtilities.stringToColor("#FBFBFA");
+    private static final Color LIGHT_GRAY = OptionsUtilities.stringToColor("#F5F5F5");
+
+    private Color customBackground;
+    private boolean isRefreshing;
+
 
     GeneralOptionsPanel(GeneralOptionsPanelController controller) {
         this.controller = controller;
@@ -66,6 +78,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         jPanel10 = new javax.swing.JPanel();
         sessionPersistenceEnabledRadio = new javax.swing.JRadioButton();
         sessionPersistenceDisabledRadio = new javax.swing.JRadioButton();
+        jLabel10 = new javax.swing.JLabel();
+        backgroundCombo = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel9 = new javax.swing.JPanel();
@@ -122,7 +136,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel4.add(jLabel4, gridBagConstraints);
 
         parallelBookLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
@@ -141,7 +155,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(versesPerTabComboBox, gridBagConstraints);
 
-        defaultSearchLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "unlimited", "10", "20", "30", "40", "50", "75", "100", "125", "150", "175", "200" }));
+        defaultSearchLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Unlimited", "10", "20", "30", "40", "50", "75", "100", "125", "150", "175", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 20;
@@ -166,7 +180,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
-        org.openide.awt.Mnemonics.setLocalizedText(fontBoldCheckBox, bundle.getString("CTL_FontBold.Tex")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(fontBoldCheckBox, bundle.getString("CTL_FontBold.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -199,7 +213,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         jPanel10.setLayout(new java.awt.GridBagLayout());
 
         sessionPersistenceGroup.add(sessionPersistenceEnabledRadio);
-        org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceEnabledRadio, bundle.getString("CTL_Enabled.Text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceEnabledRadio, bundle.getString("CTL_SessionEnabled.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -208,7 +222,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         jPanel10.add(sessionPersistenceEnabledRadio, gridBagConstraints);
 
         sessionPersistenceGroup.add(sessionPersistenceDisabledRadio);
-        org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceDisabledRadio, bundle.getString("CTL_Disabled.Text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceDisabledRadio, bundle.getString("CTL_SessionDisabled.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -220,6 +234,20 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(jPanel10, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel10, bundle.getString("CTL_Background.Text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        jPanel4.add(jLabel10, gridBagConstraints);
+
+        backgroundCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Default", "Light White", "Light Yellow", "Light Gray", "Custom ..." }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        jPanel4.add(backgroundCombo, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
@@ -342,6 +370,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox backgroundCombo;
     private javax.swing.JComboBox defaultBibleComboBox;
     private javax.swing.JComboBox defaultDailyDevotionsComboBox;
     private javax.swing.JComboBox defaultDictionaryComboBox;
@@ -355,6 +384,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel fontPanel;
     private javax.swing.JComboBox fontSizeComboBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
@@ -388,6 +418,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         fontSizeComboBox.setPrototypeDisplayValue("99");
         defaultBibleComboBox.setPrototypeDisplayValue("KJV - King James Version (1769) ...");
+        backgroundCombo.setPrototypeDisplayValue("Light Yellow");
 
         refreshAvailableFonts();
         refreshDefaultBooks();
@@ -406,9 +437,17 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
                 }
             }
         });
+
+        backgroundCombo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                backgroundComboItemStateChanged(evt);
+            }
+        });
     }
 
     void load() {
+        isRefreshing = true;
         BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
 
         parallelBookLimitComboBox.setSelectedItem(Integer.toString(bookViewerOpts.getParallelBookLimit()));
@@ -423,13 +462,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         //sessionPersistenceEnabledRadio.setSelected(bookViewerOpts.isSessionPersistence());
         //System.out.println("SessionPersist: " + bookViewerOpts.isSessionPersistence() + " radio: " + sessionPersistenceEnabledRadio.isSelected());
 
-        setDefaultBookComboBox(defaultBibleComboBox, bookViewerOpts.getDefaultBible());
-        setDefaultBookComboBox(defaultDictionaryComboBox, bookViewerOpts.getDefaultDictionary());
-        setDefaultBookComboBox(defaultDailyDevotionsComboBox, bookViewerOpts.getDefaultDailyDevotions());
-        setDefaultBookComboBox(defaultGreekStrongsComboBox, bookViewerOpts.getDefaultGreekStrongs());
-        setDefaultBookComboBox(defaultHebrewStrongsComboBox, bookViewerOpts.getDefaultHebrewStrongs());
-        setDefaultBookComboBox(defaultGreekMorphComboBox, bookViewerOpts.getDefaultGreekMorph());
-
         BookFontStore fontStore = BookFontStore.getInstance();
         String fontDef = fontStore.getDefaultFont();
         Font font = GuiConvert.string2Font(fontDef);
@@ -437,6 +469,28 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         fontSizeComboBox.setSelectedItem(font.getSize()+"");
         fontBoldCheckBox.setSelected(font.isBold());
         fontItalicCheckBox.setSelected(font.isItalic());
+
+        Color background = bookViewerOpts.getBackground();
+        if (background == null) {
+            backgroundCombo.setSelectedIndex(0);
+        } else if (background.equals(LIGHT_WHITE)) {
+            backgroundCombo.setSelectedIndex(1);
+        } else if (background.equals(LIGHT_YELLOW)) {
+            backgroundCombo.setSelectedIndex(2);
+        } else if (background.equals(LIGHT_GRAY)) {
+            backgroundCombo.setSelectedIndex(3);
+        } else {
+            backgroundCombo.setSelectedIndex(4);
+        }
+
+        setDefaultBookComboBox(defaultBibleComboBox, bookViewerOpts.getDefaultBible());
+        setDefaultBookComboBox(defaultDictionaryComboBox, bookViewerOpts.getDefaultDictionary());
+        setDefaultBookComboBox(defaultDailyDevotionsComboBox, bookViewerOpts.getDefaultDailyDevotions());
+        setDefaultBookComboBox(defaultGreekStrongsComboBox, bookViewerOpts.getDefaultGreekStrongs());
+        setDefaultBookComboBox(defaultHebrewStrongsComboBox, bookViewerOpts.getDefaultHebrewStrongs());
+        setDefaultBookComboBox(defaultGreekMorphComboBox, bookViewerOpts.getDefaultGreekMorph());
+
+        isRefreshing = false;
     }
 
     void store() {
@@ -451,6 +505,26 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         }
 
         bookViewerOpts.setSessionPersistence(sessionPersistenceEnabledRadio.isSelected());
+
+        int index = backgroundCombo.getSelectedIndex();
+        switch (index) {
+            case 0:
+                bookViewerOpts.setBackground(null);
+                break;
+            case 1:
+                bookViewerOpts.setBackground(LIGHT_WHITE);
+                break;
+            case 2:
+                bookViewerOpts.setBackground(LIGHT_YELLOW);
+                break;
+            case 3:
+                bookViewerOpts.setBackground(LIGHT_GRAY);
+                break;
+            default:
+                bookViewerOpts.setBackground(customBackground);
+                break;
+        }
+
 
         String initials = null;
         if (defaultBibleComboBox.getSelectedIndex() > 0) {
@@ -608,5 +682,16 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         if (index >= 0) {
             comboBox.setSelectedIndex(index);
         }
+    }
+
+     private void backgroundComboItemStateChanged(ItemEvent evt) {
+         if (evt.getStateChange() == ItemEvent.DESELECTED) { return; }
+
+         if (isRefreshing) { return; }
+
+         // not custom background color
+         if (backgroundCombo.getSelectedIndex() != 4) { return; }
+         
+         customBackground = JColorChooser.showDialog(this, "Choose Color", customBackground);
     }
 }

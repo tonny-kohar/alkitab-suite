@@ -54,7 +54,6 @@ import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.ParallelBookViewerPane;
 import kiyut.alkitab.bookviewer.ViewerHintsPane;
-import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -244,14 +243,14 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         bookViewerNode = new BookViewerNode(bookViewer);
 
         bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                String name = (String) evt.getNewValue();
-                setName(name);
-                setToolTipText(name);
-            }
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    String name = (String) evt.getNewValue();
+                    setName(name);
+                    setToolTipText(name);
+                }
         });
-        
+
         bookViewer.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {

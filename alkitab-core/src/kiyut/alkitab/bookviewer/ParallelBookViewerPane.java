@@ -3,6 +3,7 @@
 package kiyut.alkitab.bookviewer;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Insets;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionEvent;
@@ -325,7 +326,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     protected void initCustom() {
         unindexedBooks = false;
         indexInProgress = false;
-        
+
         BookViewerOptions opts = BookViewerOptions.getInstance();
         maximumBook = opts.getParallelBookLimit();
         historyManager = new BookViewerHistoryManager();
