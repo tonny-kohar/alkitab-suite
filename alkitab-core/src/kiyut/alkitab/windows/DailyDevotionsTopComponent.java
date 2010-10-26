@@ -123,6 +123,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
             //return DailyDevotionsTopComponent.getDefault();
             final DailyDevotionsTopComponent result = DailyDevotionsTopComponent.getDefault();
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     // always close it at startup
                     result.close();
@@ -147,6 +148,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
     private void initCustom() {
         tabbedPane = TabbedPaneFactory.createCloseButtonTabbedPane();
         tabbedPane.addPropertyChangeListener( TabbedPaneFactory.PROP_CLOSE, new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 JTabbedPane pane = (JTabbedPane)evt.getSource();
                 Object obj = evt.getNewValue();
@@ -161,6 +163,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
         this.add(BorderLayout.CENTER, tabbedPane);
         
         hyperlinkListener = new HyperlinkListener() {
+            @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 DailyDevotionsTopComponent.this.hyperlinkUpdate(evt);
             }
@@ -212,7 +215,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
         
         if (swordURI == null) {
             Logger logger = Logger.getLogger(DailyDevotionsTopComponent.class.getName());
-            logger.log(Level.WARNING, "invalid SwordURI: " + uri);
+            logger.log(Level.WARNING, "invalid SwordURI: {0}", uri);
             
         }
         
@@ -236,6 +239,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
             putValue(Action.NAME, NbBundle.getMessage(ViewSourceAction.class, "CTL_ViewSourceAction"));
         }
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             int i = tabbedPane.getSelectedIndex();
             if (i < 0) { return; }

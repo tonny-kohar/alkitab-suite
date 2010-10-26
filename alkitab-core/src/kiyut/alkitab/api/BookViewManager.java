@@ -49,6 +49,7 @@ public final class BookViewManager {
         bookViewProviders = result.allInstances();
         
         result.addLookupListener(new LookupListener() {
+            @Override
             public void resultChanged(LookupEvent evt) {
                 Object obj = evt.getSource();
                 if (obj == null) { return; }

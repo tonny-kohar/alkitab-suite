@@ -86,9 +86,10 @@ public class BookTextPane extends JTextPane {
             if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
                 Color color = UIManager.getColor("TextPane.background");
                 if (color != null) {
-                    if (!color.equals(getBackground())) {
-                        bg = color;
-                    }
+                    bg = color;
+                    //if (!color.equals(getBackground())) {
+                    //    bg = color;
+                    //}
                 }
             } 
         } catch (Exception ex) {

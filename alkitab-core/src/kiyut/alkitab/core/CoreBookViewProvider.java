@@ -29,6 +29,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
     
     public CoreBookViewProvider() {
         TopComponent.getRegistry().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 bookViewerTopComponentPropertyChangeListener(evt);
             }
@@ -70,12 +71,12 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
     
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (uri == null) { 
-            logger.log(Level.WARNING, "openURI(uri," + newView + "): uri is null" );
+            logger.log(Level.WARNING, "openURI(uri,{0}): uri is null", newView);
             return;
         }
         
         if (Application.isDebug()) {
-            logger.log(Level.INFO, "openURI(uri," + newView + "): " + uri);
+            logger.log(Level.INFO, "openURI(uri,{0}): {1}", new Object[]{newView, uri});
         }
         
         //System.out.println(this.getClass().getSimpleName()+ ".openURI(uri," + newView + ")");
@@ -123,6 +124,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
         final BookViewerTopComponent finalTC = tc;
         
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 finalTC.openURI(uri, info);
             }
@@ -151,6 +153,7 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
         tc.requestActive();
         
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 tc.openURI(uri, info);
             }

@@ -3,7 +3,6 @@
 package kiyut.alkitab.bookviewer;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Insets;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionEvent;

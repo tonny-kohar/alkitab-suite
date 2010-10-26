@@ -90,6 +90,7 @@ public class DefinitionPane extends javax.swing.JPanel {
         indexList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         indexList.addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent evt) {
                 keyValueChanged(evt);
             }

@@ -68,6 +68,7 @@ public abstract class BookViewerTopComponent extends TopComponent {
         BookViewer bookViewer = getBookViewer();
         if (bookViewer != null) {
             Color bg = BookViewerOptions.getInstance().getBackground();
+            //System.out.println("this is executed");
             bookViewer.getViewerComponent().setBackground(bg);
         }
     }
