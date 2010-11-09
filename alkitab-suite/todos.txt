@@ -5,7 +5,7 @@ in no particular order
 - [API] Open more public API for plugins/extension (On going progress)
 - [GUI] Alternative HTML viewer: xhtml (flying sourcer), XULEmbed, JDIC native browser, JWebPane (preferred, but not available yet)
 - [i18n] Internationalization or Localization for Alkitab Bible Study,
-  in_ID = Indonesian (Done)
+  in = Indonesian (Done)
   fa = Farsi (Done, thanks Peter von Kaehne)
   vi = Vietnamese (Done, thanks Daniel Owens)
 - [Installer] Mac OSX dmg, need community help to build the dmg installer
@@ -14,11 +14,13 @@ in no particular order
 - [SWORD] Indonesian Bible Translation, create my own translation :)
   http://www.kiyut.com/products/alkitab/translation/index.html (in progress)
 - Search highlight
-- Configurable font and font color
-- Synchronized Book Viewer (aka each tab show the same passage)
+- Configurable background color (some users says white is too bright)
 - Improved History Viewer
   * clear history (request from Max Carlton)
   * history grouping (Today, Yesterday, Last 3 Days, Last 6 Days, ...)
   * try to capture search string as part of history [done]
   * any other ideas ?
 - Daily Devotional (setting arbitary start date)
+- Support Alternate Versification (av11n), belong to upstream JSword Project
+  http://www.crosswire.org/wiki/Alternate_Versification
+- Support user supplied XSL

@@ -108,7 +108,8 @@ public class DefinitionPane extends javax.swing.JPanel {
             
             Key key = book.getGlobalKeyList();
             ((KeyListModel)indexList.getModel()).setKey(key);
-            
+
+            // for eg: DailyDevotions today key
             Key prefKey = null;
             if (book instanceof PreferredKey) {
                 prefKey = ((PreferredKey)book).getPreferred();

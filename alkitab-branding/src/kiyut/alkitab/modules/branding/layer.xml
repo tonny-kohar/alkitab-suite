@@ -4,6 +4,7 @@
     <folder name="Actions">
         <file name="Edit_hidden"/>
         <file name="Debug_hidden"/>
+        <file name="Profile_hidden"/>
         <folder name="System">
             <file name="org-netbeans-core-actions-JumpNextAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-JumpPrevAction.instance_hidden"/>
@@ -20,6 +21,7 @@
             <file name="org-openide-actions-PageSetupAction.instance_hidden"/>
             <file name="org-openide-actions-PopupAction.instance_hidden"/>
             <file name="org-openide-actions-PrintAction.instance_hidden"/>
+            <file name="org-openide-actions-PropertiesAction.instance_hidden"/>
             <file name="org-openide-actions-RenameAction.instance_hidden"/>
             <file name="org-openide-actions-ReorderAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAction.instance_hidden"/>

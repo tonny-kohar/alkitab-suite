@@ -2,8 +2,6 @@
 
 package kiyut.alkitab.navigator;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import javax.swing.AbstractListModel;
 import org.crosswire.jsword.passage.Key;
 
@@ -12,7 +10,7 @@ import org.crosswire.jsword.passage.Key;
  * 
  */
 public class KeyListModel extends AbstractListModel {
-    private final ScheduledExecutorService scheduler =  Executors.newScheduledThreadPool(1);
+    //private final ScheduledExecutorService scheduler =  Executors.newScheduledThreadPool(1);
     protected boolean searchCancelled = false;
     protected int searchResult = -1;
     protected Key keyList;
@@ -48,11 +46,13 @@ public class KeyListModel extends AbstractListModel {
         return this.keyList;
     }
     
+    @Override
     public int getSize() {
         if (keyList == null) { return 0; }
         return keyList.getCardinality();
     }
 
+    @Override
     public Object getElementAt(int index) {
         if (keyList == null) { return null; }
         return keyList.get(index);
