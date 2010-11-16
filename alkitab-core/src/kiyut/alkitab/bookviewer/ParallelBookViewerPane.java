@@ -173,6 +173,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jPanel1.add(compareCheckBox, gridBagConstraints);
 
         jLabel2.setText(bundle.getString("CTL_Search.Text")); // NOI18N
+        jLabel2.setToolTipText(bundle.getString("HINT_Search.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
@@ -236,7 +237,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         searchTextArea.setLineWrap(true);
-        searchTextArea.setToolTipText(bundle.getString("HINT_Search.Text")); // NOI18N
         searchTextArea.setWrapStyleWord(true);
         jScrollPane2.setViewportView(searchTextArea);
 
