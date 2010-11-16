@@ -2,13 +2,28 @@
 
 package kiyut.alkitab.modules.branding;
 
+import java.awt.AWTEvent;
+import java.awt.Component;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.AWTEventListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
+import javax.swing.MenuSelectionManager;
+import javax.swing.SwingUtilities;
+import javax.swing.text.JTextComponent;
 import kiyut.alkitab.Application;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.GlobalHistory;
 import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookTextPane;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
@@ -46,7 +61,12 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         configureSwordPath();
 
+        // register context menu (right click) cut/copy/paste
+        // it is hack see http://www.javalobby.org/java/forums/t19867.html
+        Toolkit.getDefaultToolkit().addAWTEventListener(new ExtendedMouseEventListener(), AWTEvent.MOUSE_EVENT_MASK);
+
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+            @Override
             public void run() {
                 ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());
 
@@ -108,12 +128,6 @@ public class BrandingModuleInstall extends ModuleInstall {
         // override user.dir variable to the
         IOUtilities.setUserDir(null);
 
-        //System.err.println("test blash balsh");
-        //System.err.println("why not printed out");
-        //System.err.println(this.getClass().getName());
-        //System.err.println(this.getClass().getPackage().getName());
-        //Books.installed();
-
         // disable jsword logger reapplying configuration for JSword > 20100619
         //org.crosswire.common.util.Logger.setDisableReadConfiguration(true);
 
@@ -170,5 +184,141 @@ public class BrandingModuleInstall extends ModuleInstall {
         sb.append("-------------------------------------------------------------------------------\n");
 
         logger.log(Level.INFO,sb.toString());
+    }
+
+
+    private class ExtendedMouseEventListener implements AWTEventListener {
+
+        @Override
+        public void eventDispatched(AWTEvent event) {
+
+            // interested only in mouseevents
+            if (!(event instanceof MouseEvent)) {
+                return;
+            }
+
+            MouseEvent me = (MouseEvent) event;
+
+            // interested only in popuptriggers
+            if (!me.isPopupTrigger()) {
+                return;
+            }
+
+            // me.getComponent(...) retunrs the heavy weight component on which event occured
+            Component comp = SwingUtilities.getDeepestComponentAt(me.getComponent(), me.getX(), me.getY());
+
+            // interested only in textcomponents
+            if (!(comp instanceof JTextComponent)) {
+                return;
+            }
+
+            // no popup shown by user code
+            if (MenuSelectionManager.defaultManager().getSelectedPath().length > 0) {
+                return;
+            }
+
+            // create popup menu and show
+            JTextComponent tc = (JTextComponent) comp;
+            JPopupMenu menu = new JPopupMenu();
+            menu.add(new CutAction(tc));
+            menu.add(new CopyAction(tc));
+            menu.add(new PasteAction(tc));
+            menu.add(new DeleteAction(tc));
+            //menu.addSeparator();
+            //menu.add(new SelectAllAction(tc));
+
+            Point pt = SwingUtilities.convertPoint(me.getComponent(), me.getPoint(), tc);
+            menu.show(tc, pt.x, pt.y);
+        }
+
+    }
+
+    private class CutAction extends AbstractAction {
+        private JTextComponent comp;
+
+        public CutAction(JTextComponent comp) {
+            super("Cut");
+            this.comp = comp;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            comp.cut();
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return comp.isEditable()
+                    && comp.isEnabled()
+                    && comp.getSelectedText() != null;
+        }
+    }
+    
+    private class CopyAction extends AbstractAction {
+
+        private JTextComponent comp;
+
+        public CopyAction(JTextComponent comp) {
+            super("Copy");
+            this.comp = comp;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            comp.copy();
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return comp.isEnabled()
+                    && comp.getSelectedText() != null;
+        }
+    }
+
+    private class PasteAction extends AbstractAction {
+
+        private JTextComponent comp;
+
+        public PasteAction(JTextComponent comp) {
+            super("Paste");
+            this.comp = comp;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            comp.paste();
+        }
+
+        @Override
+        public boolean isEnabled() {
+            if (comp.isEditable() && comp.isEnabled()) {
+                Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(this);
+                return contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private class DeleteAction extends AbstractAction {
+
+        private JTextComponent comp;
+
+        public DeleteAction(JTextComponent comp) {
+            super("Delete");
+            this.comp = comp;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            comp.replaceSelection(null);
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return comp.isEditable()
+                    && comp.isEnabled()
+                    && comp.getSelectedText() != null;
+        }
     }
 }

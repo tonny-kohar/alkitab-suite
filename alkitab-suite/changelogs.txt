@@ -1,3 +1,7 @@
+ver 2.6.1
+- ParallelBook move search hint from JTextField to JLabel
+- Add Context Menu (cut,copy,paste) for some text component
+
 ver 2.6
 - Add background color
 - Improved UI
