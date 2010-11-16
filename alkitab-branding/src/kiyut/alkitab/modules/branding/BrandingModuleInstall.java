@@ -61,8 +61,10 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         configureSwordPath();
 
-        // register context menu (right click) cut/copy/paste
-        // it is hack see http://www.javalobby.org/java/forums/t19867.html
+        // XXX Register context menu (right click) cut/copy/paste
+        // it is hack see:
+        // http://www.javalobby.org/java/forums/t19867.html
+        // http://tips4java.wordpress.com/2009/08/30/global-event-listeners/
         Toolkit.getDefaultToolkit().addAWTEventListener(new ExtendedMouseEventListener(), AWTEvent.MOUSE_EVENT_MASK);
 
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
