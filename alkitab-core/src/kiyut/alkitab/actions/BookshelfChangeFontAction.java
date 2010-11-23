@@ -24,8 +24,10 @@ public class BookshelfChangeFontAction extends AbstractAction {
         super(NbBundle.getMessage(BookshelfChangeFontAction.class, "CTL_BookshelfChangeFontAction"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent evt) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 doChangeFont();
             }
