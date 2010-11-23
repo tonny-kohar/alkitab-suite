@@ -131,6 +131,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         IOUtilities.setUserDir(null);
 
         // disable jsword logger reapplying configuration for JSword > 20100619
+        // XXX it is also workaround for JSword recent, hang on splash screen
         //org.crosswire.common.util.Logger.setDisableReadConfiguration(true);
 
         BookViewerOptions viewerOpts = BookViewerOptions.getInstance();
