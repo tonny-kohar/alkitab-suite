@@ -114,6 +114,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
     @Override
     public void componentActivated() {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 if (!displayUpdated) {
                     if (bookViewer == null) {
@@ -155,6 +156,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
         navigatorMap = new HashMap<BookViewer,BookNavigatorPane>();
         
         tcPropertyChangeListener = new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 Object obj = evt.getNewValue();
                 if (!(obj instanceof BookViewerTopComponent)) {
@@ -172,6 +174,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
         };
         
         bookViewerLookupListener = new LookupListener() {
+            @Override
             public void resultChanged(LookupEvent lookupEvent) {
                 bookViewerLookupListenerResultChanged(lookupEvent);
             }
@@ -199,6 +202,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
     
     private synchronized void registerBookViewer(final BookViewer bookViewer) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 if (bookViewer == null) { return; }
                 registerBookViewerImpl(bookViewer);

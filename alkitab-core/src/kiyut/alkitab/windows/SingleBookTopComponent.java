@@ -136,7 +136,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                         restoreSession(result);
                     } catch (Exception ex) {
                         Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.log(Level.FINE, "Unable to restore session.\n{0}", ex.getMessage());
+                        logger.log(Level.FINER, "Unable to restore session.\n{0}", ex.getMessage());
                         result.close();
                     }
                 }
