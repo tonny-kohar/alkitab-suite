@@ -14,12 +14,12 @@ public class GoForwardAction extends CallbackSystemAction {
     
     @Override
     public String getName() {
-        return NbBundle.getMessage(GoBackAction.class, "CTL_GoForwardAction");
+        return NbBundle.getMessage(GoForwardAction.class, "CTL_GoForwardAction");
     }
 
     @Override
     protected String iconResource() {
-        return NbBundle.getMessage(GoBackAction.class, "ICON_GoForwardAction");
+        return NbBundle.getMessage(GoForwardAction.class, "ICON_GoForwardAction");
     }
 
     @Override

@@ -12,12 +12,6 @@ import org.openide.util.actions.CallbackSystemAction;
  */
 public class GoBackAction extends CallbackSystemAction {
 
-    /*@Override
-    protected void initialize() {
-        super.initialize();
-        setSurviveFocusChange(true);
-    }*/
-
     @Override
     public String getName() {
         return NbBundle.getMessage(GoBackAction.class, "CTL_GoBackAction");

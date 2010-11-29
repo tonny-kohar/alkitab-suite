@@ -14,12 +14,12 @@ public class ReloadAction extends CallbackSystemAction {
 
     @Override
     public String getName() {
-        return NbBundle.getMessage(GoBackAction.class, "CTL_ReloadAction");
+        return NbBundle.getMessage(ReloadAction.class, "CTL_ReloadAction");
     }
 
     @Override
     protected String iconResource() {
-        return NbBundle.getMessage(GoBackAction.class, "ICON_ReloadAction");
+        return NbBundle.getMessage(ReloadAction.class, "ICON_ReloadAction");
     }
 
     @Override
