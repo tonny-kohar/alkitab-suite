@@ -19,7 +19,7 @@
         commandLine=""
         workingDirectory="$INSTALL_PATH/bin"
         description="${app.title.full} Launcher"
-        categories="Religion;Bible;Application;Utility"
+        categories="Religion;Bible;Education;Application;Utility"
         iconFile="$INSTALL_PATH/${app.name}/${app.name}48.png"
         iconIndex="0"
         encoding="UTF-8"

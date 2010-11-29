@@ -75,6 +75,7 @@
     
     <!-- The native libraries to add -->
     <native type="izpack" name="ShellLink.dll"/>
+    <native type="izpack" name="ShellLink_x64.dll"/>
     
     <!--
         The panels section.
