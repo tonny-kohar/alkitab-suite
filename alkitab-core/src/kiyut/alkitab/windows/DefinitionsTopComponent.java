@@ -3,6 +3,7 @@
 package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -48,6 +49,8 @@ public final class DefinitionsTopComponent extends TopComponent {
     private JTabbedPane tabbedPane;
     
     private HyperlinkListener hyperlinkListener;
+
+    protected PropertyChangeListener backgroundPropertyChangeListener;
     
     private DefinitionsTopComponent() {
         initComponents();
@@ -127,6 +130,7 @@ public final class DefinitionsTopComponent extends TopComponent {
             
             final DefinitionsTopComponent result = DefinitionsTopComponent.getDefault();
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     // always close it at startup
                     result.close();
@@ -151,6 +155,7 @@ public final class DefinitionsTopComponent extends TopComponent {
     private void initCustom() {
         tabbedPane = TabbedPaneFactory.createCloseButtonTabbedPane();
         tabbedPane.addPropertyChangeListener( TabbedPaneFactory.PROP_CLOSE, new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 JTabbedPane pane = (JTabbedPane)evt.getSource();
                 Object obj = evt.getNewValue();
@@ -165,13 +170,32 @@ public final class DefinitionsTopComponent extends TopComponent {
         this.add(BorderLayout.CENTER, tabbedPane);
         
         hyperlinkListener = new HyperlinkListener() {
+            @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 DefinitionsTopComponent.this.hyperlinkUpdate(evt);
             }
         };
 
+        backgroundPropertyChangeListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (!evt.getPropertyName().equals(BookViewerOptions.BACKGROUND)) {
+                    return;
+                }
+
+                Color bg = null;
+                if (evt.getNewValue() instanceof Color) {
+                    bg = (Color) evt.getNewValue();
+                }
+
+                backgroundPropertyChange(bg);
+            }
+        };
+
         // this part make the loading slower
         BookViewerOptions opts = BookViewerOptions.getInstance();
+        opts.addPropertyChangeListener(backgroundPropertyChangeListener);
+        
         String name = opts.getDefaultDictionary();
         if (name == null) { return; }
         SwordURI uri = SwordURI.createURI(SwordURI.DICTIONARY_SCHEME, name, null);
@@ -230,6 +254,9 @@ public final class DefinitionsTopComponent extends TopComponent {
             tabbedPane.add(dicPane);
             index = tabbedPane.getTabCount() - 1;
             tabbedPane.setToolTipTextAt(index, book.getName());
+
+            Color bg = BookViewerOptions.getInstance().getBackground();
+            backgroundPropertyChange(bg);
         }
         
         tabbedPane.setSelectedIndex(index);
@@ -266,14 +293,14 @@ public final class DefinitionsTopComponent extends TopComponent {
         return name;
     }
     
-    private void hyperlinkUpdate(HyperlinkEvent evt) {
+    protected void hyperlinkUpdate(HyperlinkEvent evt) {
         EventType eventType = evt.getEventType();
         String uri = evt.getDescription();
         SwordURI swordURI = SwordURI.createURI(uri);
         
         if (swordURI == null) {
             Logger logger = Logger.getLogger(DefinitionsTopComponent.class.getName());
-            logger.log(Level.WARNING, "invalid SwordURI: " + uri);
+            logger.log(Level.WARNING, "invalid SwordURI: {0}", uri);
             
         }
         
@@ -291,12 +318,20 @@ public final class DefinitionsTopComponent extends TopComponent {
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
         }
     }
+
+    protected void backgroundPropertyChange(Color bg) {
+        for (int i=0; i<tabbedPane.getTabCount(); i++) {
+            DictionaryPane dicPane = (DictionaryPane)tabbedPane.getComponentAt(i);
+            dicPane.getViewerComponent().setBackground(bg);
+        }
+    }
     
     private class ViewSourceAction extends AbstractAction {
         public ViewSourceAction() {
             putValue(Action.NAME, NbBundle.getMessage(ViewSourceAction.class, "CTL_ViewSourceAction"));
         }
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             int i = tabbedPane.getSelectedIndex();
             if (i < 0) { return; }

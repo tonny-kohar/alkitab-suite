@@ -58,6 +58,7 @@ public class DictionaryPane extends DefinitionPane {
     }
 
     public class SearchTask implements Runnable {
+        @Override
         public void run() {
             searching = true;
             try {

@@ -47,6 +47,7 @@
         </folder>
         <folder name="Tools">
             <file name="kiyut-alkitab-actions-BookInstallerAction.instance">
+                <attr name="position" intvalue="0"/>
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookInstallerAction"/>
             </file>
         </folder>

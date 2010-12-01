@@ -5,6 +5,7 @@ package kiyut.alkitab.bookviewer;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
@@ -179,7 +180,11 @@ public class DefinitionPane extends javax.swing.JPanel {
         }
         return viewerHints;
     }
-    
+
+    public JComponent getViewerComponent() {
+        return bookTextPane;
+    }
+
     public void addHyperlinkListener(HyperlinkListener listener) {
         bookTextPane.addHyperlinkListener(listener);
     }
