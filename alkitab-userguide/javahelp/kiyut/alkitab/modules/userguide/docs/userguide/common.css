@@ -1,15 +1,15 @@
 /*
- * adapted from Netbeans 6.0 user guide css
+ * adapted from Netbeans 6.9.1 user guide css
  */
 
-body  {font-size: small;
+body  {font-size: medium;
 	font-family: SansSerif, Arial, Helvetica, sans-serif;
 	margin-left: 5;
 	margin-right: 5;
 	color: Black;
 	background-color: White}
 
-p  {font-size: small;
+p  {font-size: medium;
      margin-top: 5;
      margin-bottom: 5}
 
@@ -29,7 +29,7 @@ h3 { font-size: medium;
      margin-top: 10;
      margin-bottom: 5}
 
-h4 { font-size: small;
+h4 { font-size: medium;
      font-weight: bold;
      margin-top: 10;
      margin-bottom: 5}
@@ -54,8 +54,7 @@ li p{margin-top: 5;
 ul {list-style-image:url(images/blue-ball-mid.gif);
     margin-top: 5;
     margin-bottom: 0;
-    margin-left: 16;
-    /* font-family: 'Times New Roman',Times,serif; */
+	 margin-left: 16;
 }
 
 ul li ul{list-style-image:url(images/blue-sqr-mid.gif)}
