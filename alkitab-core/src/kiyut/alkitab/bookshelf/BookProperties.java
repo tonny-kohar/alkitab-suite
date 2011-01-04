@@ -76,8 +76,15 @@ public class BookProperties extends javax.swing.JPanel {
         
         setName(bundle.getString("CTL_Name.Text"));
 
+        Color color = UIManager.getColor("TextPane.background");
+        if (color != null) {
+            if (!color.equals(getBackground())) {
+                textPane.setBackground(color);
+            }
+        }
+
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
-        try {
+        /*try {
             if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
                 Color color = UIManager.getColor("TextPane.background");
                 if (color != null) {
@@ -89,7 +96,7 @@ public class BookProperties extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.CONFIG,ex.getMessage(),ex);
-        }
+        }*/
         
     }
     
@@ -117,7 +124,7 @@ public class BookProperties extends javax.swing.JPanel {
             
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, "",ex);
+            logger.log(Level.WARNING, ex.getMessage(), ex);
         }
     }
 }

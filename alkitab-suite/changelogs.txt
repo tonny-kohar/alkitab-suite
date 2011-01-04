@@ -1,7 +1,9 @@
 ver 2.6.1
-- ParallelBook move search hint from JTextField to JLabel
 - Add Context Menu (cut,copy,paste) for some text component
 - Add additional font size (>48)
+- ParallelBook move search hint from JTextField to JLabel
+- Add background color listener for DefinitionsTopComponent
+- Fix Windows 64-bit installer
 
 ver 2.6
 - Add background color

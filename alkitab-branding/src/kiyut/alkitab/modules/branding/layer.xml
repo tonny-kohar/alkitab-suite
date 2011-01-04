@@ -30,7 +30,6 @@
         </folder>
         <folder name="View">
             <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
-            <!-- <file name="org-netbeans-core-actions-LogAction.instance_hidden"/> -->
             <file name="org.netbeans.modules.image.CustomZoomAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.ZoomInAction.instance_hidden"/>
             <file name="org.netbeans.modules.image.ZoomOutAction.instance_hidden"/>
@@ -58,7 +57,6 @@
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
             <file name="Separator2.instance_hidden"/>
             <file name="Separator3.instance_hidden"/>
-            <!-- <file name="Separator4.instance_hidden"/> -->
             <file name="org-openide-actions-PageSetupAction.instance_hidden"/>
             <file name="org-openide-actions-PrintAction.instance_hidden"/>
             <file name="org-openide-actions-SaveAction.instance_hidden"/>
@@ -77,6 +75,7 @@
             </file>
             <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow_hidden"/>
         </folder>
+        <file name="Refactoring_hidden"/>
         <folder name="Tools">
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
             <file name="Separator1.instance_hidden"/>

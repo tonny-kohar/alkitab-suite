@@ -81,15 +81,19 @@ public class BookTextPane extends JTextPane {
             return;
         }
 
+        Color color = UIManager.getColor("TextPane.background");
+        if (color != null) {
+            if (!color.equals(getBackground())) {
+                super.setBackground(color);
+            }
+        }
+
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
-        try {
+        /*try {
             if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
                 Color color = UIManager.getColor("TextPane.background");
                 if (color != null) {
                     bg = color;
-                    //if (!color.equals(getBackground())) {
-                    //    bg = color;
-                    //}
                 }
             } 
         } catch (Exception ex) {
@@ -98,6 +102,8 @@ public class BookTextPane extends JTextPane {
         }
         
         super.setBackground(bg);
+         * 
+         */
     }
 
     public void setViewerHints(ViewerHints<ViewerHints.Key,Object> viewerHints) {

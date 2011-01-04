@@ -23,7 +23,6 @@ import kiyut.alkitab.Application;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.GlobalHistory;
 import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.bookviewer.BookTextPane;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
@@ -150,41 +149,44 @@ public class BrandingModuleInstall extends ModuleInstall {
             logger.log(Level.WARNING,ex.getMessage(),ex);
         }
 
-        StringBuilder sb = new StringBuilder("Sword Path Configuration\n");
+
+        String newline = System.getProperty("line.separator");
+
+        StringBuilder sb = new StringBuilder("Sword Path Configuration").append(newline);
 
         File[] files;
         File file;
 
-        sb.append("  AugmentPath:\n");
+        sb.append("  AugmentPath:").append(newline);
         files = SwordBookPath.getAugmentPath();
         for (int i=0; i<files.length; i++) {
-            sb.append("\t").append(files[i].toString()).append("\n");
+            sb.append("\t").append(files[i].toString()).append(newline);
         }
 
-        sb.append("  DownloadDir:\n");
+        sb.append("  DownloadDir:").append(newline);
         file = SwordBookPath.getDownloadDir();
         if (file != null) {
-            sb.append("\t").append(file.toString()).append("\n");
+            sb.append("\t").append(file.toString()).append(newline);
         }
 
-        sb.append("  SwordDownloadDir:\n");
+        sb.append("  SwordDownloadDir:").append(newline);
         file = SwordBookPath.getSwordDownloadDir();
         if (file != null) {
-            sb.append("\t").append(file.toString()).append("\n");
+            sb.append("\t").append(file.toString()).append(newline);
         }
 
-        sb.append("  SwordPath:\n");
+        sb.append("  SwordPath:").append(newline);
         files = SwordBookPath.getSwordPath();
         for (int i=0; i<files.length; i++) {
-            sb.append("\t").append(files[i].toString()).append("\n");
+            sb.append("\t").append(files[i].toString()).append(newline);
         }
 
-        sb.append("  Book Count: ").append(Books.installed().getBooks().size()).append("\n");
+        sb.append("  Book Count: ").append(Books.installed().getBooks().size()).append(newline);
 
         // adding Orientation to the log
         //sb.append(orientationKey + ": " + strOrientation + "\n");
 
-        sb.append("-------------------------------------------------------------------------------\n");
+        sb.append("-------------------------------------------------------------------------------").append(newline);
 
         logger.log(Level.INFO,sb.toString());
     }

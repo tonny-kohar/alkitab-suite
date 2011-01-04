@@ -100,8 +100,10 @@ public class SourceViewerPane extends javax.swing.JPanel {
         Dimension size = new Dimension(780,540);
         this.setPreferredSize(size);
 
+        Color background = UIManager.getColor("TextPane.background");
+
         //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
-        Color background = osisEditorPane.getBackground();
+        /*Color background = osisEditorPane.getBackground();
         try {
             if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
                 Color color = UIManager.getColor("TextPane.background");
@@ -114,7 +116,7 @@ public class SourceViewerPane extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.CONFIG,ex.getMessage(),ex);
-        }
+        }*/
 
         int fontSize = 10;
         try {
@@ -213,13 +215,13 @@ public class SourceViewerPane extends javax.swing.JPanel {
             for (int i = 0; i < books.size(); i++) {
                 Book book = books.get(i);
                 if (sb.length() > 0) {
-                    sb.append("\n");
+                    sb.append(System.getProperty("line.separator"));
                 }
                 sb.append(book.getInitials());
                 if (osisID != null) {
-                    sb.append(':' + osisID);
+                    sb.append(':').append(osisID);
                 }
-                sb.append(" - " + book.getRawText(curKey));
+                sb.append(" - ").append(book.getRawText(curKey));
             }
         }
 
