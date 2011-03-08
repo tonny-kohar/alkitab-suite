@@ -1,3 +1,7 @@
+ver 2.6.2
+- Improved session persistance
+- Session Management enabled by default
+
 ver 2.6.1
 - Add Context Menu (cut,copy,paste) for some text component
 - Add additional font size (>48)

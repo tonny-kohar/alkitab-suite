@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.api;
 
+import java.io.IOException;
 import java.util.HashMap;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 
@@ -9,9 +10,10 @@ import org.crosswire.common.xml.TransformingSAXEventProvider;
  * This class describe various hints for viewing books.
  * It also defines a way to pass transformer parameters for XSLT transform. 
  * 
- * 
  */
 public class ViewerHints<K,V> extends HashMap<K,V> {
+
+    private static final long serialVersionUID = 201103081508L;
 
     public static final ViewerHints.Key START_VERSE_ON_NEWLINE = new BooleanKey("VLine");
     public static final ViewerHints.Key STRONGS_NUMBERS = new BooleanKey("Strongs");
@@ -47,7 +49,7 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
         TOOLTIP_POPUP,
     };
     
-    protected ViewerHints<K,V> defaults;
+    protected transient ViewerHints<K,V> defaults;
     
     public ViewerHints() {
         this(null);
@@ -55,6 +57,13 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
     
     public ViewerHints(ViewerHints<K,V> defaults) {
         super();
+        this.defaults = defaults;
+    }
+
+    /**
+     * set the defaults or parent for lookup
+     */
+    public void setDefaults(ViewerHints<K,V> defaults) {
         this.defaults = defaults;
     }
     
@@ -91,12 +100,16 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
             }
         }
     }
-    
+
     /**
-     * Defines the base type of all keys used to control various
-     * aspects of the XSLT transform.
+     * Defines the base type of all keys used for {@code ViewerHints}
+     * 
      */
-    public abstract static class Key {
+    public abstract static class Key implements java.io.Serializable {
+
+        private static final long serialVersionUID = 201103081508L;
+
+        protected String name;
 
         /**
          * Returns {@code true} if the specified object is a valid value for
@@ -105,42 +118,63 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
          */
         public abstract boolean accept(Object val);
         
-        public abstract String getName();
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (getClass() != obj.getClass()) return false;
+
+            final Key other = (Key) obj;
+            if (!name.equals(other.name)) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 47 * hash + (this.name != null ? this.name.hashCode() : 0);
+            return hash;
+        }
     }
-    
+
+    /**
+     * Implementation of Key which only accept Boolean as value
+     *
+     */
     public static class BooleanKey extends Key {
-        protected String name;
-        
+
+        private static final long serialVersionUID = 201103081508L;
+
         public BooleanKey(String name) {
-            this.name = name;
+            super.name = name;
         }
         
         @Override
         public boolean accept(Object v) {
             return (v != null && v instanceof Boolean);
         }
-        
-        @Override
-        public String getName() {
-            return name;
-        }
     }
-    
+
+    /**
+     * Implementation of Key which only accept String as value
+     *
+     */
     public static class StringKey extends Key {
-        protected String name;
-        
+
+        private static final long serialVersionUID = 201103081508L;
+
         public StringKey(String name) {
-            this.name = name;
+            super.name = name;
         }
         
         @Override
         public boolean accept(Object v) {
             return (v != null && v instanceof String);
-        }
-        
-        @Override
-        public String getName() {
-            return name;
         }
     }
     

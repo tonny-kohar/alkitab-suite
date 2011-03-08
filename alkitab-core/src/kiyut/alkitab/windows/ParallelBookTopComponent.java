@@ -16,6 +16,7 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +55,7 @@ import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.ParallelBookViewerPane;
 import kiyut.alkitab.bookviewer.ViewerHintsPane;
+import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
@@ -134,6 +136,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         private String searchString;
         private boolean compareView;
         private boolean focused;
+        private ViewerHints<ViewerHints.Key,Object> viewerHints;
+
 
         public ResolvableHelper(ParallelBookTopComponent tc) {
             ParallelBookViewerPane bookViewer = tc.bookViewer;
@@ -151,6 +155,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             searchString = bookViewer.getHistoryManager().current().getSearch();
             compareView = bookViewer.isCompareView();
             this.focused = tc.isFocusOwner();
+            viewerHints = bookViewer.getViewerHints();
         }
 
         public Object readResolve() {
@@ -184,6 +189,11 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             ParallelBookViewerPane bookViewer = tc.bookViewer;
+
+            if (viewerHints != null) {
+                viewerHints.setDefaults(ViewerHintsOptions.getInstance().getViewerHints());
+                bookViewer.setViewerHints(viewerHints);
+            } 
 
             if (key != null) {
                 bookViewer.setKey(key);
