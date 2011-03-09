@@ -20,7 +20,7 @@ import org.crosswire.jsword.passage.Key;
 import org.openide.windows.TopComponent;
 
 /**
- * Module Core {@link kiyut.alkitab.spi.BookViewProvider BookViewProvider} implementation
+ * Module Core {@link kiyut.alkitab.api.BookViewProvider BookViewProvider} implementation
  * 
  */
 public final class CoreBookViewProvider extends AbstractBookViewProvider {

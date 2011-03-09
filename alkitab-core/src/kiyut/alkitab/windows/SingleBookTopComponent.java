@@ -42,7 +42,7 @@ import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.SingleBookViewerPane SingleBookViewerPane}.
+ * TopComponent which displays {@link kiyut.alkitab.bookviewer.SingleBookViewerPane SingleBookViewerPane}.
  */
 public class SingleBookTopComponent extends BookViewerTopComponent {
     
@@ -268,7 +268,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
 
     /**
      * Update history related UI action state eg: setEnabled(true/false)
-     * This methods is called after {@link kiyut.alkitab.api.BookViewer#refresh()} called
+     * This methods is called after {@link kiyut.alkitab.api.BookViewer#reload()} called
      */
     protected void updateHistoryAction() {
         HistoryManager historyManager = bookViewer.getHistoryManager();

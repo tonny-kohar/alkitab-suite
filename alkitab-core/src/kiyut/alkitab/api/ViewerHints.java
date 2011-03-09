@@ -2,7 +2,6 @@
 
 package kiyut.alkitab.api;
 
-import java.io.IOException;
 import java.util.HashMap;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
 
@@ -102,7 +101,7 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
     }
 
     /**
-     * Defines the base type of all keys used for {@code ViewerHints}
+     * Defines the base type of all keys used for {@link kiyut.alkitab.api.ViewerHints ViewerHints}
      * 
      */
     public abstract static class Key implements java.io.Serializable {

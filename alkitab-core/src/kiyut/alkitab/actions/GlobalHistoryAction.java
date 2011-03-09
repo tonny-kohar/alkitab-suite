@@ -18,6 +18,7 @@ public class GlobalHistoryAction extends AbstractAction {
 //        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(HistoryActionTopComponent.ICON_PATH, true)));
     }
 
+    @Override
     public void actionPerformed(ActionEvent evt) {
         TopComponent win = GlobalHistoryTopComponent.findInstance();
         win.open();

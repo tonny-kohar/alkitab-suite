@@ -69,37 +69,47 @@ public class BrandingModuleInstall extends ModuleInstall {
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             @Override
             public void run() {
-                ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());
-
-                boolean session = BookViewerOptions.getInstance().isSessionPersistence();
-
-                if (!session) {
-                    // open preferred Bible if exist and available
-                    String prefsBible = BookViewerOptions.getInstance().getDefaultBible();
-                    Book book = Books.installed().getBook(prefsBible);
-                    if (book != null) {
-                        SwordURI uri = SwordURI.createURI(book, null);
-                        if (uri != null) {
-                            BookViewManager.getInstance().openURI(uri, null, true);
-                        }
-                    }
-                } else {
-                    // set any bookViewer to active if not active
-                    TopComponent activeTC = WindowManager.getDefault().getRegistry().getActivated();
-                    if (activeTC instanceof BookViewerTopComponent) {
-                        return;
-                    }
-
-                    Mode mode = WindowManager.getDefault().findMode("editor"); //NOI18N
-                    if (mode != null) {
-                        TopComponent selectedTC = mode.getSelectedTopComponent();
-                        if (selectedTC != null) {
-                            selectedTC.requestActive();
-                        }
-                    }
+                try {
+                    doRun();
+                } catch (Exception ex) {
+                    Logger logger = Logger.getLogger(this.getClass().getName());
+                    logger.log(Level.INFO, ex.getMessage());
                 }
             }
         });
+    }
+
+    private void doRun() {
+        ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());
+
+        boolean session = BookViewerOptions.getInstance().isSessionPersistence();
+        boolean firstTime = GlobalHistory.getInstance().size() == 0 ? true : false;
+
+        if (!session || firstTime) {
+            // open preferred Bible if exist and available
+            String prefsBible = BookViewerOptions.getInstance().getDefaultBible();
+            Book book = Books.installed().getBook(prefsBible);
+            if (book != null) {
+                SwordURI uri = SwordURI.createURI(book, null);
+                if (uri != null) {
+                    BookViewManager.getInstance().openURI(uri, null, true);
+                }
+            }
+        } /*else {
+            // set any bookViewer to active if not active
+            TopComponent activeTC = WindowManager.getDefault().getRegistry().getActivated();
+            if (activeTC instanceof BookViewerTopComponent) {
+                return;
+            }
+
+            Mode mode = WindowManager.getDefault().findMode("editor"); //NOI18N
+            if (mode != null) {
+                TopComponent selectedTC = mode.getSelectedTopComponent();
+                if (selectedTC != null) {
+                    selectedTC.requestActive();
+                }
+            }
+        } */
     }
     
     @Override

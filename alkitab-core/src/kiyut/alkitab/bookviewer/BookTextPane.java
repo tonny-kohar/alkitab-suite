@@ -147,7 +147,7 @@ public class BookTextPane extends JTextPane {
     }
 
     /** Redisplay or refresh content, equivalent with calling {@code refresh(false)}
-     * @see #refresh(boolean)
+     * @see #reload(boolean)
      */
     public void reload() {
         reload(false);

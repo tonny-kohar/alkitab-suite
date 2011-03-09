@@ -12,7 +12,7 @@ import org.openide.windows.WindowManager;
 
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.GlobalHistoryPane GlobalHistoryPane}.
+ * TopComponent which displays {@link kiyut.alkitab.history.GlobalHistoryPane GlobalHistoryPane}.
  */
 
 public final class GlobalHistoryTopComponent extends TopComponent {

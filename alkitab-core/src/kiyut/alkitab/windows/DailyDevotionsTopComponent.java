@@ -33,7 +33,7 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.DailyDevotionPane DailyDevotionPane}.
+ * TopComponent which displays {@link kiyut.alkitab.bookviewer.DailyDevotionPane DailyDevotionPane}.
  */
 public final class DailyDevotionsTopComponent extends TopComponent {
 

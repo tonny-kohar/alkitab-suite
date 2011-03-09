@@ -25,7 +25,7 @@ import org.openide.windows.WindowManager;
 //import org.openide.util.Utilities;
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.BookNavigatorPane BookNavigatorPane}.
+ * TopComponent which displays {@link kiyut.alkitab.navigator.BookNavigatorPane BookNavigatorPane}.
  */
 public final class BookNavigatorTopComponent extends TopComponent {
 

@@ -16,7 +16,6 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +69,7 @@ import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 
 /**
- * Top component which displays {@link kiyut.alkitab.swing.ParallelBookViewerPane ParallelBookViewerPane}.
+ * TopComponent which displays {@link kiyut.alkitab.bookviewer.ParallelBookViewerPane ParallelBookViewerPane}.
  */
 public class ParallelBookTopComponent extends BookViewerTopComponent {
 
@@ -526,7 +525,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     
     /**
      * Update history related UI action state eg: setEnabled(true/false)
-     * This methods is called after {@link kiyut.alkitab.api.BookViewer#refresh()} called
+     * This methods is called after {@link kiyut.alkitab.api.BookViewer#reload()} called
      */
     protected void updateHistoryAction() {
         HistoryManager historyManager = bookViewer.getHistoryManager();

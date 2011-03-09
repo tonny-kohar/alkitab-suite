@@ -61,14 +61,14 @@ public interface BookViewer {
     
     /** Open the specified {@code SwordURI}
      * @param uri the {@code SwordURI} to be opened
-     * @see openURI(SwordURI,String)
+     * @see #openURI(SwordURI,String)
      */
     public void openURI(SwordURI uri);
 
     /** Open the specified {@code SwordURI}
      * @param uri the {@code SwordURI} to be opened
      * @param info optional additional info eg: search term, etc
-     * @see openURI(SwordURI)
+     * @see #openURI(SwordURI)
      */
     public void openURI(SwordURI uri, String info);
     

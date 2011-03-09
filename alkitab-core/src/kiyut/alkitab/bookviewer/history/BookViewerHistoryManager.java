@@ -34,10 +34,12 @@ public class BookViewerHistoryManager implements HistoryManager {
         forwardList = Collections.synchronizedList(new ArrayList<History>());
     }
     
+    @Override
     public int getLimit() {
         return limit;
     }
     
+    @Override
     public void setLimit(int limit) {
         if (limit < 1) {
             throw new IllegalArgumentException("limit should not < 1");
@@ -45,6 +47,7 @@ public class BookViewerHistoryManager implements HistoryManager {
         this.limit = limit;
     }
     
+    @Override
     public void add(History history) {
         if (history == null) {
             throw new IllegalArgumentException("history should not be null");
@@ -65,6 +68,7 @@ public class BookViewerHistoryManager implements HistoryManager {
         }
     }
 
+    @Override
     public History blur(int by, RestrictionType restrict) {
         History curr = current();
         if (curr != null) {
@@ -77,6 +81,7 @@ public class BookViewerHistoryManager implements HistoryManager {
         return null;
     }
     
+    @Override
     public History current() {
         if (backList.size() < 1) {
             return null;
@@ -84,6 +89,7 @@ public class BookViewerHistoryManager implements HistoryManager {
         return backList.get(0);
     }
     
+    @Override
     public synchronized History back() {
         if (!hasBack()) {
             return null;
@@ -95,8 +101,9 @@ public class BookViewerHistoryManager implements HistoryManager {
         return current();
     }
     
+    @Override
     public synchronized History forward() {
-        if (forwardList.size() == 0) {
+        if (forwardList.isEmpty()) {
             return null;
         }
         
@@ -106,11 +113,13 @@ public class BookViewerHistoryManager implements HistoryManager {
         return current();
     }
     
+    @Override
     public boolean hasBack() {
         // need > 1, because index 0 is current
         return backList.size() > 1;
     }
     
+    @Override
     public boolean hasForward() {
         return forwardList.size() > 0;
     }

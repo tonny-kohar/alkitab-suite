@@ -62,15 +62,18 @@ public class BookViewerHistory implements History {
         }
     }
     
+    @Override
     public Key getKey() {
         return this.key;
     }
 
+    @Override
     public String getSearch() {
         return this.search;
     }
 
 
+    @Override
     public Key current() {
         //System.out.println(index + " size: " + keyList.size());
         if (index >= keyList.size()) {
@@ -79,11 +82,13 @@ public class BookViewerHistory implements History {
         return keyList.get(index);
     }
     
+    @Override
     public Key first() {
         index = 0;
         return current();
     }
 
+    @Override
     public Key previous() {
         if (!hasPrevious()) {
             return null;
@@ -95,6 +100,7 @@ public class BookViewerHistory implements History {
         return currentKey;
     }
 
+    @Override
     public Key next() {
         if (!hasNext()) {
             return null;
@@ -106,6 +112,7 @@ public class BookViewerHistory implements History {
         return currentKey;
     }
 
+    @Override
     public boolean hasNext() {
         if (index < keyList.size() - 1) {
             return true;
@@ -113,6 +120,7 @@ public class BookViewerHistory implements History {
         return false;
     }
 
+    @Override
     public boolean hasPrevious() {
         if (index > 0) {
             return true;
@@ -120,6 +128,7 @@ public class BookViewerHistory implements History {
         return false;
     }
     
+    @Override
     public History blur(int by, RestrictionType restrict) {
         if (!(key instanceof Passage)) {
             return null;

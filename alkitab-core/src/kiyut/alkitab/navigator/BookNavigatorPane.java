@@ -21,7 +21,7 @@ import org.crosswire.jsword.passage.KeyUtil;
 
 /**
  * Panel which display book Key aka Table of Content. It display the content using
- * {@link kiyut.alkitab.swing.KeyTree KeyTree}
+ * {@link kiyut.alkitab.navigator.KeyTree KeyTree}
  * 
  */
 public class BookNavigatorPane extends javax.swing.JPanel {
@@ -84,12 +84,14 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     
     protected void initCustom() {
         treeSelectionListener = new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent evt) {
                 keyValueChanged(evt);
             }
         };
 
         filterCombo.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 filterActionPerformed(evt);
             }

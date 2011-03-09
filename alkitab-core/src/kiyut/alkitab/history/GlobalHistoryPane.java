@@ -96,14 +96,17 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
     private class HistoryListModel extends AbstractListModel {
         public HistoryListModel() {
            ListDataListener listDataListener = new ListDataListener() {
+                @Override
                 public void contentsChanged(ListDataEvent evt) {
                     fireContentsChanged(this, evt.getIndex0(), evt.getIndex1());
                 }
 
+                @Override
                 public void intervalAdded(ListDataEvent evt) {
                     fireIntervalAdded(this, evt.getIndex0(), evt.getIndex1());
                 }
 
+                @Override
                 public void intervalRemoved(ListDataEvent evt) {
                     fireIntervalRemoved(this, evt.getIndex0(), evt.getIndex1());
                 }
@@ -111,10 +114,12 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
             GlobalHistory.getInstance().addListDataListener(listDataListener);
         }
 
+        @Override
         public Object getElementAt(int index) {
             return GlobalHistory.getInstance().getHistory(index);
         }
 
+        @Override
         public int getSize() {
             return  GlobalHistory.getInstance().size();
         }

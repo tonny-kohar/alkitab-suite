@@ -33,7 +33,7 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
 /**
- * Top component which displays available book as {@link kiyut.alkitab.swing.BookshelfTree BookshelfTree}.
+ * TopComponent which displays available book as {@link kiyut.alkitab.bookshelf.BookshelfTree BookshelfTree}.
  */
 public final class BookshelfTopComponent extends TopComponent {
 
