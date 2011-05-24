@@ -113,12 +113,12 @@
         <file name="BookViewerOptionsCategory.instance">
             <attr name="position" intvalue="0"/>
             <attr name="advancedOptionsFolder" stringvalue="OptionsDialog/BookViewerOptionsCategory"/>
-            <attr name="categoryName" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.Name"/>
-            <attr name="iconBase" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.IconBase"/>
+            <attr name="categoryName" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerOptionsCategory.Name"/>
+            <attr name="iconBase" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerOptionsCategory.IconBase"/>
             <attr name="instanceCreate" methodvalue="org.netbeans.spi.options.OptionsCategory.createCategory"/>
-            <attr name="keywords" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.Keywords"/>
-            <attr name="keywordsCategory" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.KeywordsCategory"/>
-            <attr name="title" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerCategory.Title"/>
+            <attr name="keywords" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerOptionsCategory.Keywords"/>
+            <attr name="keywordsCategory" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerOptionsCategory.KeywordsCategory"/>
+            <attr name="title" bundlevalue="kiyut.alkitab.options.Bundle#BookViewerOptionsCategory.Title"/>
         </file>
     </folder>
     <folder name="Services">

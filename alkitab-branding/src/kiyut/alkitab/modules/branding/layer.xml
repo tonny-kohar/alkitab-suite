@@ -78,15 +78,9 @@
         <file name="Refactoring_hidden"/>
         <folder name="Tools">
             <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
-            <file name="Separator1.instance_hidden"/>
-            <file name="org-netbeans-modules-favorites-templates-TemplatesAction.instance_hidden"/>
-            <file name="org-openide-actions-ToolsAction.instance_hidden"/>
             <file name="BookInstallerAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Tools/kiyut-alkitab-actions-BookInstallerAction.instance"/>
-                <attr name="position" intvalue="1360"/>
-            </file>
-            <file name="Separator3.instance">
-                <attr name="position" intvalue="1399"/>
+                <attr name="position" intvalue="0"/>
             </file>
         </folder>
         <folder name="View">
@@ -206,8 +200,15 @@
         <folder name="Advanced">
             <file name="Ant.instance_hidden"/>
             <file name="Diff.instance_hidden"/>
+            <file name="Files.instance_hidden"/>
             <file name="FormEditor.instance_hidden"/>
+            <file name="IssueTracking.instance_hidden"/>
+            <file name="JavaScript.instance_hidden"/>
             <file name="Maven.instance_hidden"/>
+            <file name="Spellchecker.instance_hidden"/>
+            <file name="TermAdvancedOption.instance_hidden"/>
+            <file name="ToDo.instance_hidden"/>
+            <file name="Versioning.instance_hidden"/>
             <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsAdvancedOption.instance_hidden"/>
             <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsOptionsPanelController.instance_hidden"/>
             <file name="org-netbeans-modules-debugger-jpda-ui-options-JavaDebuggerAdvancedOption.instance_hidden"/>
