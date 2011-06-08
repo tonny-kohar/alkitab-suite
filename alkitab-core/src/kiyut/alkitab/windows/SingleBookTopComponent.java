@@ -202,16 +202,6 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             }
         });
         
-        /*// Init action map: cut,copy,delete,paste actions.
-        javax.swing.ActionMap tcActionMap = getActionMap();
-        javax.swing.ActionMap bookViewerActionMap = ((JComponent)bookViewer).getActionMap();
-        tcActionMap.setParent(bookViewerActionMap);
-        */
-
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
-        add(BorderLayout.NORTH, toolBar);
-
         ActionMap actionMap = getActionMap();
 
         CallbackSystemAction goPreviousAction = SystemAction.get(GoPreviousAction.class);
@@ -224,10 +214,6 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         actionMap.put(goPreviousAction.getActionMapKey(), goPreviousDelegateAction);
         actionMap.put(goNextAction.getActionMapKey(), goNextDelegateAction);
         actionMap.put(reloadAction.getActionMapKey(), new ReloadDelegateAction());;
-
-        toolBar.add(goPreviousAction.getToolbarPresenter());
-        toolBar.add(goNextAction.getToolbarPresenter());
-        toolBar.add(reloadAction.getToolbarPresenter());
     }
     
     @Override

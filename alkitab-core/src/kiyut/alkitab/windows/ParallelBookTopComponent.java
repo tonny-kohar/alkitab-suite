@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
@@ -315,13 +316,9 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
         });
 
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
-        add(BorderLayout.NORTH, toolBar);
-
         ActionMap actionMap = getActionMap();
         //bookViewer.getActionMap().setParent(actionMap);
-
+        
         CallbackSystemAction goBackAction = SystemAction.get(GoBackAction.class);
         CallbackSystemAction goForwardAction = SystemAction.get(GoForwardAction.class);
         CallbackSystemAction goPreviousAction = SystemAction.get(GoPreviousAction.class);
@@ -353,18 +350,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         Keymap gKeymap = Lookup.getDefault().lookup(Keymap.class);
         JTextComponent textComponent = (JTextComponent)bookViewer.getViewerComponent();
         textComponent.getKeymap().setResolveParent(gKeymap);
-
-        toolBar.add(goBackAction.getToolbarPresenter());
-        toolBar.add(goForwardAction.getToolbarPresenter());
-        toolBar.addSeparator();
-        toolBar.add(goPreviousAction.getToolbarPresenter());
-        toolBar.add(goNextAction.getToolbarPresenter());
-        toolBar.add(expand1Action.getToolbarPresenter());
-        toolBar.add(expand5Action.getToolbarPresenter());
-        toolBar.addSeparator();
-        toolBar.add(reloadAction.getToolbarPresenter());
-        toolBar.add(viewerHintsAction.getToolbarPresenter());
-
     }
     
     @Override
@@ -612,6 +597,13 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     }
 
     public class ViewerHintsDelegateAction extends AbstractAction {
+        public ViewerHintsDelegateAction() {
+            SystemAction action = SystemAction.get(ViewerHintsAction.class);
+            putValue(Action.SMALL_ICON, action.getIcon());
+            putValue(Action.SHORT_DESCRIPTION, action.getName());
+            
+        }
+        
         @Override
         public void actionPerformed(ActionEvent evt) {
             ViewerHintsPane hintsPane = new ViewerHintsPane();
