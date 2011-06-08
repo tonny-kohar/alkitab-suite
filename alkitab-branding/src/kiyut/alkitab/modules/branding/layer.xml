@@ -11,6 +11,7 @@
             <file name="org-netbeans-modules-favorites-templates-TemplatesAction.instance_hidden"/>
             <file name="org-netbeans-progress-module-CancelAction.instance_hidden"/>
             <file name="org-openide-actions-EditAction.instance_hidden"/>
+            <file name="org-openide-actions-FileSystemAction.instance_hidden"/>
             <file name="org-openide-actions-FileSystemRefreshAction.instance_hidden"/>
             <file name="org-openide-actions-InstantiateAction.instance_hidden"/>
             <file name="org-openide-actions-MoveDownAction.instance_hidden"/>
@@ -51,52 +52,25 @@
         </folder>
     </folder>
     <folder name="Menu">
-        <file name="BuildProject_hidden"/>
         <file name="Edit_hidden"/>
-        <folder name="File">
-            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
-            <file name="Separator2.instance_hidden"/>
-            <file name="Separator3.instance_hidden"/>
-            <file name="org-openide-actions-PageSetupAction.instance_hidden"/>
-            <file name="org-openide-actions-PrintAction.instance_hidden"/>
-            <file name="org-openide-actions-SaveAction.instance_hidden"/>
-            <file name="org-openide-actions-SaveAllAction.instance_hidden"/>
-            <file name="org-openide-actions-SaveAsAction.shadow_hidden"/>
-            <file name="NewTabAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewTabAction.instance"/>
-                <attr name="position" intvalue="100"/>
-            </file>
-        </folder>
         <file name="GoTo_hidden"/>
-        <folder name="Help">
-            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
-            <file name="master-help.xml" url="alkitab-master-help.xml">
-                <attr name="position" intvalue="0"/>
-            </file>
-            <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow_hidden"/>
-        </folder>
-        <file name="Refactoring_hidden"/>
-        <folder name="Tools">
-            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
-            <file name="BookInstallerAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Tools/kiyut-alkitab-actions-BookInstallerAction.instance"/>
-                <attr name="position" intvalue="0"/>
-            </file>
+        <folder name="File">
+            <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/File"/>
         </folder>
         <folder name="View">
-            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
-            <file name="Separator1.instance_hidden"/>
-            <file name="Separator2.instance_hidden"/>
-            <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
-            <file name="org-netbeans-core-actions-LogAction.instance_hidden"/>
+            <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/View"/>
             <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
-            <file name="SynchronizeViewAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/View/kiyut-alkitab-actions-SynchronizeViewAction.instance"/>
-                <attr name="position" intvalue="1000"/>
-            </file>
+            <file name="org-netbeans-core-actions-HTMLViewAction.shadow" url="org-netbeans-core-actions-HTMLViewAction.shadow"/>
+        </folder>
+        <folder name="Navigate">
+            <attr name="position" intvalue="500"/>
+            <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Navigate"/>
+        </folder>
+        <folder name="Tools">
+            <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Tools"/>
         </folder>
         <folder name="Window">
-            <attr name="SystemFileSystem.localizingBundle" stringvalue="kiyut.alkitab.modules.branding.Bundle"/>
+            <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Window"/>
             <file name="CloneDocumentAction.shadow_hidden"/>
             <file name="Output_hidden"/>
             <file name="ProgressListAction.shadow_hidden"/>
@@ -104,82 +78,25 @@
             <file name="ViewFavoritesTabAction.shadow_hidden"/>
             <file name="ViewRuntimeTabAction.shadow_hidden"/>
             <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow_hidden"/>
-            <file name="BookshelfAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookshelfAction.instance"/>
-                <attr name="position" intvalue="100"/>
+        </folder>
+        <folder name="Help">
+            <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Help"/>
+            <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow_hidden"/>
+            <file name="master-help.xml" url="alkitab-master-help.xml">
+                <attr name="position" intvalue="0"/>
             </file>
-            <file name="BookViewerAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookViewerAction.instance"/>
-                <attr name="position" intvalue="110"/>
-            </file>
-            <file name="BookNavigatorAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookNavigatorAction.instance"/>
-                <attr name="position" intvalue="120"/>
-            </file>
-            <file name="DailyDevotionsAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DailyDevotionsAction.instance"/>
-                <attr name="position" intvalue="130"/>
-            </file>
-            <file name="DefinitionsAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DefinitionsAction.instance"/>
-                <attr name="position" intvalue="140"/>
-            </file>
-            <file name="GlobalHistoryAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-GlobalHistoryAction.instance"/>
-                <attr name="position" intvalue="150"/>
+            <file name="org-netbeans-core-actions-LogAction.shadow" url="org-netbeans-core-actions-LogAction_1.shadow">
+                <attr name="position" intvalue="1400"/>
+                <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
             </file>
         </folder>
     </folder>
     <folder name="Shortcuts">
-        <file name="D-4.shadow_hidden"/>
-        <file name="D-F12.shadow_hidden"/>
-        <file name="D-I.shadow_hidden"/>
-        <file name="DS-DELETE.shadow_hidden"/>
         <file name="F1.shadow">
             <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
         </file>
-        <file name="D-T.shadow">
-            <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewTabAction.instance"/>
-        </file>
         <file name="D-Q.shadow">
             <attr name="originalFile" stringvalue="Actions/System/org-netbeans-core-actions-SystemExit.instance"/>
-        </file>
-        <file name="D-G.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-FocusPassageComponentAction.instance"/>
-        </file>
-        <file name="D-F.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-FocusSearchComponentAction.instance"/>
-        </file>
-        <file name="O-F12.shadow_hidden"/>
-        <file name="O-LEFT.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoBackAction.instance"/>
-        </file>
-        <file name="O-RIGHT.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoForwardAction.instance"/>
-        </file>
-        <file name="O-PAGE_UP.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoPreviousAction.instance"/>
-        </file>
-        <file name="O-PAGE_DOWN.shadow">
-            <attr name="originalFile" stringvalue="Actions/Navigate/kiyut-alkitab-actions-GoNextAction.instance"/>
-        </file>
-        <file name="DO-1.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookshelfAction.instance"/>
-        </file>
-        <file name="DO-2.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookViewerAction.instance"/>
-        </file>
-        <file name="DO-3.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-BookNavigatorAction.instance"/>
-        </file>
-        <file name="DO-4.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DailyDevotionsAction.instance"/>
-        </file>
-        <file name="DO-5.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-DefinitionsAction.instance"/>
-        </file>
-        <file name="DS-H.shadow">
-            <attr name="originalFile" stringvalue="Actions/Window/kiyut-alkitab-actions-GlobalHistoryAction.instance"/>
         </file>
         <file name="S-Escape.shadow">
             <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-MaximizeWindowAction.instance"/>
@@ -193,29 +110,13 @@
         <file name="DS-W.shadow">
             <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-CloseAllDocumentsAction.instance"/>
         </file>
-        <file name="SD-F12.shadow_hidden"/>
-        <file name="SO-F12.shadow_hidden"/>
     </folder>
     <folder name="OptionsDialog">
-        <folder name="Advanced">
-            <file name="Ant.instance_hidden"/>
-            <file name="Diff.instance_hidden"/>
-            <file name="Files.instance_hidden"/>
-            <file name="FormEditor.instance_hidden"/>
-            <file name="IssueTracking.instance_hidden"/>
-            <file name="JavaScript.instance_hidden"/>
-            <file name="Maven.instance_hidden"/>
-            <file name="Spellchecker.instance_hidden"/>
-            <file name="TermAdvancedOption.instance_hidden"/>
-            <file name="ToDo.instance_hidden"/>
-            <file name="Versioning.instance_hidden"/>
-            <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsAdvancedOption.instance_hidden"/>
-            <file name="org-netbeans-core-ui-options-filetypes-FileAssociationsOptionsPanelController.instance_hidden"/>
-            <file name="org-netbeans-modules-debugger-jpda-ui-options-JavaDebuggerAdvancedOption.instance_hidden"/>
-            <file name="org-netbeans-modules-profiler-options-ProfilerOptionsCategory.instance_hidden"/>
-        </folder>
         <file name="Editor_hidden"/>
         <file name="General.instance_hidden"/>
+        <folder name="Advanced">
+            <file name="Files.instance_hidden"/>
+        </folder>
         <file name="BookViewerOptionCategory.instance">
             <attr name="position" intvalue="0"/>
         </file>
@@ -234,46 +135,19 @@
     <folder name="Toolbars">
         <file name="Standard.xml" url="alkitab-toolbar.xml"/>
         <file name="Clipboard_hidden"/>
+        <file name="Debugging.xml_hidden"/>
         <file name="UndoRedo_hidden"/>
         <folder name="File">
-            <file name="org-openide-actions-SaveAllAction.instance_hidden"/>
-            <file name="NewTabAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/File/kiyut-alkitab-actions-NewTabAction.instance"/>
-                <attr name="position" intvalue="100"/>
-            </file>
+            <attr name="position" intvalue="0"/>
         </folder>
-    </folder>
-    <folder name="Windows2">
-        <folder name="Components">
-            <file name="BookshelfTopComponent.settings" url="nbres:/kiyut/alkitab/windows/BookshelfTopComponent.settings"/>
-            <file name="BookNavigatorTopComponent.settings" url="nbres:/kiyut/alkitab/windows/BookNavigatorTopComponent.settings"/>
-            <file name="DefinitionsTopComponent.settings" url="nbres:/kiyut/alkitab/windows/DefinitionsTopComponent.settings"/>
-            <file name="DailyDevotionsTopComponent.settings" url="nbres:/kiyut/alkitab/windows/DailyDevotionsTopComponent.settings"/>
-            <file name="GlobalHistoryTopComponent.settings" url="nbres:/kiyut/alkitab/windows/GlobalHistoryTopComponent.settings"/>
-        </folder> 
-        <folder name="Modes">
-            <file name="properties_hidden"/>
-            <folder name="explorer">
-                <file name="favorites.wstcref_hidden"/>
-                <file name="runtime.wstcref_hidden"/>
-                <file name="BookshelfTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/BookshelfTopComponent.wstcref">
-                    <attr name="position" intvalue="100"/>
-                 </file>
-                <file name="BookNavigatorTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/BookNavigatorTopComponent.wstcref">
-                    <attr name="position" intvalue="110"/>
-                 </file>
-                 <file name="GlobalHistoryTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/GlobalHistoryTopComponent.wstcref">
-                    <attr name="position" intvalue="120"/>
-                 </file>
-            </folder>
-            <folder name="output">
-                <file name="DefinitionsTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/DefinitionsTopComponent.wstcref">
-                    <attr name="position" intvalue="200"/>
-                 </file>
-                <file name="DailyDevotionsTopComponent.wstcref" url="nbres:/kiyut/alkitab/windows/DailyDevotionsTopComponent.wstcref">
-                    <attr name="position" intvalue="210"/>
-                </file>
-            </folder>
+        <folder name="Navigate">
+            <attr name="position" intvalue="100"/>
+        </folder>
+        <folder name="View">
+            <attr name="position" intvalue="200"/>
+        </folder>
+        <folder name="Memory">
+            <attr name="position" intvalue="300"/>
         </folder>
     </folder>
 </filesystem>

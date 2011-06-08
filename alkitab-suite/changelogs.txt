@@ -1,3 +1,7 @@
+ver 2.7
+- Major bug fixes for toolbar
+- Improved UI
+
 ver 2.6.2
 - Improved session persistance
 - Session Management enabled by default

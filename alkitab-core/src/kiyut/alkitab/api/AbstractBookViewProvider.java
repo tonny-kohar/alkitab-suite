@@ -12,14 +12,17 @@ import org.crosswire.jsword.passage.Key;
  */
 public abstract class AbstractBookViewProvider implements BookViewProvider {
     
+    @Override
     public void openURI(SwordURI uri, boolean newView) {
         openURI(uri,null,newView);
     }
     
+    @Override
     public void openURI(SwordURI uri, String info, boolean newView) {
         // do nothing
     }
 
+    @Override
     public void synchronizeView(Key key) {
         // do nothing
     }

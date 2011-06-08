@@ -4,7 +4,9 @@
 
 <Configuration>
   <Row>
-    <Toolbar name="File" visible="false"/>
+    <Toolbar name="File" visible="true"/>
+    <Toolbar name="Navigate" visible="true"/>
+    <Toolbar name="View" visible="true"/>
     <Toolbar name="Clipboard" visible="false"/>
     <Toolbar name="UndoRedo" visible="false"/>
     <Toolbar name="Memory" visible="false"/>
