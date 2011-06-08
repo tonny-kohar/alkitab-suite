@@ -2,22 +2,27 @@
 
 package kiyut.alkitab.actions;
 
-import kiyut.alkitab.windows.*;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.openide.util.NbBundle;
+import kiyut.alkitab.windows.DailyDevotionsTopComponent;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.windows.TopComponent;
 
 /**
- * Action which shows DailyDevotions component.
+ * Action which shows {@link kiyut.alkitab.windows.DailyDevotionsTopComponent DailyDevotionsTopComponent}.
  */
-public class DailyDevotionsAction extends AbstractAction {
+@ActionID(id = "kiyut.alkitab.actions.DailyDevotionsAction", category = "Window")
+@ActionRegistration(displayName = "#CTL_DailyDevotionsAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 130),
+    @ActionReference(path = "Shortcuts", name = "DO-4")
+})
+public class DailyDevotionsAction extends AbstractAction {   
 
-    public DailyDevotionsAction() {
-        super(NbBundle.getMessage(DailyDevotionsAction.class, "CTL_DailyDevotionsAction"));
-//        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(DailyDevotionsTopComponent.ICON_PATH, true)));
-    }
-
+    @Override
     public void actionPerformed(ActionEvent evt) {
         TopComponent win = DailyDevotionsTopComponent.findInstance();
         win.open();

@@ -5,18 +5,22 @@ package kiyut.alkitab.actions;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import kiyut.alkitab.windows.GlobalHistoryTopComponent;
-import org.openide.util.NbBundle;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.windows.TopComponent;
 
 /**
  * Action which shows {@link kiyut.alkitab.windows.GlobalHistoryTopComponent GlobalHistoryTopComponent}.
  */
+@ActionID(id = "kiyut.alkitab.actions.GlobalHistoryAction", category = "Window")
+@ActionRegistration(displayName = "#CTL_HistoryAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 150),
+    @ActionReference(path = "Shortcuts", name = "DS-H")
+})
 public class GlobalHistoryAction extends AbstractAction {
-
-    public GlobalHistoryAction() {
-        super(NbBundle.getMessage(GlobalHistoryAction.class, "CTL_HistoryAction"));
-//        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(HistoryActionTopComponent.ICON_PATH, true)));
-    }
 
     @Override
     public void actionPerformed(ActionEvent evt) {

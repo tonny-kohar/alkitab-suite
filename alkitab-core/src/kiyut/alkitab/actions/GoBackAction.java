@@ -2,6 +2,10 @@
 
 package kiyut.alkitab.actions;
 
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
@@ -10,16 +14,29 @@ import org.openide.util.actions.CallbackSystemAction;
  *
  * @author tonny
  */
+
+@ActionID(id = "kiyut.alkitab.actions.GoBackAction", category = "Navigate")
+@ActionRegistration(displayName = "#CTL_GoBackAction")
+@ActionReferences({
+    @ActionReference(path = "Toolbars/Navigate", position = 0),
+    @ActionReference(path = "Menu/Navigate", position = 0),
+    @ActionReference(path = "Shortcuts", name = "O-LEFT")
+})
 public class GoBackAction extends CallbackSystemAction {
 
+    @Override
+    protected void initialize() {
+        super.initialize();
+    }
+    
     @Override
     public String getName() {
         return NbBundle.getMessage(GoBackAction.class, "CTL_GoBackAction");
     }
-
+    
     @Override
     protected String iconResource() {
-        return NbBundle.getMessage(GoBackAction.class, "ICON_GoBackAction");
+        return "kiyut/alkitab/actions/back.png";
     }
 
     @Override
@@ -31,4 +48,5 @@ public class GoBackAction extends CallbackSystemAction {
     protected boolean asynchronous() {
         return false;
     }
+    
 }

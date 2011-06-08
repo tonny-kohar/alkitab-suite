@@ -2,6 +2,10 @@
 
 package kiyut.alkitab.actions;
 
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
@@ -11,11 +15,16 @@ import org.openide.util.actions.CallbackSystemAction;
  * 
  * @author tonny
  */
-public final class FocusSearchComponentAction extends CallbackSystemAction {
+@ActionID(id = "kiyut.alkitab.actions.FocusSearchComponentAction", category = "Navigate")
+@ActionRegistration(displayName = "#CTL_FocusSearchComponentAction")
+@ActionReferences({
+    @ActionReference(path = "Shortcuts", name = "D-F")
+})
+public class FocusSearchComponentAction extends CallbackSystemAction {
 
     @Override
     public String getName() {
-        return NbBundle.getMessage(Expand1Action.class, "CTL_FocusSearchComponentAction");
+        return NbBundle.getMessage(FocusSearchComponentAction.class, "CTL_FocusSearchComponentAction");
     }
 
     @Override

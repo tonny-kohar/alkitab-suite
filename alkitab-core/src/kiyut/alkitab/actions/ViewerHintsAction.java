@@ -2,6 +2,10 @@
 
 package kiyut.alkitab.actions;
 
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
@@ -10,8 +14,19 @@ import org.openide.util.actions.CallbackSystemAction;
  *
  * @author tonny
  */
+@ActionID(id = "kiyut.alkitab.actions.ViewerHintsAction", category = "View")
+@ActionRegistration(displayName = "#CTL_ViewerHintsAction")
+@ActionReferences({
+    @ActionReference(path = "Toolbars/View", position = 100),
+    @ActionReference(path = "Menu/View", position = 950)
+})
 public class ViewerHintsAction extends CallbackSystemAction {
-
+    
+    @Override
+    protected void initialize() {
+        super.initialize();
+    }
+    
     @Override
     public String getName() {
         return NbBundle.getMessage(ViewerHintsAction.class, "CTL_ViewerHintsAction");
@@ -19,7 +34,7 @@ public class ViewerHintsAction extends CallbackSystemAction {
 
     @Override
     protected String iconResource() {
-        return NbBundle.getMessage(ViewerHintsAction.class, "ICON_ViewerHintsAction");
+        return "kiyut/alkitab/actions/viewer-hints.png";
     }
 
     @Override

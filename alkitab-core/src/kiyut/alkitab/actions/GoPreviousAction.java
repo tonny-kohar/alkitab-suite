@@ -2,6 +2,10 @@
 
 package kiyut.alkitab.actions;
 
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
@@ -10,8 +14,20 @@ import org.openide.util.actions.CallbackSystemAction;
  *
  * @author tonny
  */
+@ActionID(id = "kiyut.alkitab.actions.GoPreviousAction", category = "Navigate")
+@ActionRegistration(displayName = "#CTL_GoPreviousAction")
+@ActionReferences({
+    @ActionReference(path = "Toolbars/Navigate", position = 100),
+    @ActionReference(path = "Menu/Navigate", position = 100),
+    @ActionReference(path = "Shortcuts", name = "O-PAGE_UP")
+})
 public class GoPreviousAction extends CallbackSystemAction {
 
+    @Override
+    protected void initialize() {
+        super.initialize();
+    }
+    
     @Override
     public String getName() {
         return NbBundle.getMessage(GoPreviousAction.class, "CTL_GoPreviousAction");
@@ -19,7 +35,7 @@ public class GoPreviousAction extends CallbackSystemAction {
 
     @Override
     protected String iconResource() {
-        return NbBundle.getMessage(GoPreviousAction.class, "ICON_GoPreviousAction");
+        return "kiyut/alkitab/actions/previous.png";
     }
 
     @Override

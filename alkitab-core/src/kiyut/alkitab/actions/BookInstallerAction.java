@@ -5,30 +5,28 @@ package kiyut.alkitab.actions;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.installer.BookInstallerPane;
 import kiyut.alkitab.windows.BookshelfTopComponent;
-import org.openide.util.ImageUtilities;
-import org.openide.util.NbBundle;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionRegistration;
 import org.openide.windows.WindowManager;
 
 /**
  * This action will open book installer dialog.
  * 
  */
-public final class BookInstallerAction extends AbstractAction {
-
-    public BookInstallerAction() {
-        super(NbBundle.getMessage(BookInstallerAction.class, "CTL_BookInstallerAction"));
-
-        String iconPath = NbBundle.getMessage(BookInstallerAction.class, "ICON_BookInstallerAction");
-        putValue(SMALL_ICON, new ImageIcon(ImageUtilities.loadImage(iconPath, true)));
-    }
+@ActionID(id = "kiyut.alkitab.actions.BookInstallerAction", category = "Tools")
+@ActionRegistration(displayName = "#CTL_BookInstallerAction",
+        iconBase = "kiyut/alkitab/actions/installer.png")
+@ActionReference(path = "Menu/Tools", position = 0)
+public class BookInstallerAction extends AbstractAction {
     
-    
+    @Override
     public void actionPerformed(ActionEvent evt) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Frame owner = WindowManager.getDefault().getMainWindow();
                 BookInstallerPane installerPane = new BookInstallerPane();

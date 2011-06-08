@@ -29,6 +29,7 @@ public class BookshelfIndexerAction extends AbstractAction {
         super(NbBundle.getMessage(BookshelfIndexerAction.class, "CTL_BookshelfIndexerAction"));
 
         treeSelectionListener = new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent evt) {
                 TreePath treePath = evt.getPath();
                 if (treePath == null) {
@@ -69,8 +70,10 @@ public class BookshelfIndexerAction extends AbstractAction {
         super.finalize();
     }
 
+    @Override
     public void actionPerformed(ActionEvent evt) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 doCreateIndex();
             }

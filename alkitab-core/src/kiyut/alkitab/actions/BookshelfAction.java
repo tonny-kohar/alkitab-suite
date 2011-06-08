@@ -5,19 +5,24 @@ package kiyut.alkitab.actions;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import kiyut.alkitab.windows.BookshelfTopComponent;
-import org.openide.util.NbBundle;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.windows.TopComponent;
 
 /**
  * Action which shows {@link kiyut.alkitab.windows.BookshelfTopComponent BookshelfTopComponent}.
  */
+@ActionID(id = "kiyut.alkitab.actions.BookshelfAction", category = "Window")
+@ActionRegistration(displayName = "#CTL_BookshelfAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 100),
+    @ActionReference(path = "Shortcuts", name = "DO-1")
+})
 public class BookshelfAction extends AbstractAction {
 
-    public BookshelfAction() {
-        super(NbBundle.getMessage(BookshelfAction.class, "CTL_BookshelfAction"));
-//        putValue(SMALL_ICON, new ImageIcon(Utilities.loadImage(BookshelfTopComponent.ICON_PATH, true)));
-    }
-
+    @Override
     public void actionPerformed(ActionEvent evt) {
         TopComponent win = BookshelfTopComponent.findInstance();
         win.open();

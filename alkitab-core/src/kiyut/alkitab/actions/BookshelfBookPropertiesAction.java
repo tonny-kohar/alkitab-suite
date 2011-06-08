@@ -23,8 +23,10 @@ public class BookshelfBookPropertiesAction extends AbstractAction {
         super(NbBundle.getMessage(BookshelfBookPropertiesAction.class, "CTL_BookshelfBookPropertiesAction"));
     }
     
+    @Override
     public void actionPerformed(ActionEvent evt) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 showPropertiesDialog();
             }
