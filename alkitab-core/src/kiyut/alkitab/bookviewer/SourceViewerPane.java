@@ -9,6 +9,9 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.net.URI;
 import java.util.Iterator;
@@ -17,6 +20,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import kiyut.alkitab.api.BookFontStore;
@@ -61,26 +65,26 @@ public class SourceViewerPane extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        rawEditorPane = new javax.swing.JEditorPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        osisEditorPane = new javax.swing.JEditorPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        htmlEditorPane = new javax.swing.JEditorPane();
+        rawScrollPane = new javax.swing.JScrollPane();
+        rawEditorPane = new ExtendedEditorPane();
+        osisScrollPane = new javax.swing.JScrollPane();
+        osisEditorPane = new ExtendedEditorPane();
+        htmlScrollPane = new javax.swing.JScrollPane();
+        htmlEditorPane = new ExtendedEditorPane();
 
         setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setViewportView(rawEditorPane);
+        rawScrollPane.setViewportView(rawEditorPane);
 
-        jTabbedPane1.addTab(bundle.getString("CTL_Raw.Text"), jScrollPane1); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("CTL_Raw.Text"), rawScrollPane); // NOI18N
 
-        jScrollPane2.setViewportView(osisEditorPane);
+        osisScrollPane.setViewportView(osisEditorPane);
 
-        jTabbedPane1.addTab(bundle.getString("CTL_OSIS.Text"), jScrollPane2); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("CTL_OSIS.Text"), osisScrollPane); // NOI18N
 
-        jScrollPane3.setViewportView(htmlEditorPane);
+        htmlScrollPane.setViewportView(htmlEditorPane);
 
-        jTabbedPane1.addTab(bundle.getString("CTL_HTML.Text"), jScrollPane3); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("CTL_HTML.Text"), htmlScrollPane); // NOI18N
 
         add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -88,12 +92,12 @@ public class SourceViewerPane extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JEditorPane htmlEditorPane;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane htmlScrollPane;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JEditorPane osisEditorPane;
+    private javax.swing.JScrollPane osisScrollPane;
     private javax.swing.JEditorPane rawEditorPane;
+    private javax.swing.JScrollPane rawScrollPane;
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
@@ -268,5 +272,18 @@ public class SourceViewerPane extends javax.swing.JPanel {
         rawEditorPane.setCaretPosition(0);
         osisEditorPane.setCaretPosition(0);
         htmlEditorPane.setCaretPosition(0);
+    }
+    
+    public class ExtendedEditorPane extends JEditorPane {
+
+        /**
+         * Overriden to add antialiasing
+         */
+        @Override
+        public void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            super.paintComponent(g);
+        }
     }
 }
