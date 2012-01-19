@@ -1,5 +1,5 @@
 ver 2.8
-- Fix Java 7 incompability
+- Fix Java 7 incompatibility
 - Source Viewer enhancements (anti alias)
 - Improved startup
 - Updated to use Netbeans 7.1
