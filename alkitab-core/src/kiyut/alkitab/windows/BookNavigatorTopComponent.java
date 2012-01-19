@@ -228,7 +228,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
         Book book = bookViewer.getBooks().get(0);
         BookCategory bookCategory = book.getBookCategory();
 
-        BookNavigatorPane navPane = null;
+        BookNavigatorPane navPane;
 
         if (bookCategory.equals(BookCategory.BIBLE) || bookCategory.equals(BookCategory.COMMENTARY)) {
             if (bibleNavPane == null) {

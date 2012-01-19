@@ -18,6 +18,7 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.openide.modules.InstalledFileLocator;
 
 /**
  * Global History Manager and persist the data between session.
@@ -62,11 +63,15 @@ public class GlobalHistory {
 
     @SuppressWarnings("unchecked")
     protected synchronized void load() {
-        String parent = System.getProperty("netbeans.user");
-        File file = new File(parent + File.separator + "alkitab-history" + File.separator + FILENAME);
-
-        if (!file.exists()) { return; }
-
+        //InstalledFileLocator fileLocator = InstalledFileLocator.getDefault();
+        //String parent = System.getProperty("netbeans.user");
+        //File file = new File(parent + File.separator + "alkitab-history" + File.separator + FILENAME);
+        //if (!file.exists()) { return; }
+        
+        File file = InstalledFileLocator.getDefault().locate("alkitab-history/" + FILENAME, "", false);
+        if (file == null) { 
+            return; 
+        }
         
         try {
             SAXBuilder builder = new SAXBuilder();
@@ -114,16 +119,19 @@ public class GlobalHistory {
         if (!modified) { return; }
 
         // check folder
-        String parent = System.getProperty("netbeans.user");
-        File file = new File(parent, "alkitab-history");
-        if (!file.exists()) { 
-            if (!file.mkdir()) {
-                Logger logger = Logger.getLogger(this.getClass().getName());
-                logger.log(Level.WARNING, "unable to create folder to save history." );
-                return; 
+        File file = InstalledFileLocator.getDefault().locate("alkitab-history", "", false);
+        if (file == null) {
+            String parent = System.getProperty("netbeans.user");
+            file = new File(parent, "alkitab-history");
+            if (!file.exists()) { 
+                if (!file.mkdir()) {
+                    Logger logger = Logger.getLogger(this.getClass().getName());
+                    logger.log(Level.WARNING, "unable to create folder to save history." );
+                    return; 
+                }
             }
         }
-
+        
         file = new File(file, FILENAME);
 
         Element root = new Element("history");
@@ -186,10 +194,8 @@ public class GlobalHistory {
         }
 
         if (text == null) { return; }
-
-        // java 6 only
-        //if (text.isEmpty()) { return; }
-        if (text.length() == 0) { return; }
+      
+        if (text.isEmpty()) { return; }
 
         data.add(0,new Entry (System.currentTimeMillis(), text, search));
         fireIntervalAdded(0, 0);
@@ -212,7 +218,16 @@ public class GlobalHistory {
         return data.size();
     }
 
+    /**
+     * Return Entry or null if index is invalid
+     * @param index the index of Entry
+     * @return Entry or null
+     */
     public Entry getHistory(int index) {
+        if (size() <= 0 || size() <= index) {
+            return null;
+        }
+        
         return data.get(index);
     }
 

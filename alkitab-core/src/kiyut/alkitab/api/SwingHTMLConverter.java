@@ -52,12 +52,18 @@ public class SwingHTMLConverter implements Converter {
      *
      */
     protected void fixForJava7(TransformingSAXEventProvider tsep) {
+        String ver = System.getProperty("java.version");
+        if (!ver.startsWith("1.7")) {
+            return;
+        }
+        
         // use reflection to set the TransformerFactory private field _isNotSecureProcessing to true
         // thanks to Brian Fernandes (author of FireBible)
         try {
             Field field = tsep.getClass().getDeclaredField("transfact");
             field.setAccessible(true);
             Object transfact = field.get(tsep);
+            
             Field _isNotSecureProcessing = transfact.getClass().getDeclaredField("_isNotSecureProcessing");
             _isNotSecureProcessing.setAccessible(true);
             _isNotSecureProcessing.set(transfact, Boolean.TRUE);

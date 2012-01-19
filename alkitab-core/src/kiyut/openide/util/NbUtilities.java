@@ -5,7 +5,6 @@ package kiyut.openide.util;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -87,8 +86,9 @@ public class NbUtilities {
                     // workaround create new JSeparator
                     menu.add(new JSeparator());
                 } else if (instanceObj instanceof BooleanStateAction) {
-                    JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
-                    Actions.connect(menuItem, (BooleanStateAction) instanceObj, true);
+                    //JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
+                    //Actions.connect(menuItem, (BooleanStateAction) instanceObj, true);
+                    menu.add(((BooleanStateAction)instanceObj).getMenuPresenter());
                 } else if (instanceObj instanceof Action) {
                     JMenuItem menuItem = new JMenuItem();
                     Actions.connect(menuItem, (Action) instanceObj, true);

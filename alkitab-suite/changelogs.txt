@@ -1,3 +1,9 @@
+ver 2.8
+- Fix Java 7 incompability
+- Source Viewer enhancements (anti alias)
+- Improved startup
+- Updated to use Netbeans 7.1
+
 ver 2.7
 - Major bug fixes for toolbar
 - Improved UI

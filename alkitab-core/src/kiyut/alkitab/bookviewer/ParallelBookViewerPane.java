@@ -156,11 +156,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jToolBar1, gridBagConstraints);
 
-        booksComboPane.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0);
+        flowLayout1.setAlignOnBaseline(true);
+        booksComboPane.setLayout(flowLayout1);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         jPanel1.add(booksComboPane, gridBagConstraints);
 
@@ -218,6 +220,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jToolBar2.add(passageChooserButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         passagePane.add(jToolBar2, gridBagConstraints);
@@ -265,6 +268,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jToolBar3.add(advancedSearchButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         jPanel4.add(jToolBar3, gridBagConstraints);

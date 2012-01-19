@@ -24,3 +24,5 @@ in no particular order
 - Support Alternate Versification (av11n), belong to upstream JSword Project
   http://www.crosswire.org/wiki/Alternate_Versification
 - Support user supplied XSL
+- Chapter Introduction (verses 0) 
+- Personal commentary.

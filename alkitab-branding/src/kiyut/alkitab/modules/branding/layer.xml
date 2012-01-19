@@ -8,6 +8,7 @@
         <folder name="System">
             <file name="org-netbeans-core-actions-JumpNextAction.instance_hidden"/>
             <file name="org-netbeans-core-actions-JumpPrevAction.instance_hidden"/>
+            <file name="org-netbeans-core-windows-model-NewMode.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-templates-TemplatesAction.instance_hidden"/>
             <file name="org-netbeans-progress-module-CancelAction.instance_hidden"/>
             <file name="org-openide-actions-EditAction.instance_hidden"/>
@@ -91,6 +92,10 @@
             </file>
         </folder>
     </folder>
+    <file name="QuickSearch_hidden"/>
+    <folder name="Keymaps">
+        <folder name="Alkitab" />
+    </folder>
     <folder name="Shortcuts">
         <file name="F1.shadow">
             <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
@@ -133,6 +138,8 @@
         </folder>
     </folder>
     <folder name="Toolbars">
+        <file name="Build_hidden"/>
+        <file name="Debug_hidden"/>
         <file name="Standard.xml" url="alkitab-toolbar.xml"/>
         <file name="Clipboard_hidden"/>
         <file name="Debugging.xml_hidden"/>
