@@ -217,15 +217,16 @@
             <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
         </replace>
         
-        <!-- TODO always check this, when there is new NbPlatform release -->
-        <replace file="${nbdist-contents.dir}/Info.plist">
-            <replacefilter token="0.1" value="${app.version}" />
-            <replacefilter token="6.0" value="${app.version}" />
-        </replace>
+        <!-- rename alkitab.app to Alkitab.app, use unix mv command to keep symbolic link -->
+        <!-- <move file="${nbdist.dir}/${app.name}.app" tofile="${nbdist.dir}/${app.title}.app"/> -->
+        <delete dir="${nbdist.dir}/${app.title.full}.app"/>
+        <exec dir="${nbdist.dir}" executable="mv">
+            <arg line="${app.name}.app &quot;${app.title.full}.app&quot;"/>
+        </exec>
         
-        <delete file="${nbdist.dir}/${nbdist-app-installer}"/>
+        <!-- <delete file="${nbdist.dir}/${nbdist-app-installer}"/> -->
         <exec dir="${nbdist.dir}" executable="zip">
-            <arg line="-yr ${nbdist-app-installer} ${app.name}.app"/>
+            <arg line="-yr ${nbdist-app-installer} &quot;${app.title.full}.app&quot;"/>
         </exec>
         
     </target>
