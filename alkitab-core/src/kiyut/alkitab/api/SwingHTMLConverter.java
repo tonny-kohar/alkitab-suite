@@ -53,9 +53,14 @@ public class SwingHTMLConverter implements Converter {
      */
     protected void fixForJava7(TransformingSAXEventProvider tsep) {
         String ver = System.getProperty("java.version");
-        if (!ver.startsWith("1.7")) {
+        if (ver.startsWith("1.6")) {
+          String name = System.getProperty("java.vm.name");
+          if (!name.startsWith("OpenJDK")) {
+              return;
+          }
+        } else if (!ver.startsWith("1.7")) {
             return;
-        }
+        } 
         
         // use reflection to set the TransformerFactory private field _isNotSecureProcessing to true
         // thanks to Brian Fernandes (author of FireBible)
