@@ -12,7 +12,8 @@ import javax.swing.JSeparator;
 import javax.swing.ListCellRenderer;
 
 
-/** Extended ComboBox which have separator on its item.
+/** 
+ * Extended ComboBox which have separator on its item.
  * The default separator is defined as String "--"
  *
  */
@@ -38,12 +39,6 @@ public class SeparatorComboBox extends JComboBox {
         setSeparator(DEFAULT_SEPARATOR);
     }
 
-    public SeparatorComboBox(Vector<?> items)  {
-        super(items);
-        initCustom();
-        setSeparator(DEFAULT_SEPARATOR);
-    }
-    
     public SeparatorComboBox(Object separator) {
         super();
         initCustom();
@@ -51,25 +46,7 @@ public class SeparatorComboBox extends JComboBox {
     }
     
     protected void initCustom() {
-        setRenderer(createRenderer());
-    }
-    
-    private ListCellRenderer createRenderer() {
-        return new DefaultListCellRenderer() {
-            private final Component separatorComp = new JSeparator();
-            @Override
-            public Component getListCellRendererComponent( JList list,
-                    Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                
-                if (value != null) {
-                    if ( value.equals(separator)  ) {
-                        return separatorComp;
-                    }
-                }
-                return super.getListCellRendererComponent( list, value, index,
-                        isSelected, cellHasFocus );
-            }
-        };
+        setRenderer(new SeparatorListCellRenderer(getRenderer()));
     }
     
     public void setSeparator(Object separator) {
@@ -78,7 +55,6 @@ public class SeparatorComboBox extends JComboBox {
         } else {
             this.separator = separator;
         }
-        
     }
     
     public Object getSeparator() {
@@ -87,7 +63,7 @@ public class SeparatorComboBox extends JComboBox {
     
     @Override
     public void setSelectedIndex(int index) {
-        if (index >= getModel().getSize() -1) {
+        if (index < getItemCount()) {
             Object obj = getItemAt(index);
             if (obj.equals(separator)) {
                 int oldIndex = getSelectedIndex();
@@ -105,5 +81,33 @@ public class SeparatorComboBox extends JComboBox {
             }
         }
         super.setSelectedIndex(index);
+    }
+    
+    /** 
+     * ListCellRenderer for {@link kiyut.swing.combo.SeparatorComboBox SeparatorComboBox}. 
+     * <strong>Implementation Note:</strong> This class is simply a wrapper for original ListCellRenderer and
+     * using return JSeparator if the value is the separator.
+     */
+    public class SeparatorListCellRenderer implements ListCellRenderer {
+        protected ListCellRenderer wrapped;
+        protected Component separatorComp = new JSeparator();
+        
+        /** 
+         * Constructs a renderer object for an item in a list.
+         * @param listCellRenderer The original ListCellRenderer
+         */
+        public SeparatorListCellRenderer(ListCellRenderer listCellRenderer) {
+            this.wrapped = listCellRenderer;
+        }
+        
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            if (value != null) {
+                if (value.equals(separator)) {
+                    return separatorComp;
+                }
+            }
+            return wrapped.getListCellRendererComponent( list, value, index,isSelected, cellHasFocus );
+        }
     }
 }
