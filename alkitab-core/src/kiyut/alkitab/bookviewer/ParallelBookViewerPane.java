@@ -94,7 +94,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         java.awt.GridBagConstraints gridBagConstraints;
 
         splitPane = new javax.swing.JSplitPane();
-        jPanel1 = new javax.swing.JPanel();
+        topPane = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         addBookButton = new javax.swing.JButton();
@@ -124,15 +124,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 6, 6, 6));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        topPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 6, 6, 6));
+        topPane.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText(bundle.getString("CTL_Book.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 6);
-        jPanel1.add(jLabel1, gridBagConstraints);
+        topPane.add(jLabel1, gridBagConstraints);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -154,7 +154,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jToolBar1, gridBagConstraints);
+        topPane.add(jToolBar1, gridBagConstraints);
 
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0);
         flowLayout1.setAlignOnBaseline(true);
@@ -164,7 +164,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        jPanel1.add(booksComboPane, gridBagConstraints);
+        topPane.add(booksComboPane, gridBagConstraints);
 
         compareCheckBox.setText(bundle.getString("CTL_Compare.Text")); // NOI18N
         compareCheckBox.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -172,7 +172,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
-        jPanel1.add(compareCheckBox, gridBagConstraints);
+        topPane.add(compareCheckBox, gridBagConstraints);
 
         jLabel2.setText(bundle.getString("CTL_Search.Text")); // NOI18N
         jLabel2.setToolTipText(bundle.getString("HINT_Search.Text")); // NOI18N
@@ -180,14 +180,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
-        jPanel1.add(jLabel2, gridBagConstraints);
+        topPane.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText(bundle.getString("CTL_Passsage.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
-        jPanel1.add(jLabel3, gridBagConstraints);
+        topPane.add(jLabel3, gridBagConstraints);
 
         passagePane.setLayout(new java.awt.GridBagLayout());
 
@@ -233,7 +233,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        jPanel1.add(passagePane, gridBagConstraints);
+        topPane.add(passagePane, gridBagConstraints);
 
         searchPane.setLayout(new java.awt.CardLayout());
 
@@ -288,9 +288,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        jPanel1.add(searchPane, gridBagConstraints);
+        topPane.add(searchPane, gridBagConstraints);
 
-        splitPane.setLeftComponent(jPanel1);
+        splitPane.setLeftComponent(topPane);
         splitPane.setRightComponent(bookScrollPane);
 
         add(splitPane, java.awt.BorderLayout.CENTER);
@@ -307,7 +307,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
@@ -324,6 +323,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     private javax.swing.JPanel searchPane;
     private javax.swing.JTextArea searchTextArea;
     private javax.swing.JSplitPane splitPane;
+    private javax.swing.JPanel topPane;
     // End of variables declaration//GEN-END:variables
  
     protected void initCustom() {
@@ -510,6 +510,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         };
         
         Indexer.getInstance().addChangeListener(indexChangeListener);
+        
+        splitPane.setDividerLocation(topPane.getMinimumSize().height);
     }
 
     
