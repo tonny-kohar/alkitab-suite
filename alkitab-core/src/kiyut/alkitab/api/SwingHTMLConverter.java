@@ -37,7 +37,7 @@ public class SwingHTMLConverter implements Converter {
             URL xslURL = ResourceUtil.getResource(path);
 
             TransformingSAXEventProvider tsep = new TransformingSAXEventProvider(NetUtil.toURI(xslURL), xmlsep);
-            fixForJava7(tsep);
+            fixXalanExtensionAndSecureProcessing(tsep);
 
             return tsep;
 
@@ -47,11 +47,14 @@ public class SwingHTMLConverter implements Converter {
     }
 
     /**
-     * XXX Workaround for Java 7 and xalan use of extension function 'http://xml.apache.org/xalan/java:instance' is not
-     * allowed when the secure processing feature is set to true. *
+     * XXX Workaround for xalan use of extension function 'http://xml.apache.org/xalan/java:instance' is not
+     * allowed when the secure processing feature is set to true.  
      *
      */
-    protected void fixForJava7(TransformingSAXEventProvider tsep) {
+    protected void fixXalanExtensionAndSecureProcessing(TransformingSAXEventProvider tsep) {
+        // this xalan bug (incompatible change to secure processing) are affecting
+        // - Java 7
+        // - Java 6 with OpenJDK
         String ver = System.getProperty("java.version");
         if (ver.startsWith("1.6")) {
           String name = System.getProperty("java.vm.name");
@@ -76,26 +79,5 @@ public class SwingHTMLConverter implements Converter {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage());
         }
-
-        /*
-         * XXX: workaround for Java 7 and xalan use of extension function 'http://xml.apache.org/xalan/java:instance' is
-         * not allowed when the secure processing feature is set to true. 
-         * By using reflection 
-         * - Create new TransformerFactory 
-         * - set isNotSecureProcessing to true (reflection) 
-         * - Replace the TransformingSAXEventProvider.transfact with the above (reflection)
-         */
-        /*
-         * try { TransformerFactory tf = TransformerFactory.newInstance(); Field _isNotSecureProcessing =
-         * tf.getClass().getDeclaredField("_isNotSecureProcessing"); _isNotSecureProcessing.setAccessible(true);
-         * _isNotSecureProcessing.set(tf, Boolean.TRUE);
-         *
-         * Field _transfact = tsep.getClass().getDeclaredField("transfact"); _transfact.setAccessible(true);
-         * _transfact.set(tsep,tf);
-         *
-         * } catch (Exception ex) { Logger logger = Logger.getLogger(this.getClass().getName());
-         * logger.log(Level.WARNING, ex.getMessage()); }
-         *
-         */
     }
 }

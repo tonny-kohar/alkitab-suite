@@ -18,7 +18,7 @@ import org.openide.util.actions.CallbackSystemAction;
 @ActionRegistration(displayName = "#CTL_ReloadAction")
 @ActionReferences({
     @ActionReference(path = "Toolbars/View", position = 0),
-    @ActionReference(path = "Menu/View", position = 900),
+    @ActionReference(path = "Menu/View", position = 100),
     @ActionReference(path = "Shortcuts", name = "D-R")
 })
 public class ReloadAction extends CallbackSystemAction {

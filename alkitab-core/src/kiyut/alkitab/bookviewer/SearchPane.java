@@ -3,7 +3,6 @@
 package kiyut.alkitab.bookviewer;
 
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -285,6 +284,7 @@ public class SearchPane extends javax.swing.JPanel {
         }
                 
         rankedCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 ranked = rankedCheckBox.isSelected();
                 searchLimitSlider.setVisible(ranked);
@@ -294,6 +294,7 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         searchLimitSlider.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent evt) {
                 JSlider slider = (JSlider) evt.getSource();
                 if (slider.getValueIsAdjusting()) {
@@ -308,6 +309,7 @@ public class SearchPane extends javax.swing.JPanel {
         rangeComboBox.setModel(new DefaultComboBoxModel(presets));
         
         rangeCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 boolean checked = rangeCheckBox.isSelected();
                 rangePane.setVisible(checked);
@@ -316,6 +318,7 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         rangeComboBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 JComboBox comboBox = (JComboBox) evt.getSource();
                 int index = comboBox.getSelectedIndex();
@@ -335,6 +338,7 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         rangeIncludesButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 PassageChooser passageChooser = new PassageChooser();
                 passageChooser.setPassage(rangeIncludesField.getText());
@@ -360,6 +364,7 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         syntaxCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 boolean checked = syntaxCheckBox.isSelected();
                 syntaxScrollPane.setVisible(checked);
@@ -368,14 +373,17 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         DocumentListener docListener = new DocumentListener() {
+            @Override
             public void insertUpdate(DocumentEvent evt) {
                 syntaxTextArea.setText(createSearchString());
             }
 
+            @Override
             public void removeUpdate(DocumentEvent evt) {
                 syntaxTextArea.setText(createSearchString());
             }
 
+            @Override
             public void changedUpdate(DocumentEvent evt) {
                 syntaxTextArea.setText(createSearchString());
             }
@@ -411,9 +419,9 @@ public class SearchPane extends javax.swing.JPanel {
      * @param searchString Search String or null
      */
     public void setSearchString(String searchString) {
-        if (searchString == null) {
+        /*if (searchString == null) {
             return;
-        }
+        }*/
         
         // TODO not implmented yet; 
     }

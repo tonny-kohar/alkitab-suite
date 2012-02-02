@@ -819,21 +819,24 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     /** This only set the search field with the param and do nothing aka
-     * does not perform searching. <br/>
-     * It is used for persistence session <br/>
-     * Do not use this API, this will be refactored soon.
+     * does not perform searching. If you want actual search call #search(String) instead.<br/>
+     * It is only used for persisting the session.<br/>
      * @param searchString the search text
+     * @see #search(String)
      */
     public void setSearchString(String searchString) {
         this.searchString = searchString;
         searchTextArea.setText(searchString);
     }
     
+    public String getSearchString() {
+        return searchString;
+    }
+    
     protected void setKey(String keyString) {
-        Key key = null;
         List<Book> books = bookTextPane.getBooks();
         if (!books.isEmpty()) {
-            key = books.get(0).getValidKey(keyString);
+            Key key = books.get(0).getValidKey(keyString);
             setKey(key);
         } 
     }

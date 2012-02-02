@@ -22,10 +22,8 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.HyperlinkEvent;
@@ -152,7 +150,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
 
             key = bookViewer.getKey();
-            searchString = bookViewer.getHistoryManager().current().getSearch();
+            searchString = bookViewer.getSearchString();
             compareView = bookViewer.isCompareView();
             this.focused = tc.isFocusOwner();
             viewerHints = bookViewer.getViewerHints();

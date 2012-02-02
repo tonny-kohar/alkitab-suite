@@ -17,7 +17,7 @@ import org.openide.util.actions.BooleanStateAction;
 @ActionID(id = "kiyut.alkitab.actions.SynchronizeViewAction", category = "View")
 @ActionRegistration(displayName = "#CTL_SynchronizeViewAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/View", position = 920)
+    @ActionReference(path = "Menu/View", position = 110)
 })
 public class SynchronizeViewAction extends BooleanStateAction  {
 

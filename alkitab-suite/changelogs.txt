@@ -1,3 +1,8 @@
+ver 2.8.1
+- Fix OpenJDK incompatibility
+- Various minor bug fixes
+- Various minor enhancements
+
 ver 2.8
 - Fix Java 7 incompatibility
 - Source Viewer enhancements (anti alias)

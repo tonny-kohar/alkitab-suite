@@ -18,7 +18,7 @@ import org.openide.util.actions.CallbackSystemAction;
 @ActionRegistration(displayName = "#CTL_ViewerHintsAction")
 @ActionReferences({
     @ActionReference(path = "Toolbars/View", position = 100),
-    @ActionReference(path = "Menu/View", position = 950)
+    @ActionReference(path = "Menu/View", position = 120)
 })
 public class ViewerHintsAction extends CallbackSystemAction {
     

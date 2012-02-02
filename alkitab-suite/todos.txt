@@ -26,3 +26,4 @@ in no particular order
 - Support user supplied XSL
 - Chapter Introduction (verses 0) 
 - Personal commentary.
+- Session and History always conflict (repeated as history), need to fix

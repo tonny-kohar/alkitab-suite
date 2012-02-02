@@ -61,7 +61,9 @@
         <folder name="View">
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/View"/>
             <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
-            <file name="org-netbeans-core-actions-HTMLViewAction.shadow" url="org-netbeans-core-actions-HTMLViewAction.shadow"/>
+            <file name="org-netbeans-core-windows-actions-ToolbarsListAction.instance">
+                <attr name="position" intvalue="1250"/>
+            </file>
         </folder>
         <folder name="Navigate">
             <attr name="position" intvalue="500"/>
@@ -86,15 +88,15 @@
             <file name="master-help.xml" url="alkitab-master-help.xml">
                 <attr name="position" intvalue="0"/>
             </file>
-            <file name="org-netbeans-core-actions-LogAction.shadow" url="org-netbeans-core-actions-LogAction_1.shadow">
+            <file name="org-netbeans-core-actions-LogAction.shadow">
                 <attr name="position" intvalue="1400"/>
                 <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
             </file>
         </folder>
+        <file name="org-netbeans-modules-quicksearch-QuickSearchAction.shadow_hidden"/>
     </folder>
-    <file name="QuickSearch_hidden"/>
     <folder name="Keymaps">
-        <folder name="Alkitab" />
+        <folder name="Alkitab"/>
     </folder>
     <folder name="Shortcuts">
         <file name="F1.shadow">
@@ -143,6 +145,7 @@
         <file name="Standard.xml" url="alkitab-toolbar.xml"/>
         <file name="Clipboard_hidden"/>
         <file name="Debugging.xml_hidden"/>
+        <file name="QuickSearch_hidden"/>
         <file name="UndoRedo_hidden"/>
         <folder name="File">
             <attr name="position" intvalue="0"/>

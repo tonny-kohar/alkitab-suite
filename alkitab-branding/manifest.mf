@@ -3,5 +3,5 @@ OpenIDE-Module: kiyut.alkitab.modules.branding
 OpenIDE-Module-Layer: kiyut/alkitab/modules/branding/layer.xml
 OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/branding/Bundle.properties
 OpenIDE-Module-Install: kiyut/alkitab/modules/branding/BrandingModuleInstall.class
-OpenIDE-Module-Specification-Version: 2.8
+OpenIDE-Module-Specification-Version: 2.8.1
 

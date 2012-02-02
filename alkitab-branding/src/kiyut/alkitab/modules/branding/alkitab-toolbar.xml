@@ -10,5 +10,6 @@
     <Toolbar name="Clipboard" visible="false"/>
     <Toolbar name="UndoRedo" visible="false"/>
     <Toolbar name="Memory" visible="false"/>
+    <Toolbar name="QuickSearch" visible="false"/>
   </Row>
 </Configuration>
