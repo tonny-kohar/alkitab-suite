@@ -22,6 +22,9 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeAdapter;
 import org.openide.filesystems.FileEvent;
@@ -35,14 +38,19 @@ import org.openide.windows.WindowManager;
 /**
  * TopComponent which displays available book as {@link kiyut.alkitab.bookshelf.BookshelfTree BookshelfTree}.
  */
+@TopComponent.Description(preferredID = "BookshelfTopComponent",
+    //iconBase="SET/PATH/TO/ICON/HERE", 
+    persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Registration(mode = "explorer", openAtStartup = true, position=100)
+@ActionID(category = "Window", id = "kiyut.alkitab.actions.BookshelfAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 100),
+    @ActionReference(path = "Shortcuts", name = "DO-1")
+})
+@TopComponent.OpenActionRegistration(displayName = "#CTL_BookshelfAction",
+    preferredID = "BookshelfTopComponent")
 public final class BookshelfTopComponent extends TopComponent {
 
-    private static BookshelfTopComponent instance;
-    /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-
-    private static final String PREFERRED_ID = "BookshelfTopComponent";
-    
     private BookshelfTree booksTree;
     
     // popup menu related
@@ -75,60 +83,18 @@ public final class BookshelfTopComponent extends TopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
-    /**
-     * Gets default instance. Do not use directly: reserved for *.settings files only,
-     * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
-     * To obtain the singleton instance, use {@link #findInstance}.
-     */
-    public static synchronized BookshelfTopComponent getDefault() {
-        if (instance == null) {
-            instance = new BookshelfTopComponent();
-        }
-        return instance;
-    }
 
     /**
-     * Obtain the BookshelfTopComponent instance. Never call {@link #getDefault} directly!
+     * Obtain the BookshelfTopComponent instance.
      */
     public static synchronized BookshelfTopComponent findInstance() {
-        TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
-        if (win == null) {
-            Logger.getLogger(BookshelfTopComponent.class.getName()).warning(
-                    "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
-            return getDefault();
-        }
+        
+        TopComponent win = WindowManager.getDefault().findTopComponent("BookshelfTopComponent");
         if (win instanceof BookshelfTopComponent) {
             return (BookshelfTopComponent) win;
         }
-        Logger.getLogger(BookshelfTopComponent.class.getName()).warning(
-                "There seem to be multiple components with the '" + PREFERRED_ID +
-                "' ID. That is a potential source of errors and unexpected behavior.");
-        return getDefault();
-    }
-
-    @Override
-    public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
-    }
-
-    /** replaces this in object stream */
-    @Override
-    public Object writeReplace() {
-        return new ResolvableHelper();
-    }
-
-    @Override
-    protected String preferredID() {
-        return PREFERRED_ID;
-    }
-
-    final static class ResolvableHelper implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        public Object readResolve() {
-            return BookshelfTopComponent.getDefault();
-        }
+        
+        return null;
     }
     
     @Override

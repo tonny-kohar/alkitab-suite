@@ -3,24 +3,28 @@
 package kiyut.alkitab.windows;
 
 import java.awt.BorderLayout;
-import java.util.logging.Logger;
 import kiyut.alkitab.history.GlobalHistoryPane;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
-//import org.openide.util.ImageUtilities;
-
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.history.GlobalHistoryPane GlobalHistoryPane}.
  */
-
+@TopComponent.Description(preferredID = "GlobalHistoryTopComponent",
+    //iconBase="SET/PATH/TO/ICON/HERE", 
+    persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Registration(mode = "explorer", openAtStartup = false, position=120)
+@ActionID(category = "Window", id = "kiyut.alkitab.actions.GlobalHistoryAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 150),
+    @ActionReference(path = "Shortcuts", name = "DS-H")
+})
+@TopComponent.OpenActionRegistration(displayName = "#CTL_GlobalHistoryAction",
+    preferredID = "GlobalHistoryTopComponent")
 public final class GlobalHistoryTopComponent extends TopComponent {
-    private static GlobalHistoryTopComponent instance;
-    /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-
-    private static final String PREFERRED_ID = "GlobalHistoryTopComponent";
 
     private GlobalHistoryPane historyPane;
 
@@ -46,77 +50,9 @@ public final class GlobalHistoryTopComponent extends TopComponent {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    /**
-     * Gets default instance. Do not use directly: reserved for *.settings files only,
-     * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
-     * To obtain the singleton instance, use {@link #findInstance}.
-     */
-    public static synchronized GlobalHistoryTopComponent getDefault() {
-        if (instance == null) {
-            instance = new GlobalHistoryTopComponent();
-        }
-        return instance;
-    }
 
-    /**
-     * Obtain the GlobalHistoryTopComponent instance. Never call {@link #getDefault} directly!
-     */
-    public static synchronized GlobalHistoryTopComponent findInstance() {
-        TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
-        if (win == null) {
-            Logger.getLogger(GlobalHistoryTopComponent.class.getName()).warning(
-                    "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
-            return getDefault();
-        }
-        if (win instanceof GlobalHistoryTopComponent) {
-            return (GlobalHistoryTopComponent) win;
-        }
-        Logger.getLogger(GlobalHistoryTopComponent.class.getName()).warning(
-                "There seem to be multiple components with the '" + PREFERRED_ID +
-                "' ID. That is a potential source of errors and unexpected behavior.");
-        return getDefault();
+    private void initCustom() {
+        historyPane = new GlobalHistoryPane();
+        this.add(historyPane, BorderLayout.CENTER);
     }
-
-    @Override
-    public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
-    }
-
-    @Override
-    public void componentOpened() {
-        // TODO add custom code on component opening
-    }
-
-    @Override
-    public void componentClosed() {
-        // TODO add custom code on component closing
-    }
-
-    void writeProperties(java.util.Properties p) {
-        // better to version settings since initial version as advocated at
-        // http://wiki.apidesign.org/wiki/PropertyFiles
-        p.setProperty("version", "1.0");
-        // TODO store your settings
-    }
-
-    Object readProperties(java.util.Properties p) {
-        GlobalHistoryTopComponent singleton = GlobalHistoryTopComponent.getDefault();
-        singleton.readPropertiesImpl(p);
-        return singleton;
-    }
-
-    private void readPropertiesImpl(java.util.Properties p) {
-        String version = p.getProperty("version");
-        // TODO read your settings according to their version
-    }
-
-    @Override
-    protected String preferredID() {
-        return PREFERRED_ID;
-    }
-
-     private void initCustom() {
-         historyPane = new GlobalHistoryPane();
-         this.add(historyPane, BorderLayout.CENTER);
-     }
 }

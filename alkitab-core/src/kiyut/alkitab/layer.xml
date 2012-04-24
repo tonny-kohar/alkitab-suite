@@ -48,57 +48,5 @@
                 <attr name="instanceClass" stringvalue="kiyut.alkitab.core.CoreBookViewProvider"/>
             </file>
         </folder>
-    </folder>
-    <folder name="Windows2">
-        <folder name="Components">
-            <file name="BookshelfTopComponent.settings" url="windows/BookshelfTopComponent.settings"/>
-            <file name="BookNavigatorTopComponent.settings" url="windows/BookNavigatorTopComponent.settings"/>
-            <file name="DefinitionsTopComponent.settings" url="windows/DefinitionsTopComponent.settings"/>
-            <file name="DailyDevotionsTopComponent.settings" url="windows/DailyDevotionsTopComponent.settings"/>
-            <file name="GlobalHistoryTopComponent.settings" url="windows/GlobalHistoryTopComponent.settings"/>
-        </folder> 
-        <folder name="Modes">
-            <folder name="explorer">
-                <file name="BookshelfTopComponent.wstcref" url="windows/BookshelfTopComponent.wstcref">
-                    <attr name="position" intvalue="100"/>
-                 </file>
-                <file name="BookNavigatorTopComponent.wstcref" url="windows/BookNavigatorTopComponent.wstcref">
-                    <attr name="position" intvalue="110"/>
-                 </file>
-                 <file name="GlobalHistoryTopComponent.wstcref" url="windows/GlobalHistoryTopComponent.wstcref">
-                    <attr name="position" intvalue="120"/>
-                 </file>
-            </folder>
-            <folder name="output">
-                <file name="DefinitionsTopComponent.wstcref" url="windows/DefinitionsTopComponent.wstcref">
-                    <attr name="position" intvalue="200"/>
-                 </file>
-                <file name="DailyDevotionsTopComponent.wstcref" url="windows/DailyDevotionsTopComponent.wstcref">
-                    <attr name="position" intvalue="210"/>
-                </file>
-            </folder>
-        </folder>
-    </folder>
-    <folder name="Alkitab">
-        <folder name="Bookshelf">
-            <folder name="PopupMenu">
-                <file name="kiyut-alkitab-actions-BookshelfOpenSelectedAction.instance">
-                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfOpenSelectedAction"/>
-                    <attr name="position" intvalue="10"/>
-                </file>
-                <file name="kiyut-alkitab-actions-BookshelfChangeFontAction.instance">
-                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfChangeFontAction"/>
-                    <attr name="position" intvalue="100"/>
-                </file>
-                <file name="kiyut-alkitab-actions-BookshelfIndexerAction.instance">
-                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfIndexerAction"/>
-                    <attr name="position" intvalue="500"/>
-                </file>
-                <file name="kiyut-alkitab-actions-BookshelfBookPropertiesAction.instance">
-                    <attr name="instanceClass" stringvalue="kiyut.alkitab.actions.BookshelfBookPropertiesAction"/>
-                    <attr name="position" intvalue="1000"/>
-                </file>
-            </folder>
-        </folder>
-    </folder>
+    </folder>    
 </filesystem>

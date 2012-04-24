@@ -6,7 +6,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,34 +14,40 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.DailyDevotionPane;
 import kiyut.alkitab.bookviewer.DefinitionPane;
+import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
 import org.openide.awt.StatusDisplayer;
 import org.openide.awt.TabbedPaneFactory;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.DailyDevotionPane DailyDevotionPane}.
  */
+@TopComponent.Description(preferredID = "DailyDevotionsTopComponent",
+    //iconBase="SET/PATH/TO/ICON/HERE", 
+    persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Registration(mode = "output", openAtStartup = false, position=210)
+@ActionID(category = "Window", id = "kiyut.alkitab.actions.DailyDevotionsAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 130),
+    @ActionReference(path = "Shortcuts", name = "DO-4")
+})
+@TopComponent.OpenActionRegistration(displayName = "#CTL_DailyDevotionsAction",
+    preferredID = "DailyDevotionsTopComponent")
 public final class DailyDevotionsTopComponent extends TopComponent {
 
-    private static DailyDevotionsTopComponent instance;
-    /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-
-    private static final String PREFERRED_ID = "DailyDevotionsTopComponent";
-    
     private JTabbedPane tabbedPane;
     
     private HyperlinkListener hyperlinkListener;
@@ -68,70 +73,6 @@ public final class DailyDevotionsTopComponent extends TopComponent {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    /**
-     * Gets default instance. Do not use directly: reserved for *.settings files only,
-     * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
-     * To obtain the singleton instance, use {@link #findInstance}.
-     */
-    public static synchronized DailyDevotionsTopComponent getDefault() {
-        if (instance == null) {
-            instance = new DailyDevotionsTopComponent();
-        }
-        return instance;
-    }
-
-    /**
-     * Obtain the DailyDevotionsTopComponent instance. Never call {@link #getDefault} directly!
-     */
-    public static synchronized DailyDevotionsTopComponent findInstance() {
-        TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
-        if (win == null) {
-            Logger.getLogger(DailyDevotionsTopComponent.class.getName()).warning(
-                    "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
-            return getDefault();
-        }
-        if (win instanceof DailyDevotionsTopComponent) {
-            return (DailyDevotionsTopComponent) win;
-        }
-        Logger.getLogger(DailyDevotionsTopComponent.class.getName()).warning(
-                "There seem to be multiple components with the '" + PREFERRED_ID +
-                "' ID. That is a potential source of errors and unexpected behavior.");
-        return getDefault();
-    }
-
-    @Override
-    public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
-    }
-    
-    /** replaces this in object stream */
-    @Override
-    public Object writeReplace() {
-        return new ResolvableHelper();
-    }
-
-    @Override
-    protected String preferredID() {
-        return PREFERRED_ID;
-    }
-
-    final static class ResolvableHelper implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-        
-        public Object readResolve() {
-            //return DailyDevotionsTopComponent.getDefault();
-            final DailyDevotionsTopComponent result = DailyDevotionsTopComponent.getDefault();
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    // always close it at startup
-                    result.close();
-                }
-            });
-            return result;
-        }
-    }
     
     @Override
     public javax.swing.Action[] getActions() {

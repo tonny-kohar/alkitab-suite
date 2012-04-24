@@ -10,6 +10,10 @@ import javax.swing.SwingUtilities;
 import kiyut.alkitab.bookshelf.BookProperties;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.Book;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
@@ -17,6 +21,11 @@ import org.openide.windows.WindowManager;
  * Implementation of Bookshelf Book Properties Action
  * 
  */
+@ActionID(id = "kiyut.alkitab.actions.BookshelfBookPropertiesAction", category = "Bookshelf")
+@ActionRegistration(displayName = "#CTL_BookshelfBookPropertiesAction")
+@ActionReferences({
+    @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 40)
+})
 public class BookshelfBookPropertiesAction extends AbstractAction {
 
     public BookshelfBookPropertiesAction() {
@@ -34,8 +43,8 @@ public class BookshelfBookPropertiesAction extends AbstractAction {
     }
     
     protected void showPropertiesDialog() {
-        BookshelfTopComponent bs = BookshelfTopComponent.findInstance();
-        Book book = bs.getSelectedBook();
+        BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
+        Book book = tc.getSelectedBook();
         if (book == null) {
             return;
         }

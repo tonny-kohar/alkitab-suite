@@ -11,6 +11,10 @@ import kiyut.alkitab.api.BookFontStore;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.common.swing.FontChooser;
 import org.crosswire.jsword.book.Book;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
 
@@ -18,6 +22,11 @@ import org.openide.windows.WindowManager;
  * Implementation of Bookshelf Change Font Action
  * 
  */
+@ActionID(id = "kiyut.alkitab.actions.BookshelfChangeFontAction", category = "Bookshelf")
+@ActionRegistration(displayName = "#CTL_BookshelfChangeFontAction")
+@ActionReferences({
+    @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 20)
+})
 public class BookshelfChangeFontAction extends AbstractAction {
 
     public BookshelfChangeFontAction() {

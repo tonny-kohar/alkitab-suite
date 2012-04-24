@@ -35,6 +35,8 @@ public class BookInstallerAction extends AbstractAction {
                 if (installerPane.isBookInstalled()) {
                     BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
                     tc.reload();
+                    //BookshelfTopComponent tc = WindowManager.getDefault().findTopComponent("BookshelfTopComponent");
+                    //tc.reload();
                 }
 
                 /*if (installerPane.isBookInstalled()) {

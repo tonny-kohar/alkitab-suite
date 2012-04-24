@@ -3,7 +3,6 @@
 package kiyut.alkitab.actions;
 
 import java.awt.event.ActionEvent;
-import java.lang.ref.WeakReference;
 import javax.swing.AbstractAction;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
@@ -15,12 +14,21 @@ import kiyut.alkitab.api.Indexer;
 import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 
 /**
  * Implementation of Bookshelf Index or Re-index Action
  * 
  */
+@ActionID(id = "kiyut.alkitab.actions.BookshelfIndexerAction", category = "Bookshelf")
+@ActionRegistration(displayName = "#CTL_BookshelfIndexerAction")
+@ActionReferences({
+    @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 30)
+})
 public class BookshelfIndexerAction extends AbstractAction {
 
     private TreeSelectionListener treeSelectionListener;
@@ -81,8 +89,8 @@ public class BookshelfIndexerAction extends AbstractAction {
     }
 
     protected void doCreateIndex() {
-        BookshelfTopComponent bs = BookshelfTopComponent.findInstance();
-        Book book = bs.getSelectedBook();
+        BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
+        Book book = tc.getSelectedBook();
         if (book == null) {
             return;
         }

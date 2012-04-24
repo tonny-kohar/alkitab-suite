@@ -12,12 +12,13 @@ import kiyut.alkitab.Application;
 import kiyut.alkitab.api.AbstractBookViewProvider;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.windows.BookViewerTopComponent;
-import kiyut.alkitab.windows.SingleBookTopComponent;
 import kiyut.alkitab.windows.DailyDevotionsTopComponent;
 import kiyut.alkitab.windows.DefinitionsTopComponent;
 import kiyut.alkitab.windows.ParallelBookTopComponent;
+import kiyut.alkitab.windows.SingleBookTopComponent;
 import org.crosswire.jsword.passage.Key;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * Module Core {@link kiyut.alkitab.api.BookViewProvider BookViewProvider} implementation
@@ -133,17 +134,23 @@ public final class CoreBookViewProvider extends AbstractBookViewProvider {
     
     
     protected void openDefinition(final SwordURI uri, final String info, boolean newView) {
-        DefinitionsTopComponent tc = DefinitionsTopComponent.findInstance();
-        tc.open();
-        tc.requestActive();
-        tc.openURI(uri, info);
+        TopComponent obj = WindowManager.getDefault().findTopComponent("DefinitionsTopComponent");
+        if (obj instanceof DefinitionsTopComponent) {
+            DefinitionsTopComponent tc = (DefinitionsTopComponent)obj;
+            tc.open();
+            tc.requestActive();
+            tc.openURI(uri, info);
+        }
     }
     
     protected void openDailyDevotion(final SwordURI uri, final String info, boolean newView) {
-        DailyDevotionsTopComponent tc = DailyDevotionsTopComponent.findInstance();
-        tc.open();
-        tc.requestActive();
-        tc.openURI(uri, info);
+        TopComponent obj = WindowManager.getDefault().findTopComponent("DailyDevotionsTopComponent");
+        if (obj instanceof DailyDevotionsTopComponent) {
+            DailyDevotionsTopComponent tc = (DailyDevotionsTopComponent)obj;
+            tc.open();
+            tc.requestActive();
+            tc.openURI(uri, info);
+        }
     }
     
     /** openGeneralBook. this methods ignore the value of newView. It always open new View*/

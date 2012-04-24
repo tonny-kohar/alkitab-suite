@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,36 +15,42 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.api.BookViewManager;
 import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.DictionaryPane;
+import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
 import org.openide.awt.StatusDisplayer;
 import org.openide.awt.TabbedPaneFactory;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.DictionaryPane DictionaryPane}.
  */
+@TopComponent.Description(preferredID = "DefinitionsTopComponent",
+    //iconBase="SET/PATH/TO/ICON/HERE", 
+    persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Registration(mode = "output", openAtStartup = false, position=200)
+@ActionID(category = "Window", id = "kiyut.alkitab.actions.DefinitionsAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 140),
+    @ActionReference(path = "Shortcuts", name = "DO-5")
+})
+@TopComponent.OpenActionRegistration(displayName = "#CTL_DefinitionsAction",
+    preferredID = "DefinitionsTopComponent")
 public final class DefinitionsTopComponent extends TopComponent {
 
-    private static DefinitionsTopComponent instance;
-    /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-
-    private static final String PREFERRED_ID = "DefinitionsTopComponent";
-    
     private JTabbedPane tabbedPane;
     
     private HyperlinkListener hyperlinkListener;
@@ -73,72 +78,6 @@ public final class DefinitionsTopComponent extends TopComponent {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    
-    /**
-     * Gets default instance. Do not use directly: reserved for *.settings files only,
-     * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
-     * To obtain the singleton instance, use {@link #findInstance}.
-     */
-    public static synchronized DefinitionsTopComponent getDefault() {
-        if (instance == null) {
-            instance = new DefinitionsTopComponent();
-        } 
-        return instance;
-    }
-
-    /**
-     * Obtain the DefinitionsTopComponent instance. Never call {@link #getDefault} directly!
-     */
-    public static synchronized DefinitionsTopComponent findInstance() {
-        TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
-        if (win == null) {
-            Logger.getLogger(DefinitionsTopComponent.class.getName()).warning(
-                    "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
-            return getDefault();
-        }
-        if (win instanceof DefinitionsTopComponent) {
-            return (DefinitionsTopComponent) win;
-        }
-        Logger.getLogger(DefinitionsTopComponent.class.getName()).warning(
-                "There seem to be multiple components with the '" + PREFERRED_ID +
-                "' ID. That is a potential source of errors and unexpected behavior.");
-        return getDefault();
-    }
-
-    @Override
-    public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
-    }
-
-    /** replaces this in object stream */
-    @Override
-    public Object writeReplace() {
-        return new ResolvableHelper();
-    }
-
-    @Override
-    protected String preferredID() {
-        return PREFERRED_ID;
-    }
-
-    final static class ResolvableHelper implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        public Object readResolve() {
-            //return DefinitionsTopComponent.getDefault();
-            
-            final DefinitionsTopComponent result = DefinitionsTopComponent.getDefault();
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    // always close it at startup
-                    result.close();
-                }
-            });
-            return result;
-        }
-    } 
     
     @Override
     public javax.swing.Action[] getActions() {
