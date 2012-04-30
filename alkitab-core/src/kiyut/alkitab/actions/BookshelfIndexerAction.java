@@ -2,26 +2,20 @@
 
 package kiyut.alkitab.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.JTree;
+import java.util.Collection;
 import javax.swing.SwingUtilities;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
 import kiyut.alkitab.api.Indexer;
-import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.util.LookupEvent;
 import org.openide.util.NbBundle;
 
 /**
- * Implementation of Bookshelf Index or Re-index Action
+ * Implementation of Bookshelf Reindex Action
  * 
  */
 @ActionID(id = "kiyut.alkitab.actions.BookshelfIndexerAction", category = "Bookshelf")
@@ -29,57 +23,31 @@ import org.openide.util.NbBundle;
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 30)
 })
-public class BookshelfIndexerAction extends AbstractAction {
-
-    private TreeSelectionListener treeSelectionListener;
-
-    public BookshelfIndexerAction() {
-        super(NbBundle.getMessage(BookshelfIndexerAction.class, "CTL_BookshelfIndexerAction"));
-
-        treeSelectionListener = new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent evt) {
-                TreePath treePath = evt.getPath();
-                if (treePath == null) {
-                    setEnabled(false);
-                    return;
-                }
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
-
-                Object obj = node.getUserObject();
-                if (!(obj instanceof Book)) {
-                    setEnabled(false);
-                    return;
-                }
-
-                Book book = (Book)obj;
-                if (!(book.getBookCategory().equals(BookCategory.BIBLE) || book.getBookCategory().equals(BookCategory.COMMENTARY))) {
-                    setEnabled(false);
-                    return;
-                }
-
-                setEnabled(true);
-            }
-        };
-
-        BookshelfTopComponent bs = BookshelfTopComponent.findInstance();
-        bs.getBookshelf().getSelectionModel().addTreeSelectionListener(treeSelectionListener);
+public class BookshelfIndexerAction extends BookshelfBookAction {
+    
+    protected Book book;
+    
+    @Override
+    public String getName() {
+        return NbBundle.getMessage(BookshelfIndexerAction.class, "CTL_BookshelfIndexerAction");
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        BookshelfTopComponent bs = BookshelfTopComponent.findInstance();
-        if (bs != null) {
-            JTree tree = bs.getBookshelf();
-            tree.getSelectionModel().removeTreeSelectionListener(null);
-        }
-        treeSelectionListener = null;
-
-        super.finalize();
+    protected void bookLookupResultChanged(LookupEvent evt) {
+        boolean b = false;
+        book = null;
+        
+        Collection c = bookLookupResult.allInstances();
+        if (!c.isEmpty()) {
+            book = (Book)c.iterator().next();
+            b = allowCreateIndex(book);
+        }        
+        
+        setEnabled(b);
     }
-
+    
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void performAction() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -87,15 +55,23 @@ public class BookshelfIndexerAction extends AbstractAction {
             }
         });
     }
-
+    
     protected void doCreateIndex() {
-        BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
-        Book book = tc.getSelectedBook();
         if (book == null) {
+            return;
+        }
+        
+        if (!allowCreateIndex(book)) {
             return;
         }
       
         Indexer.getInstance().createIndex(book, true);
-        
+    }
+    
+    protected boolean allowCreateIndex(Book book) {
+        if (book.getBookCategory().equals(BookCategory.BIBLE) || book.getBookCategory().equals(BookCategory.COMMENTARY)) {
+            return true;
+        }
+        return false;
     }
 }

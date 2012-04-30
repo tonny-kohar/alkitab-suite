@@ -17,6 +17,8 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataFolder;
 import org.openide.loaders.DataObject;
 import org.openide.util.actions.BooleanStateAction;
+import org.openide.util.actions.Presenter;
+import org.openide.util.actions.SystemAction;
 
 /**
  * Collection of Netbean Platform or OpenIDE Utilities
@@ -85,14 +87,19 @@ public class NbUtilities {
                     // XXX JSeparator instance is shared between component, ordering will be fail,
                     // workaround create new JSeparator
                     menu.add(new JSeparator());
-                } else if (instanceObj instanceof BooleanStateAction) {
+                /*} else if (instanceObj instanceof BooleanStateAction) {
                     //JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
                     //Actions.connect(menuItem, (BooleanStateAction) instanceObj, true);
                     menu.add(((BooleanStateAction)instanceObj).getMenuPresenter());
+                    * 
+                    */
+                } else if (instanceObj instanceof Presenter.Popup) {
+                    menu.add(((Presenter.Popup)instanceObj).getPopupPresenter());
                 } else if (instanceObj instanceof Action) {
                     JMenuItem menuItem = new JMenuItem();
                     Actions.connect(menuItem, (Action) instanceObj, true);
                     menu.add(menuItem);
+                    //System.out.println(instanceObj.getClass().toString());
                 }
             }
         }

@@ -3,12 +3,9 @@
 package kiyut.alkitab.actions;
 
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.bookshelf.BookProperties;
-import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -26,14 +23,15 @@ import org.openide.windows.WindowManager;
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 40)
 })
-public class BookshelfBookPropertiesAction extends AbstractAction {
+public class BookshelfBookPropertiesAction extends BookshelfBookAction {
 
-    public BookshelfBookPropertiesAction() {
-        super(NbBundle.getMessage(BookshelfBookPropertiesAction.class, "CTL_BookshelfBookPropertiesAction"));
+    @Override
+    public String getName() {
+        return NbBundle.getMessage(BookshelfBookPropertiesAction.class, "CTL_BookshelfBookPropertiesAction");
     }
     
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void performAction() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -43,8 +41,7 @@ public class BookshelfBookPropertiesAction extends AbstractAction {
     }
     
     protected void showPropertiesDialog() {
-        BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
-        Book book = tc.getSelectedBook();
+        Book book = bookshelfTopComponent.getSelectedBook();
         if (book == null) {
             return;
         }

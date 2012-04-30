@@ -6,10 +6,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.Serializable;
 import java.text.MessageFormat;
-import java.util.logging.Logger;
 import javax.swing.JPopupMenu;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -19,6 +19,7 @@ import kiyut.alkitab.bookshelf.BookshelfTree;
 import kiyut.alkitab.bookshelf.BookshelfTreeModel;
 import kiyut.openide.util.NbUtilities;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.passage.Key;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
@@ -31,7 +32,10 @@ import org.openide.filesystems.FileEvent;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileRenameEvent;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
+import org.openide.util.lookup.AbstractLookup;
+import org.openide.util.lookup.InstanceContent;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
@@ -51,6 +55,10 @@ import org.openide.windows.WindowManager;
     preferredID = "BookshelfTopComponent")
 public final class BookshelfTopComponent extends TopComponent {
 
+    
+    private InstanceContent content;
+    private Book selectedBook;
+    
     private BookshelfTree booksTree;
     
     // popup menu related
@@ -110,6 +118,11 @@ public final class BookshelfTopComponent extends TopComponent {
     }
     
     private void initCustom() {
+        // registering lookup
+        content = new InstanceContent();
+        Lookup dynamicLookup = new AbstractLookup(content);
+        associateLookup(dynamicLookup);
+        
         booksTree = new BookshelfTree();
         scrollPane.setViewportView(booksTree);
         
@@ -154,16 +167,6 @@ public final class BookshelfTopComponent extends TopComponent {
             }
         });
         
-        booksTree.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent evt) {
-                if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
-                    return;
-                }
-                openSelectedBook();
-            }
-        });
-        
         FileObject fo = FileUtil.getConfigRoot().getFileObject(popupMenuFolderName);
         
         // add listener to monitor layer.xml popup menu change
@@ -181,7 +184,39 @@ public final class BookshelfTopComponent extends TopComponent {
             @Override
             public void fileAttributeChanged(FileAttributeEvent fe) { popupMenuValid = false; }
         });
+        createPopupMenu();
+        
+        booksTree.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+                    return;
+                }
+                openSelectedBook();
+            }
+        });
 
+        booksTree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent evt) {
+                if (selectedBook != null) {
+                    content.remove(selectedBook);
+                    selectedBook = null;
+                }
+                
+                TreePath treePath = evt.getPath();
+                if (treePath == null) {
+                    return;
+                }
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+
+                Object obj = node.getUserObject();
+                if (obj instanceof Book) {
+                    selectedBook = (Book)obj;
+                    content.add(selectedBook);
+                }
+            }
+        });
     }
     
     private void createPopupMenu() {
@@ -279,7 +314,7 @@ public final class BookshelfTopComponent extends TopComponent {
      * @return true if valid otherwise false
      */
     private boolean isUnlockKeyValid(Book book) {
-        boolean valid = false;
+        boolean valid;
 
         try {
             Key key = book.getGlobalKeyList();

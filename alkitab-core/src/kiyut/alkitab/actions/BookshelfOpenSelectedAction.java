@@ -2,10 +2,7 @@
 
 package kiyut.alkitab.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -21,19 +18,19 @@ import org.openide.util.NbBundle;
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 10)
 })
-public class BookshelfOpenSelectedAction extends AbstractAction {
+public class BookshelfOpenSelectedAction extends BookshelfBookAction {
 
-    public BookshelfOpenSelectedAction() {
-        super(NbBundle.getMessage(BookshelfOpenSelectedAction.class, "CTL_BookshelfOpenSelectedAction"));
+    @Override
+    public String getName() {
+        return NbBundle.getMessage(BookshelfOpenSelectedAction.class, "CTL_BookshelfOpenSelectedAction");
     }
     
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void performAction() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                BookshelfTopComponent tc = BookshelfTopComponent.findInstance();
-                tc.openSelectedBook();                
+                bookshelfTopComponent.openSelectedBook();                
             }
         });
     }

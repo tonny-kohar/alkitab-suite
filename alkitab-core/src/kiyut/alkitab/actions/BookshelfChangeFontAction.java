@@ -4,11 +4,8 @@ package kiyut.alkitab.actions;
 
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 import kiyut.alkitab.api.BookFontStore;
-import kiyut.alkitab.windows.BookshelfTopComponent;
 import org.crosswire.common.swing.FontChooser;
 import org.crosswire.jsword.book.Book;
 import org.openide.awt.ActionID;
@@ -27,14 +24,15 @@ import org.openide.windows.WindowManager;
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 20)
 })
-public class BookshelfChangeFontAction extends AbstractAction {
+public class BookshelfChangeFontAction extends BookshelfBookAction {
 
-    public BookshelfChangeFontAction() {
-        super(NbBundle.getMessage(BookshelfChangeFontAction.class, "CTL_BookshelfChangeFontAction"));
+    @Override
+    public String getName() {
+        return NbBundle.getMessage(BookshelfChangeFontAction.class, "CTL_BookshelfChangeFontAction");
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void performAction() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -44,8 +42,7 @@ public class BookshelfChangeFontAction extends AbstractAction {
     }
 
     protected void doChangeFont() {
-        BookshelfTopComponent bs = BookshelfTopComponent.findInstance();
-        Book book = bs.getSelectedBook();
+        Book book = bookshelfTopComponent.getSelectedBook();
         if (book == null) {
             return;
         }
