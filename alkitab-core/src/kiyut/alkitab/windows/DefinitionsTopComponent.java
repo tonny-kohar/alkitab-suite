@@ -7,6 +7,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -78,6 +84,64 @@ public final class DefinitionsTopComponent extends TopComponent {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    
+    void writeProperties(java.util.Properties p) {
+        // better to version settings since initial version as advocated at
+        // http://wiki.apidesign.org/wiki/PropertyFiles
+        p.setProperty("version", "1.0");
+        // TODO store your settings
+    }
+
+    void readProperties(java.util.Properties p) {
+        String version = p.getProperty("version");
+        // TODO read your settings according to their version
+    }
+    
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        super.writeExternal(out);
+        
+        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
+            return;
+        }
+        
+        int count = tabbedPane.getTabCount();
+        if (count <= 0) { 
+            out.writeInt(count);
+            return; 
+        }
+        
+        List<String> bookNames  = new ArrayList<String>(count);
+        for (int i = 0; i < count; i++) {
+            DictionaryPane dicPane = (DictionaryPane) tabbedPane.getComponentAt(i);
+            bookNames.add(dicPane.getBook().getInitials());
+        }
+        
+        out.writeInt(count);
+        out.writeObject(bookNames);
+    }
+    
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        super.readExternal(in);
+        
+        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
+            return;
+        }
+        
+        int count = in.readInt();
+        if (count <= 0) { return; }
+        
+        Object obj = in.readObject();
+        if (obj instanceof List) {
+            List<String> bookNames = (List<String>)obj;
+            for (int i=0; i<count; i++ ) {
+                String name = bookNames.get(i);
+                SwordURI uri = SwordURI.createURI(SwordURI.DICTIONARY_SCHEME, name, null);
+                openURI(uri, null);
+            }
+        }
+    }
     
     @Override
     public javax.swing.Action[] getActions() {
@@ -188,8 +252,8 @@ public final class DefinitionsTopComponent extends TopComponent {
             dicPane.addHyperlinkListener(hyperlinkListener);
             dicPane.setName(book.getInitials());
             
-            // do not use addTab, there is bug for space between title and x button
-            //tabbedPane.addTab(book.getInitials() + "   ", null, dicPane, book.getName());
+            // XXX do not use addTab, there is bug for space between title and x button
+            // tabbedPane.addTab(book.getInitials() + "   ", null, dicPane, book.getName());
             tabbedPane.add(dicPane);
             index = tabbedPane.getTabCount() - 1;
             tabbedPane.setToolTipTextAt(index, book.getName());
