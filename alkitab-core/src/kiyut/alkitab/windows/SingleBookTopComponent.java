@@ -6,9 +6,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +16,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.JComponent;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -25,12 +23,11 @@ import kiyut.alkitab.actions.GoNextAction;
 import kiyut.alkitab.actions.GoPreviousAction;
 import kiyut.alkitab.actions.ReloadAction;
 import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.BookViewer;
 import kiyut.alkitab.api.BookViewerNode;
 import kiyut.alkitab.api.History;
 import kiyut.alkitab.api.HistoryManager;
-import kiyut.alkitab.options.BookViewerOptions;
+import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.bookviewer.SingleBookViewerPane;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
@@ -90,86 +87,27 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         return PREFERRED_ID;
     }
     
-    /** replaces this in object stream */
     @Override
-    public Object writeReplace() throws ObjectStreamException {
-        return new ResolvableHelper(this);
+    public void writeExternal(ObjectOutput out) throws IOException {
+        super.writeExternal(out);
+        
+        List<Book> books = bookViewer.getBooks();
+        String bookName = books.get(0).getInitials();
+        
+        out.writeObject(bookName);
+        out.writeObject(bookViewer.getKey());
     }
     
-    final static class ResolvableHelper implements Serializable {
-
-        private static final long serialVersionUID = 1L;
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        super.readExternal(in);
         
-        private List<String> bookNames;
-        private Key key;
-        private boolean focused;
-                
-        public ResolvableHelper(SingleBookTopComponent tc) {
-            SingleBookViewerPane bookViewer = tc.bookViewer;
-            
-            if (bookViewer == null) { return; }
+        String bookName = (String)in.readObject();
+        Key key = (Key)in.readObject();
         
-            List<Book> books = bookViewer.getBooks();
-
-            bookNames = new ArrayList<String>(books.size());
-            for (int i = 0; i < books.size(); i++) {
-                bookNames.add(books.get(i).getInitials());
-            }
-
-            key = bookViewer.getKey();
-            this.focused = tc.isFocusOwner();
-        }
-
-        public Object readResolve() {
-            final SingleBookTopComponent result = new SingleBookTopComponent();
-            
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (!BookViewerOptions.getInstance().isSessionPersistence()) {
-                        // just a fallback mechanism in case ModuleInstall fail to handle
-                        result.close();
-                        return;
-                    }
-
-                    try {
-                        restoreSession(result);
-                    } catch (Exception ex) {
-                        Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.log(Level.FINER, "Unable to restore session.\n{0}", ex.getMessage());
-                        result.close();
-                    }
-                }
-            });
-            
-            return result;
-        }
-        
-        private void restoreSession(SingleBookTopComponent tc) {
-            if (bookNames == null || key == null) {
-                throw new IllegalStateException("bookNames or key is null");
-            }
-
-            SingleBookViewerPane bookViewer = tc.bookViewer;
-
-            for (int i = 0; i < bookNames.size(); i++) {
-                bookViewer.setBook(bookNames.get(i));
-            }
-
-            if (bookViewer.getBookCount() == 0) {
-                throw new IllegalStateException("bookViewer.getBookCount() == 0");
-            }
-
-            if (key != null) {
-                bookViewer.setKey(key);
-            }
-
-            bookViewer.reload();
-
-            if (focused) {
-                tc.requestActive();
-            }
-        }
+        bookViewer.setBook(bookName);
+        bookViewer.setKey(key);        
+        bookViewer.reload();
     }
     
     /** If you override this, please make sure to call super.initCustom() */
@@ -213,7 +151,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
 
         actionMap.put(goPreviousAction.getActionMapKey(), goPreviousDelegateAction);
         actionMap.put(goNextAction.getActionMapKey(), goNextDelegateAction);
-        actionMap.put(reloadAction.getActionMapKey(), new ReloadDelegateAction());;
+        actionMap.put(reloadAction.getActionMapKey(), new ReloadDelegateAction());
     }
     
     @Override

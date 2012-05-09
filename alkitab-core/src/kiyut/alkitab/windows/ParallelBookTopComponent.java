@@ -12,6 +12,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,6 +53,7 @@ import kiyut.alkitab.api.HistoryManager;
 import kiyut.alkitab.api.Indexer;
 import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.bookviewer.DictionaryPane;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.bookviewer.ParallelBookViewerPane;
 import kiyut.alkitab.bookviewer.ViewerHintsPane;
@@ -119,103 +123,46 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     protected String preferredID() {
         return PREFERRED_ID;
     }
-
-    /** replaces this in object stream */
+    
     @Override
-    public Object writeReplace() throws ObjectStreamException {
-        return new ResolvableHelper(this);
+    public void writeExternal(ObjectOutput out) throws IOException {
+        super.writeExternal(out);
+        
+        List<Book> books = bookViewer.getBooks();
+        List<String> bookNames = new ArrayList<String>(books.size());
+        for (int i = 0; i < books.size(); i++) {
+            bookNames.add(books.get(i).getInitials());
+        }
+        
+        
+        out.writeObject(bookNames);
+        out.writeObject(bookViewer.getKey());
+        out.writeObject(bookViewer.getSearchString());
+        out.writeBoolean(bookViewer.isCompareView());
+        out.writeObject(bookViewer.getViewerHints());
     }
-
-    final static class ResolvableHelper implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-        private List<String> bookNames;
-        private Key key;
-        private String searchString;
-        private boolean compareView;
-        private boolean focused;
-        private ViewerHints<ViewerHints.Key,Object> viewerHints;
-
-
-        public ResolvableHelper(ParallelBookTopComponent tc) {
-            ParallelBookViewerPane bookViewer = tc.bookViewer;
-            
-            if (bookViewer == null) { return; }
-
-            List<Book> books = bookViewer.getBooks();
-
-            bookNames = new ArrayList<String>(books.size());
-            for (int i = 0; i < books.size(); i++) {
-                bookNames.add(books.get(i).getInitials());
-            }
-
-            key = bookViewer.getKey();
-            searchString = bookViewer.getSearchString();
-            compareView = bookViewer.isCompareView();
-            this.focused = tc.isFocusOwner();
-            viewerHints = bookViewer.getViewerHints();
+    
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        super.readExternal(in);
+        
+        List<String> bookNames = (List<String>)in.readObject();
+        Key key = (Key)in.readObject();
+        String searchString = (String)in.readObject();
+        boolean compareView = in.readBoolean();
+        ViewerHints<ViewerHints.Key,Object> viewerHints = (ViewerHints<ViewerHints.Key,Object>)in.readObject();
+        
+        viewerHints.setDefaults(ViewerHintsOptions.getInstance().getViewerHints());
+        bookViewer.setViewerHints(viewerHints);
+        bookViewer.setKey(key);
+        bookViewer.setSearchString(searchString);
+        
+        for (int i = 0; i < bookNames.size(); i++) {
+            bookViewer.addBook(bookNames.get(i));
         }
-
-        public Object readResolve() {
-            final ParallelBookTopComponent result = new ParallelBookTopComponent();
-
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (!BookViewerOptions.getInstance().isSessionPersistence()) {
-                        // just a fallback mechanism in case ModuleInstall fail to handle
-                        result.close();
-                        return;
-                    }
-
-                    try {
-                        restoreSession(result);
-                    } catch (Exception ex) {
-                        Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
-                        logger.log(Level.FINER, "Unable to restore session.\n{0}", ex.getMessage());
-                        result.close();
-                    }
-                }
-            });
-
-            return result;
-        }
-
-        private void restoreSession(ParallelBookTopComponent tc) {
-            if (bookNames == null || key == null) {
-                throw new IllegalStateException("bookNames or key is null");
-            }
-
-            ParallelBookViewerPane bookViewer = tc.bookViewer;
-
-            if (viewerHints != null) {
-                viewerHints.setDefaults(ViewerHintsOptions.getInstance().getViewerHints());
-                bookViewer.setViewerHints(viewerHints);
-            } 
-
-            if (key != null) {
-                bookViewer.setKey(key);
-            }
-
-            if (searchString != null) {
-                bookViewer.setSearchString(searchString);
-            }
-
-            for (int i = 0; i < bookNames.size(); i++) {
-                bookViewer.addBook(bookNames.get(i));
-            }
-
-            if (bookViewer.getBookCount() == 0) {
-                throw new IllegalStateException("bookViewer.getBookCount() == 0"); 
-            }
-
-            bookViewer.compareView(compareView);
-            bookViewer.reload();
-
-            if (focused) {
-                tc.requestActive();
-            }
-        }
+        
+        bookViewer.compareView(compareView);
+        bookViewer.reload();
     }
 
     @Override
