@@ -21,14 +21,16 @@ import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
+import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.navigator.BookNavigatorPane BookNavigatorPane}.
  */
 @TopComponent.Description(preferredID = "BookNavigatorTopComponent",
     //iconBase="SET/PATH/TO/ICON/HERE", 
-    persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+    persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED)
 @TopComponent.Registration(mode = "explorer", openAtStartup = true, position=110)
 @ActionID(category = "Window", id = "kiyut.alkitab.actions.BookNavigatorAction")
 @ActionReferences({
@@ -87,13 +89,23 @@ public final class BookNavigatorTopComponent extends TopComponent {
             public void run() {
                 if (!displayUpdated) {
                     if (bookViewer == null) {
-                        
+                        // special case only when loading from TopComponent persistence
+                        // and this got the focus (activated) from previous session.
+                        Mode mode = WindowManager.getDefault().findMode("editor"); //NOI18N
+                        if (mode != null) {
+                            TopComponent selectedTC = mode.getSelectedTopComponent();
+                            if (selectedTC != null && selectedTC instanceof BookViewerTopComponent) {
+                                BookViewerTopComponent tc = (BookViewerTopComponent) selectedTC;
+                                bookViewer = tc.getBookViewer();
+                                registerBookViewer(bookViewer);
+                                return;
+                            }
+                        }
                     }
                     updateDisplay();
                 }
             }
         });
-        
     }
 
     @Override
@@ -119,7 +131,6 @@ public final class BookNavigatorTopComponent extends TopComponent {
                     unregisterBookViewer(bookViewer);
                 } 
             }
-
         };
         
         bookViewerLookupListener = new LookupListener() {
@@ -131,8 +142,8 @@ public final class BookNavigatorTopComponent extends TopComponent {
 
         result = Utilities.actionsGlobalContext().lookupResult(BookViewer.class);
         result.addLookupListener(bookViewerLookupListener);
-        //result.allInstances(); // needed to tell Nb that it is processed
-        bookViewerLookupListenerResultChanged(new LookupEvent(result));
+        result.allInstances(); // needed to tell Nb that it is processed
+        //bookViewerLookupListenerResultChanged(new LookupEvent(result));
     }
     
     private void bookViewerLookupListenerResultChanged(LookupEvent lookupEvent) {
@@ -161,7 +172,8 @@ public final class BookNavigatorTopComponent extends TopComponent {
     }
     
     private synchronized void unregisterBookViewer(BookViewer bookViewer) {
-        navigatorMap.remove(bookViewer);
+        displayUpdated = false;
+        navigatorMap.remove(bookViewer);        
         //System.out.println("BookNavTC.unregisterBookViewer()");
     }
 
