@@ -61,7 +61,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         sessionPersistenceGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -76,8 +75,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         fontBoldCheckBox = new javax.swing.JCheckBox();
         fontItalicCheckBox = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
-        sessionPersistenceEnabledRadio = new javax.swing.JRadioButton();
-        sessionPersistenceDisabledRadio = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
         backgroundCombo = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
@@ -104,44 +101,42 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel16, bundle.getString("CTL_SessionPersistence.Text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 6);
-        jPanel4.add(jLabel16, gridBagConstraints);
-
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, bundle.getString("CTL_ParallelLimit.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel4.add(jLabel1, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, bundle.getString("CTL_VerseLimit.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel4.add(jLabel2, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, bundle.getString("CTL_SearchLimit.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel4.add(jLabel3, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel4, bundle.getString("CTL_Font.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel4.add(jLabel4, gridBagConstraints);
 
         parallelBookLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
@@ -149,7 +144,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         versesPerTabComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "25", "50", "75", "100", "125", "150", "176", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
@@ -157,7 +153,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         defaultSearchLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Unlimited", "10", "20", "30", "40", "50", "75", "100", "125", "150", "175", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
@@ -203,32 +200,15 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         fontPanel.add(jPanel11, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(fontPanel, gridBagConstraints);
 
         jPanel10.setLayout(new java.awt.GridBagLayout());
-
-        sessionPersistenceGroup.add(sessionPersistenceEnabledRadio);
-        org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceEnabledRadio, bundle.getString("CTL_SessionEnabled.Text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 12);
-        jPanel10.add(sessionPersistenceEnabledRadio, gridBagConstraints);
-
-        sessionPersistenceGroup.add(sessionPersistenceDisabledRadio);
-        org.openide.awt.Mnemonics.setLocalizedText(sessionPersistenceDisabledRadio, bundle.getString("CTL_SessionDisabled.Text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel10.add(sessionPersistenceDisabledRadio, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
@@ -237,14 +217,16 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel10, bundle.getString("CTL_Background.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(jLabel10, gridBagConstraints);
 
         backgroundCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Default", "Light White", "Light Yellow", "Light Gray", "Custom ..." }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(backgroundCombo, gridBagConstraints);
@@ -387,7 +369,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -404,8 +385,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox parallelBookLimitComboBox;
-    private javax.swing.JRadioButton sessionPersistenceDisabledRadio;
-    private javax.swing.JRadioButton sessionPersistenceEnabledRadio;
     private javax.swing.ButtonGroup sessionPersistenceGroup;
     private javax.swing.JComboBox versesPerTabComboBox;
     // End of variables declaration//GEN-END:variables
@@ -454,14 +433,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         versesPerTabComboBox.setSelectedItem(Integer.toString(bookViewerOpts.getVersesLimit()));
         defaultSearchLimitComboBox.setSelectedItem(Integer.toString(bookViewerOpts.getDefaultSearchLimit()));
 
-        if (bookViewerOpts.isSessionPersistence()) {
-            sessionPersistenceEnabledRadio.setSelected(true);
-        } else {
-            sessionPersistenceDisabledRadio.setSelected(true);
-        }
-        //sessionPersistenceEnabledRadio.setSelected(bookViewerOpts.isSessionPersistence());
-        //System.out.println("SessionPersist: " + bookViewerOpts.isSessionPersistence() + " radio: " + sessionPersistenceEnabledRadio.isSelected());
-
         BookFontStore fontStore = BookFontStore.getInstance();
         String fontDef = fontStore.getDefaultFont();
         Font font = GuiConvert.string2Font(fontDef);
@@ -503,8 +474,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         } else {
             bookViewerOpts.setDefaultSearchLimit(Integer.parseInt(defaultSearchLimitComboBox.getSelectedItem().toString()));
         }
-
-        bookViewerOpts.setSessionPersistence(sessionPersistenceEnabledRadio.isSelected());
 
         int index = backgroundCombo.getSelectedIndex();
         switch (index) {

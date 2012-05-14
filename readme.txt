@@ -1,4 +1,4 @@
-How to open Alkitab in Netbeans*
+How to open Alkitab in Netbeans
 - extract the source code into your desired location
 - Open Netbeans 
 - Go to Menu - File - Open Project
@@ -20,5 +20,3 @@ alkitab-suite (Main Container Project)
 |- etc
 
 The main source code is under alkitab-core
-
-*Netbeans used is Netbeans 7.0

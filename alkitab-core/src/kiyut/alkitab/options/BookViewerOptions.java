@@ -27,10 +27,8 @@ public final class BookViewerOptions extends AbstractOptions {
     }
 
     /*
-     * TODO
-     *  make all public and available from propertyChangeListener
+     * TODO make all public and available from propertyChangeListener
      */
-    public static final String SESSION_PERSISTENCE = "session-persistence";
     public static final String SYNCHRONIZE_VIEW = "synchronize-view";
     private static final String PARALLEL_BOOK_LIMIT = "parallel-book-limit";
     private static final String VERSES_LIMIT = "verses-limit";
@@ -45,7 +43,6 @@ public final class BookViewerOptions extends AbstractOptions {
     private static final String DOWNLOAD_PATH = "download-path";
     public static final String BACKGROUND = "background";
     
-    private boolean sessionPersistence;
     private boolean synchronizeView;
     private int parallelBookLimit;
     private int defaultSearchLimit;
@@ -75,7 +72,6 @@ public final class BookViewerOptions extends AbstractOptions {
     public void load() {
         Preferences prefs = getPreferences();
 
-        sessionPersistence = prefs.getBoolean(SESSION_PERSISTENCE, true);
         synchronizeView = prefs.getBoolean(SYNCHRONIZE_VIEW, false);
         parallelBookLimit = prefs.getInt(PARALLEL_BOOK_LIMIT, 5);
         defaultSearchLimit = prefs.getInt(DEFAULT_SEARCH_LIMIT, 50);
@@ -111,7 +107,6 @@ public final class BookViewerOptions extends AbstractOptions {
     @Override
     public void store() {
         Preferences prefs = getPreferences();
-        prefs.putBoolean(SESSION_PERSISTENCE, sessionPersistence);
         prefs.putInt(PARALLEL_BOOK_LIMIT, parallelBookLimit);
         prefs.putInt(DEFAULT_SEARCH_LIMIT, defaultSearchLimit);
         prefs.putInt(VERSES_LIMIT, versesLimit);
@@ -175,16 +170,6 @@ public final class BookViewerOptions extends AbstractOptions {
         }
     }
  
-    public void setSessionPersistence(boolean b) {
-        boolean old = this.sessionPersistence;
-        this.sessionPersistence = b;
-        firePropertyChange(SESSION_PERSISTENCE, old, this.sessionPersistence);
-    }
-    
-    public boolean isSessionPersistence() {
-        return this.sessionPersistence;
-    }
-
     public void setSynchronizeView(boolean b) {
         boolean old = this.synchronizeView;
         this.synchronizeView = b;

@@ -26,13 +26,10 @@ import kiyut.alkitab.api.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
-import kiyut.alkitab.windows.BookViewerTopComponent;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.sword.SwordBookPath;
 import org.openide.modules.ModuleInstall;
-import org.openide.windows.Mode;
-import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
 /**
@@ -57,7 +54,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         System.setProperty("alkitab.buildnumber", Application.getBuildNumber());
         System.setProperty("alkitab.version", Application.getVersion());
         System.setProperty(orientationKey, strOrientation);
-
+        
         configureSwordPath();
 
         // XXX Register context menu (right click) cut/copy/paste
@@ -82,10 +79,9 @@ public class BrandingModuleInstall extends ModuleInstall {
     private void doRun() {
         ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());
 
-        boolean session = BookViewerOptions.getInstance().isSessionPersistence();
         boolean firstTime = GlobalHistory.getInstance().size() == 0 ? true : false;
 
-        if (!session || firstTime) {
+        if (firstTime) {
             // open preferred Bible if exist and available
             String prefsBible = BookViewerOptions.getInstance().getDefaultBible();
             Book book = Books.installed().getBook(prefsBible);
@@ -109,27 +105,12 @@ public class BrandingModuleInstall extends ModuleInstall {
                     selectedTC.requestActive();
                 }
             }
-        } */
+        } */ 
     }
     
     @Override
     public boolean closing() {
-
         GlobalHistory.getInstance().save();
-
-        if (BookViewerOptions.getInstance().isSessionPersistence()) {
-            return super.closing();
-        }
-               
-        // if not session persistence. close all currently opened BookViewer
-        TopComponent[] tcs = TopComponent.getRegistry().getOpened().toArray(new TopComponent[0]);
-        for (int i=0; i<tcs.length; i++) {
-            TopComponent tc = tcs[i];
-            if (tc instanceof BookViewerTopComponent) {
-                tc.close();
-            }
-        }
-        
         return super.closing();
     }
 

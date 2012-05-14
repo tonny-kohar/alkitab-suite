@@ -23,11 +23,6 @@ import org.openide.util.actions.CallbackSystemAction;
 public class FocusPassageComponentAction extends CallbackSystemAction {
 
     @Override
-    protected void initialize() {
-        super.initialize();
-    }
-    
-    @Override
     public String getName() {
         return NbBundle.getMessage(FocusPassageComponentAction.class, "CTL_FocusPassageComponentAction");
     }

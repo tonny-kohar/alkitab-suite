@@ -24,11 +24,6 @@ import org.openide.util.actions.CallbackSystemAction;
 public class GoForwardAction extends CallbackSystemAction {
     
     @Override
-    protected void initialize() {
-        super.initialize();
-    }
-    
-    @Override
     public String getName() {
         return NbBundle.getMessage(GoForwardAction.class, "CTL_GoForwardAction");
     }

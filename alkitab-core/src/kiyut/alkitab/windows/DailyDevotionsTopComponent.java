@@ -139,8 +139,8 @@ public final class DailyDevotionsTopComponent extends TopComponent {
             dailyPane.addHyperlinkListener(hyperlinkListener);
             dailyPane.setName(daily.getInitials());
             
-            // do not use addTab, there is bug for space between title and x button
-            //tabbedPane.addTab(daily.getInitials() + "   ", null, dailyPane, daily.getName());
+            // XXX do not use addTab, there is bug for space between title and x button
+            // tabbedPane.addTab(daily.getInitials() + "   ", null, dailyPane, daily.getName());
             tabbedPane.add(dailyPane);
             index = tabbedPane.getTabCount() - 1;
             tabbedPane.setToolTipTextAt(index, daily.getName());

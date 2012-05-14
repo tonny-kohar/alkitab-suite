@@ -11,7 +11,7 @@
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
-                        <specification-version>2.8.1</specification-version>
+                        <specification-version>2.9</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>

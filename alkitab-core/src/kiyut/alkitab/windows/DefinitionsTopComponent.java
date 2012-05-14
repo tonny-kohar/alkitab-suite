@@ -10,8 +10,6 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
@@ -101,10 +98,6 @@ public final class DefinitionsTopComponent extends TopComponent {
     public void writeExternal(ObjectOutput out) throws IOException {
         super.writeExternal(out);
         
-        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
-            return;
-        }
-        
         int count = tabbedPane.getTabCount();
         if (count <= 0) { 
             out.writeInt(count);
@@ -117,17 +110,16 @@ public final class DefinitionsTopComponent extends TopComponent {
             bookNames.add(dicPane.getBook().getInitials());
         }
         
+        int selectedIndex = tabbedPane.getSelectedIndex();
+        
         out.writeInt(count);
         out.writeObject(bookNames);
+        out.writeInt(selectedIndex);
     }
     
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         super.readExternal(in);
-        
-        if (!BookViewerOptions.getInstance().isSessionPersistence()) {
-            return;
-        }
         
         int count = in.readInt();
         if (count <= 0) { return; }
@@ -141,6 +133,9 @@ public final class DefinitionsTopComponent extends TopComponent {
                 openURI(uri, null);
             }
         }
+        
+        int selectedIndex = in.readInt();
+        tabbedPane.setSelectedIndex(selectedIndex);
     }
     
     @Override

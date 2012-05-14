@@ -22,11 +22,6 @@ import org.openide.util.actions.BooleanStateAction;
 public class SynchronizeViewAction extends BooleanStateAction  {
 
     @Override
-    protected void initialize() {
-        super.initialize();
-    }
-    
-    @Override
     public String getName() {
         return NbBundle.getMessage(SynchronizeViewAction.class, "CTL_SynchronizeViewAction");
     }

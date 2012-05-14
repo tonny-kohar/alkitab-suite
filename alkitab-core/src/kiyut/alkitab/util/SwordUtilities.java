@@ -164,6 +164,7 @@ public class SwordUtilities {
     /** just an implementation of genericfied book initial comparator */
     public static Comparator<Book> getBookInitialsComparator() {
         Comparator<Book> comp = new Comparator<Book>() {
+            @Override
             public int compare(Book o1, Book o2) {
                 return o1.getInitials().compareTo(o2.getInitials());
             }

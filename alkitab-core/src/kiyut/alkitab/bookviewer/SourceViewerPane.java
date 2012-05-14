@@ -13,7 +13,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,18 +22,14 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import kiyut.alkitab.api.BookFontStore;
-import kiyut.alkitab.api.SwingHTMLConverter;
 import kiyut.alkitab.api.ViewerHints;
 import kiyut.swing.dialog.DialogESC;
 import kiyut.swing.text.xml.XMLContext;
 import kiyut.swing.text.xml.XMLEditorKit;
-import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
 import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.TransformingSAXEventProvider;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
@@ -48,7 +43,8 @@ import org.xml.sax.ContentHandler;
  */
 public class SourceViewerPane extends javax.swing.JPanel {
     
-    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
+    protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    protected BookTextPane bookTextPane;
     
     /** Creates new SourceViewerPane */
     public SourceViewerPane() {
@@ -105,22 +101,6 @@ public class SourceViewerPane extends javax.swing.JPanel {
         this.setPreferredSize(size);
 
         Color background = UIManager.getColor("TextPane.background");
-
-        //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
-        /*Color background = osisEditorPane.getBackground();
-        try {
-            if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-                Color color = UIManager.getColor("TextPane.background");
-                if (color != null) {
-                    if (!color.equals(getBackground())) {
-                        background = color;
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.CONFIG,ex.getMessage(),ex);
-        }*/
 
         int fontSize = 10;
         try {
@@ -184,11 +164,21 @@ public class SourceViewerPane extends javax.swing.JPanel {
         dialog.setVisible(true);
     }
 
+    public void initSource(BookTextPane bookTextPane) {
+        this.bookTextPane = bookTextPane;
+        try {
+            initSourceImpl(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.isCompareView());
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.WARNING, ex.getMessage(), ex);
+        }
+    }
 
     /** Init this component with the source text
+     * @Deprecated replaced with #initSource(BookTextPane)
      */
     @SuppressWarnings("unchecked")
-    public void initSource(List<Book> books, Key key, Converter converter, ViewerHints<ViewerHints.Key,Object> viewerHints, boolean compareView) throws Exception {
+    private void initSourceImpl(List<Book> books, Key key, boolean compareView) throws Exception {
         if (books.isEmpty() || key == null) {
             return;
         }
@@ -199,13 +189,12 @@ public class SourceViewerPane extends javax.swing.JPanel {
             return;
         }
 
-        boolean ltr = bmd.isLeftToRight();
-
-        String rawText = null;
+        //boolean ltr = bmd.isLeftToRight();
 
         /////////////
         // Raw Text
-        StringBuilder sb = new StringBuilder();
+        
+        StringBuilder rawText = new StringBuilder();
         Iterator<Key> iter = key.iterator();
         while (iter.hasNext()) {
             Key curKey = iter.next();
@@ -218,18 +207,16 @@ public class SourceViewerPane extends javax.swing.JPanel {
             //System.out.println("BookTextPane.refreshImpl osisID: " + osisID);
             for (int i = 0; i < books.size(); i++) {
                 Book book = books.get(i);
-                if (sb.length() > 0) {
-                    sb.append(System.getProperty("line.separator"));
+                if (rawText.length() > 0) {
+                    rawText.append(System.getProperty("line.separator"));
                 }
-                sb.append(book.getInitials());
+                rawText.append(book.getInitials());
                 if (osisID != null) {
-                    sb.append(':').append(osisID);
+                    rawText.append(':').append(osisID);
                 }
-                sb.append(" - ").append(book.getRawText(curKey));
+                rawText.append(" - ").append(book.getRawText(curKey));
             }
         }
-
-        rawText = sb.toString();
 
         ///////////////
         // OSIS Text
@@ -239,29 +226,7 @@ public class SourceViewerPane extends javax.swing.JPanel {
         ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
         osissep.provideSAXEvents(osis);
 
-        //////////////
-        // HTML Text
-
-        TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
-
-        htmlSEP.setParameter(SwingHTMLConverter.DIRECTION, ltr ? "ltr" : "rtl");
-
-        URI uri = bmd.getLocation();
-        String uriString = uri == null ? "" : uri.toURL().toString();
-        htmlSEP.setParameter(SwingHTMLConverter.BASE_URL, uriString);
-
-        // set the font, overrides default if needed
-        String fontSpec = GuiConvert.font2String(BookFontStore.getInstance().getFont(bookData.getFirstBook()));
-        htmlSEP.setParameter(SwingHTMLConverter.FONT, fontSpec);
-
-        ViewerHints<ViewerHints.Key, Object> thisViewerHints = new ViewerHints<ViewerHints.Key, Object>(viewerHints);
-
-        thisViewerHints.updateProvider(htmlSEP);
-
-        ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
-        htmlSEP.provideSAXEvents(html);
-
-        initSource(rawText, osis.toString(), html.toString());
+        initSource(rawText.toString(), osis.toString(), bookTextPane.getText());
     }
 
     public void initSource(String raw, String osis, String html) {

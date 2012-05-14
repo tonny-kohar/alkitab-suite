@@ -42,6 +42,7 @@
             <public-packages>
                 <package>gnu.gpl</package>
                 <package>gnu.lgpl</package>
+                <package>kiyut.alkitab.modules.jsword.xsl</package>
                 <package>org.crosswire.common.activate</package>
                 <package>org.crosswire.common.aqua</package>
                 <package>org.crosswire.common.compress</package>

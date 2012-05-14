@@ -1,5 +1,4 @@
 /* This work has been placed into the public domain. */
-
 package kiyut.alkitab.bookviewer;
 
 import java.awt.Color;
@@ -8,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
@@ -31,8 +31,7 @@ import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
 
 /**
- * BookTextPane that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit.
- * This support parallel book.
+ * BookTextPane that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit. This support parallel book.
  *
  */
 public class BookTextPane extends JTextPane {
@@ -40,25 +39,26 @@ public class BookTextPane extends JTextPane {
     protected List<Book> books;
     protected Key key;
     protected Converter converter;
-    
-    /** Default it is false */
+    /**
+     * Default it is false
+     */
     protected boolean compareView;
-    
-    protected ViewerHints<ViewerHints.Key,Object> viewerHints;
-    
-    /** Creates new BookTextPane. 
-     * By default it is using empty TransfomerHints
-     * 
+    protected ViewerHints<ViewerHints.Key, Object> viewerHints;
+
+    /**
+     * Creates new BookTextPane. By default it is using empty TransfomerHints
+     *
      */
     public BookTextPane() {
-        this(new ViewerHints<ViewerHints.Key,Object>());
+        this(new ViewerHints<ViewerHints.Key, Object>());
     }
-    
-    public BookTextPane(ViewerHints<ViewerHints.Key,Object> viewerHints) {
+
+    public BookTextPane(ViewerHints<ViewerHints.Key, Object> viewerHints) {
         books = new ArrayList<Book>();
         setEditable(false);
         setEditorKit(new HTMLEditorKit());
         addHyperlinkListener(new HyperlinkListener() {
+
             @Override
             public void hyperlinkUpdate(HyperlinkEvent evt) {
                 BookTextPane.this.hyperlinkUpdate(evt);
@@ -87,37 +87,22 @@ public class BookTextPane extends JTextPane {
                 super.setBackground(color);
             }
         }
-
-        //XXX workaround for Linux GTK lnf JEditorPane.setEditable(false) background color
-        /*try {
-            if (!System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-                Color color = UIManager.getColor("TextPane.background");
-                if (color != null) {
-                    bg = color;
-                }
-            } 
-        } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.CONFIG,ex.getMessage(),ex);
-        }
-        
-        super.setBackground(bg);
-         * 
-         */
     }
 
-    public void setViewerHints(ViewerHints<ViewerHints.Key,Object> viewerHints) {
+    public void setViewerHints(ViewerHints<ViewerHints.Key, Object> viewerHints) {
         if (viewerHints == null) {
             throw new IllegalArgumentException("transformerHints could not be null");
         }
         this.viewerHints = viewerHints;
     }
-    
-    public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
+
+    public ViewerHints<ViewerHints.Key, Object> getViewerHints() {
         return viewerHints;
     }
-    
-    /** Default it is false */
+
+    /**
+     * Default it is false
+     */
     public void setCompareView(boolean compareView) {
         this.compareView = compareView;
     }
@@ -146,19 +131,24 @@ public class BookTextPane extends JTextPane {
         return this.key;
     }
 
-    /** Redisplay or refresh content, equivalent with calling {@code refresh(false)}
+    /**
+     * Redisplay or refresh content, equivalent with calling {@code refresh(false)}
+     *
      * @see #reload(boolean)
      */
     public void reload() {
         reload(false);
     }
 
-    /** Redisplay or refresh content 
+    /**
+     * Redisplay or refresh content
+     *
      * @param invokeLater using Event Dispatch Thread
      */
     public void reload(boolean invokeLater) {
         if (invokeLater) {
             SwingUtilities.invokeLater(new Runnable() {
+
                 @Override
                 public void run() {
                     reloadImpl();
@@ -172,12 +162,12 @@ public class BookTextPane extends JTextPane {
     @SuppressWarnings("unchecked")
     protected void reloadImpl() {
         //System.out.println("BookTextPane refreshImpl()");
-        
+
         if (books.isEmpty() || key == null) {
             clear();
             return;
         }
-        
+
         BookData bookData = new BookData(books.toArray(new Book[books.size()]), key, compareView);
 
         BookMetaData bmd = bookData.getFirstBook().getBookMetaData();
@@ -189,31 +179,31 @@ public class BookTextPane extends JTextPane {
         boolean ltr = bmd.isLeftToRight();
         applyComponentOrientation(ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
 
-
-        // Note: any source code change here, please update SourceViewerPane source code as well
-        // TODO: due to the above, need to refactor, so both things use the same code base
+        // Set the correct locale
+        this.setLocale(new Locale(bmd.getLanguage().getCode()));
 
         String text = null;
         try {
             SAXEventProvider osissep = bookData.getSAXEventProvider();
-            
+
             TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
             htmlSEP.setParameter(SwingHTMLConverter.DIRECTION, ltr ? "ltr" : "rtl");
-            
+
             URI uri = bmd.getLocation();
             //String uriString = uri == null ? "" : NetUtil.getAsFile(uri).getCanonicalPath();
-            String uriString = uri == null ? "" : uri.toURL().toString();
+            String uriString = uri == null ? "" : uri.toURL().toExternalForm();
             htmlSEP.setParameter(SwingHTMLConverter.BASE_URL, uriString);
-            
+            htmlSEP.setParameter(SwingHTMLConverter.CSS, uriString);
+
             // set the font, overrides default if needed
             String fontSpec = GuiConvert.font2String(BookFontStore.getInstance().getFont(bookData.getFirstBook()));
             htmlSEP.setParameter(SwingHTMLConverter.FONT, fontSpec);
 
             viewerHints.updateProvider(htmlSEP);
-            
+
             // HTML Text
             text = XMLUtil.writeToString(htmlSEP);
-            
+
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);
@@ -223,9 +213,9 @@ public class BookTextPane extends JTextPane {
         select(0, 0);
     }
 
-    /** 
+    /**
      * If it is in the same document, then scroll to the referenced URI
-     * 
+     *
      * @param evt the Event
      */
     protected void hyperlinkUpdate(HyperlinkEvent evt) {
@@ -244,8 +234,8 @@ public class BookTextPane extends JTextPane {
             }
         }
     }
-    
+
     protected void clear() {
         setText(null);
-    }   
+    }
 }

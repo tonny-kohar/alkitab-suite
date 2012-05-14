@@ -21,11 +21,6 @@ import org.openide.util.actions.CallbackSystemAction;
     @ActionReference(path = "Menu/Navigate", position = 210)
 })
 public class Expand1Action extends CallbackSystemAction {
-
-    @Override
-    protected void initialize() {
-        super.initialize();
-    }
     
     @Override
     public String getName() {

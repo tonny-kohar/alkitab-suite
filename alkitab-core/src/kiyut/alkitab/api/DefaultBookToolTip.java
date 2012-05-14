@@ -22,7 +22,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * DefaultBookToolTip popup implementation. 
  * Internally, it is using {@link javax.swing.PopupFactory PopupFactory}.
- * This implementation is sharing the popup, so only 1 can be available at one time.
+ * This implementation is sharing the popup. So only one popup can be displayed at a time.
  * 
  */
 public class DefaultBookToolTip implements BookToolTip {
@@ -62,29 +62,13 @@ public class DefaultBookToolTip implements BookToolTip {
             }
         });
         
-        /*Color background = new ColorUIResource(255, 247, 200); // The color is #fff7c8.
-        Border border = BorderFactory.createLineBorder(new Color(76,79,83)); // The color is #4c4f53.
         
-        bookTextPane.setBackground(background);
-        bookTextPane.setForeground(UIManager.getColor("Tooltip.foreground"));
-        bookTextPane.setBorder(border);
-         */
+        bookTextPane.setBackground(UIManager.getColor("ToolTip.background"));
+        bookTextPane.setForeground(UIManager.getColor("ToolTip.foreground"));
+        bookTextPane.setFont(UIManager.getFont("ToolTip.font"));
         
-        //bookTextPane.setBackground(UIManager.getColor("Tooltip.background"));
-        //bookTextPane.setForeground(UIManager.getColor("Tooltip.foreground"));
-        
-        bookTextPane.setBackground(UIManager.getColor("info"));
-        bookTextPane.setForeground(UIManager.getColor("infoText"));
-        
-        
-        // no longer need border because now it is contained in JScrollPane
-        /*Border border = UIManager.getBorder("Tooltip.border");
-        if (border == null) {
-            border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(76,79,83)), BorderFactory.createEmptyBorder(6,6,6,6));
-        }
-        bookTextPane.setBorder(border);
-         */
-
+        //bookTextPane.setBackground(UIManager.getColor("info"));
+        //bookTextPane.setForeground(UIManager.getColor("infoText"));
 
         //bookTextPane.putClientProperty(JEditorPane.W3C_LENGTH_UNITS, Boolean.TRUE);
 

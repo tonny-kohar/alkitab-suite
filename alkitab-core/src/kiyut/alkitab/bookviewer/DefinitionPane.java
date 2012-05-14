@@ -166,7 +166,8 @@ public class DefinitionPane extends javax.swing.JPanel {
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
-            sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            sourcePane.initSource(bookTextPane);
+            //sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
             sourcePane.showDialog(this,true);
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());

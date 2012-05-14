@@ -24,11 +24,6 @@ import org.openide.util.actions.CallbackSystemAction;
 public class ReloadAction extends CallbackSystemAction {
 
     @Override
-    protected void initialize() {
-        super.initialize();
-    }
-    
-    @Override
     public String getName() {
         return NbBundle.getMessage(ReloadAction.class, "CTL_ReloadAction");
     }

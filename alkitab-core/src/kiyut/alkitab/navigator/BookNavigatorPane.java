@@ -169,7 +169,7 @@ public class BookNavigatorPane extends javax.swing.JPanel {
             bookViewer.setKey(KeyUtil.getPassage(key));
             bookViewer.reload();
         } else {
-            //System.out.println(obj.toString());
+            //System.out.println(key.toString());
             bookViewer.setKey(key);
             bookViewer.reload();
         }

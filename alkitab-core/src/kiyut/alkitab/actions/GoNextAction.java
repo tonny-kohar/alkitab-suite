@@ -24,11 +24,6 @@ import org.openide.util.actions.CallbackSystemAction;
 public class GoNextAction extends CallbackSystemAction {
 
     @Override
-    protected void initialize() {
-        super.initialize();
-    }
-    
-    @Override
     public String getName() {
         return NbBundle.getMessage(GoNextAction.class, "CTL_GoNextAction");
     }

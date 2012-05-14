@@ -793,8 +793,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
+            sourcePane.initSource(bookTextPane);
             //sourcePane.setText(bookTextPane.getRawText(), bookTextPane.getOSISText(), bookTextPane.getHTMLText());
-            sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            //sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
             sourcePane.showDialog(this,true);
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());

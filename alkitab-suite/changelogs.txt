@@ -1,3 +1,11 @@
+ver 2.9
+- Fix Could not compile stylesheet
+- Fix regression Bookshelf reindex
+- Improved Session Persistence
+- Improved performance
+- Some refactoring
+- Updated to use Netbeans 7.1.2
+
 ver 2.8.1
 - Fix OpenJDK incompatibility
 - Various minor bug fixes

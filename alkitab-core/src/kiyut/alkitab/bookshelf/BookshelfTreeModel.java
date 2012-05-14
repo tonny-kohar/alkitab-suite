@@ -44,7 +44,7 @@ public class BookshelfTreeModel extends DefaultTreeModel {
     
     @Override
     public void reload() {
-        rootObject = new String("root");
+        rootObject = "root";
         root = new DefaultMutableTreeNode(rootObject);
         setRoot(root);
         reload(root);
