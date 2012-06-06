@@ -20,7 +20,7 @@
     
     <variables>
         <variable name="APP_TITLE_FULL" value="${app.title.full}"/>
-        <variable name="JVM_REQ" value="Java 6 Update 13 or higher."/>
+        <variable name="JVM_REQ" value="Java 6 Update 26 or higher."/>
         <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
         <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
     </variables>

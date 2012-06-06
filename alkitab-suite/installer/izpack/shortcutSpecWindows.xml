@@ -2,10 +2,10 @@
 
 <shortcuts>
     <skipIfNotSupported/>
-    <programGroup defaultName="${app.title.full} ${app.version}" location="applications"/>
+    <programGroup defaultName="${app.title.full}" location="applications"/>
   
     <shortcut
-        name="${app.title.full} ${app.version}"
+        name="${app.title.full}"
         programGroup="yes"
         desktop="yes"
         applications="no"

@@ -1,3 +1,6 @@
+ver 2.9.1
+- Add support for Ubuntu Unity
+
 ver 2.9
 - Fix Could not compile stylesheet
 - Fix regression Bookshelf reindex

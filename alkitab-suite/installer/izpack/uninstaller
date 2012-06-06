@@ -1,3 +1,21 @@
 #!/bin/sh
 
-java -jar uninstaller.jar 
+#
+# resolve symlinks
+#
+
+PROG_DIR=$0
+
+while [ -h "$PROG_DIR" ]; do
+    ls=`ls -ld "$PROG_DIR"`
+    link=`expr "$ls" : '^.*-> \(.*\)$' 2>/dev/null`
+    if expr "$link" : '^/' 2> /dev/null >/dev/null; then
+	PROG_DIR="$link"
+    else
+	PROG_DIR="`dirname "$PROG_DIR"`/$link"
+    fi
+done
+
+PROG_DIR=`dirname "$PROG_DIR"`
+
+java -jar $PROG_DIR/uninstaller.jar
