@@ -71,6 +71,7 @@
         </folder>
         <folder name="Tools">
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Tools"/>
+            <file name="org-netbeans-modules-templates-actions-TemplatesAction.shadow_hidden"/>
         </folder>
         <folder name="Window">
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Window"/>
@@ -125,11 +126,10 @@
         </file>
     </folder>
     <folder name="OptionsDialog">
-        <file name="Editor_hidden"/>
+        <file name="Advanced.instance_hidden"/>
+        <file name="Advanced_hidden"/>
+        <file name="Editor.instance_hidden"/>
         <file name="General.instance_hidden"/>
-        <folder name="Advanced">
-            <file name="Files.instance_hidden"/>
-        </folder>
         <file name="BookViewerOptionCategory.instance">
             <attr name="position" intvalue="0"/>
         </file>
