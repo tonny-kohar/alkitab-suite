@@ -42,12 +42,12 @@ public class XMLContext extends StyleContext {
         String syntaxName;
         Font font;
         Color fontForeground;
-        syntaxFontMap = new HashMap<String, Font>();
-        syntaxForegroundMap = new HashMap<String, Color>();        
+        syntaxFontMap = new HashMap<>();
+        syntaxForegroundMap = new HashMap<>();        
 
         if (defaultFont == null) {
-            int screenRes = Toolkit.getDefaultToolkit().getScreenResolution();
-            int fontSize = (int)Math.round(12.0 * screenRes / 72.0);            
+            int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+            int fontSize = (int)Math.round(12.0 * (dpi / 90.0));
             defaultFont = new Font("Monospaced", Font.PLAIN, fontSize);
         }
         

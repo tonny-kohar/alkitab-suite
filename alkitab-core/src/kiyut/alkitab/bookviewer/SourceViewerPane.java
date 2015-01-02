@@ -104,7 +104,7 @@ public class SourceViewerPane extends javax.swing.JPanel {
         int fontSize = 12;
         try {
             int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-            fontSize = (int)Math.round((double)fontSize * dpi / 72.0);
+            fontSize = (int)Math.round((double)fontSize * (dpi / 90.0));
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.CONFIG,ex.getMessage(),ex);
