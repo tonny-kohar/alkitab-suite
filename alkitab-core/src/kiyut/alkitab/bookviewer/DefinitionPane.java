@@ -174,12 +174,13 @@ public class DefinitionPane extends javax.swing.JPanel {
     
     public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
         if (viewerHints == null) {
-            viewerHints = new ViewerHints<ViewerHints.Key,Object>();
+            viewerHints = new ViewerHints<>();
         }
         return viewerHints;
     }
 
-    /** 
+    /**
+     * @return getBookRenderer().getComponent();
      * @deprecated replaced with #getBookRenderer() 
      */
     public JComponent getViewerComponent() {

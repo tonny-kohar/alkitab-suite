@@ -94,10 +94,10 @@ public class BookProperties extends javax.swing.JPanel {
     }
     
     public void setBook(Book book) {
-        setBook(book, new ViewerHints());
+        setBook(book, new ViewerHints<ViewerHints.Key,Object>());
     }
     
-    public void setBook(Book book, ViewerHints viewerHints) {
+    public void setBook(Book book, ViewerHints<ViewerHints.Key,Object> viewerHints) {
         if (book == null) {
             textPane.setText(""); 
             return;

@@ -563,7 +563,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
     /** Refresh available fonts */
     private void refreshAvailableFonts() {
-        DefaultComboBoxModel model = (DefaultComboBoxModel)fontComboBox.getModel();
+        DefaultComboBoxModel<String> model = (DefaultComboBoxModel)fontComboBox.getModel();
         model.removeAllElements();
 
         // add generic font family
@@ -617,16 +617,15 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
      * @param books the list of books which is used to refresh
      * @param comparator the {@code Comparator} for books order or null
      */
-    @SuppressWarnings("unchecked")
     private void refreshDefaultBookComboBox(JComboBox comboBox, List<Book> books, Comparator comparator) {
         if (comparator != null) {
             Collections.sort(books, comparator);
         }
-        DefaultComboBoxModel model = (DefaultComboBoxModel)comboBox.getModel();
+        DefaultComboBoxModel<String> model = (DefaultComboBoxModel)comboBox.getModel();
         model.removeAllElements();
         model.addElement("None");
-        for (int i=0; i<books.size(); i++) {
-            model.addElement(books.get(i).getInitials() + " - " + books.get(i).getName());
+        for (Book book : books) {
+            model.addElement(book.getInitials() + " - " + book.getName());
         }
     }
 

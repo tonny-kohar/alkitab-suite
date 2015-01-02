@@ -62,6 +62,7 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
 
     /**
      * set the defaults or parent for lookup
+     * @param defaults
      */
     public void setDefaults(ViewerHints<K,V> defaults) {
         this.defaults = defaults;

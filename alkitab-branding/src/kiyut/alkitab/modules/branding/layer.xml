@@ -60,6 +60,7 @@
         </folder>
         <folder name="View">
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/View"/>
+            <file name="ShowEditorOnlyAction.shadow_hidden"/>
             <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
             <file name="org-netbeans-core-windows-actions-ToolbarsListAction.instance">
                 <attr name="position" intvalue="1250"/>
@@ -106,6 +107,9 @@
         <file name="NetBeans_hidden"/>
     </folder>
     <folder name="Shortcuts">
+        <file name="AS-Y.shadow_hidden"/>
+        <file name="D-4.shadow_hidden"/>
+        <file name="D-I.shadow_hidden"/>
         <file name="F1.shadow">
             <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
         </file>

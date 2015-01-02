@@ -31,7 +31,7 @@ public class BookshelfTreeModel extends DefaultTreeModel {
     public BookshelfTreeModel() {
         super(null);
         
-        groupBy = new ArrayList<String>(2);
+        groupBy = new ArrayList<>(2);
         groupBy.add(BookMetaData.KEY_CATEGORY);
         groupBy.add(BookMetaData.KEY_XML_LANG);
         
@@ -83,8 +83,7 @@ public class BookshelfTreeModel extends DefaultTreeModel {
         
         if (level < groupBy.size()) {
             String key = groupBy.get(level);
-            Set group = books.getGroup(key);
-            Iterator iter = group.iterator();
+            Iterator<Object> iter = books.getGroup(key).iterator();
             while (iter.hasNext()) {
                 Object value = iter.next();
                 BookSet subBooks = books.filter(key, value);
