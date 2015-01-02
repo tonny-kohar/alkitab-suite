@@ -13,10 +13,10 @@ import org.openide.util.actions.CallbackSystemAction;
 /**
  * This action request focus on the search component of the ParallelBookTopComponent
  * 
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.FocusSearchComponentAction", category = "Navigate")
-@ActionRegistration(displayName = "#CTL_FocusSearchComponentAction")
+@ActionRegistration(displayName = "#CTL_FocusSearchComponentAction", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Shortcuts", name = "D-F")
 })

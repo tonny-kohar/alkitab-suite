@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.BookViewerNode;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewer;
+import kiyut.alkitab.bookviewer.BookViewerNode;
+import kiyut.alkitab.bookviewer.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
@@ -21,8 +21,9 @@ import org.openide.windows.TopComponent;
 
 /**
  * 
- * Top component which displays {@link kiyut.alkitab.api.BookViewer BookViewer}.
+ * TopComponent which displays {@link kiyut.alkitab.api.BookViewer BookViewer}.
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public abstract class BookViewerTopComponent extends TopComponent {
     protected BookViewerNode bookViewerNode;
@@ -45,11 +46,14 @@ public abstract class BookViewerTopComponent extends TopComponent {
                 if (bookViewer == null) {
                     return;
                 }
-                Color bg = null;
+                /*Color bg = null;
                 if (evt.getNewValue() instanceof Color) {
                     bg = (Color) evt.getNewValue();
                 }
-                bookViewer.getViewerComponent().setBackground(bg);
+                bookViewer.getBookRenderer().getComponent().setBackground(bg);
+                */
+                bookViewer.reload();
+                
             }
         };
     }
@@ -69,7 +73,7 @@ public abstract class BookViewerTopComponent extends TopComponent {
         if (bookViewer != null) {
             Color bg = BookViewerOptions.getInstance().getBackground();
             //System.out.println("this is executed");
-            bookViewer.getViewerComponent().setBackground(bg);
+            bookViewer.getBookRenderer().getComponent().setBackground(bg);
         }
     }
 

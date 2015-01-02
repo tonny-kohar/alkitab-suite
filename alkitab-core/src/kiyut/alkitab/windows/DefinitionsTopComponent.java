@@ -21,9 +21,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewerManager;
 import kiyut.alkitab.bookviewer.DictionaryPane;
+import kiyut.alkitab.bookviewer.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilter;
@@ -40,6 +40,8 @@ import org.openide.windows.TopComponent;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.DictionaryPane DictionaryPane}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @TopComponent.Description(preferredID = "DefinitionsTopComponent",
     //iconBase="SET/PATH/TO/ICON/HERE", 
@@ -210,7 +212,7 @@ public final class DefinitionsTopComponent extends TopComponent {
         }
 
         String name = uri.getPath();
-        if (name.equals("") ) {
+        if (name.isEmpty() ) {
             switch (uri.getType()) {
                 case GREEK_STRONGS:
                     name = getValidBookName(BookViewerOptions.getInstance().getDefaultGreekStrongs(), BookFilters.getGreekDefinitions());
@@ -253,14 +255,14 @@ public final class DefinitionsTopComponent extends TopComponent {
             index = tabbedPane.getTabCount() - 1;
             tabbedPane.setToolTipTextAt(index, book.getName());
 
-            Color bg = BookViewerOptions.getInstance().getBackground();
-            backgroundPropertyChange(bg);
+            //Color bg = BookViewerOptions.getInstance().getBackground();
+            //backgroundPropertyChange(bg);
         }
         
         tabbedPane.setSelectedIndex(index);
         
         String keyString = uri.getFragment();
-        if (keyString != null && !keyString.equals("")) {
+        if (keyString != null && !keyString.isEmpty()) {
             DictionaryPane dicPane = (DictionaryPane)tabbedPane.getSelectedComponent();
             Book theBook = dicPane.getBook();
             if (book != null) {
@@ -310,7 +312,7 @@ public final class DefinitionsTopComponent extends TopComponent {
                 }
             }
             
-            BookViewManager.getInstance().openURI(swordURI);
+            BookViewerManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             //StatusDisplayer.getDefault().setStatusText(uri);
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
@@ -320,7 +322,8 @@ public final class DefinitionsTopComponent extends TopComponent {
     protected void backgroundPropertyChange(Color bg) {
         for (int i=0; i<tabbedPane.getTabCount(); i++) {
             DictionaryPane dicPane = (DictionaryPane)tabbedPane.getComponentAt(i);
-            dicPane.getViewerComponent().setBackground(bg);
+            //dicPane.getViewerComponent().setBackground(bg);
+            dicPane.getBookRenderer().reload();
         }
     }
     

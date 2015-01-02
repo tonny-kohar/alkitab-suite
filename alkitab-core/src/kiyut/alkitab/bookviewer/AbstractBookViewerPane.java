@@ -3,12 +3,12 @@
 package kiyut.alkitab.bookviewer;
 
 import javax.swing.JPanel;
-import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.event.BookChangeEvent;
-import kiyut.alkitab.api.event.BookChangeListener;
+import kiyut.alkitab.bookviewer.event.BookChangeEvent;
+import kiyut.alkitab.bookviewer.event.BookChangeListener;
 
 /**
- * Abstract implementaion of {@link kiyut.alkitab.api.BookViewer BookViewer}
+ * Abstract implementaion of {@link kiyut.alkitab.api.BookViewer BookViewer} 
+ * 
  */
 public abstract class AbstractBookViewerPane extends JPanel implements BookViewer {
 

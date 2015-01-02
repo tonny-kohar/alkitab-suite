@@ -12,10 +12,10 @@ import org.openide.util.actions.CallbackSystemAction;
 
 /**
  *
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.ReloadAction", category = "View")
-@ActionRegistration(displayName = "#CTL_ReloadAction")
+@ActionRegistration(displayName = "#CTL_ReloadAction", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Toolbars/View", position = 0),
     @ActionReference(path = "Menu/View", position = 100),

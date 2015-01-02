@@ -4,7 +4,6 @@ package kiyut.alkitab.bookviewer;
 
 import java.awt.CardLayout;
 import java.awt.Insets;
-import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -18,23 +17,19 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.GlobalHistory;
-import kiyut.alkitab.api.History;
-import kiyut.alkitab.api.HistoryManager;
-import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.api.ViewerHints;
-import kiyut.alkitab.api.event.BookChangeEvent;
+import kiyut.alkitab.bookviewer.event.BookChangeEvent;
+import kiyut.alkitab.history.BookViewerHistory;
+import kiyut.alkitab.history.BookViewerHistoryManager;
+import kiyut.alkitab.history.GlobalHistory;
+import kiyut.alkitab.history.History;
+import kiyut.alkitab.history.HistoryManager;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.options.ViewerHintsOptions;
-import kiyut.alkitab.api.Indexer;
-import kiyut.alkitab.bookviewer.history.BookViewerHistory;
-import kiyut.alkitab.bookviewer.history.BookViewerHistoryManager;
+import kiyut.alkitab.util.Indexer;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.jsword.book.Book;
@@ -57,7 +52,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(ParallelBookViewerPane.class.getName());
     
-    protected BookTextPane bookTextPane;
+    //protected BookTextPane bookRenderer;
+    protected transient WebViewRenderer bookRenderer;
 
     /** just a flag indicating searching mode */
     protected boolean searching;
@@ -337,10 +333,12 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         //splitPane.setOneTouchExpandable(true);
 
         ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
-        bookTextPane = new BookTextPane(viewerHints);
-        bookScrollPane.setViewportView(bookTextPane);
+        //bookTextPane = new BookTextPane(viewerHints);
+        //bookScrollPane.setViewportView(bookRenderer);
+        bookRenderer = new WebViewRenderer(viewerHints);
+        splitPane.setRightComponent(bookRenderer);
         
-        //getActionMap().setParent(bookTextPane.getActionMap());
+        //getActionMap().setParent(bookRenderer.getActionMap());
 
         // XXX workaround for Windows Plaf for button margin
         Insets insets = new Insets(0, 0, 0, 0);
@@ -495,7 +493,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         indexButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                List<Book> books = bookTextPane.getBooks();
+                List<Book> books = bookRenderer.getBooks();
                 if (!books.isEmpty()) {
                     Indexer.getInstance().createIndex(books.get(0),true);
                 }
@@ -524,11 +522,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     @Override
     public String getName() {
-        if (bookTextPane == null) {
+        if (bookRenderer == null) {
             return "";
         }
         
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
         
         if (books.isEmpty()) {
             return "";
@@ -547,27 +545,27 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
     
     @Override
-    public JComponent getViewerComponent() {
-        return bookTextPane;
+    public BookRenderer getBookRenderer() {
+        return bookRenderer;
     }
 
     @Override
     public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
-        return bookTextPane.getViewerHints();
+        return bookRenderer.getViewerHints();
     }
 
     public void setViewerHints(ViewerHints<ViewerHints.Key,Object> viewerHints) {
-        bookTextPane.setViewerHints(viewerHints);
+        bookRenderer.setViewerHints(viewerHints);
     }
 
     @Override
     public void addHyperlinkListener(HyperlinkListener listener) {
-        bookTextPane.addHyperlinkListener(listener);
+        bookRenderer.addHyperlinkListener(listener);
     }
     
     @Override
     public void removeHyperlinkListener(HyperlinkListener listener) {
-        bookTextPane.removeHyperlinkListener(listener);
+        bookRenderer.removeHyperlinkListener(listener);
     }
     
     @Override
@@ -579,8 +577,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     public void openURI(SwordURI uri, String info) {
         //System.out.println("ParallelBookViewerPane.openURI()");
         
-        if (uri.getPath().equals("")) {
-            if (bookTextPane.getBooks().isEmpty()) {
+        if (uri.getPath().isEmpty()) {
+            if (bookRenderer.getBooks().isEmpty()) {
                 // try to open preferences default bible
                 Book book =  null;
                 String bookName = BookViewerOptions.getInstance().getDefaultBible();
@@ -605,7 +603,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 searching = true;
             }
 
-            if (!uri.getFragment().equals("")) {
+            if (!uri.getFragment().isEmpty()) {
                 //passageTextArea.setText(uri.getFragment());
                 //setKey(passageTextArea.getText());
                 setKey(uri.getFragment());
@@ -639,8 +637,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         comboBox.setSelectedItem(bookName);
         
-        bookTextPane.getBooks().add(book);
-        if (bookTextPane.getBooks().size() == 1) {
+        bookRenderer.getBooks().add(book);
+        if (bookRenderer.getBooks().size() == 1) {
             checkIndexStatus();
         }
 
@@ -676,8 +674,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             // getValidKey will convert Verse to Passage
             // see BookViewerHistory constructor
             
-            if (BookViewManager.getInstance().isSynchronizeView()) {
-                initialKey = BookViewManager.getInstance().getSynchronizeKey();
+            if (BookViewerManager.getInstance().isSynchronizeView()) {
+                initialKey = BookViewerManager.getInstance().getSynchronizeKey();
             }
 
             if (initialKey == null) {
@@ -718,7 +716,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         booksComboPane.revalidate();
         booksComboPane.repaint();
 
-        bookTextPane.getBooks().remove(index);
+        bookRenderer.getBooks().remove(index);
         if (index == 0) {
             checkIndexStatus();
         }
@@ -738,7 +736,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             return;
         }
 
-        bookTextPane.getBooks().set(index, book);
+        bookRenderer.getBooks().set(index, book);
         if (index == 0) {
             checkIndexStatus();
         }
@@ -751,7 +749,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         unindexedBooks = false;
 
         // check only first book
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
         if (!books.isEmpty()) {
             IndexStatus status = books.get(0).getIndexStatus();
             if (!status.equals(IndexStatus.DONE)) {
@@ -780,22 +778,20 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     @Override
     public List<Book> getBooks() {
-        List<Book> srcBooks = bookTextPane.getBooks();
+        List<Book> srcBooks = bookRenderer.getBooks();
         return Collections.unmodifiableList(srcBooks);
     }
 
     @Override
     public int getBookCount() {
-        return bookTextPane.getBooks().size();
+        return bookRenderer.getBooks().size();
     }
 
     @Override
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
-            sourcePane.initSource(bookTextPane);
-            //sourcePane.setText(bookTextPane.getRawText(), bookTextPane.getOSISText(), bookTextPane.getHTMLText());
-            //sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            sourcePane.initSource(bookRenderer);
             sourcePane.showDialog(this,true);
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
@@ -805,7 +801,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     @Override
     public void compareView(boolean compare) {
-        bookTextPane.setCompareView(compare);
+        bookRenderer.setCompareView(compare);
         if (compare != compareCheckBox.isSelected()) {
             compareCheckBox.setSelected(compare);
         }
@@ -816,7 +812,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      */
     @Override
     public boolean isCompareView() {
-        return bookTextPane.isCompareView();
+        return bookRenderer.isCompareView();
     }
 
     /** This only set the search field with the param and do nothing aka
@@ -835,7 +831,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
     
     protected void setKey(String keyString) {
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
         if (!books.isEmpty()) {
             Key key = books.get(0).getValidKey(keyString);
             setKey(key);
@@ -848,7 +844,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             throw new IllegalArgumentException("argument key can't be null");
         }
 
-        Key curKey = bookTextPane.getKey();
+        Key curKey = bookRenderer.getKey();
         if (curKey != null) {
             if (curKey.toString().equals(key.toString())) {
                 return;
@@ -871,8 +867,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             //BookViewManager.getInstance().synchronizeView(key);
         }
 
-        BookViewManager.getInstance().synchronizeView(key);
-        bookTextPane.setKey(displayKey);
+        BookViewerManager.getInstance().synchronizeView(key);
+        bookRenderer.setKey(displayKey);
 
         passageTextArea.setText(key.getName());
         passageTextArea.setCaretPosition(0);
@@ -882,13 +878,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     @Override
     public Key getKey() {
-        return bookTextPane.getKey();
+        return bookRenderer.getKey();
     }
 
     @Override
     public void reload() {
         //System.out.println("ParallelBookViewerPane.refresh()");
-        bookTextPane.reload(true);
+        bookRenderer.reload(true);
     }
 
     public HistoryManager getHistoryManager() {
@@ -907,7 +903,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             searchTextArea.setText(hist.getSearch());
         
             if (hist.getKey() instanceof Passage) {
-                bookTextPane.setKey(hist.current());
+                bookRenderer.setKey(hist.current());
             }
             
         } finally {
@@ -929,7 +925,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             searchTextArea.setText(hist.getSearch());
         
             if (hist.getKey() instanceof Passage) {
-                bookTextPane.setKey(hist.current());
+                bookRenderer.setKey(hist.current());
             }
         } finally {
             historyInProgress = false;
@@ -949,7 +945,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         historyInProgress = true;
         try {
-            bookTextPane.setKey(hist.previous());
+            bookRenderer.setKey(hist.previous());
         } finally {
             historyInProgress = false;
         }
@@ -969,7 +965,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         historyInProgress = true;
         try {
-            bookTextPane.setKey(hist.next());
+            bookRenderer.setKey(hist.next());
         } finally {
             historyInProgress = false;
         }
@@ -993,7 +989,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         /*historyInProgress = true;
         try {
             hist = historyManager.blur(by, restrict);
-            bookTextPane.setKey(hist.current());
+            bookRenderer.setKey(hist.current());
             passageTextArea.setText(hist.getKey().getName());
             passageTextArea.setCaretPosition(0);
         } finally {
@@ -1068,19 +1064,22 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
         if (books.isEmpty()) { 
             JOptionPane.showMessageDialog(this, bundle.getString("MSG_EmptyBooks.Text"), bundle.getString("MSG_EmptyBooks.Title"), JOptionPane.ERROR_MESSAGE);
             return; 
         }
 
-        //boolean ranked = searchLimit <= 0 ? false : true;
-
         DefaultSearchModifier modifier = new DefaultSearchModifier();
         modifier.setRanked(ranked);
-        
-        Key results = null;
-        int total = 0;
+
+        // If ranking see if the results are being limited.
+        int rankCount = searchLimit;
+        if (ranked && rankCount != 0) {
+            modifier.setMaxResults(rankCount);
+        }
+
+        Key results;
         
         try {
             results =  books.get(0).find(new DefaultSearchRequest(searchString, modifier));
@@ -1091,34 +1090,31 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        total = results.getCardinality();
-        int partial = total;
-        
+        int partial = results.getCardinality();
+        int total = partial;
+
+        // we should get PassageTallys for rank searches
+        if (results instanceof PassageTally) {
+            PassageTally tally = (PassageTally) results;
+            total = tally.getTotal();
+            tally.setOrdering(PassageTally.Order.TALLY);
+        }
+
         if (total == 0) {
             Object[] args = {searchString};
             String msg = MessageFormat.format(bundle.getString("MSG_SearchNoHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
             return;
-        }
-
-        if (results instanceof PassageTally || ranked)  {
-            PassageTally tally = (PassageTally) results;
-            tally.setOrdering(PassageTally.ORDER_TALLY);
-            
-            if (searchLimit > 0 && searchLimit < total)  {
-                tally.trimRanges(searchLimit, RestrictionType.NONE);
-                partial = searchLimit;
-            }
-        }
-
+        } 
+        
         if (total == partial) {
-            Object[] args = {searchString,new Integer(total)};
+            Object[] args = {searchString, new Integer(total)};
             String msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
-            JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, msg, bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         } else {
-            Object[] args = {searchString,new Integer(partial),new Integer(total)};
+            Object[] args = {searchString, new Integer(partial), new Integer(total)};
             String msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
-            JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, msg, bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         }
 
         this.searchString = searchString;

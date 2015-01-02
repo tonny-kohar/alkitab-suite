@@ -6,7 +6,7 @@ How to open Alkitab in Netbeans
 eg: ../alkitab-suite/alkitab-suite
 - You are done
 
-Now you can recompile, build, crete your own distribution, etc
+Now you can recompile, build, create your own distribution, etc
 
 note: alkitab-suite is the main project (aka the container project),
 all other projects are sub-project (module) for this alkitab-suite.

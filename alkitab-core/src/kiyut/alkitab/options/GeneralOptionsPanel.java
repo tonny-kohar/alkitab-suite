@@ -21,11 +21,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.api.BookFontStore;
+import kiyut.alkitab.bookviewer.BookFontStore;
 import kiyut.alkitab.util.ComponentOrientationSupport;
+import kiyut.alkitab.util.FontUtilities;
 import kiyut.alkitab.util.SwordUtilities;
 import kiyut.swing.combo.SeparatorComboBox;
-import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
@@ -36,8 +36,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
 
     private static final Color LIGHT_YELLOW = OptionsUtilities.stringToColor("#FFFFE1");
-    private static final Color LIGHT_WHITE = OptionsUtilities.stringToColor("#FBFBFA");
-    private static final Color LIGHT_GRAY = OptionsUtilities.stringToColor("#F5F5F5");
+    private static final Color LIGHT_WHITE = OptionsUtilities.stringToColor("#F5F5F5");
+    private static final Color LIGHT_GRAY = OptionsUtilities.stringToColor("#EBEBEB");
 
     private Color customBackground;
     private boolean isRefreshing;
@@ -58,16 +58,15 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        sessionPersistenceGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        parallelBookLimitComboBox = new javax.swing.JComboBox();
-        versesPerTabComboBox = new javax.swing.JComboBox();
-        defaultSearchLimitComboBox = new javax.swing.JComboBox();
+        parallelBookLimitComboBox = new javax.swing.JComboBox<String>();
+        versesPerTabComboBox = new javax.swing.JComboBox<String>();
+        defaultSearchLimitComboBox = new javax.swing.JComboBox<String>();
         fontPanel = new javax.swing.JPanel();
         fontComboBox =  new SeparatorComboBox();
         fontSizeComboBox = new javax.swing.JComboBox();
@@ -359,7 +358,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox defaultGreekMorphComboBox;
     private javax.swing.JComboBox defaultGreekStrongsComboBox;
     private javax.swing.JComboBox defaultHebrewStrongsComboBox;
-    private javax.swing.JComboBox defaultSearchLimitComboBox;
+    private javax.swing.JComboBox<String> defaultSearchLimitComboBox;
     private javax.swing.JCheckBox fontBoldCheckBox;
     private javax.swing.JComboBox fontComboBox;
     private javax.swing.JCheckBox fontItalicCheckBox;
@@ -384,9 +383,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox parallelBookLimitComboBox;
-    private javax.swing.ButtonGroup sessionPersistenceGroup;
-    private javax.swing.JComboBox versesPerTabComboBox;
+    private javax.swing.JComboBox<String> parallelBookLimitComboBox;
+    private javax.swing.JComboBox<String> versesPerTabComboBox;
     // End of variables declaration//GEN-END:variables
 
     private void initCustom() {
@@ -435,7 +433,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
         BookFontStore fontStore = BookFontStore.getInstance();
         String fontDef = fontStore.getDefaultFont();
-        Font font = GuiConvert.string2Font(fontDef);
+        Font font = FontUtilities.string2Font(fontDef);
         fontComboBox.setSelectedItem(font.getName());
         fontSizeComboBox.setSelectedItem(font.getSize()+"");
         fontBoldCheckBox.setSelected(font.isBold());
@@ -495,7 +493,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         }
 
 
-        String initials = null;
+        String initials;
         if (defaultBibleComboBox.getSelectedIndex() > 0) {
             initials = defaultBibleComboBox.getSelectedItem().toString();
             initials = initials.substring(0,initials.indexOf('-') - 1);
@@ -553,7 +551,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         Font font = new Font(fontComboBox.getSelectedItem().toString(), style, size);
 
         BookFontStore fontStore = BookFontStore.getInstance();
-        fontStore.setDefaultFont(GuiConvert.font2String(font));
+        fontStore.setDefaultFont(FontUtilities.font2String(font));
         //System.out.println(fontDefs + "   TEST ONLY");
 
         bookViewerOpts.store();

@@ -80,6 +80,7 @@
             <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
             <file name="ViewFavoritesTabAction.shadow_hidden"/>
             <file name="ViewRuntimeTabAction.shadow_hidden"/>
+            <file name="Web_hidden"/>
             <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow_hidden"/>
         </folder>
         <folder name="Help">
@@ -97,6 +98,11 @@
     </folder>
     <folder name="Keymaps">
         <folder name="Alkitab"/>
+        <file name="Eclipse_hidden"/>
+        <file name="Emacs_hidden"/>
+        <file name="Idea_hidden"/>
+        <file name="NetBeans55_hidden"/>
+        <file name="NetBeans_hidden"/>
     </folder>
     <folder name="Shortcuts">
         <file name="F1.shadow">

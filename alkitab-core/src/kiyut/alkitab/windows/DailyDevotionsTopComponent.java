@@ -17,8 +17,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.SwordURI;
 import kiyut.alkitab.bookviewer.DailyDevotionPane;
 import kiyut.alkitab.bookviewer.DefinitionPane;
 import kiyut.alkitab.options.BookViewerOptions;
@@ -34,6 +34,8 @@ import org.openide.windows.TopComponent;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.DailyDevotionPane DailyDevotionPane}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @TopComponent.Description(preferredID = "DailyDevotionsTopComponent",
     //iconBase="SET/PATH/TO/ICON/HERE", 
@@ -168,7 +170,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
                 }
             }
             
-            BookViewManager.getInstance().openURI(swordURI);
+            BookViewerManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             //StatusDisplayer.getDefault().setStatusText(uri);
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());

@@ -2,7 +2,7 @@
 
 package kiyut.alkitab.actions;
 
-import kiyut.alkitab.api.BookViewManager;
+import kiyut.alkitab.bookviewer.BookViewerManager;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -13,9 +13,11 @@ import org.openide.util.actions.BooleanStateAction;
 
 /**
  * Action which could change the state of Synchonize View
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.SynchronizeViewAction", category = "View")
-@ActionRegistration(displayName = "#CTL_SynchronizeViewAction")
+@ActionRegistration(displayName = "#CTL_SynchronizeViewAction", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Menu/View", position = 110)
 })
@@ -33,11 +35,11 @@ public class SynchronizeViewAction extends BooleanStateAction  {
 
     @Override
     public boolean getBooleanState() {
-        return BookViewManager.getInstance().isSynchronizeView();
+        return BookViewerManager.getInstance().isSynchronizeView();
     }
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent evt) {
-        BookViewManager.getInstance().setSynchronizeView(!BookViewManager.getInstance().isSynchronizeView());
+        BookViewerManager.getInstance().setSynchronizeView(!BookViewerManager.getInstance().isSynchronizeView());
     }
 }

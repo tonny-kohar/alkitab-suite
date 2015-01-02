@@ -13,6 +13,7 @@ import org.openide.util.actions.CallableSystemAction;
 /**
  * Abstract class for BookshelfBookAction
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public abstract class BookshelfBookAction extends CallableSystemAction {
     

@@ -4,7 +4,7 @@ package kiyut.alkitab.options;
 
 import java.util.Iterator;
 import java.util.prefs.Preferences;
-import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.bookviewer.ViewerHints;
 
 /**
  * Implementation of ViewerHintsOptions

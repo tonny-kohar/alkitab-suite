@@ -14,13 +14,13 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.GlobalHistory;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.SwordURI;
 
 /**
  * Panel which display user's history
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class GlobalHistoryPane extends javax.swing.JPanel {
     protected ListModel listModel;
@@ -90,7 +90,7 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         GlobalHistory.Entry hist = GlobalHistory.getInstance().getHistory(index);
         String str = hist.getText();
         SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, "", str);
-        BookViewManager.getInstance().openURI(uri, hist.getSearch(), false);
+        BookViewerManager.getInstance().openURI(uri, hist.getSearch(), false);
     }
 
     private class HistoryListModel extends AbstractListModel {

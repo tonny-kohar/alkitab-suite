@@ -16,6 +16,7 @@ import org.openide.windows.WindowManager;
 /**
  * This action will open book installer dialog.
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.BookInstallerAction", category = "Tools")
 @ActionRegistration(displayName = "#CTL_BookInstallerAction",

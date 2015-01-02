@@ -22,13 +22,13 @@ import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.actions.GoNextAction;
 import kiyut.alkitab.actions.GoPreviousAction;
 import kiyut.alkitab.actions.ReloadAction;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.BookViewerNode;
-import kiyut.alkitab.api.History;
-import kiyut.alkitab.api.HistoryManager;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewer;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.BookViewerNode;
 import kiyut.alkitab.bookviewer.SingleBookViewerPane;
+import kiyut.alkitab.bookviewer.SwordURI;
+import kiyut.alkitab.history.History;
+import kiyut.alkitab.history.HistoryManager;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.passage.Key;
@@ -40,6 +40,8 @@ import org.openide.windows.TopComponent;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.SingleBookViewerPane SingleBookViewerPane}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class SingleBookTopComponent extends BookViewerTopComponent {
     
@@ -183,7 +185,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
                 }
             }
             
-            BookViewManager.getInstance().openURI(swordURI);
+            BookViewerManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
             //StatusDisplayer.getDefault().setStatusText(uri);
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());

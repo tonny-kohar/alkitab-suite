@@ -15,8 +15,6 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,8 +30,6 @@ import javax.swing.Timer;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.JTextComponent;
-import javax.swing.text.Keymap;
 import kiyut.alkitab.actions.Expand1Action;
 import kiyut.alkitab.actions.Expand5Action;
 import kiyut.alkitab.actions.FocusPassageComponentAction;
@@ -44,28 +40,26 @@ import kiyut.alkitab.actions.GoNextAction;
 import kiyut.alkitab.actions.GoPreviousAction;
 import kiyut.alkitab.actions.ReloadAction;
 import kiyut.alkitab.actions.ViewerHintsAction;
-import kiyut.alkitab.api.BookToolTipFactory;
-import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.BookViewerNode;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.History;
-import kiyut.alkitab.api.HistoryManager;
-import kiyut.alkitab.api.Indexer;
-import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.api.ViewerHints;
-import kiyut.alkitab.bookviewer.DictionaryPane;
-import kiyut.alkitab.options.BookViewerOptions;
+import kiyut.alkitab.bookviewer.BookToolTipFactory;
+import kiyut.alkitab.bookviewer.BookViewer;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.BookViewerNode;
 import kiyut.alkitab.bookviewer.ParallelBookViewerPane;
+import kiyut.alkitab.bookviewer.SwordURI;
+import kiyut.alkitab.bookviewer.ViewerHints;
 import kiyut.alkitab.bookviewer.ViewerHintsPane;
+import kiyut.alkitab.history.History;
+import kiyut.alkitab.history.HistoryManager;
+import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
+import kiyut.alkitab.util.Indexer;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.openide.awt.StatusDisplayer;
-import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
 import org.openide.util.actions.SystemAction;
@@ -73,6 +67,8 @@ import org.openide.windows.TopComponent;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.ParallelBookViewerPane ParallelBookViewerPane}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class ParallelBookTopComponent extends BookViewerTopComponent {
 
@@ -123,7 +119,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     protected String preferredID() {
         return PREFERRED_ID;
     }
-    
+       
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         super.writeExternal(out);
@@ -133,7 +129,6 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         for (int i = 0; i < books.size(); i++) {
             bookNames.add(books.get(i).getInitials());
         }
-        
         
         out.writeObject(bookNames);
         out.writeObject(bookViewer.getKey());
@@ -226,7 +221,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         linkToolTipTimer.setCoalesce(true);
         linkToolTipForceVisible = false;
 
-        bookViewer.getViewerComponent().addMouseMotionListener(new MouseMotionAdapter() {
+        bookViewer.getBookRenderer().getComponent().addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent evt) {
                 linkToolTipLocation.setLocation(evt.getX(), evt.getY());
@@ -240,7 +235,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             }
         });
 
-        bookViewer.getViewerComponent().addMouseListener(new MouseAdapter() {
+        bookViewer.getBookRenderer().getComponent().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 if (SwingUtilities.isMiddleMouseButton(evt)) {
@@ -292,9 +287,10 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         actionMap.put(focusSearchComponentAction.getActionMapKey(), new FocusSearchComponentDelegateAction());
 
         // XXX workaround for HTMLEditorKit keybinding for CTRL-T
-        Keymap gKeymap = Lookup.getDefault().lookup(Keymap.class);
-        JTextComponent textComponent = (JTextComponent)bookViewer.getViewerComponent();
+        /*Keymap gKeymap = Lookup.getDefault().lookup(Keymap.class);
+        JTextComponent textComponent = (JTextComponent)bookViewer.getBookRenderer();
         textComponent.getKeymap().setResolveParent(gKeymap);
+        */
     }
     
     @Override
@@ -326,7 +322,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 }
             }
             // in this part linkTooltip will force to open new Tab if true
-            BookViewManager.getInstance().openURI(swordURI,null,linkToolTipForceVisible);
+            BookViewerManager.getInstance().openURI(swordURI,null,linkToolTipForceVisible);
             linkToolTipTimer.stop();
             hideToolTip();
 
@@ -368,7 +364,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         }
 
         Point p = new Point(linkToolTipLocation.x, linkToolTipLocation.y);
-        JComponent comp = bookViewer.getViewerComponent();
+        JComponent comp = bookViewer.getBookRenderer().getComponent();
 
         BookToolTipFactory.getInstance().getToolTip().show(book, key, comp, p.x, p.y);
     }

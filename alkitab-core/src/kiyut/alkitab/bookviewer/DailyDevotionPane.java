@@ -5,7 +5,7 @@ package kiyut.alkitab.bookviewer;
 import org.crosswire.jsword.book.Book;
 
 /**
- *
+ * 
  */
 public class DailyDevotionPane extends DefinitionPane {
 

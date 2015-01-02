@@ -7,6 +7,8 @@ import org.crosswire.jsword.passage.Key;
 
 /**
  * Default implementation of KeyTreeNode
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class DefaultKeyTreeNode extends DefaultMutableTreeNode implements KeyTreeNode {
 

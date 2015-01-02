@@ -10,6 +10,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * DefaultKeyTreeModel which arrange the data/theKey in tree format.
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class DefaultKeyTreeModel extends DefaultTreeModel implements KeyTreeModel {
     public DefaultKeyTreeModel(Key key) {

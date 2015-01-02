@@ -13,13 +13,12 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.SwordURI;
 import kiyut.alkitab.bookshelf.BookshelfTree;
 import kiyut.alkitab.bookshelf.BookshelfTreeModel;
 import kiyut.openide.util.NbUtilities;
 import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.passage.Key;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
@@ -41,6 +40,8 @@ import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays available book as {@link kiyut.alkitab.bookshelf.BookshelfTree BookshelfTree}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @TopComponent.Description(preferredID = "BookshelfTopComponent",
     //iconBase="SET/PATH/TO/ICON/HERE", 
@@ -96,7 +97,6 @@ public final class BookshelfTopComponent extends TopComponent {
      * Obtain the BookshelfTopComponent instance.
      */
     public static synchronized BookshelfTopComponent findInstance() {
-        
         TopComponent win = WindowManager.getDefault().findTopComponent("BookshelfTopComponent");
         if (win instanceof BookshelfTopComponent) {
             return (BookshelfTopComponent) win;
@@ -301,10 +301,9 @@ public final class BookshelfTopComponent extends TopComponent {
             return;
         }
 
-
         SwordURI uri = SwordURI.createURI(book, null);
         if (uri != null) {
-            BookViewManager.getInstance().openURI(uri, null, true);
+            BookViewerManager.getInstance().openURI(uri, null, true);
         }
     }
 

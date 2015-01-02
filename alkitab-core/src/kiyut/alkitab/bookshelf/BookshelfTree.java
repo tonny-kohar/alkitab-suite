@@ -9,6 +9,7 @@ import javax.swing.tree.TreeSelectionModel;
 /**
  * JTree component which display {@code Books} arranged according to {@code groupBy}
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class BookshelfTree extends JTree {
     

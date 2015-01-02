@@ -5,62 +5,65 @@
         <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
             <code-name-base>kiyut.alkitab.modules.jsword</code-name-base>
             <suite-component/>
-            <module-dependencies>
-                <dependency>
-                    <code-name-base>kiyut.alkitab.modules.commons.httpclient</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>3.1</specification-version>
-                    </run-dependency>
-                </dependency>
-                <dependency>
-                    <code-name-base>kiyut.alkitab.modules.jdom</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>1.0</specification-version>
-                    </run-dependency>
-                </dependency>
-                <dependency>
-                    <code-name-base>kiyut.alkitab.modules.lucene</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>2.3.2</specification-version>
-                    </run-dependency>
-                </dependency>
-                <dependency>
-                    <code-name-base>kiyut.alkitab.modules.tar</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>2.5</specification-version>
-                    </run-dependency>
-                </dependency>
-            </module-dependencies>
+            <module-dependencies/>
             <public-packages>
+                <package>com.ice.tar</package>
                 <package>gnu.gpl</package>
                 <package>gnu.lgpl</package>
-                <package>kiyut.alkitab.modules.jsword.xsl</package>
+                <package>org.apache.commons.logging</package>
+                <package>org.apache.commons.logging.impl</package>
+                <package>org.apache.lucene</package>
+                <package>org.apache.lucene.analysis</package>
+                <package>org.apache.lucene.analysis.ar</package>
+                <package>org.apache.lucene.analysis.br</package>
+                <package>org.apache.lucene.analysis.cjk</package>
+                <package>org.apache.lucene.analysis.cn</package>
+                <package>org.apache.lucene.analysis.cn.smart</package>
+                <package>org.apache.lucene.analysis.cn.smart.hhmm</package>
+                <package>org.apache.lucene.analysis.compound</package>
+                <package>org.apache.lucene.analysis.compound.hyphenation</package>
+                <package>org.apache.lucene.analysis.cz</package>
+                <package>org.apache.lucene.analysis.de</package>
+                <package>org.apache.lucene.analysis.el</package>
+                <package>org.apache.lucene.analysis.fa</package>
+                <package>org.apache.lucene.analysis.fr</package>
+                <package>org.apache.lucene.analysis.miscellaneous</package>
+                <package>org.apache.lucene.analysis.ngram</package>
+                <package>org.apache.lucene.analysis.nl</package>
+                <package>org.apache.lucene.analysis.payloads</package>
+                <package>org.apache.lucene.analysis.position</package>
+                <package>org.apache.lucene.analysis.query</package>
+                <package>org.apache.lucene.analysis.reverse</package>
+                <package>org.apache.lucene.analysis.ru</package>
+                <package>org.apache.lucene.analysis.shingle</package>
+                <package>org.apache.lucene.analysis.sinks</package>
+                <package>org.apache.lucene.analysis.snowball</package>
+                <package>org.apache.lucene.analysis.standard</package>
+                <package>org.apache.lucene.analysis.th</package>
+                <package>org.apache.lucene.analysis.tokenattributes</package>
+                <package>org.apache.lucene.document</package>
+                <package>org.apache.lucene.index</package>
+                <package>org.apache.lucene.messages</package>
+                <package>org.apache.lucene.queryParser</package>
+                <package>org.apache.lucene.search</package>
+                <package>org.apache.lucene.search.function</package>
+                <package>org.apache.lucene.search.payloads</package>
+                <package>org.apache.lucene.search.spans</package>
+                <package>org.apache.lucene.store</package>
+                <package>org.apache.lucene.util</package>
+                <package>org.apache.lucene.util.cache</package>
                 <package>org.crosswire.common.activate</package>
-                <package>org.crosswire.common.aqua</package>
                 <package>org.crosswire.common.compress</package>
                 <package>org.crosswire.common.config</package>
-                <package>org.crosswire.common.config.swing</package>
                 <package>org.crosswire.common.crypt</package>
                 <package>org.crosswire.common.diff</package>
                 <package>org.crosswire.common.history</package>
                 <package>org.crosswire.common.icu</package>
                 <package>org.crosswire.common.options</package>
                 <package>org.crosswire.common.progress</package>
-                <package>org.crosswire.common.progress.swing</package>
-                <package>org.crosswire.common.swing</package>
-                <package>org.crosswire.common.swing.desktop</package>
-                <package>org.crosswire.common.swing.desktop.event</package>
-                <package>org.crosswire.common.swing.plaf</package>
                 <package>org.crosswire.common.util</package>
                 <package>org.crosswire.common.xml</package>
+                <package>org.crosswire.jsword</package>
                 <package>org.crosswire.jsword.book</package>
                 <package>org.crosswire.jsword.book.basic</package>
                 <package>org.crosswire.jsword.book.filter</package>
@@ -73,6 +76,8 @@
                 <package>org.crosswire.jsword.book.readings</package>
                 <package>org.crosswire.jsword.book.study</package>
                 <package>org.crosswire.jsword.book.sword</package>
+                <package>org.crosswire.jsword.book.sword.processing</package>
+                <package>org.crosswire.jsword.book.sword.state</package>
                 <package>org.crosswire.jsword.bridge</package>
                 <package>org.crosswire.jsword.examples</package>
                 <package>org.crosswire.jsword.index</package>
@@ -80,25 +85,72 @@
                 <package>org.crosswire.jsword.index.lucene.analysis</package>
                 <package>org.crosswire.jsword.index.query</package>
                 <package>org.crosswire.jsword.index.search</package>
+                <package>org.crosswire.jsword.internationalisation</package>
                 <package>org.crosswire.jsword.passage</package>
                 <package>org.crosswire.jsword.util</package>
                 <package>org.crosswire.jsword.versification</package>
+                <package>org.crosswire.jsword.versification.system</package>
+                <package>org.jdom2</package>
+                <package>org.jdom2.adapters</package>
+                <package>org.jdom2.filter</package>
+                <package>org.jdom2.input</package>
+                <package>org.jdom2.input.sax</package>
+                <package>org.jdom2.input.stax</package>
+                <package>org.jdom2.internal</package>
+                <package>org.jdom2.located</package>
+                <package>org.jdom2.output</package>
+                <package>org.jdom2.output.support</package>
+                <package>org.jdom2.transform</package>
+                <package>org.jdom2.util</package>
+                <package>org.jdom2.xpath</package>
+                <package>org.jdom2.xpath.jaxen</package>
+                <package>org.jdom2.xpath.util</package>
+                <package>org.slf4j</package>
+                <package>org.slf4j.helpers</package>
+                <package>org.slf4j.impl</package>
+                <package>org.slf4j.spi</package>
+                <package>org.tartarus.snowball</package>
+                <package>org.tartarus.snowball.ext</package>
             </public-packages>
             <class-path-extension>
-                <runtime-relative-path>ext/jsword-1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-1.6.jar</binary-origin>
+                <runtime-relative-path>ext/javatar-2.5.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/javatar-2.5.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/jsword-common-1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-common-1.6.jar</binary-origin>
+                <runtime-relative-path>ext/jcl-over-slf4j-1.7.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jcl-over-slf4j-1.7.2.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/jsword-common-aqua-1.0.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-common-aqua-1.0.6.jar</binary-origin>
+                <runtime-relative-path>ext/jdom2-2.0.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jdom2-2.0.4.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/jsword-common-swing-1.6.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jsword-common-swing-1.6.jar</binary-origin>
+                <runtime-relative-path>ext/jsword-2.0-beta.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jsword-2.0-beta.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-analyzers-3.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-analyzers-3.0.3.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-core-3.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-core-3.0.3.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-smartcn-3.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-smartcn-3.0.3.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/lucene-snowball-3.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/lucene-snowball-3.0.3.jar</binary-origin>
+            </class-path-extension>            
+            <class-path-extension>
+                <runtime-relative-path>ext/slf4j-api-1.7.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/slf4j-api-1.7.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/slf4j-jdk14-1.7.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/slf4j-jdk14-1.7.2.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>

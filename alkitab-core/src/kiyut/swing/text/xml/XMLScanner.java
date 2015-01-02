@@ -5,6 +5,7 @@ package kiyut.swing.text.xml;
 /**
  * XML scanner for parsing xml text
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class XMLScanner {
     public static final int TEMP_ERROR_CONTEXT = -2;

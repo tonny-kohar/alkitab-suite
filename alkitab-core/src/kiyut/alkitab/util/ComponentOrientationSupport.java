@@ -9,6 +9,7 @@ import java.util.Locale;
 /**
  * Component Orientation Support
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class ComponentOrientationSupport {
 

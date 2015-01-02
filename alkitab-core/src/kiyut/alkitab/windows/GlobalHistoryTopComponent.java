@@ -12,6 +12,8 @@ import org.openide.windows.TopComponent;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.history.GlobalHistoryPane GlobalHistoryPane}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @TopComponent.Description(preferredID = "GlobalHistoryTopComponent",
     //iconBase="SET/PATH/TO/ICON/HERE", 

@@ -20,9 +20,9 @@ import javax.swing.MenuSelectionManager;
 import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 import kiyut.alkitab.Application;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.GlobalHistory;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.SwordURI;
+import kiyut.alkitab.history.GlobalHistory;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
@@ -35,6 +35,7 @@ import org.openide.windows.WindowManager;
 /**
  * Core Module Install for Netbeans Platform
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class BrandingModuleInstall extends ModuleInstall {
 
@@ -88,7 +89,7 @@ public class BrandingModuleInstall extends ModuleInstall {
             if (book != null) {
                 SwordURI uri = SwordURI.createURI(book, null);
                 if (uri != null) {
-                    BookViewManager.getInstance().openURI(uri, null, true);
+                    BookViewerManager.getInstance().openURI(uri, null, true);
                 }
             }
         } /*else {
@@ -134,12 +135,10 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         File[] paths = viewerOpts.getBookPaths();
         try {
-            //SwordUtilities.setAugmentPath(paths);
             SwordBookPath.setAugmentPath(paths);
         } catch (Exception ex) {
             logger.log(Level.WARNING,ex.getMessage(),ex);
         }
-
 
         String newline = System.getProperty("line.separator");
 
@@ -165,7 +164,7 @@ public class BrandingModuleInstall extends ModuleInstall {
         if (file != null) {
             sb.append("\t").append(file.toString()).append(newline);
         }
-
+        
         sb.append("  SwordPath:").append(newline);
         files = SwordBookPath.getSwordPath();
         for (int i=0; i<files.length; i++) {

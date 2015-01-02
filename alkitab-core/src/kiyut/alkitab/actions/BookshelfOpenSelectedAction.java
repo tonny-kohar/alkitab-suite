@@ -11,10 +11,10 @@ import org.openide.util.NbBundle;
 
 /**
  *
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.BookshelfOpenSelectedAction", category = "Bookshelf")
-@ActionRegistration(displayName = "#CTL_BookshelfOpenSelectedAction")
+@ActionRegistration(displayName = "#CTL_BookshelfOpenSelectedAction" , lazy = false)
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 10)
 })

@@ -7,19 +7,11 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
-                    <code-name-base>kiyut.alkitab.modules.jdom</code-name-base>
-                    <build-prerequisite/>
-                    <compile-dependency/>
-                    <run-dependency>
-                        <specification-version>1.0</specification-version>
-                    </run-dependency>
-                </dependency>
-                <dependency>
                     <code-name-base>kiyut.alkitab.modules.jsword</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
-                        <specification-version>1.6.0.20091003</specification-version>
+                        <specification-version>2.0.0</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>
@@ -115,12 +107,9 @@
             <public-packages>
                 <package>kiyut.alkitab</package>
                 <package>kiyut.alkitab.actions</package>
-                <package>kiyut.alkitab.api</package>
-                <package>kiyut.alkitab.api.event</package>
                 <package>kiyut.alkitab.bookshelf</package>
                 <package>kiyut.alkitab.bookviewer</package>
-                <package>kiyut.alkitab.bookviewer.history</package>
-                <package>kiyut.alkitab.core</package>
+                <package>kiyut.alkitab.bookviewer.event</package>
                 <package>kiyut.alkitab.history</package>
                 <package>kiyut.alkitab.installer</package>
                 <package>kiyut.alkitab.navigator</package>

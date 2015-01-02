@@ -14,6 +14,8 @@ import org.crosswire.jsword.passage.Key;
 
 /**
  * Panel which display dictionary,lexicon, glossary, or something similar.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class DictionaryPane extends DefinitionPane {
 

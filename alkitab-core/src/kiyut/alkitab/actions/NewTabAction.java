@@ -3,8 +3,8 @@ package kiyut.alkitab.actions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import kiyut.alkitab.api.BookViewManager;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.BookViewerManager;
+import kiyut.alkitab.bookviewer.SwordURI;
 import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
@@ -16,7 +16,7 @@ import org.openide.awt.ActionRegistration;
 
 /**
  *
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(category = "File", id = "kiyut.alkitab.actions.NewTabAction")
 @ActionRegistration(displayName = "#CTL_NewTabAction",
@@ -38,6 +38,6 @@ public final class NewTabAction implements ActionListener {
 
         SwordURI uri = SwordURI.createURI(SwordURI.BIBLE_SCHEME, name, null);
 
-        BookViewManager.getInstance().openURI(uri, null, true);
+        BookViewerManager.getInstance().openURI(uri, null, true);
     }
 }

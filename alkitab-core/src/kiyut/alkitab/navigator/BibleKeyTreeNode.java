@@ -4,11 +4,11 @@ package kiyut.alkitab.navigator;
 
 /**
  *
- * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com> 
  */
 public class BibleKeyTreeNode extends DefaultKeyTreeNode {
 
-    /** Bible Category, it is used for anything other than BOOK, CHAPTER and VERSE*/
+    /** Bible Category, it is used for anything other than BOOK, CHAPTER and VERSE */
     public static final int BIBLE = 0;
     public static final int BOOK = 1;
     public static final int CHAPTER = 2;
@@ -30,7 +30,7 @@ public class BibleKeyTreeNode extends DefaultKeyTreeNode {
      * Create new BibleKeyTreeNode
      * @param userObject a Key
      * @param category the category eg: BIBLE, BOOK, CHAPTER, VERSE
-     * @param  name is used to overide the toString or getName
+     * @param name is used to overide the toString or getName
      */
     public BibleKeyTreeNode(Object userObject, int category, String name) {
         super(userObject);

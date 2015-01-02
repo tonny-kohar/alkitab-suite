@@ -7,6 +7,7 @@ import javax.swing.tree.TreeModel;
 
 /**
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public interface KeyTreeModel extends TreeModel {
     /** Return TreeCellRenderer to render this model 

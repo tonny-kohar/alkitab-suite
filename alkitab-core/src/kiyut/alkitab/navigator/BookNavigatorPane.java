@@ -2,17 +2,11 @@
 
 package kiyut.alkitab.navigator;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-import kiyut.alkitab.api.BookViewer;
+import kiyut.alkitab.bookviewer.BookViewer;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
@@ -23,6 +17,7 @@ import org.crosswire.jsword.passage.KeyUtil;
  * Panel which display book Key aka Table of Content. It display the content using
  * {@link kiyut.alkitab.navigator.KeyTree KeyTree}
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class BookNavigatorPane extends javax.swing.JPanel {
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
@@ -30,9 +25,7 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     protected KeyTree keyTree;
     protected BookViewer bookViewer;
     protected TreeSelectionListener treeSelectionListener;
-    protected Book book;
-    protected boolean bibleDisplayMode = false;
-    protected FilterData[] filters;
+    //protected Book book;
 
     /** Creates new BookNavigatorPane */
     public BookNavigatorPane() {
@@ -49,26 +42,7 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        filterPane = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        filterCombo = new javax.swing.JComboBox();
         scrollPane = new javax.swing.JScrollPane();
-
-        filterPane.setLayout(new java.awt.GridBagLayout());
-
-        jLabel1.setText(bundle.getString("CTL_Filter.Text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 12);
-        filterPane.add(jLabel1, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 1.0;
-        filterPane.add(filterCombo, gridBagConstraints);
 
         setLayout(new java.awt.BorderLayout());
         add(scrollPane, java.awt.BorderLayout.CENTER);
@@ -76,9 +50,6 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox filterCombo;
-    private javax.swing.JPanel filterPane;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
     
@@ -89,30 +60,6 @@ public class BookNavigatorPane extends javax.swing.JPanel {
                 keyValueChanged(evt);
             }
         };
-
-        filterCombo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                filterActionPerformed(evt);
-            }
-        });
-
-        String[] presets = bundle.getString("Filter.Preset").split("\\|");
-        filters = new FilterData[presets.length];
-        try {
-            for (int i = 0; i < presets.length; i++) {
-                String str = presets[i];
-                int indexOf = str.indexOf("[");
-                presets[i] = str.substring(0, indexOf).trim();
-                String[] strFilters = str.substring(indexOf + 1, str.length() - 1).split("\\-");
-                filters[i] = new FilterData(Integer.parseInt(strFilters[0]), Integer.parseInt(strFilters[1]));
-            }
-            filterCombo.setModel(new DefaultComboBoxModel(presets));
-        } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.CONFIG, ex.getMessage(),ex);
-            filters = null;
-        }
     }
 
     public void setBookViewer(BookViewer bookViewer) {
@@ -120,20 +67,12 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     }
 
     public void setDisplayMode(Book book) {
-        bibleDisplayMode = false;
         BookCategory bookCategory = book.getBookCategory();
         if (bookCategory.equals(BookCategory.BIBLE) || bookCategory.equals(BookCategory.COMMENTARY)) {
             keyTree = new KeyTree(new BibleKeyTreeModel(BibleKeyTreeModel.LEVEL_VERSE));
-            bibleDisplayMode = true;
         } else {
             Key key = book.getGlobalKeyList();
             keyTree = new KeyTree(new DefaultKeyTreeModel(key));
-        }
-
-        if (bibleDisplayMode && filters != null) {
-            this.add(BorderLayout.PAGE_START,filterPane);
-        } else {
-            this.remove(filterPane);
         }
 
         scrollPane.setViewportView(keyTree);
@@ -144,7 +83,6 @@ public class BookNavigatorPane extends javax.swing.JPanel {
         ComponentOrientationSupport.applyComponentOrientation(this);
 
         this.revalidate();
-        
     }
     
     protected void keyValueChanged(TreeSelectionEvent evt) {
@@ -172,37 +110,6 @@ public class BookNavigatorPane extends javax.swing.JPanel {
             //System.out.println(key.toString());
             bookViewer.setKey(key);
             bookViewer.reload();
-        }
-        
-    }
-
-    protected void filterActionPerformed(ActionEvent evt) {
-        if (!bibleDisplayMode) { return; }
-        if (filters == null) { return; }
-        
-        int i = filterCombo.getSelectedIndex();
-
-        BibleKeyTreeModel model = (BibleKeyTreeModel)keyTree.getModel();
-        FilterData filterData = filters[i];
-        model.setFilter(filterData.getBeginFilter(), filterData.getEndFilter());
-        repaint();
-    }
-
-    public class FilterData {
-        private int beginFilter;
-        private int endFilter;
-
-        public FilterData(int beginFilter, int endFilter) {
-            this.beginFilter = beginFilter;
-            this.endFilter = endFilter;
-        }
-
-        public int getBeginFilter() {
-            return beginFilter;
-        }
-
-        public int getEndFilter() {
-            return endFilter;
         }
     }
 }

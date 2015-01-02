@@ -6,22 +6,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLEditorKit;
-import kiyut.alkitab.api.SwingHTMLConverter;
-import kiyut.alkitab.api.ViewerHints;
-import org.crosswire.common.xml.Converter;
-import org.crosswire.common.xml.JDOMSAXEventProvider;
-import org.crosswire.common.xml.SAXEventProvider;
-import org.crosswire.common.xml.TransformingSAXEventProvider;
-import org.crosswire.common.xml.XMLUtil;
+import kiyut.alkitab.bookviewer.ViewerHints;
 import org.crosswire.jsword.book.Book;
 
 /**
  * Book Properties (Metadata) component
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com> 
  */
 public class BookProperties extends javax.swing.JPanel {
 
@@ -110,7 +103,8 @@ public class BookProperties extends javax.swing.JPanel {
             return;
         }   
         
-        try {
+        // TODO jsword2
+        /*try {
             SAXEventProvider osissep = new JDOMSAXEventProvider(book.toOSIS());
             Converter converter = new SwingHTMLConverter();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider)converter.convert(osissep);
@@ -125,6 +119,6 @@ public class BookProperties extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);
-        }
+        }*/
     }
 }

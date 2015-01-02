@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.api.BookViewer;
+import kiyut.alkitab.bookviewer.BookViewer;
 import kiyut.alkitab.navigator.BookNavigatorPane;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
@@ -27,6 +27,8 @@ import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.navigator.BookNavigatorPane BookNavigatorPane}.
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @TopComponent.Description(preferredID = "BookNavigatorTopComponent",
     //iconBase="SET/PATH/TO/ICON/HERE", 

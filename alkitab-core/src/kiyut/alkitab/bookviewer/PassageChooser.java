@@ -2,9 +2,6 @@
 
 package kiyut.alkitab.bookviewer;
 
-import kiyut.alkitab.navigator.KeyTree;
-import kiyut.alkitab.navigator.BibleKeyTreeModel;
-import kiyut.alkitab.navigator.BibleKeyTreeNode;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -22,26 +19,33 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import kiyut.alkitab.navigator.BibleKeyTreeModel;
+import kiyut.alkitab.navigator.BibleKeyTreeNode;
+import kiyut.alkitab.navigator.KeyTree;
 import org.crosswire.jsword.passage.Key;
-import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.VerseRange;
+import org.crosswire.jsword.versification.Versification;
+import org.crosswire.jsword.versification.system.Versifications;
 
 /**
  * PassageChooser
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
+@SuppressWarnings("unchecked")
 public class PassageChooser extends javax.swing.JPanel {
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
     
     protected KeyTree passageTree;
     protected PassageListModel passageListModel;
             
-    protected KeyFactory keyFactory;
+    protected PassageKeyFactory keyFactory;
     protected Passage passage;
+    protected Versification v11n;
     
     protected boolean textAdjusting;
     
@@ -215,7 +219,8 @@ public class PassageChooser extends javax.swing.JPanel {
         passageList.setModel(passageListModel);
         
         keyFactory = PassageKeyFactory.instance();
-        passage = (Passage)keyFactory.createEmptyKeyList();
+        v11n = Versifications.instance().getDefaultVersification();
+        passage = (Passage)keyFactory.createEmptyKeyList(v11n);
         
         summaryLabel.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
 
@@ -223,16 +228,6 @@ public class PassageChooser extends javax.swing.JPanel {
         Insets insets = new Insets(2, 2, 2, 2);
         addButton.setMargin(insets);
         removeButton.setMargin(insets);
-        
-        /*
-         Disable this, UI Gesture does not match, because double click is tree expand
-         passageTree.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() != 2) { return; }
-                addPassage();
-            }
-        });*/
         
         passageList.addMouseListener(new MouseAdapter() {
             @Override
@@ -243,14 +238,17 @@ public class PassageChooser extends javax.swing.JPanel {
         });
         
         passageTextArea.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
             public void insertUpdate(DocumentEvent e) {
                 textUpdated();
             }
 
+            @Override
             public void removeUpdate(DocumentEvent e) {
                 textUpdated();
             }
 
+            @Override
             public void changedUpdate(DocumentEvent e) {
                 textUpdated();
             }
@@ -264,12 +262,14 @@ public class PassageChooser extends javax.swing.JPanel {
         });
         
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addPassage();
             }
         });
         
         removeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 removePassage();
             }
@@ -289,7 +289,8 @@ public class PassageChooser extends javax.swing.JPanel {
      * @param parentComponent {@code Component}
      */
     public int showDialog(Component parentComponent) {
-        int choice = JOptionPane.showConfirmDialog(parentComponent,this,bundle.getString("CTL_Title.Text"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(parentComponent,this,bundle.getString("CTL_Title.Text"),
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         return choice;
     }
     
@@ -301,7 +302,7 @@ public class PassageChooser extends javax.swing.JPanel {
         String invalidMsg = null;
         try {
             if (textAdjusting) {
-                Passage tPassage = (Passage) keyFactory.getKey(passageTextArea.getText());
+                Passage tPassage = (Passage) keyFactory.getKey(v11n,passageTextArea.getText());
                 passage.clear();
                 passage.addAll(tPassage);
             } else {
@@ -379,7 +380,6 @@ public class PassageChooser extends javax.swing.JPanel {
             data = new ArrayList();
         }
 
-        @SuppressWarnings("unchecked")
         public void setPassage(Passage passage) {
             fireIntervalRemoved(this, 0, getSize());
             
@@ -404,10 +404,12 @@ public class PassageChooser extends javax.swing.JPanel {
             return this.passage;
         }
         
+        @Override
         public int getSize() {
             return data.size();
         }
 
+        @Override
         public Object getElementAt(int index) {
             return data.get(index);
         }

@@ -22,6 +22,8 @@ import kiyut.alkitab.options.BookViewerOptions;
 
 /**
  * Search Panel
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class SearchPane extends javax.swing.JPanel {
     

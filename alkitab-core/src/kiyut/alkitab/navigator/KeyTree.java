@@ -10,6 +10,7 @@ import javax.swing.tree.TreeSelectionModel;
 /**
  * Key Tree for a book. It display all the key for single book in Tree Model
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class KeyTree extends JTree {
 

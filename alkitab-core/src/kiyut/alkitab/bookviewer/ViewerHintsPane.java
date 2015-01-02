@@ -10,11 +10,10 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import kiyut.alkitab.api.ViewerHints;
 
 /**
  *
- * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com> 
  */
 public class ViewerHintsPane extends javax.swing.JPanel {
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName()); 

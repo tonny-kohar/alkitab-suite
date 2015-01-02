@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileSystemView;
 
 /** Collection of I/O Utilities
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class IOUtilities {
     //private  static JFileChooser fc;

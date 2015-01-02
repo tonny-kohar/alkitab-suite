@@ -16,13 +16,12 @@ import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataFolder;
 import org.openide.loaders.DataObject;
-import org.openide.util.actions.BooleanStateAction;
 import org.openide.util.actions.Presenter;
-import org.openide.util.actions.SystemAction;
 
 /**
  * Collection of Netbean Platform or OpenIDE Utilities
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class NbUtilities {
 

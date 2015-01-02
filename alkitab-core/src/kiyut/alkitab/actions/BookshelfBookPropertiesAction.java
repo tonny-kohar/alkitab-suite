@@ -17,9 +17,10 @@ import org.openide.windows.WindowManager;
 /**
  * Implementation of Bookshelf Book Properties Action
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.BookshelfBookPropertiesAction", category = "Bookshelf")
-@ActionRegistration(displayName = "#CTL_BookshelfBookPropertiesAction")
+@ActionRegistration(displayName = "#CTL_BookshelfBookPropertiesAction", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 40)
 })

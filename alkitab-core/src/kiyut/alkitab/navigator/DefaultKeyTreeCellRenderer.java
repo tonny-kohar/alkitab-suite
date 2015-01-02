@@ -8,6 +8,10 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+/**
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
+ */
 public class DefaultKeyTreeCellRenderer extends DefaultTreeCellRenderer {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());

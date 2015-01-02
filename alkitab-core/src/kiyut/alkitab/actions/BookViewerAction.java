@@ -12,7 +12,10 @@ import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-
+/**
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
+ */
 @ActionID(id = "kiyut.alkitab.actions.BookViewerAction", category = "Window")
 @ActionRegistration(displayName = "#CTL_BookViewerAction")
 @ActionReferences({

@@ -15,6 +15,7 @@ import javax.swing.text.ViewFactory;
  * This is the set of things needed by a text component to be a reasonably
  * functioning editor for xml type document.
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class XMLEditorKit extends DefaultEditorKit {
     public static final String XML_MIME_TYPE = "text/xml";

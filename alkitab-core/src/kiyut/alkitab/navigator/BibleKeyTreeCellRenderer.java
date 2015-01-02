@@ -13,7 +13,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 /**
  *
- * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class BibleKeyTreeCellRenderer extends DefaultTreeCellRenderer {
 

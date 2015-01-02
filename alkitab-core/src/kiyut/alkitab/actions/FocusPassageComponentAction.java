@@ -13,12 +13,12 @@ import org.openide.util.actions.CallbackSystemAction;
 /**
  * This action request focus on the passage component of the ParallelBookTopComponent
  *
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.FocusPassageComponentAction", category = "Navigate")
-@ActionRegistration(displayName = "#CTL_FocusPassageComponentAction")
+@ActionRegistration(displayName = "#CTL_FocusPassageComponentAction", lazy = false)
 @ActionReferences({
-    @ActionReference(path = "Shortcuts", name = "D-G")
+    @ActionReference(path = "Shortcuts", name = "D-L")
 })
 public class FocusPassageComponentAction extends CallbackSystemAction {
 

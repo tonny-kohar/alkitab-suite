@@ -3,9 +3,7 @@
 package kiyut.swing.combo;
 
 import java.awt.Component;
-import java.util.Vector;
 import javax.swing.ComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JSeparator;
@@ -16,6 +14,7 @@ import javax.swing.ListCellRenderer;
  * Extended ComboBox which have separator on its item.
  * The default separator is defined as String "--"
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class SeparatorComboBox extends JComboBox {
     public static final String DEFAULT_SEPARATOR = "--";

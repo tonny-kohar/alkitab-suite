@@ -5,7 +5,7 @@ package kiyut.alkitab.options;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ResourceBundle;
-import kiyut.alkitab.api.ViewerHints;
+import kiyut.alkitab.bookviewer.ViewerHints;
 
 final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
 

@@ -17,6 +17,7 @@ import org.crosswire.jsword.book.Books;
 /**
  * BookshelfTreeModel which arrange the content by {@link #groupBy}
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class BookshelfTreeModel extends DefaultTreeModel {
     
@@ -34,11 +35,6 @@ public class BookshelfTreeModel extends DefaultTreeModel {
         groupBy.add(BookMetaData.KEY_CATEGORY);
         groupBy.add(BookMetaData.KEY_XML_LANG);
         
-        /*rootObject = new String("root");
-        root = new DefaultMutableTreeNode(rootObject);
-        setRoot(root);
-        reload(root);
-         */
         reload();
     }
     
@@ -100,9 +96,7 @@ public class BookshelfTreeModel extends DefaultTreeModel {
             if (books == null) {
                 return;
             }
-            Iterator iter = books.iterator();
-            while (iter.hasNext()) {
-                Book book =(Book)iter.next();
+            for (Book book : books) {
                 DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(book);
                 mutableNode.add(childNode);
             }

@@ -17,6 +17,7 @@ import javax.swing.text.ViewFactory;
  * simply colorizes the various tokens and assumes a constant
  * font family and size.
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class XMLView extends PlainView {
     protected XMLContext context = null;

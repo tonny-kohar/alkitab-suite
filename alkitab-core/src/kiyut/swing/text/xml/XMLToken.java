@@ -4,6 +4,8 @@ package kiyut.swing.text.xml;
 
 /**
  * XML Token
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class XMLToken {
     private int context;

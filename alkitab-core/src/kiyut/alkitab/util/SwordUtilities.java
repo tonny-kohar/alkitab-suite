@@ -4,16 +4,15 @@ package kiyut.alkitab.util;
 
 import java.io.File;
 import java.util.Comparator;
-import kiyut.alkitab.api.SwordURI;
+import kiyut.alkitab.bookviewer.SwordURI;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.sword.SwordBookPath;
 import org.crosswire.jsword.passage.Key;
 
 /**
  * Collections of Sword Utilities
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class SwordUtilities {
     private static File[] initialCopyOfSwordPath = null;

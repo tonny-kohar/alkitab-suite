@@ -4,6 +4,7 @@ package kiyut.swing.text.xml;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.text.StyleContext;
@@ -12,6 +13,7 @@ import javax.swing.text.StyleContext;
 /**
  * A pool of styles and their associated resources
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class XMLContext extends StyleContext {
     //public static final String DEFAULT_SYNTAX         = "default";
@@ -44,7 +46,9 @@ public class XMLContext extends StyleContext {
         syntaxForegroundMap = new HashMap<String, Color>();        
 
         if (defaultFont == null) {
-            defaultFont = new Font("Monospaced", Font.PLAIN, 12);
+            int screenRes = Toolkit.getDefaultToolkit().getScreenResolution();
+            int fontSize = (int)Math.round(12.0 * screenRes / 72.0);            
+            defaultFont = new Font("Monospaced", Font.PLAIN, fontSize);
         }
         
         syntaxName = XMLContext.DEFAULT_STYLE;

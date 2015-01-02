@@ -13,6 +13,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import org.crosswire.jsword.book.Book;
 
+/**
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
+ */
 public class BookshelfTreeCellRenderer extends DefaultTreeCellRenderer {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());

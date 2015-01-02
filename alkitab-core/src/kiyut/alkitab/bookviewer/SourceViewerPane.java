@@ -22,11 +22,9 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import kiyut.alkitab.api.ViewerHints;
-import kiyut.swing.dialog.DialogESC;
+import kiyut.swing.dialog.EscapeDialog;
 import kiyut.swing.text.xml.XMLContext;
 import kiyut.swing.text.xml.XMLEditorKit;
-import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -40,11 +38,12 @@ import org.xml.sax.ContentHandler;
 /**
  * Display the OSIS and HTML source for the the book
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class SourceViewerPane extends javax.swing.JPanel {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
-    protected BookTextPane bookTextPane;
+    protected BookRenderer bookRenderer;
     
     /** Creates new SourceViewerPane */
     public SourceViewerPane() {
@@ -102,15 +101,10 @@ public class SourceViewerPane extends javax.swing.JPanel {
 
         Color background = UIManager.getColor("TextPane.background");
 
-        int fontSize = 10;
+        int fontSize = 12;
         try {
             int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
             fontSize = (int)Math.round((double)fontSize * dpi / 72.0);
-            
-            /*Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-            if (size.width >= 1280 || size.height >= 1024) {
-                fontSize = 13;
-            }*/
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.CONFIG,ex.getMessage(),ex);
@@ -148,9 +142,9 @@ public class SourceViewerPane extends javax.swing.JPanel {
                 comp = SwingUtilities.getWindowAncestor(owner);
             }
             if (comp instanceof Frame) {
-                dialog = new DialogESC((Frame)comp, bundle.getString("CTL_Title.Text"), true);
+                dialog = new EscapeDialog((Frame)comp, bundle.getString("CTL_Title.Text"), true);
             } else if (comp instanceof Dialog) {
-                dialog = new DialogESC((Dialog)comp, bundle.getString("CTL_Title.Text"), true);
+                dialog = new EscapeDialog((Dialog)comp, bundle.getString("CTL_Title.Text"), true);
             } 
         }
         
@@ -164,10 +158,10 @@ public class SourceViewerPane extends javax.swing.JPanel {
         dialog.setVisible(true);
     }
 
-    public void initSource(BookTextPane bookTextPane) {
-        this.bookTextPane = bookTextPane;
+    public void initSource(BookRenderer bookRenderer) {
+        this.bookRenderer = bookRenderer;
         try {
-            initSourceImpl(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.isCompareView());
+            initSourceImpl(bookRenderer.getBooks(), bookRenderer.getKey(), bookRenderer.isCompareView());
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);
@@ -226,7 +220,7 @@ public class SourceViewerPane extends javax.swing.JPanel {
         ContentHandler osis = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
         osissep.provideSAXEvents(osis);
 
-        initSource(rawText.toString(), osis.toString(), bookTextPane.getText());
+        initSource(rawText.toString(), osis.toString(), bookRenderer.getContentSource());
     }
 
     public void initSource(String raw, String osis, String html) {

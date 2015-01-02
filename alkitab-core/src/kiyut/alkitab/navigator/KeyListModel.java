@@ -8,6 +8,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * Implementation of {@code ListModel} for Book Passage Key
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class KeyListModel extends AbstractListModel {
     //private final ScheduledExecutorService scheduler =  Executors.newScheduledThreadPool(1);

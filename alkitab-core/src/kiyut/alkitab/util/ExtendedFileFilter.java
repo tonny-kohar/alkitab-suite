@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileFilter;
  * filter.setDescription("Image Files");
  * </pre>
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class ExtendedFileFilter extends FileFilter {
 

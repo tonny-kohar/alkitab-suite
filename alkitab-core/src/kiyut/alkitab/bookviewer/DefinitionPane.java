@@ -10,7 +10,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import kiyut.alkitab.api.ViewerHints;
 import kiyut.alkitab.navigator.KeyListModel;
 import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
@@ -24,7 +23,7 @@ import org.crosswire.jsword.passage.PreferredKey;
  */
 public class DefinitionPane extends javax.swing.JPanel {
     
-    protected BookTextPane bookTextPane;
+    protected WebViewRenderer bookRenderer;
     protected ViewerHints<ViewerHints.Key,Object> viewerHints;
     
     /** Creates new DefinitionPane */
@@ -49,16 +48,14 @@ public class DefinitionPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
-        bookScrollPane = new javax.swing.JScrollPane();
+        splitPane = new javax.swing.JSplitPane();
         indexPane = new javax.swing.JPanel();
         indexScrollPane = new javax.swing.JScrollPane();
         indexList = new javax.swing.JList();
 
         setLayout(new java.awt.BorderLayout());
 
-        jSplitPane1.setResizeWeight(1.0);
-        jSplitPane1.setLeftComponent(bookScrollPane);
+        splitPane.setResizeWeight(1.0);
 
         indexPane.setLayout(new java.awt.BorderLayout(0, 3));
 
@@ -66,25 +63,25 @@ public class DefinitionPane extends javax.swing.JPanel {
 
         indexPane.add(indexScrollPane, java.awt.BorderLayout.CENTER);
 
-        jSplitPane1.setRightComponent(indexPane);
+        splitPane.setRightComponent(indexPane);
 
-        add(jSplitPane1, java.awt.BorderLayout.CENTER);
+        add(splitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane bookScrollPane;
     protected javax.swing.JList indexList;
     protected javax.swing.JPanel indexPane;
     private javax.swing.JScrollPane indexScrollPane;
-    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
-        bookTextPane = new BookTextPane(viewerHints);
-        bookScrollPane.setViewportView(bookTextPane);
+        bookRenderer = new WebViewRenderer(viewerHints);
+        //bookScrollPane.setViewportView(bookRenderer);
+        splitPane.setLeftComponent(bookRenderer);
         
-        //getActionMap().setParent(bookTextPane.getActionMap());
+        //getActionMap().setParent(bookRenderer.getActionMap());
         
         indexList.setPrototypeCellValue("DICTIONARY INDEX TEXT");
         indexList.setModel(new KeyListModel());
@@ -100,7 +97,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     
     public void setBook(Book book) {
         if (book != null) {
-            List<Book> books = bookTextPane.getBooks();
+            List<Book> books = bookRenderer.getBooks();
             if (books.isEmpty()) {
                 books.add(book);
             } else {
@@ -127,12 +124,12 @@ public class DefinitionPane extends javax.swing.JPanel {
                 indexList.ensureIndexIsVisible(index);
             }
         } else {
-            bookTextPane.getBooks().clear();
+            bookRenderer.getBooks().clear();
         }
     }
     
     public Book getBook() {
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
         if (books.isEmpty()) {
             return null;
         }
@@ -141,8 +138,8 @@ public class DefinitionPane extends javax.swing.JPanel {
     
     public void setKey(Key key) {
         if (key == null) { return; }
-        bookTextPane.setKey(key);
-        bookTextPane.reload(true);
+        bookRenderer.setKey(key);
+        bookRenderer.reload(true);
 
         // synchronize the List and the View
         int i = ((KeyListModel) indexList.getModel()).getKey().indexOf(key);
@@ -159,15 +156,15 @@ public class DefinitionPane extends javax.swing.JPanel {
         Book book = getBook();
         if (book == null) { return; }
         Key key = book.getValidKey(keyString);
-        bookTextPane.setKey(key);
-        bookTextPane.refresh(true);
+        bookRenderer.setKey(key);
+        bookRenderer.refresh(true);
     }*/
     
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
-            sourcePane.initSource(bookTextPane);
-            //sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            sourcePane.initSource(bookRenderer);
+            //sourcePane.initSource(bookRenderer.getBooks(), bookRenderer.getKey(), bookRenderer.getConverter(), bookRenderer.getViewerHints(), bookRenderer.isCompareView());
             sourcePane.showDialog(this,true);
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
@@ -182,16 +179,23 @@ public class DefinitionPane extends javax.swing.JPanel {
         return viewerHints;
     }
 
+    /** 
+     * @deprecated replaced with #getBookRenderer() 
+     */
     public JComponent getViewerComponent() {
-        return bookTextPane;
+        return getBookRenderer().getComponent();
+    }
+    
+    public BookRenderer getBookRenderer() {
+        return bookRenderer;
     }
 
     public void addHyperlinkListener(HyperlinkListener listener) {
-        bookTextPane.addHyperlinkListener(listener);
+        bookRenderer.addHyperlinkListener(listener);
     }
     
     public void removeHyperlinkListener(HyperlinkListener listener) {
-        bookTextPane.removeHyperlinkListener(listener);
+        bookRenderer.removeHyperlinkListener(listener);
     }
     
     protected void keyValueChanged(ListSelectionEvent evt) {

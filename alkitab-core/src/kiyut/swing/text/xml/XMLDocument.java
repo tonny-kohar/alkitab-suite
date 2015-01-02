@@ -10,6 +10,7 @@ import javax.swing.text.PlainDocument;
 /**
  * A document that can be marked up using XML style.
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class XMLDocument extends PlainDocument {
     private XMLScanner lexer;

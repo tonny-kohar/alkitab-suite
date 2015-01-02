@@ -12,10 +12,10 @@ import org.openide.util.actions.CallbackSystemAction;
 
 /**
  *
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.GoNextAction", category = "Navigate")
-@ActionRegistration(displayName = "#CTL_GoNextAction")
+@ActionRegistration(displayName = "#CTL_GoNextAction", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Toolbars/Navigate", position = 110),
     @ActionReference(path = "Menu/Navigate", position = 110),

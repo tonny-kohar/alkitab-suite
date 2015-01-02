@@ -4,7 +4,7 @@ package kiyut.alkitab.actions;
 
 import java.util.Collection;
 import javax.swing.SwingUtilities;
-import kiyut.alkitab.api.Indexer;
+import kiyut.alkitab.util.Indexer;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.openide.awt.ActionID;
@@ -17,9 +17,10 @@ import org.openide.util.NbBundle;
 /**
  * Implementation of Bookshelf Reindex Action
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.BookshelfIndexerAction", category = "Bookshelf")
-@ActionRegistration(displayName = "#CTL_BookshelfIndexerAction")
+@ActionRegistration(displayName = "#CTL_BookshelfIndexerAction" , lazy = false)
 @ActionReferences({
     @ActionReference(path = "Alkitab/Bookshelf/PopupMenu", position = 30)
 })

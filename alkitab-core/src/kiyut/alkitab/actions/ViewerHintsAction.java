@@ -12,10 +12,10 @@ import org.openide.util.actions.CallbackSystemAction;
 
 /**
  *
- * @author tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.actions.ViewerHintsAction", category = "View")
-@ActionRegistration(displayName = "#CTL_ViewerHintsAction")
+@ActionRegistration(displayName = "#CTL_ViewerHintsAction", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Toolbars/View", position = 100),
     @ActionReference(path = "Menu/View", position = 120)

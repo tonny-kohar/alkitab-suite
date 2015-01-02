@@ -30,12 +30,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
-import kiyut.swing.dialog.DialogESC;
+import kiyut.swing.dialog.EscapeDialog;
 import org.crosswire.jsword.book.sword.SwordBookPath;
 
 /**
  * BookInstallerPane
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class BookInstallerPane extends javax.swing.JPanel {
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
@@ -65,7 +66,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         srcField = new javax.swing.JTextField();
         srcBrowseButton = new javax.swing.JButton();
-        destComboBox = new javax.swing.JComboBox();
+        destComboBox = new javax.swing.JComboBox<File>();
         overwriteCheckBox = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -183,7 +184,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
-    private javax.swing.JComboBox destComboBox;
+    private javax.swing.JComboBox<File> destComboBox;
     private javax.swing.JButton installButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -198,7 +199,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
-        DefaultComboBoxModel model = (DefaultComboBoxModel)destComboBox.getModel();
+        DefaultComboBoxModel<File> model = (DefaultComboBoxModel<File>)destComboBox.getModel();
         model.removeAllElements();
         
         File[] paths = SwordBookPath.getSwordPath();
@@ -207,6 +208,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
         }
         
         srcBrowseButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 File file = showFileChooser();
                 if (file == null) { return; }
@@ -215,12 +217,14 @@ public class BookInstallerPane extends javax.swing.JPanel {
         });
         
         installButton.addActionListener(new ActionListener() {
+           @Override
            public void actionPerformed(ActionEvent evt)  {
                installBook();
            }
         });
         
         closeButton.addActionListener(new ActionListener() {
+           @Override
            public void actionPerformed(ActionEvent evt)  {
                Component comp = SwingUtilities.getWindowAncestor(BookInstallerPane.this);
                if (comp != null) {
@@ -242,9 +246,9 @@ public class BookInstallerPane extends javax.swing.JPanel {
                 comp = SwingUtilities.getWindowAncestor(owner);
             }
             if (comp instanceof Frame) {
-                dialog = new DialogESC((Frame)comp, bundle.getString("CTL_Title.Text"), true);
+                dialog = new EscapeDialog((Frame)comp, bundle.getString("CTL_Title.Text"), true);
             } else if (comp instanceof Dialog) {
-                dialog = new DialogESC((Dialog)comp, bundle.getString("CTL_Title.Text"), true);
+                dialog = new EscapeDialog((Dialog)comp, bundle.getString("CTL_Title.Text"), true);
             } 
         }
         
@@ -312,6 +316,7 @@ public class BookInstallerPane extends javax.swing.JPanel {
     /** Install or extracting the book raw zip file */
     protected void installBook() {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Cursor cursor = getCursor();
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));

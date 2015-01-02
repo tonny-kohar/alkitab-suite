@@ -2,6 +2,7 @@
 
 package kiyut.alkitab.bookviewer;
 
+import java.awt.BorderLayout;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -9,14 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.event.HyperlinkListener;
-import kiyut.alkitab.api.BookViewer;
-import kiyut.alkitab.api.History;
-import kiyut.alkitab.api.HistoryManager;
-import kiyut.alkitab.api.SwordURI;
-import kiyut.alkitab.api.ViewerHints;
-import kiyut.alkitab.api.event.BookChangeEvent;
-import kiyut.alkitab.bookviewer.history.BookViewerHistory;
-import kiyut.alkitab.bookviewer.history.BookViewerHistoryManager;
+import kiyut.alkitab.bookviewer.event.BookChangeEvent;
+import kiyut.alkitab.history.BookViewerHistory;
+import kiyut.alkitab.history.BookViewerHistoryManager;
+import kiyut.alkitab.history.History;
+import kiyut.alkitab.history.HistoryManager;
 import kiyut.alkitab.options.ViewerHintsOptions;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
@@ -24,12 +22,12 @@ import org.crosswire.jsword.passage.Key;
 
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which display single book
- *
+ * 
  */
 public class SingleBookViewerPane extends AbstractBookViewerPane {
 
     protected ResourceBundle bundle = ResourceBundle.getBundle(SingleBookViewerPane.class.getName());
-    protected BookTextPane bookTextPane;
+    protected WebViewRenderer bookRenderer;
     protected HistoryManager historyManager;
     
     /** Creates new SingleBookViewerPane */
@@ -47,31 +45,27 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bookScrollPane = new javax.swing.JScrollPane();
-
         setLayout(new java.awt.BorderLayout());
-        add(bookScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane bookScrollPane;
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
         ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
-        bookTextPane = new BookTextPane(viewerHints);
-        bookScrollPane.setViewportView(bookTextPane);
+        bookRenderer = new WebViewRenderer(viewerHints);
+        add(bookRenderer,BorderLayout.CENTER);
         historyManager = new BookViewerHistoryManager();
 
-        //getActionMap().setParent(bookTextPane.getActionMap());
+        //getActionMap().setParent(bookRenderer.getActionMap());
     }
 
     @Override
     public String getName() {
-        if (bookTextPane == null) {
+        if (bookRenderer == null) {
             return "";
         }
 
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
 
         if (books.isEmpty()) {
             return "";
@@ -86,42 +80,42 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     }
     
     @Override
-    public JComponent getViewerComponent() {
-        return bookTextPane;
+    public BookRenderer getBookRenderer() {
+        return bookRenderer;
     }
 
     @Override
     public ViewerHints<ViewerHints.Key,Object> getViewerHints() {
-        return bookTextPane.getViewerHints();
+        return bookRenderer.getViewerHints();
     }
 
     @Override
     public void addHyperlinkListener(HyperlinkListener listener) {
-        bookTextPane.addHyperlinkListener(listener);
+        bookRenderer.addHyperlinkListener(listener);
     }
 
     @Override
     public void removeHyperlinkListener(HyperlinkListener listener) {
-        bookTextPane.removeHyperlinkListener(listener);
+        bookRenderer.removeHyperlinkListener(listener);
     }
 
     @Override
     public List<Book> getBooks() {
-        List<Book> srcBooks = bookTextPane.getBooks();
+        List<Book> srcBooks = bookRenderer.getBooks();
         return Collections.unmodifiableList(srcBooks);
     }
 
     @Override
     public int getBookCount() {
-        return bookTextPane.getBooks().size();
+        return bookRenderer.getBooks().size();
     }
     
     @Override
     public void viewSource() {
         try {
             SourceViewerPane sourcePane = new SourceViewerPane();
-            sourcePane.initSource(bookTextPane);
-            //sourcePane.initSource(bookTextPane.getBooks(), bookTextPane.getKey(), bookTextPane.getConverter(), bookTextPane.getViewerHints(), bookTextPane.isCompareView());
+            sourcePane.initSource(bookRenderer);
+            //sourcePane.initSource(bookRenderer.getBooks(), bookRenderer.getKey(), bookRenderer.getConverter(), bookRenderer.getViewerHints(), bookRenderer.isCompareView());
             sourcePane.showDialog(this,true);
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
@@ -147,7 +141,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     }
     
     public void setBook(Book book) {
-        List<Book> books = bookTextPane.getBooks();
+        List<Book> books = bookRenderer.getBooks();
 
         if (books.isEmpty()) {
             books.add(book);
@@ -169,7 +163,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         if (tKey.getCardinality() > 0) {
             History hist = new BookViewerHistory(tKey,null);
             historyManager.add(hist);
-            bookTextPane.setKey(hist.current());
+            bookRenderer.setKey(hist.current());
         }
     }
     
@@ -195,17 +189,17 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        bookTextPane.setKey(keyHist);
+        bookRenderer.setKey(keyHist);
     }
 
     @Override
     public Key getKey() {
-        return bookTextPane.getKey();
+        return bookRenderer.getKey();
     }
 
     @Override
     public void reload() {
-        bookTextPane.reload(true);
+        bookRenderer.reload(true);
     }
 
     public HistoryManager getHistoryManager() {
@@ -222,7 +216,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        bookTextPane.setKey(hist.previous());
+        bookRenderer.setKey(hist.previous());
         reload();
     }
 
@@ -236,7 +230,7 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        bookTextPane.setKey(hist.next());
+        bookRenderer.setKey(hist.next());
         reload();
     }
     
