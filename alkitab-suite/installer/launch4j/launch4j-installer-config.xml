@@ -15,7 +15,7 @@
   <icon>exe_icon.ico</icon>
   <jre>
     <path></path>
-    <minVersion>1.6.0_13</minVersion>
+    <minVersion>1.7.0_25</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
   </jre>

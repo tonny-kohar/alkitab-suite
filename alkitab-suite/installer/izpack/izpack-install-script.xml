@@ -14,13 +14,14 @@
         </authors>
         <uninstaller>yes</uninstaller>
         <!-- combine this later with ProcessPanel for set prefs during install -->
-        <javaversion>1.6</javaversion>
+        <javaversion>1.8</javaversion>
+        <!-- <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/> -->
     </info>
     
     
     <variables>
         <variable name="APP_TITLE_FULL" value="${app.title.full}"/>
-        <variable name="JVM_REQ" value="Java 6 Update 26 or higher."/>
+        <variable name="JVM_REQ" value="Java 8 Update 25 or higher."/>
         <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
         <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
     </variables>

@@ -69,7 +69,7 @@
         <property name="nbdist-izpack-packs.dir" value="packs"/>
         <property name="nbdist-izpack-app-core.pack" value="${app.title}-${app.version.dash}"/>
         <property name="izpack-installer" value="setup.jar"/>
-        <property name="izpack.dir" value="/home/tonny/opt/IzPack"/>
+        <property name="izpack.dir" value="C:\Program Files\IzPack"/>
         <taskdef name="izpack" classpath="${izpack.dir}/lib/standalone-compiler.jar" 
             classname="com.izforge.izpack.ant.IzPackTask"/>
         

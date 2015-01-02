@@ -1,3 +1,14 @@
+ver 3.0-beta3
+- Improved HTML rendering (Java FX WebView)  
+- Add support for Versifications
+- Add shortcut Ctrl-L (for passage field)
+- Add shortcut Ctrl-F (for search field)
+- Updated Options background color section
+- Lots of refactoring
+- Updated to use JSword 2.0-beta
+- Updated to use Java 8 or Higher
+- Updated to use Netbeans 8.0.2
+
 ver 2.9.1
 - Add support for Ubuntu Unity
 

@@ -27,3 +27,4 @@ in no particular order
 - Chapter Introduction (verses 0) 
 - Personal commentary.
 - Session and History always conflict (repeated as history), need to fix
+- Clone Tab (duplicate tab)
