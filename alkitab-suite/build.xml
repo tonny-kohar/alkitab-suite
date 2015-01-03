@@ -208,7 +208,7 @@
         <copy todir="${nbdist-app.dir}/legal">
             <fileset dir="legal"/>
         </copy>
-
+        
         <delete file="${nbdist-resources.dir}/${app.name}.icns"/>
         <copy tofile="${nbdist-resources.dir}/${app.name}.icns" file="installer/icons/${app.name}.icns" />
         

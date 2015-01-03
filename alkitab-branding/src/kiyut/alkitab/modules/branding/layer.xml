@@ -77,9 +77,12 @@
         <folder name="Window">
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Window"/>
             <file name="CloneDocumentAction.shadow_hidden"/>
+            <file name="DocumentsAction.shadow_hidden"/>
+            <file name="GroupsMenuAction.shadow_hidden"/>
             <file name="Output_hidden"/>
             <file name="ProgressListAction.shadow_hidden"/>
             <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
+            <file name="Tools_hidden"/>
             <file name="ViewFavoritesTabAction.shadow_hidden"/>
             <file name="ViewRuntimeTabAction.shadow_hidden"/>
             <file name="Web_hidden"/>
