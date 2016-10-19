@@ -3,5 +3,5 @@ OpenIDE-Module: kiyut.alkitab.modules.userguide
 OpenIDE-Module-Layer: kiyut/alkitab/modules/userguide/layer.xml
 OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/userguide/Bundle.properties
 OpenIDE-Module-Requires: org.netbeans.api.javahelp.Help
-OpenIDE-Module-Specification-Version: 2.9
+OpenIDE-Module-Specification-Version: 3.0
 

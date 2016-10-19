@@ -80,7 +80,7 @@ public class BrandingModuleInstall extends ModuleInstall {
     private void doRun() {
         ComponentOrientationSupport.applyComponentOrientation(WindowManager.getDefault().getMainWindow());
 
-        boolean firstTime = GlobalHistory.getInstance().size() == 0 ? true : false;
+        boolean firstTime = GlobalHistory.getInstance().size() == 0;
 
         if (firstTime) {
             // open preferred Bible if exist and available
@@ -149,8 +149,8 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         sb.append("  AugmentPath:").append(newline);
         files = SwordBookPath.getAugmentPath();
-        for (int i=0; i<files.length; i++) {
-            sb.append("\t").append(files[i].toString()).append(newline);
+        for (File file1 : files) {
+            sb.append("\t").append(file1.toString()).append(newline);
         }
 
         sb.append("  DownloadDir:").append(newline);
@@ -167,8 +167,8 @@ public class BrandingModuleInstall extends ModuleInstall {
         
         sb.append("  SwordPath:").append(newline);
         files = SwordBookPath.getSwordPath();
-        for (int i=0; i<files.length; i++) {
-            sb.append("\t").append(files[i].toString()).append(newline);
+        for (File file1 : files) {
+            sb.append("\t").append(file1.toString()).append(newline);
         }
 
         sb.append("  Book Count: ").append(Books.installed().getBooks().size()).append(newline);

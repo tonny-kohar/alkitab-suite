@@ -67,7 +67,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
     /**
      * Default it is false
      */
-    protected boolean compareView;
+    protected boolean compareView = false;
     protected ViewerHints<ViewerHints.Key, Object> viewerHints;
     
     //protected EventListenerList listenerList;
@@ -84,7 +84,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
         super();
         
         listenerList = new EventListenerList();
-        books = new ArrayList<Book>();
+        books = new ArrayList<>();
         setConverter(new HTMLConverter());
         setViewerHints(viewerHints);
         this.compareView = false;
@@ -171,6 +171,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
     
     /**
      * Default it is false
+     * @param compareView
      */
     public void setCompareView(boolean compareView) {
         this.compareView = compareView;

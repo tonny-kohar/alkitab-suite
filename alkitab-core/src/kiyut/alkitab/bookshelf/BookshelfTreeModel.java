@@ -33,7 +33,8 @@ public class BookshelfTreeModel extends DefaultTreeModel {
         
         groupBy = new ArrayList<>(2);
         groupBy.add(BookMetaData.KEY_CATEGORY);
-        groupBy.add(BookMetaData.KEY_XML_LANG);
+        groupBy.add(BookMetaData.KEY_LANGUAGE);
+        //groupBy.add(BookMetaData.KEY_XML_LANG);
         
         reload();
     }
