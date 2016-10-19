@@ -90,8 +90,8 @@
     <panels>
         <panel classname="HelloPanel"/>
         <panel classname="LicencePanel"/>
-        <panel classname="TreePacksPanel"/>
         <panel classname="TargetPanel"/>
+        <panel classname="TreePacksPanel"/>
         <panel classname="UserPathPanel"/>
         <panel classname="InstallPanel"/>
         <panel classname="ShortcutPanel"/>
@@ -103,14 +103,10 @@
     <!--
         The packs section.
         We specify here our packs.
-        note: bug on IzPack 4.0 loose=true can be used together with unpack=true
     -->
     <packs>
         <pack name="${app.title.full}" required="yes" loose="true">
             <description>${app.title.full} Core</description>
-            <!-- XXX Izpack 4.0 Bug when loose=true and unpack=true
-            <file targetdir="$INSTALL_PATH" src="${packs.dir}/${app-core.pack}" override="true" /> 
-            -->
             <fileset targetdir="$INSTALL_PATH" dir="${packs.dir}/${app-core.pack}" override="true" />
             <executable targetfile="$INSTALL_PATH/bin/alkitab" stage="never"/>
             <executable targetfile="$INSTALL_PATH/Uninstaller/uninstaller" stage="never"/>
@@ -120,27 +116,22 @@
         </pack>
         <pack name="Bible: King James Version (KJV)" required="no" parent="[Optional] Books" loose="true">
             <description>King James Version (1769) with Strongs Numbers and Morphology</description>
-            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/KJV.zip" override="askfalse" unpack="true" /> -->
             <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/KJV" override="true" />
         </pack>
         <pack name="Dictionary: Strong's Greek" required="no" parent="[Optional] Books" loose="true">
             <description>Strong's Greek Bible Dictionary</description>
-            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/StrongsGreek.zip" override="askfalse" unpack="true" /> -->
             <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/StrongsGreek" override="true" />
         </pack>
         <pack name="Dictionary: Strong's Hebrew" required="no" parent="[Optional] Books" loose="true">
             <description>Strong's Hebrew Bible Dictionary</description>
-            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/StrongsHebrew.zip" override="askfalse" unpack="true" /> -->
             <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/StrongsHebrew" override="true" />
         </pack>
         <pack name="Dictionary: Robinson's Morphology" required="no" parent="[Optional] Books" loose="true">
             <description>Robinson's Morphological Analysis Codes</description>
-            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/Robinson.zip" override="askfalse" unpack="true" /> -->
             <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Robinson" override="true" />
         </pack>
         <pack name="Book: Institutes" required="no" parent="[Optional] Books" loose="true">
             <description>Calvin's Institutes</description>
-            <!-- <file targetdir="$UserPathPanelVariable" src="${packs.dir}/Institutes.zip" override="askfalse" unpack="true" /> -->
             <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Institutes" override="true" />
         </pack>
     </packs>
