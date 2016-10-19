@@ -70,8 +70,14 @@
         <property name="nbdist-izpack-app-core.pack" value="${app.title}-${app.version.dash}"/>
         <property name="izpack-installer" value="setup.jar"/>
         <property name="izpack.dir" value="C:\Program Files\IzPack"/>
-        <taskdef name="izpack" classpath="${izpack.dir}/lib/standalone-compiler.jar" 
-            classname="com.izforge.izpack.ant.IzPackTask"/>
+        
+        <path id="izpack.classpath">
+            <fileset dir="${izpack.dir}">
+                <include name="lib/*.jar" />
+            </fileset>
+        </path>
+        
+        <taskdef name="izpack" classpathref="izpack.classpath" classname="com.izforge.izpack.ant.IzPackTask" />
         
         <echo message="=================" />
         <echo message="STEP 1" />
