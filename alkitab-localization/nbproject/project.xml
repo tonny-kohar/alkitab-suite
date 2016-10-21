@@ -8,14 +8,16 @@
             <module-dependencies>
                 <dependency>
                     <code-name-base>kiyut.alkitab.modules.branding</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
                     <run-dependency>
-                        <specification-version>2.7</specification-version>
+                        <specification-version>3.0</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>
                     <code-name-base>kiyut.alkitab.modules.userguide</code-name-base>
                     <run-dependency>
-                        <specification-version>2.7</specification-version>
+                        <specification-version>3.0</specification-version>
                     </run-dependency>
                 </dependency>
             </module-dependencies>
