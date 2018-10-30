@@ -83,7 +83,7 @@ public class BookshelfTreeModel extends DefaultTreeModel {
         
         if (level < groupBy.size()) {
             String key = groupBy.get(level);
-            Iterator<Object> iter = books.getGroup(key).iterator();
+            Iterator<?> iter = books.getGroup(key).iterator();
             while (iter.hasNext()) {
                 Object value = iter.next();
                 BookSet subBooks = books.filter(key, value);
@@ -95,9 +95,9 @@ public class BookshelfTreeModel extends DefaultTreeModel {
             if (books == null) {
                 return;
             }
-            Iterator iter = books.iterator();
+            Iterator<?> iter = books.iterator();
             while (iter.hasNext()) {
-                Book book =(Book)iter.next();
+                Book book = (Book)iter.next();
                 DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(book);
                 mutableNode.add(childNode);
             }

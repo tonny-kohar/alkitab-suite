@@ -62,7 +62,7 @@ public class SearchPane extends javax.swing.JPanel {
         rangeCheckBox = new javax.swing.JCheckBox();
         rangePane = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        rangeComboBox = new javax.swing.JComboBox();
+        rangeComboBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         rangeIncludesField = new javax.swing.JTextField();
         rangeIncludesButton = new javax.swing.JButton();
@@ -259,7 +259,7 @@ public class SearchPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField phraseField;
     private javax.swing.JCheckBox rangeCheckBox;
-    private javax.swing.JComboBox rangeComboBox;
+    private javax.swing.JComboBox<String> rangeComboBox;
     private javax.swing.JButton rangeIncludesButton;
     private javax.swing.JTextField rangeIncludesField;
     private javax.swing.JPanel rangePane;
@@ -308,7 +308,7 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         String[] presets = bundle.getString("Range.Preset").split("\\|");
-        rangeComboBox.setModel(new DefaultComboBoxModel(presets));
+        rangeComboBox.setModel(new DefaultComboBoxModel<String>(presets));
         
         rangeCheckBox.addActionListener(new ActionListener() {
             @Override
@@ -322,7 +322,7 @@ public class SearchPane extends javax.swing.JPanel {
         rangeComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                JComboBox comboBox = (JComboBox) evt.getSource();
+                JComboBox<String> comboBox = rangeComboBox;
                 int index = comboBox.getSelectedIndex();
                 if (index <= 0) {
                     return;

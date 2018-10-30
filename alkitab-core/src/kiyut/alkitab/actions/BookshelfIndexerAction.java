@@ -38,9 +38,9 @@ public class BookshelfIndexerAction extends BookshelfBookAction {
         boolean b = false;
         book = null;
         
-        Collection c = bookLookupResult.allInstances();
+        Collection<? extends Book> c = bookLookupResult.allInstances();
         if (!c.isEmpty()) {
-            book = (Book)c.iterator().next();
+            book = c.iterator().next();
             b = allowCreateIndex(book);
         }        
         

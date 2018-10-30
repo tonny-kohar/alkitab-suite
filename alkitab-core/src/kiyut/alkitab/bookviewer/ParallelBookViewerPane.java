@@ -3,6 +3,7 @@
 package kiyut.alkitab.bookviewer;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -368,7 +369,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         bookComboActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                JComboBox comboBox = (JComboBox) evt.getSource();
+                Object comboBox = evt.getSource();
                 int index = -1;
                 for (int i = 0; i < booksComboPane.getComponentCount(); i++) {
                     if (comboBox.equals(booksComboPane.getComponent(i))) {
@@ -380,7 +381,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                     return;
                 }
 
-                String bookName = comboBox.getSelectedItem().toString();
+                String bookName = ((JComboBox)comboBox).getSelectedItem().toString();
                 setBook(index, bookName);
                 reload();
             }
@@ -624,10 +625,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             return;
         }
         
-        JComboBox comboBox = createBookComboBox();
+        JComboBox<String> comboBox = createBookComboBox();
 
         if (bookName == null) {
-            bookName = comboBox.getItemAt(0).toString();
+            bookName = comboBox.getItemAt(0);
         }
         
         Book book = Books.installed().getBook(bookName);
@@ -710,8 +711,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         //comboBox.addActionListener(bookComboActionListener);
-        JComboBox comboBox = (JComboBox) booksComboPane.getComponent(index);
-        comboBox.removeActionListener(bookComboActionListener);
+        //JComboBox<String> comboBox = (JComboBox<String>) booksComboPane.getComponent(index);
+        //comboBox.removeActionListener(bookComboActionListener);
+        Component comboBox =  booksComboPane.getComponent(index);
+        ((JComboBox)comboBox).removeActionListener(bookComboActionListener);
         booksComboPane.remove(index);
         booksComboPane.revalidate();
         booksComboPane.repaint();
@@ -1107,11 +1110,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
 
         if (total == partial) {
-            Object[] args = {searchString,new Integer(total)};
+            Object[] args = {searchString, total};
             String msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         } else {
-            Object[] args = {searchString,new Integer(partial),new Integer(total)};
+            Object[] args = {searchString, partial,new Integer(total)};
             String msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1189,13 +1192,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * @return JComboBox
      */
     @SuppressWarnings("unchecked")
-    protected JComboBox createBookComboBox() {
-        List<Book> books = new ArrayList<Book>();
-        List<String> bookInitials = new ArrayList<String>();
+    protected JComboBox<String> createBookComboBox() {
+        List<Book> books = new ArrayList<>();
+        List<String> bookInitials = new ArrayList<>();
         Comparator<Book> comparator = SwordUtilities.getBookInitialsComparator();
         
         // bible
-        List tBooks = Books.installed().getBooks(BookFilters.getOnlyBibles());
+        List<Book> tBooks = Books.installed().getBooks(BookFilters.getOnlyBibles());
         books.addAll(tBooks);
         Collections.sort(books, comparator);
         for (int i=0; i<books.size(); i++) {
@@ -1220,7 +1223,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             bookInitials.add(book.getInitials());
         }
         
-        SeparatorComboBox comboBox = new SeparatorComboBox(bookInitials.toArray());
+        SeparatorComboBox comboBox = new SeparatorComboBox(bookInitials.toArray(new String[0]));
         comboBox.setPrototypeDisplayValue("BOOKINITIALS"); //NOI18N
         return comboBox;
     }

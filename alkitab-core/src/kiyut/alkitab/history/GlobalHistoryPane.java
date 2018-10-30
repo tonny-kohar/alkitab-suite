@@ -23,7 +23,7 @@ import kiyut.alkitab.bookviewer.SwordURI;
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class GlobalHistoryPane extends javax.swing.JPanel {
-    protected ListModel listModel;
+    protected ListModel<GlobalHistory.Entry> listModel;
 
     /** Creates new form GlobalHistoryPane */
     public GlobalHistoryPane() {
@@ -41,7 +41,7 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
     private void initComponents() {
 
         scrollPane = new javax.swing.JScrollPane();
-        historyList = new javax.swing.JList();
+        historyList = new javax.swing.JList<>();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -52,12 +52,12 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList historyList;
+    private javax.swing.JList<GlobalHistory.Entry> historyList;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
-        historyList.setPrototypeCellValue("1234567890123456789012345678901234567890");
+        //historyList.setPrototypeCellValue("1234567890123456789012345678901234567890");
         listModel = new HistoryListModel();
         historyList.setModel(listModel);
         historyList.setCellRenderer(new HistoryCellRenderer());
@@ -93,7 +93,7 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         BookViewerManager.getInstance().openURI(uri, hist.getSearch(), false);
     }
 
-    private class HistoryListModel extends AbstractListModel {
+    private class HistoryListModel extends AbstractListModel<GlobalHistory.Entry> {
         public HistoryListModel() {
            ListDataListener listDataListener = new ListDataListener() {
                 @Override
@@ -115,7 +115,7 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public GlobalHistory.Entry getElementAt(int index) {
             return GlobalHistory.getInstance().getHistory(index);
         }
 
@@ -125,9 +125,9 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         }
     }
 
-    private class HistoryCellRenderer extends DefaultListCellRenderer {
+    private class HistoryCellRenderer extends DefaultListCellRenderer  {
         @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             GlobalHistory.Entry entry = GlobalHistory.getInstance().getHistory(index);
             if (entry != null ) {
                 String display = null;

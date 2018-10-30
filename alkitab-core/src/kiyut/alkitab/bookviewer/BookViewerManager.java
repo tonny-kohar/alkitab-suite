@@ -48,17 +48,15 @@ public final class BookViewerManager {
 
     private BookViewerManager() {
         
-        Lookup.Result<BookViewerProvider> result = Lookups.forPath("Alkitab/BookViewerProvider").lookupResult(BookViewerProvider.class);
+        final Lookup.Result<BookViewerProvider> result = Lookups.forPath("Alkitab/BookViewerProvider").lookupResult(BookViewerProvider.class);
         //Lookup.Result<BookViewProvider> result = Lookup.getDefault().lookupResult(BookViewerProvider.class);
         setBookViewerProvider(result.allInstances()); // needed to tell Nb that it is processed
         
         result.addLookupListener(new LookupListener() {
             @Override
             public void resultChanged(LookupEvent evt) {
-                Object obj = evt.getSource();
-                if (obj == null) { return; }
-                Lookup.Result<BookViewerProvider> r = (Lookup.Result<BookViewerProvider>)obj;
-                setBookViewerProvider(r.allInstances());
+                Collection<? extends BookViewerProvider> c = result.allInstances();
+                setBookViewerProvider(c);
             }
         });
 

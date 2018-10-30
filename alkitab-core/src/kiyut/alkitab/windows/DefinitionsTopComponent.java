@@ -106,7 +106,7 @@ public final class DefinitionsTopComponent extends TopComponent {
             return; 
         }
         
-        List<String> bookNames  = new ArrayList<String>(count);
+        List<String> bookNames  = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             DictionaryPane dicPane = (DictionaryPane) tabbedPane.getComponentAt(i);
             bookNames.add(dicPane.getBook().getInitials());
@@ -119,6 +119,7 @@ public final class DefinitionsTopComponent extends TopComponent {
         out.writeInt(selectedIndex);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         super.readExternal(in);
@@ -142,7 +143,7 @@ public final class DefinitionsTopComponent extends TopComponent {
     
     @Override
     public javax.swing.Action[] getActions() {
-        List<Action> actionList = new ArrayList<Action>();
+        List<Action> actionList = new ArrayList<>();
         
         // add 
         actionList.add(new ViewSourceAction());

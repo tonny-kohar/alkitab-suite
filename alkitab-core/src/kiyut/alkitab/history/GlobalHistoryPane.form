@@ -26,6 +26,9 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
         <Component class="javax.swing.JList" name="historyList">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;GlobalHistory.Entry&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

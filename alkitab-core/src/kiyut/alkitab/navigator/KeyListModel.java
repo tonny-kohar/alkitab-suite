@@ -10,7 +10,7 @@ import org.crosswire.jsword.passage.Key;
  * 
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
-public class KeyListModel extends AbstractListModel {
+public class KeyListModel extends AbstractListModel<Key> {
     //private final ScheduledExecutorService scheduler =  Executors.newScheduledThreadPool(1);
     protected boolean searchCancelled = false;
     protected int searchResult = -1;
@@ -54,7 +54,7 @@ public class KeyListModel extends AbstractListModel {
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public Key getElementAt(int index) {
         if (keyList == null) { return null; }
         return keyList.get(index);
     }

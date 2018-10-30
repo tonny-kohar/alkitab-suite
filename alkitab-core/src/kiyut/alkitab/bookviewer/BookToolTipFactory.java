@@ -35,16 +35,14 @@ public final class BookToolTipFactory {
     private BookToolTip toolTip = null;
     
     private BookToolTipFactory() {
-        Lookup.Result<BookToolTip> result = Lookups.forPath("Alkitab/BookToolTip").lookupResult(BookToolTip.class);
+        final Lookup.Result<BookToolTip> result = Lookups.forPath("Alkitab/BookToolTip").lookupResult(BookToolTip.class);
         setBookToolTip(result.allInstances()); // needed to tell Nb that it is processed
         
         result.addLookupListener(new LookupListener() {
             @Override
             public void resultChanged(LookupEvent evt) {
-                Object obj = evt.getSource();
-                if (obj == null) { return; }
-                Lookup.Result<BookToolTip> r = (Lookup.Result<BookToolTip>)obj;
-                setBookToolTip(r.allInstances());
+                Collection<? extends BookToolTip> c = result.allInstances();
+                setBookToolTip(c);
             }
         });
     }

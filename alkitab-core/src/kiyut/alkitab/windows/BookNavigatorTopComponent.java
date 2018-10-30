@@ -45,7 +45,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
 
     private PropertyChangeListener tcPropertyChangeListener;
     
-    private Lookup.Result result = null;
+    private Lookup.Result<BookViewer> result = null;
     private LookupListener bookViewerLookupListener = null;
     
     private Map<BookViewer,BookNavigatorPane> navigatorMap;
@@ -149,8 +149,7 @@ public final class BookNavigatorTopComponent extends TopComponent {
     }
     
     private void bookViewerLookupListenerResultChanged(LookupEvent lookupEvent) {
-        Lookup.Result r = (Lookup.Result)lookupEvent.getSource();
-        Collection c = r.allInstances();
+        Collection<? extends BookViewer> c = result.allInstances();
         if (!c.isEmpty()) {
             bookViewer = (BookViewer)c.iterator().next();
             BookNavigatorPane navPane = navigatorMap.get(bookViewer);

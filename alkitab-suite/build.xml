@@ -10,14 +10,6 @@
     <target name="build" depends="build-brand,suite.build"/>
     
     <target name="build-brand" depends="-init">
-        <!-- for automated build number, 
-            do not forget the remove the app.buildnumber from project.properties
-        <tstamp>
-            <format property="app.buildnumber" pattern="yyyyMMddHHmm"/>
-        </tstamp>
-        <echo message="app.buildnumber: ${app.buildnumber}" />
-        -->
-        
         <propertyfile
             file="${basedir}/branding/core/core.jar/org/netbeans/core/startup/Bundle.properties" 
             comment="Updated by build script">
@@ -56,7 +48,6 @@
                 <include name="frame48.gif"/>
             </fileset>
         </copy>
-        
     </target>
     
     <target name="build-installer" description="Create Installer" depends="clean,build-zip">

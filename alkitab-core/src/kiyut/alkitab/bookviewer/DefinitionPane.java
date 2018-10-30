@@ -51,7 +51,7 @@ public class DefinitionPane extends javax.swing.JPanel {
         splitPane = new javax.swing.JSplitPane();
         indexPane = new javax.swing.JPanel();
         indexScrollPane = new javax.swing.JScrollPane();
-        indexList = new javax.swing.JList();
+        indexList = new javax.swing.JList<>();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -70,7 +70,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JList indexList;
+    protected javax.swing.JList<Key> indexList;
     protected javax.swing.JPanel indexPane;
     private javax.swing.JScrollPane indexScrollPane;
     private javax.swing.JSplitPane splitPane;
@@ -83,7 +83,7 @@ public class DefinitionPane extends javax.swing.JPanel {
         
         //getActionMap().setParent(bookRenderer.getActionMap());
         
-        indexList.setPrototypeCellValue("DICTIONARY INDEX TEXT");
+        //indexList.setPrototypeCellValue("DICTIONARY INDEX TEXT");
         indexList.setModel(new KeyListModel());
         indexList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
@@ -183,6 +183,7 @@ public class DefinitionPane extends javax.swing.JPanel {
      * @return getBookRenderer().getComponent();
      * @deprecated replaced with #getBookRenderer() 
      */
+    @Deprecated
     public JComponent getViewerComponent() {
         return getBookRenderer().getComponent();
     }
@@ -203,7 +204,7 @@ public class DefinitionPane extends javax.swing.JPanel {
         if (evt.getValueIsAdjusting()) { return; }
         int index = indexList.getSelectedIndex();
         if (index == -1) { return; }
-        Key key = (Key)indexList.getModel().getElementAt(index);
+        Key key = indexList.getModel().getElementAt(index);
         // XXX bug on JSword ?, if using string it will not find the key
         // eg: Daily Devotional
         /*System.out.println("key: " + key.toString());

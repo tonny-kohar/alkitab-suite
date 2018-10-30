@@ -39,7 +39,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        bookPathList = new javax.swing.JList();
+        bookPathList = new javax.swing.JList<>();
         jToolBar1 = new javax.swing.JToolBar();
         addPathButton = new javax.swing.JButton();
         removePathButton = new javax.swing.JButton();
@@ -197,7 +197,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
 
         File[] paths = bookViewerOpts.getBookPaths();
         if (paths != null) {
-            DefaultListModel model = (DefaultListModel)bookPathList.getModel();
+            DefaultListModel<File> model = (DefaultListModel<File>)bookPathList.getModel();
             model.clear();
             for (int i=0; i <paths.length; i++) {
                 model.addElement(paths[i]);
@@ -220,7 +220,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
 
         File[] paths = new File[bookPathList.getModel().getSize()];
         for (int i=0; i < paths.length; i++) {
-            paths[i] = (File)bookPathList.getModel().getElementAt(i);
+            paths[i] = bookPathList.getModel().getElementAt(i);
         }
         if (paths.length > 0) {
             bookViewerOpts.setBookPaths(paths);
@@ -237,7 +237,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addPathButton;
-    private javax.swing.JList bookPathList;
+    private javax.swing.JList<File> bookPathList;
     private javax.swing.JButton browseDownloadPathButton;
     private javax.swing.JTextPane currentConfigTextPane;
     private javax.swing.JTextField downloadPathField;
@@ -257,7 +257,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initCustom() {
-        bookPathList.setModel(new DefaultListModel());
+        bookPathList.setModel(new DefaultListModel<File>());
         bookPathList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // XXX workaround for Windows Plaf for button margin
@@ -290,7 +290,7 @@ final class PathOptionsPanel extends javax.swing.JPanel {
                 }
 
                 if (!exists) {
-                    ((DefaultListModel) bookPathList.getModel()).addElement(file);
+                    ((DefaultListModel<File>) bookPathList.getModel()).addElement(file);
                 }
             }
         });
@@ -313,9 +313,10 @@ final class PathOptionsPanel extends javax.swing.JPanel {
                 if (i <= 0) {
                     return;
                 }
-                Object obj = ((DefaultListModel) bookPathList.getModel()).remove(i);
+                DefaultListModel<File> listModel = (DefaultListModel<File>)bookPathList.getModel();
+                File file = listModel.remove(i);
                 i = i - 1;
-                ((DefaultListModel) bookPathList.getModel()).add(i, obj);
+                listModel.add(i, file);
                 bookPathList.setSelectedIndex(i);
             }
         });
@@ -326,12 +327,13 @@ final class PathOptionsPanel extends javax.swing.JPanel {
                 if (bookPathList.getModel().getSize() < 2) { return; }
                 int i = bookPathList.getSelectedIndex();
                 if (i < 0 ) { return; }
-                Object obj = ((DefaultListModel)bookPathList.getModel()).remove(i);
+                DefaultListModel<File> listModel = (DefaultListModel<File>)bookPathList.getModel();
+                File file = listModel.remove(i);
                 if (i < bookPathList.getModel().getSize()) {
-                    ((DefaultListModel)bookPathList.getModel()).add(i+1, obj);
+                    listModel.add(i+1, file);
                     i = i + 1;
                 } else {
-                    ((DefaultListModel)bookPathList.getModel()).addElement(obj);
+                    listModel.addElement(file);
                     i = bookPathList.getModel().getSize() - 1;
                 }
                 bookPathList.setSelectedIndex(i);

@@ -33,7 +33,6 @@ import org.crosswire.jsword.passage.VerseRange;
  * 
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
-@SuppressWarnings("unchecked")
 public class PassageChooser extends javax.swing.JPanel {
     protected ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());    
     

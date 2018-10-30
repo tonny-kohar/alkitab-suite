@@ -34,11 +34,11 @@ public class ExtendedFileFilter extends FileFilter {
     }
     
     public ExtendedFileFilter(String description, String[] extensions) {
-        this.filters = new ArrayList<String>(2);
+        this.filters = new ArrayList<>(2);
         
         if (extensions != null) {
-            for (int i=0; i<extensions.length; i++) {
-                addExtension(extensions[i]);
+            for (String extension : extensions) {
+                addExtension(extension);
             }
         }
         
@@ -47,6 +47,7 @@ public class ExtendedFileFilter extends FileFilter {
         }
     }
     
+    @Override
     public boolean accept(File f) {
         if(f != null) {
             if(f.isDirectory()) {
@@ -63,6 +64,8 @@ public class ExtendedFileFilter extends FileFilter {
     /**
      * Return the extension portion of the file's name.
      *
+     * @param f the File
+     * @return the extension portion of the file's name.
      * @see #getExtension
      * @see #accept
      */
@@ -84,10 +87,11 @@ public class ExtendedFileFilter extends FileFilter {
      * out all files except those that end in ".jpg" and ".tif":
      *
      * Note that the "." before the extension is not needed and will be ignored.
+     * @param extension the file extension
      */
     public void addExtension(String extension) {
         if(filters == null) {
-            filters = new ArrayList<String>(2);
+            filters = new ArrayList<>(2);
         }
         filters.add(extension.toLowerCase());
         fullDescription = null;
@@ -105,15 +109,16 @@ public class ExtendedFileFilter extends FileFilter {
      * @see #setExtensionListInDescription
      * @see #isExtensionListInDescription
      */
+    @Override
     public String getDescription() {
         if(fullDescription == null) {
             if(description == null || isExtensionListInDescription()) {
                 fullDescription = description==null ? "(" : description + " (";
-                Iterator it = filters.iterator();
+                Iterator<String> it = filters.iterator();
                 if(it != null) {
-                    fullDescription += "." + (String) it.next();
+                    fullDescription += "." + it.next();
                     while (it.hasNext()) {
-                        fullDescription += ", ." + (String) it.next();
+                        fullDescription += ", ." + it.next();
                     }
                 }
                 fullDescription += ")";
@@ -128,6 +133,7 @@ public class ExtendedFileFilter extends FileFilter {
      * Sets the human readable description of this filter. For
      * example: filter.setDescription("Gif and JPG Images");
      *
+     * @param description description
      * @see #setDescription
      * @see #setExtensionListInDescription
      * @see #isExtensionListInDescription
@@ -144,6 +150,7 @@ public class ExtendedFileFilter extends FileFilter {
      * Only relevent if a description was provided in the constructor
      * or using setDescription();
      *
+     * @param b true or false
      * @see #getDescription
      * @see #setDescription
      * @see #isExtensionListInDescription
@@ -160,6 +167,7 @@ public class ExtendedFileFilter extends FileFilter {
      * Only relevent if a description was provided in the constructor
      * or using setDescription();
      *
+     * @return true or false
      * @see #getDescription
      * @see #setDescription
      * @see #setExtensionListInDescription

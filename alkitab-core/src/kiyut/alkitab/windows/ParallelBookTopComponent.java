@@ -125,7 +125,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         super.writeExternal(out);
         
         List<Book> books = bookViewer.getBooks();
-        List<String> bookNames = new ArrayList<String>(books.size());
+        List<String> bookNames = new ArrayList<>(books.size());
         for (int i = 0; i < books.size(); i++) {
             bookNames.add(books.get(i).getInitials());
         }
@@ -137,6 +137,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         out.writeObject(bookViewer.getViewerHints());
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         super.readExternal(in);
@@ -170,7 +171,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
     @Override
     public javax.swing.Action[] getActions() {
-        List<Action> actionList = new ArrayList<Action>();
+        List<Action> actionList = new ArrayList<>();
         
         // add 
         actionList.addAll(Arrays.asList(super.getActions()));
@@ -345,9 +346,9 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     private void showToolTip(SwordURI swordURI) {
         if (swordURI == null) { return; }
         
-        ViewerHints viewerHints = bookViewer.getViewerHints();
+        ViewerHints<ViewerHints.Key,Object> viewerHints = bookViewer.getViewerHints();
         Boolean val = (Boolean)viewerHints.get(ViewerHints.TOOLTIP_POPUP);
-        if (val.booleanValue() == false) {
+        if (val == false) {
             return;
         }
 
@@ -393,7 +394,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 case BIBLE:
                     bookName = BookViewerOptions.getInstance().getDefaultBible();
                     if (bookName == null) {
-                        List books = Books.installed().getBooks(BookFilters.getBibles());
+                        List<?> books = Books.installed().getBooks(BookFilters.getBibles());
                         if (!books.isEmpty()) {
                             bookName = ((Book) books.get(0)).getInitials();
                         }
@@ -402,7 +403,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 case GREEK_STRONGS:
                     bookName = BookViewerOptions.getInstance().getDefaultGreekStrongs();
                     if (bookName == null) {
-                        List books = Books.installed().getBooks(BookFilters.getGreekDefinitions());
+                        List<?> books = Books.installed().getBooks(BookFilters.getGreekDefinitions());
                         if (!books.isEmpty()) {
                             bookName = ((Book) books.get(0)).getInitials();
                         }
@@ -411,7 +412,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 case HEBREW_STRONGS:
                     bookName = BookViewerOptions.getInstance().getDefaultHebrewStrongs();
                     if (bookName == null) {
-                        List books = Books.installed().getBooks(BookFilters.getHebrewDefinitions());
+                        List<?> books = Books.installed().getBooks(BookFilters.getHebrewDefinitions());
                         if (!books.isEmpty()) {
                             bookName = ((Book) books.get(0)).getInitials();
                         }
@@ -420,7 +421,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                 case GREEK_MORPH:
                     bookName = BookViewerOptions.getInstance().getDefaultGreekMorph();
                     if (bookName == null) {
-                        List books = Books.installed().getBooks(BookFilters.getGreekParse());
+                        List<?> books = Books.installed().getBooks(BookFilters.getGreekParse());
                         if (!books.isEmpty()) {
                             bookName = ((Book) books.get(0)).getInitials();
                         }
@@ -430,7 +431,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     // TODO need to implement this
                     //bookName = BookViewerOptions.getInstance().getDefaultHebrewMorph();
 
-                    List books = Books.installed().getBooks(BookFilters.getHebrewParse());
+                    List<?> books = Books.installed().getBooks(BookFilters.getHebrewParse());
                     if (!books.isEmpty()) {
                         bookName = ((Book) books.get(0)).getInitials();
                     }

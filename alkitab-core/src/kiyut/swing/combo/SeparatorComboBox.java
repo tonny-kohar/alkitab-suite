@@ -10,59 +10,62 @@ import javax.swing.JSeparator;
 import javax.swing.ListCellRenderer;
 
 
-/** 
- * Extended ComboBox which have separator on its item.
+/** Extended ComboBox which have separator on its item.
  * The default separator is defined as String "--"
- *
- * @author Tonny Kohar <tonny.kohar@gmail.com>
+ * 
+ * @author KIYUT
  */
-public class SeparatorComboBox extends JComboBox {
+public class SeparatorComboBox extends JComboBox<String> {
     public static final String DEFAULT_SEPARATOR = "--";
 
-    protected Object separator;
+    protected String separator;
     
     public SeparatorComboBox() {
         this(DEFAULT_SEPARATOR);
         initCustom();
     }
     
-    public SeparatorComboBox(ComboBoxModel aModel) {
+    public SeparatorComboBox(ComboBoxModel<String> aModel) {
         super(aModel);
         initCustom();
         setSeparator(DEFAULT_SEPARATOR);
     }
         
-    public SeparatorComboBox(final Object[] items) {
+    public SeparatorComboBox(final String[] items) {
         super(items);
         initCustom();
         setSeparator(DEFAULT_SEPARATOR);
     }
 
-    public SeparatorComboBox(Object separator) {
+    public SeparatorComboBox(String separator) {
         super();
         initCustom();
         setSeparator(separator);
     }
     
     protected void initCustom() {
-        setRenderer(new SeparatorListCellRenderer(getRenderer()));
+        ListCellRenderer<? super String> defaultRenderer = getRenderer();
+        ListCellRenderer<String> wrappedRendered = new SeparatorListCellRenderer<>(defaultRenderer);
+        setRenderer(wrappedRendered);
+        //setRenderer(new SeparatorListCellRenderer(getRenderer()));
     }
     
-    public void setSeparator(Object separator) {
+    public void setSeparator(String separator) {
         if (separator == null) {
             this.separator = DEFAULT_SEPARATOR;
         } else {
             this.separator = separator;
         }
+        
     }
     
-    public Object getSeparator() {
+    public String getSeparator() {
         return this.separator;
     }
     
     @Override
     public void setSelectedIndex(int index) {
-        if (index < getItemCount()) {
+        if (index < getItemCount() && index >=0) {
             Object obj = getItemAt(index);
             if (obj.equals(separator)) {
                 int oldIndex = getSelectedIndex();
@@ -86,26 +89,28 @@ public class SeparatorComboBox extends JComboBox {
      * ListCellRenderer for {@link kiyut.swing.combo.SeparatorComboBox SeparatorComboBox}. 
      * <strong>Implementation Note:</strong> This class is simply a wrapper for original ListCellRenderer and
      * using return JSeparator if the value is the separator.
+     * @param <String> the type of values this renderer can be used for
      */
-    public class SeparatorListCellRenderer implements ListCellRenderer {
-        protected ListCellRenderer wrapped;
+    public class SeparatorListCellRenderer<String> implements ListCellRenderer<String> {
+        protected ListCellRenderer<? super String> wrapped;
         protected Component separatorComp = new JSeparator();
         
         /** 
          * Constructs a renderer object for an item in a list.
          * @param listCellRenderer The original ListCellRenderer
          */
-        public SeparatorListCellRenderer(ListCellRenderer listCellRenderer) {
+        public SeparatorListCellRenderer(ListCellRenderer<? super String> listCellRenderer) {
             this.wrapped = listCellRenderer;
         }
         
         @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value != null) {
                 if (value.equals(separator)) {
                     return separatorComp;
                 }
             }
+            
             return wrapped.getListCellRendererComponent( list, value, index,isSelected, cellHasFocus );
         }
     }

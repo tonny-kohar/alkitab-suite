@@ -64,18 +64,18 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        parallelBookLimitComboBox = new javax.swing.JComboBox<String>();
-        versesPerTabComboBox = new javax.swing.JComboBox<String>();
-        defaultSearchLimitComboBox = new javax.swing.JComboBox<String>();
+        parallelBookLimitComboBox = new javax.swing.JComboBox<>();
+        versesPerTabComboBox = new javax.swing.JComboBox<>();
+        defaultSearchLimitComboBox = new javax.swing.JComboBox<>();
         fontPanel = new javax.swing.JPanel();
         fontComboBox =  new SeparatorComboBox();
-        fontSizeComboBox = new javax.swing.JComboBox();
+        fontSizeComboBox = new javax.swing.JComboBox<>();
         jPanel11 = new javax.swing.JPanel();
         fontBoldCheckBox = new javax.swing.JCheckBox();
         fontItalicCheckBox = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        backgroundCombo = new javax.swing.JComboBox();
+        backgroundCombo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel9 = new javax.swing.JPanel();
@@ -85,12 +85,12 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        defaultBibleComboBox = new javax.swing.JComboBox();
-        defaultDictionaryComboBox = new javax.swing.JComboBox();
-        defaultDailyDevotionsComboBox = new javax.swing.JComboBox();
-        defaultGreekStrongsComboBox = new javax.swing.JComboBox();
-        defaultHebrewStrongsComboBox = new javax.swing.JComboBox();
-        defaultGreekMorphComboBox = new javax.swing.JComboBox();
+        defaultBibleComboBox = new javax.swing.JComboBox<>();
+        defaultDictionaryComboBox = new javax.swing.JComboBox<>();
+        defaultDailyDevotionsComboBox = new javax.swing.JComboBox<>();
+        defaultGreekStrongsComboBox = new javax.swing.JComboBox<>();
+        defaultHebrewStrongsComboBox = new javax.swing.JComboBox<>();
+        defaultGreekMorphComboBox = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
@@ -132,7 +132,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         jPanel4.add(jLabel4, gridBagConstraints);
 
-        parallelBookLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        parallelBookLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -141,7 +141,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(parallelBookLimitComboBox, gridBagConstraints);
 
-        versesPerTabComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "25", "50", "75", "100", "125", "150", "176", "200" }));
+        versesPerTabComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "25", "50", "75", "100", "125", "150", "176", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -150,7 +150,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(versesPerTabComboBox, gridBagConstraints);
 
-        defaultSearchLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Unlimited", "10", "20", "30", "40", "50", "75", "100", "125", "150", "175", "200" }));
+        defaultSearchLimitComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unlimited", "10", "20", "30", "40", "50", "75", "100", "125", "150", "175", "200" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -168,7 +168,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
         fontPanel.add(fontComboBox, gridBagConstraints);
 
-        fontSizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "20", "22", "24", "26", "28", "32", "36", "40", "44", "48", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72" }));
+        fontSizeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "20", "22", "24", "26", "28", "32", "36", "40", "44", "48", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -222,7 +222,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         jPanel4.add(jLabel10, gridBagConstraints);
 
-        backgroundCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Default", "Light White", "Light Yellow", "Light Gray", "Custom ..." }));
+        backgroundCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "Light White", "Light Yellow", "Light Gray", "Custom ..." }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -351,19 +351,19 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox backgroundCombo;
-    private javax.swing.JComboBox defaultBibleComboBox;
-    private javax.swing.JComboBox defaultDailyDevotionsComboBox;
-    private javax.swing.JComboBox defaultDictionaryComboBox;
-    private javax.swing.JComboBox defaultGreekMorphComboBox;
-    private javax.swing.JComboBox defaultGreekStrongsComboBox;
-    private javax.swing.JComboBox defaultHebrewStrongsComboBox;
+    private javax.swing.JComboBox<String> backgroundCombo;
+    private javax.swing.JComboBox<String> defaultBibleComboBox;
+    private javax.swing.JComboBox<String> defaultDailyDevotionsComboBox;
+    private javax.swing.JComboBox<String> defaultDictionaryComboBox;
+    private javax.swing.JComboBox<String> defaultGreekMorphComboBox;
+    private javax.swing.JComboBox<String> defaultGreekStrongsComboBox;
+    private javax.swing.JComboBox<String> defaultHebrewStrongsComboBox;
     private javax.swing.JComboBox<String> defaultSearchLimitComboBox;
     private javax.swing.JCheckBox fontBoldCheckBox;
-    private javax.swing.JComboBox fontComboBox;
+    private javax.swing.JComboBox<String> fontComboBox;
     private javax.swing.JCheckBox fontItalicCheckBox;
     private javax.swing.JPanel fontPanel;
-    private javax.swing.JComboBox fontSizeComboBox;
+    private javax.swing.JComboBox<String> fontSizeComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -388,10 +388,10 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initCustom() {
-        fontComboBox.setModel(new DefaultComboBoxModel());
-        defaultBibleComboBox.setModel(new DefaultComboBoxModel());
-        defaultDictionaryComboBox.setModel(new DefaultComboBoxModel());
-        defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel());
+        fontComboBox.setModel(new DefaultComboBoxModel<String>());
+        defaultBibleComboBox.setModel(new DefaultComboBoxModel<String>());
+        defaultDictionaryComboBox.setModel(new DefaultComboBoxModel<String>());
+        defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel<String>());
 
         fontSizeComboBox.setPrototypeDisplayValue("99");
         defaultBibleComboBox.setPrototypeDisplayValue("KJV - King James Version (1769) ...");
@@ -563,7 +563,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
 
     /** Refresh available fonts */
     private void refreshAvailableFonts() {
-        DefaultComboBoxModel<String> model = (DefaultComboBoxModel)fontComboBox.getModel();
+        DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>)fontComboBox.getModel();
         model.removeAllElements();
 
         // add generic font family
@@ -584,7 +584,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     private void refreshDefaultBooks() {
         Comparator<Book> comparator = SwordUtilities.getBookInitialsComparator();
-        List<Book> books = new ArrayList<Book>();
+        List<Book> books = new ArrayList<>();
 
         books.clear();
         books.addAll(Books.installed().getBooks(BookFilters.getOnlyBibles()));
@@ -617,11 +617,11 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
      * @param books the list of books which is used to refresh
      * @param comparator the {@code Comparator} for books order or null
      */
-    private void refreshDefaultBookComboBox(JComboBox comboBox, List<Book> books, Comparator comparator) {
+    private void refreshDefaultBookComboBox(JComboBox<String> comboBox, List<Book> books, Comparator<Book> comparator) {
         if (comparator != null) {
             Collections.sort(books, comparator);
         }
-        DefaultComboBoxModel<String> model = (DefaultComboBoxModel)comboBox.getModel();
+        DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>)comboBox.getModel();
         model.removeAllElements();
         model.addElement("None");
         for (Book book : books) {
@@ -629,17 +629,15 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         }
     }
 
-    private void setDefaultBookComboBox(JComboBox comboBox, String name) {
+    private void setDefaultBookComboBox(JComboBox<String> comboBox, String name) {
         if (name == null) { return; }
 
         int index = -1;
 
-        ComboBoxModel model = comboBox.getModel();
+        ComboBoxModel<String> model = comboBox.getModel();
         for (int i=0; i<model.getSize();i++) {
-            Object obj = model.getElementAt(i);
-            if ((obj == null)) { continue; }
-            if (!(obj instanceof String)) { continue; }
-            if (obj.toString().startsWith(name)) {
+            String obj = model.getElementAt(i);
+            if (obj.startsWith(name)) {
                 index = i;
                 break;
             }
