@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 OpenIDE-Module: kiyut.alkitab.modules.localization
 OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/localization/Bundle.properties
-OpenIDE-Module-Specification-Version: 3.0
+OpenIDE-Module-Specification-Version: 3.1
 
