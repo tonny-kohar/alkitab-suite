@@ -13,11 +13,11 @@ import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.openide.modules.InstalledFileLocator;
 import org.openide.modules.Places;
 
@@ -36,7 +36,7 @@ public class GlobalHistory {
 
     private static final String FILENAME = "history.xml";
 
-    private static GlobalHistory instance; // The single instance
+    private static final GlobalHistory instance; // The single instance
     static {
         instance = new GlobalHistory();
     }
@@ -44,7 +44,6 @@ public class GlobalHistory {
     protected List<Entry> data;
     protected EventListenerList listenerList;
     protected boolean modified;
-
 
     /**
      * Returns the single instance
@@ -57,7 +56,7 @@ public class GlobalHistory {
 
     private GlobalHistory() {
         listenerList = new EventListenerList();
-        data = new ArrayList<Entry>();
+        data = new ArrayList<>();
         load();
         modified = false;
     }

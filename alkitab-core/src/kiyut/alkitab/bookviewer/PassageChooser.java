@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,13 +21,12 @@ import kiyut.alkitab.navigator.BibleKeyTreeModel;
 import kiyut.alkitab.navigator.BibleKeyTreeNode;
 import kiyut.alkitab.navigator.KeyTree;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.RestrictionType;
 import org.crosswire.jsword.passage.VerseRange;
-import org.crosswire.jsword.versification.Versification;
-import org.crosswire.jsword.versification.system.Versifications;
 
 /**
  * PassageChooser
@@ -43,9 +40,9 @@ public class PassageChooser extends javax.swing.JPanel {
     protected KeyTree passageTree;
     protected PassageListModel passageListModel;
             
-    protected PassageKeyFactory keyFactory;
+    protected KeyFactory keyFactory;
     protected Passage passage;
-    protected Versification v11n;
+    //protected Versification v11n;
     
     protected boolean textAdjusting;
     
@@ -219,16 +216,19 @@ public class PassageChooser extends javax.swing.JPanel {
         passageList.setModel(passageListModel);
         
         keyFactory = PassageKeyFactory.instance();
-        v11n = Versifications.instance().getDefaultVersification();
-        passage = (Passage)keyFactory.createEmptyKeyList(v11n);
+        passage = (Passage)keyFactory.createEmptyKeyList();
+        //v11n = Versifications.instance().getDefaultVersification();
+        //passage = (Passage)keyFactory.createEmptyKeyList(v11n);
         
         summaryLabel.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
 
-         // XXX workaround for Windows Plaf for button margin
+        // XXX workaround for Windows Plaf for button margin
         Insets insets = new Insets(2, 2, 2, 2);
         addButton.setMargin(insets);
         removeButton.setMargin(insets);
         
+        /*
+        //Disable this, UI Gesture does not match, because double click is tree expand
         passageList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -236,6 +236,7 @@ public class PassageChooser extends javax.swing.JPanel {
                 removePassage();
             }
         });
+        */
         
         passageTextArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -287,6 +288,7 @@ public class PassageChooser extends javax.swing.JPanel {
     
     /** Show as Dialog 
      * @param parentComponent {@code Component}
+     * @return JOptionPane.showConfirmDialog
      */
     public int showDialog(Component parentComponent) {
         int choice = JOptionPane.showConfirmDialog(parentComponent,this,bundle.getString("CTL_Title.Text"),
@@ -302,7 +304,7 @@ public class PassageChooser extends javax.swing.JPanel {
         String invalidMsg = null;
         try {
             if (textAdjusting) {
-                Passage tPassage = (Passage) keyFactory.getKey(v11n,passageTextArea.getText());
+                Passage tPassage = (Passage) keyFactory.getKey(passageTextArea.getText());
                 passage.clear();
                 passage.addAll(tPassage);
             } else {

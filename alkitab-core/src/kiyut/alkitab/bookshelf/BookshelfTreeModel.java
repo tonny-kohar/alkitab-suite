@@ -5,7 +5,6 @@ package kiyut.alkitab.bookshelf;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -33,8 +32,8 @@ public class BookshelfTreeModel extends DefaultTreeModel {
         
         groupBy = new ArrayList<>(2);
         groupBy.add(BookMetaData.KEY_CATEGORY);
-        groupBy.add(BookMetaData.KEY_LANGUAGE);
-        //groupBy.add(BookMetaData.KEY_XML_LANG);
+        //groupBy.add(BookMetaData.KEY_LANGUAGE);
+        groupBy.add(BookMetaData.KEY_XML_LANG);
         
         reload();
     }
@@ -96,7 +95,9 @@ public class BookshelfTreeModel extends DefaultTreeModel {
             if (books == null) {
                 return;
             }
-            for (Book book : books) {
+            Iterator iter = books.iterator();
+            while (iter.hasNext()) {
+                Book book =(Book)iter.next();
                 DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(book);
                 mutableNode.add(childNode);
             }
@@ -105,9 +106,7 @@ public class BookshelfTreeModel extends DefaultTreeModel {
     
     /** 
      * Set the list of groupBy which used to arrange this model content.
-     * 
      * <strong>Note: </strong>this methods does not automatically reload this model
-     * 
      * @param groupBy {@code List} of {@code BookMetaData} property key
      */
     public void setGroupBy(List<String> groupBy) {

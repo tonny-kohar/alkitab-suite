@@ -20,7 +20,8 @@ public class HTMLConverter implements Converter {
     public static String FONT = "font";
     public static String CSS = "css";
     public static String BACKGROUND_COLOR = "background-color";
-    /**
+    
+    /*
      * The xsl path , by default it is kiyut/alkitab/modules/jsword/xsl/simple.xsl
      */
     //private String xslPath = "/kiyut/alkitab/modules/jsword/xsl/simple.xsl";
@@ -28,6 +29,7 @@ public class HTMLConverter implements Converter {
     @Override
     public SAXEventProvider convert(SAXEventProvider xmlsep) throws TransformerException {
         try {
+            // simple.xml is located under [JSword module]/release/xsl/simple.xsl
             File file = InstalledFileLocator.getDefault().locate("xsl/simple.xsl","kiyut.alkitab.modules.jsword",false); 
             TransformingSAXEventProvider tsep = new TransformingSAXEventProvider(file.toURI(), xmlsep);
             return tsep;

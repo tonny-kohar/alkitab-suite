@@ -3,17 +3,11 @@
 package kiyut.alkitab.bookviewer;
 
 import java.awt.Font;
-import java.io.IOException;
-import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import kiyut.alkitab.util.FontUtilities;
+import java.awt.Toolkit;
+import javax.swing.UIManager;
+import org.crosswire.common.swing.FontStore;
+import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.util.CWProject;
-import org.crosswire.common.util.FileUtil;
-import org.crosswire.common.util.Language;
-import org.crosswire.common.util.NetUtil;
-import org.crosswire.common.util.PropertyMap;
-import org.crosswire.common.util.ResourceUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookMetaData;
 
@@ -23,7 +17,7 @@ import org.crosswire.jsword.book.BookMetaData;
  * The persistence location is same with JSword<br/>
  *
  */
-public class BookFontStore {
+public class BookFontStore extends FontStore {
 
     private static BookFontStore instance; // The single instance
 
@@ -39,84 +33,29 @@ public class BookFontStore {
     public static BookFontStore getInstance() {
         return instance;
     }
-    
-    protected static final String DEFAULT_FONT = "Dialog-PLAIN-12";
-    protected static final String LANG_KEY_PREFIX = "lang.";
-    protected static final String DEFAULT_KEY = "default";
-    
-    protected String storeName;
-    protected String defaultFont;
-    protected URI fontStore;
-    protected boolean loaded;
-    protected PropertyMap fontMap;
+
+    protected String defaultFontSpec;
 
     /**
-     * Create a persistent Book Font Store. The persistence location is same with JSword
+     * Create a persistent Book Font Store.
+     * The persistence location is same with JSword
      *
      */
     private BookFontStore() {
         // use the same persistence location as JSword
-        this("BookFonts", CWProject.instance().getWritableProjectDir());
-    }
-
-    private BookFontStore(String storeName, URI fontDir) {
-        if (fontDir == null) {
-            throw new IllegalArgumentException("fontStore cannot be null");
-        }
-        this.storeName = storeName;
-        this.fontStore = NetUtil.lengthenURI(fontDir, this.storeName + FileUtil.EXTENSION_PROPERTIES);
-        this.fontMap = new PropertyMap();
+        super("BookFonts", CWProject.instance().getWritableProjectDir());
+        defaultFontSpec = createDefaultFontSpec();
     }
 
     /**
-     * @param defaultFont the defaultFont to set
-     */
-    public void setDefaultFont(String defaultFont) {
-        load();
-        this.defaultFont = defaultFont;
-        fontMap.put(DEFAULT_KEY, defaultFont);
-        store();
-    }
-    
-    /**
-     * @return the defaultFont
-     */
-    public String getDefaultFont() {
-        load();
-        defaultFont = fontMap.get(DEFAULT_KEY, DEFAULT_FONT);
-        return defaultFont;
-    }
-    
-    /**
-     * Remove the font settings for a given key
-     * 
-     * @param key
-     *            the book initials or language code
-     */
-    public void resetFont(String key) {
-        load();
-        fontMap.remove(key);
-        store();
-    }
-    
-    /**
-     * Only convenience method for setFont(String resource, Font font) 
+     * Only convenience method for setFont(String resource, Font font)
      * the resources is book.getInitials
      *
      * @param book the book
      * @param font the font
      */
     public void setFont(Book book, Font font) {
-        setFont(book.getInitials(), font);
-    }
-
-    public void setFont(String resource, Font font) {
-        if (resource == null || font == null) {
-            return;
-        }
-        load();
-        fontMap.put(resource, FontUtilities.font2String(font));
-        store();
+        super.setFont(book.getInitials(), font);
     }
 
     /**
@@ -132,97 +71,48 @@ public class BookFontStore {
         String fontName = (String) book.getBookMetaData().getProperty(BookMetaData.KEY_FONT);
         String fontSpec = getDefaultFont();
         if (fontName != null) {
-            Font bookFont = FontUtilities.deriveFont(fontSpec, fontName);
+            Font bookFont = GuiConvert.deriveFont(fontSpec, fontName);
             // Make sure it is installed. Java does substitution. Make sure we got what we wanted.
             if (bookFont.getFamily().equalsIgnoreCase(fontName)) {
-                fontSpec = FontUtilities.font2String(bookFont);
+                fontSpec = GuiConvert.font2String(bookFont);
             }
         }
-
+        
         return getFont(book.getInitials(), book.getLanguage(), fontSpec);
     }
 
-    public Font getFont(String resource, Language lang, String fallback) {
-        load();
-
-        String fontSpec = null;
-        if (resource != null) {
-            fontSpec = fontMap.get(resource);
-        }
-
-        if (fontSpec != null) {
-            Font obtainedFont = obtainFont(fontSpec);
-            if (obtainedFont != null) {
-                return obtainedFont;
-            }
-            fontSpec = null;
-        }
-
-        if (lang != null) {
-            fontSpec = fontMap.get(new StringBuilder(LANG_KEY_PREFIX).append(lang.getCode()).toString());
-        }
-
-        if (fontSpec != null) {
-            Font obtainedFont = obtainFont(fontSpec);
-            if (obtainedFont != null) {
-                return obtainedFont;
-            }
-        }
-
-        fontSpec = fallback;
-        if (fontSpec != null) {
-            Font obtainedFont = obtainFont(fontSpec);
-            if (obtainedFont != null) {
-                return obtainedFont;
-            }
-        }
-
-        return FontUtilities.string2Font(defaultFont);
-    }
-
-    protected Font obtainFont(String fontSpec) {
-        if (fontSpec != null) {
-            // Creating a font never fails. Java just silently does
-            // substitution.
-            // Ensure that substitution does not happen.
-            Font obtainedFont = FontUtilities.string2Font(fontSpec);
-            String obtainedFontSpec = FontUtilities.font2String(obtainedFont);
-            if (obtainedFontSpec != null && obtainedFontSpec.equalsIgnoreCase(fontSpec)) {
-                return obtainedFont;
-            }
-        }
-        return null;
-    }
-
     /**
-     * Load the store, if it has not been loaded.
+     * Overriden to provide its own default font
+     * which is UIManager.getFont("EditorPane.font");
+     * @return the defaultFont
      */
-    protected void load() {
-        if (loaded) {
-            return;
-        }
-
-        try {
-            fontMap = ResourceUtil.getProperties(storeName);
-            loaded = true;
-        } catch (IOException ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage());
-            fontMap = new PropertyMap();
-        }
+    @Override
+    public String getDefaultFont() {
+        Font defaultFont = getFont("default", null, defaultFontSpec);
+        return GuiConvert.font2String(defaultFont);
     }
 
-    /**
-     * Store the store, if it exists.
-     */
-    protected void store() {
-        load();
-
-        try {
-            NetUtil.storeProperties(fontMap, fontStore, storeName);
-        } catch (IOException ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage());
+    protected Font createDefaultFont() {
+        Font font = UIManager.getFont("EditorPane.font");
+        if (font == null) {
+            // serif,0,14
+            return new Font("SansSerif",Font.PLAIN,13);
         }
+
+        float fontSize = font.getSize();
+
+        // XXX is this correct way to scale font based on DPI?
+        if (fontSize < 12) {
+            int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+            fontSize = (int)Math.round((double)fontSize * dpi / 72.0);
+        }
+
+        font = font.deriveFont(fontSize);
+
+        return font;
     }
+
+     protected String createDefaultFontSpec() {
+         return GuiConvert.font2String(createDefaultFont());
+     }
 }

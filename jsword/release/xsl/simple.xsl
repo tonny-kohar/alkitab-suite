@@ -2,10 +2,10 @@
 <!--
  * Distribution License:
  * JSword is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License, version 2.1 or later
- * as published by the Free Software Foundation. This program is distributed
- * in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * the terms of the GNU Lesser General Public License, version 2.1 as published by
+ * the Free Software Foundation. This program is distributed in the hope
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
  * The License is available on the internet at:
@@ -18,7 +18,7 @@
  * Copyright: 2005
  *     The copyright to this program is held by it's authors.
  *
- * ID: $Id: simple.xsl 2282 2013-02-28 22:37:57Z dmsmith $
+ * ID: $Id: simple.xsl 1823 2008-05-04 00:21:04Z dmsmith $
  -->
  <!--
  * Transforms OSIS to HTML for viewing within JSword browsers.
@@ -50,7 +50,6 @@
   <!-- gdef and hdef refer to hebrew and greek definitions keyed by strongs -->
   <xsl:param name="greek.def.protocol" select="'gdef:'"/>
   <xsl:param name="hebrew.def.protocol" select="'hdef:'"/>
-  <xsl:param name="lex.def.protocol" select="'lex:'"/>
   <!-- currently these are not used, but they are for morphologic forms -->
   <xsl:param name="greek.morph.protocol" select="'gmorph:'"/>
   <xsl:param name="hebrew.morph.protocol" select="'hmorph:'"/>
@@ -91,15 +90,9 @@
   <!-- Whether to output superscript verse numbers or normal size ones -->
   <xsl:param name="TinyVNum" select="'true'"/>
 
-  <!-- Whether to output superscript verse numbers or normal size ones -->
-  <xsl:param name="Variant" select="'x-1'"/>
-
   <!-- The CSS stylesheet to use. The url must be absolute. -->
   <xsl:param name="css"/>
   
-  <!-- The order of display. Hebrew is rtl (right to left) -->
-  <xsl:param name="v11n" select="'KJV'"/>
-
   <!-- The order of display. Hebrew is rtl (right to left) -->
   <xsl:param name="direction" select="'ltr'"/>
 
@@ -117,11 +110,7 @@
         <xsl:with-param name="style">css</xsl:with-param>
       </xsl:call-template>
   </xsl:variable>
-  
-  <xsl:param name="background-color" select="'transparent'"/>  
 
-  <!-- Create a versification from which verse numbers are understood -->
-  <xsl:variable name="v11nf" select="jsword:org.crosswire.jsword.versification.system.Versifications.instance()"/>
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
   <!-- Create a global number shaper that can transform 0-9 into other number systems. -->
@@ -133,8 +122,7 @@
       <head>
         <base href="{$baseURL}"/>
         <style type="text/css">
-          BODY, TABLE { <xsl:value-of select="$fontspec" /> }
-          BODY { background-color:<xsl:value-of select="$background-color" />; }
+          BODY { <xsl:value-of select="$fontspec" /> }
           A { text-decoration: none; }
           A.strongs { color: black; text-decoration: none; }
           SUB.strongs { font-size: 75%; color: red; }
@@ -142,7 +130,6 @@
           SUB.lemma { font-size: 75%; color: red; }
           SUP.verse { font-size: 75%; color: gray; }
           SUP.note { font-size: 75%; color: green; }
-          FONT.lex { color: red; }
           FONT.jesus { color: red; }
           FONT.speech { color: blue; }
           FONT.strike { text-decoration: line-through; }
@@ -151,17 +138,15 @@
           FONT.divineName { font-variant: small-caps; }
           FONT.normal { font-variant: normal; }
           FONT.caps { text-transform: uppercase; }
-          H1 { font-size: 115%; font-weight: bold; }
-          H2 { font-size: 110%; font-weight: bold; }
-          H3 { font-size: 100%; font-weight: bold; }
-          H4 { font-size:  90%; font-weight: bold; }
-          H5 { font-size:  85%; font-weight: bold; }
-          H6 { font-size:  80%; font-weight: bold; }
-          .heading { color: #669966; text-align: center; }
-          .canonical { color: #666699; }
-          .gen { color: #996666; }
+          H1.level { text-align: center; font-size: 115%; color: #000000; }
+          H2.level { text-align: center; font-size: 110%; color: #000000; }
+          H3.level { text-align: center; font-size: 100%; }
+          H4.level { text-align: center; font-size: 90%; }
+          H5.level { text-align: center; font-size: 85%; }
+          H6.level { text-align: center; font-size: 80%; }
+          H3.heading { font-size: 110%; color: #666699; font-weight: bold; }
+          H2.heading { font-size: 115%; color: #669966; font-weight: bold; }
           div.margin { font-size:90%; }
-          TABLE { width:100% }
           TD.notes { width:20%; background:#f4f4e8; }
           TD.text { width:80%; }
           <!-- the following are for dictionary entries -->
@@ -198,12 +183,12 @@
                 <table cols="2" cellpadding="5" cellspacing="5">
                   <!-- In a right to left, the alignment should be reversed too -->
                   <tr align="right">
-                    <td valign="top" class="text">
-                      <xsl:apply-templates/>
-                    </td>
                     <td valign="top" class="notes">
                       <p>&#160;</p>
                       <xsl:apply-templates select="//note" mode="print-notes"/>
+                    </td>
+                    <td valign="top" class="text">
+                      <xsl:apply-templates/>
                     </td>
                   </tr>
                 </table>
@@ -309,8 +294,22 @@
   <!--=======================================================================-->
   <!-- Handle verses as containers and as a start verse.                     -->
   <xsl:template match="verse[not(@eID)]">
+    <!-- output each preverse element in turn -->
+    <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
+      <xsl:choose>
+        <xsl:when test="local-name() = 'title'">
+          <!-- Always show canonical titles or if headings is turned on -->
+          <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+            <h3 class="heading"><xsl:apply-templates /></h3>
+          </xsl:if>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
     <!-- Handle the KJV paragraph marker. -->
-    <xsl:if test="milestone[@type = 'x-p'] or q[@who = 'Jesus']/milestone[@type = 'x-p']"><br/><br/></xsl:if>
+    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- If the verse doesn't start on its own line and -->
     <!-- the verse is not the first verse of a set of siblings, -->
     <!-- output an extra space. -->
@@ -332,25 +331,18 @@
   </xsl:template>
 
   <xsl:template match="verse[not(@eID)]" mode="jesus">
-    <!-- output each preverse element in turn -->
-    <xsl:for-each select=".//*[@subType = 'x-preverse' or @subtype = 'x-preverse']">
-      <xsl:choose>
-        <xsl:when test="local-name() = 'title'">
-          <xsl:call-template name="render-title"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates />
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-    <!-- Handle the KJV paragraph marker. -->
-    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- If the verse doesn't start on its own line and -->
     <!-- the verse is not the first verse of a set of siblings, -->
     <!-- output an extra space. -->
     <xsl:if test="$VLine = 'false' and preceding-sibling::*[local-name() = 'verse']">
       <xsl:text>&#160;</xsl:text>
     </xsl:if>
+    <xsl:variable name="title" select=".//title"/>
+    <xsl:if test="string-length($title) > 0">
+      <h3 class="heading"><xsl:value-of select="$title"/></h3>
+    </xsl:if>
+    <!-- Handle the KJV paragraph marker. -->
+    <xsl:if test="milestone[@type = 'x-p']"><br/><br/></xsl:if>
     <!-- Always output the verse -->
     <xsl:choose>
       <xsl:when test="$VLine = 'true'">
@@ -367,8 +359,7 @@
 
   <xsl:template match="verse" mode="print-notes">
     <xsl:if test=".//note[not(@type) or not(@type = 'x-strongsMarkup')]">
-      <xsl:variable name="versification" select="jsword:getVersification($v11nf, $v11n)"/>
-      <xsl:variable name="passage" select="jsword:getValidKey($keyf, $versification, @osisID)"/>
+      <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
       <a href="#{substring-before(concat(@osisID, ' '), ' ')}">
         <xsl:value-of select="jsword:getName($passage)"/>
       </a>
@@ -398,8 +389,7 @@
       <xsl:variable name="versenum">
         <xsl:choose>
           <xsl:when test="$BCVNum = 'true'">
-            <xsl:variable name="versification" select="jsword:getVersification($v11nf, $v11n)"/>
-            <xsl:variable name="passage" select="jsword:getValidKey($keyf, $versification, @osisID)"/>
+            <xsl:variable name="passage" select="jsword:getValidKey($keyf, @osisID)"/>
             <xsl:value-of select="jsword:getName($passage)"/>
           </xsl:when>
           <xsl:when test="$CVNum = 'true'">
@@ -469,7 +459,7 @@
 
   <xsl:template match="note" mode="jesus">
     <xsl:if test="$Notes = 'true'">
-      <!-- If there is a following sibling that is a note, emit a separator -->
+     <!-- If there is a following sibling that is a note, emit a separator -->
       <xsl:variable name="siblings" select="../child::node()"/>
       <xsl:variable name="next-position" select="position() + 1"/>
       <xsl:choose>
@@ -528,19 +518,14 @@
   <xsl:template match="w">
     <!-- Output the content followed by all the lemmas and then all the morphs. -->
     <xsl:apply-templates/>
-    <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'strong:') or starts-with(@lemma, 'x-Strongs:'))">
+    <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
       <xsl:call-template name="lemma">
         <xsl:with-param name="lemma" select="@lemma"/>
       </xsl:call-template>
     </xsl:if>
-    <xsl:if test="$Morph = 'true' and (starts-with(@morph, 'robinson:') or starts-with(@morph, 'x-Robinson:'))">
+    <xsl:if test="$Morph = 'true' and (starts-with(@morph, 'x-Robinson:') or starts-with(@morph, 'robinson:'))">
       <xsl:call-template name="morph">
         <xsl:with-param name="morph" select="@morph"/>
-      </xsl:call-template>
-    </xsl:if>
-    <xsl:if test="$Strongs = 'true' and starts-with(@lemma, 'lemma.Strong:')">
-      <xsl:call-template name="lemma">
-        <xsl:with-param name="lemma" select="@lemma"/>
       </xsl:call-template>
     </xsl:if>
     <!--
@@ -557,12 +542,12 @@
   <xsl:template match="w" mode="jesus">
     <!-- Output the content followed by all the lemmas and then all the morphs. -->
     <xsl:apply-templates mode="jesus"/>
-    <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'strong:') or starts-with(@lemma, 'x-Strongs:'))">
+    <xsl:if test="$Strongs = 'true' and (starts-with(@lemma, 'x-Strongs:') or starts-with(@lemma, 'strong:'))">
       <xsl:call-template name="lemma">
         <xsl:with-param name="lemma" select="@lemma"/>
       </xsl:call-template>
     </xsl:if>
-    <xsl:if test="$Morph = 'true' and (starts-with(@morph, 'robinson:') or starts-with(@morph, 'x-Robinson:'))">
+    <xsl:if test="$Morph = 'true' and (starts-with(@morph, 'x-Robinson:') or starts-with(@morph, 'robinson:'))">
       <xsl:call-template name="morph">
         <xsl:with-param name="morph" select="@morph"/>
       </xsl:call-template>
@@ -587,11 +572,8 @@
         <xsl:when test="substring($orig-lemma, 1, 1) = 'H'">
           <xsl:value-of select="$hebrew.def.protocol"/>
         </xsl:when>
-        <xsl:when test="substring($orig-lemma, 1, 1) = 'G'">
-          <xsl:value-of select="$greek.def.protocol"/>
-        </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="$lex.def.protocol"/>
+          <xsl:value-of select="$greek.def.protocol"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -616,9 +598,6 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$protocol = $lex.def.protocol">
-        <font class="lex">[<xsl:value-of select="$orig-lemma"/>]</font>
-      </xsl:when>
       <xsl:when test="$separator = ''">
         <!-- <sub class="strongs"><a href="{$protocol}{$orig-lemma}">S<xsl:number level="any" from="/osis//verse" format="1"/><xsl:number value="$sub" format="a"/></a></sub> -->
         <sub class="strongs"><a href="{$protocol}{$orig-lemma}"><xsl:value-of select="format-number(substring($orig-lemma,2),'#')"/></a></sub>
@@ -650,7 +629,7 @@
     <xsl:variable name="orig-morph" select="substring-after($morph, ':')"/>
     <xsl:variable name="protocol">
       <xsl:choose>
-        <xsl:when test="starts-with($orig-work, 'robinson') or starts-with($orig-work, 'x-Robinson')">
+        <xsl:when test="starts-with($orig-work, 'x-Robinson') or starts-with($orig-work, 'robinson')">
           <xsl:value-of select="$greek.morph.protocol"/>
         </xsl:when>
         <xsl:otherwise>
@@ -713,7 +692,7 @@
         <font size="{substring-before(substring-after(@type, 'font-size: '), ';')}"><xsl:apply-templates/></font>
       </xsl:when>
       <xsl:when test="@type = 'x-variant'">
-        <xsl:if test="@subType = $Variant">
+        <xsl:if test="@subType = 'x-class:1'">
           <xsl:apply-templates/>
         </xsl:if>
       </xsl:when>
@@ -732,7 +711,7 @@
         <font size="{substring-before(substring-after(@type, 'font-size: '), ';')}"><xsl:apply-templates mode="jesus"/></font>
       </xsl:when>
       <xsl:when test="@type = 'x-variant'">
-        <xsl:if test="@subType = $Variant">
+        <xsl:if test="@subType = 'x-class:1'">
           <xsl:apply-templates mode="jesus"/>
         </xsl:if>
       </xsl:when>
@@ -786,51 +765,87 @@
   </xsl:template>
 
   <!--=======================================================================-->
+  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']">
+  <!-- Done by a line in [verse]
+    <h3 class="heading">
+      <xsl:apply-templates/>
+    </h3>
+  -->
+  </xsl:template>
+
+  <xsl:template match="title[@subType ='x-preverse' or @subtype = 'x-preverse']" mode="jesus">
+  <!-- Done by a line in [verse]
+    <h3 class="heading">
+      <xsl:apply-templates/>
+    </h3>
+  -->
+  </xsl:template>
+
+  <!--=======================================================================-->
+  <xsl:template match="title[@level]">
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <xsl:choose>
+        <xsl:when test="@level = '1'">
+          <h1 class="level"><xsl:apply-templates/></h1>
+        </xsl:when>
+        <xsl:when test="@level = '2'">
+          <h2 class="level"><xsl:apply-templates/></h2>
+        </xsl:when>
+        <xsl:when test="@level = '3'">
+          <h3 class="level"><xsl:apply-templates/></h3>
+        </xsl:when>
+        <xsl:when test="@level = '4'">
+          <h4 class="level"><xsl:apply-templates/></h4>
+        </xsl:when>
+        <xsl:when test="@level = '5'">
+          <h5 class="level"><xsl:apply-templates/></h5>
+        </xsl:when>
+        <xsl:otherwise>
+          <h6 class="level"><xsl:apply-templates/></h6>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="title[@level]" mode="jesus">
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <xsl:choose>
+        <xsl:when test="@level = '1'">
+          <h1 class="level"><xsl:apply-templates/></h1>
+        </xsl:when>
+        <xsl:when test="@level = '2'">
+          <h2 class="level"><xsl:apply-templates/></h2>
+        </xsl:when>
+        <xsl:when test="@level = '3'">
+          <h3 class="level"><xsl:apply-templates/></h3>
+        </xsl:when>
+        <xsl:when test="@level = '4'">
+          <h4 class="level"><xsl:apply-templates/></h4>
+        </xsl:when>
+        <xsl:when test="@level = '5'">
+          <h5 class="level"><xsl:apply-templates/></h5>
+        </xsl:when>
+        <xsl:otherwise>
+          <h6 class="level"><xsl:apply-templates/></h6>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <!--=======================================================================-->
   <xsl:template match="title">
-    <xsl:call-template name="render-title"/>
+    <!-- Always show canonical titles or if headings is turned on -->
+    <xsl:if test="@canonical = 'true' or $Headings = 'true'">
+      <h2 class="heading"><xsl:apply-templates/></h2>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="title" mode="jesus">
-    <xsl:call-template name="render-title"/>
-  </xsl:template>
-
- <!--=======================================================================-->
-  <xsl:template name="render-title">
     <!-- Always show canonical titles or if headings is turned on -->
     <xsl:if test="@canonical = 'true' or $Headings = 'true'">
-      <xsl:variable name="heading">
-        <xsl:choose>
-          <xsl:when test="@canonical = 'true'">canonical</xsl:when>
-          <xsl:when test="@type = 'x-gen'">gen</xsl:when>
-          <xsl:otherwise>heading</xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-      <xsl:choose>
-        <xsl:when test="@level = '1'">
-          <h1 class="{$heading}"><xsl:apply-templates/></h1>
-        </xsl:when>
-        <xsl:when test="@level = '2'">
-          <h2 class="{$heading}"><xsl:apply-templates/></h2>
-        </xsl:when>
-        <xsl:when test="@level = '3'">
-          <h3 class="{$heading}"><xsl:apply-templates/></h3>
-        </xsl:when>
-        <xsl:when test="@level = '4'">
-          <h4 class="{$heading}"><xsl:apply-templates/></h4>
-        </xsl:when>
-        <xsl:when test="@level = '5'">
-          <h5 class="{$heading}"><xsl:apply-templates/></h5>
-        </xsl:when>
-        <xsl:when test="@level = '6'">
-          <h6 class="{$heading}"><xsl:apply-templates/></h6>
-        </xsl:when>
-        <xsl:when test="@type = 'x-gen'">
-          <h4 class="{$heading}"><xsl:apply-templates/></h4>
-        </xsl:when>
-        <xsl:otherwise>
-          <h3 class="{$heading}"><xsl:apply-templates /></h3>
-        </xsl:otherwise>
-      </xsl:choose>
+      <h2 class="heading"><xsl:apply-templates/></h2>
     </xsl:if>
   </xsl:template>
 
@@ -984,46 +999,18 @@
   <xsl:template match="lg[@sID or @eID]"/>
   <xsl:template match="lg[@sID or @eID]" mode="jesus"/>
 
-  <xsl:template match="l[@sID]">
-	<xsl:call-template name="indent"/>
-  </xsl:template>
-
-  <xsl:template match="l[@sID]" mode="jesus">
-    <xsl:call-template name="indent"/>
-  </xsl:template>
+  <xsl:template match="l[@sID]"/>
+  <xsl:template match="l[@sID]" mode="jesus"/>
 
   <xsl:template match="l[@eID]"><br/></xsl:template>
   <xsl:template match="l[@eID]" mode="jesus"><br/></xsl:template>
 
   <xsl:template match="l">
-	<xsl:call-template name="indent"/><xsl:apply-templates/><br/>
+    <xsl:apply-templates/><br/>
   </xsl:template>
   
   <xsl:template match="l" mode="jesus">
     <xsl:apply-templates mode="jesus"/><br/>
-  </xsl:template>
-
-  <!-- Generate poetry indent. The x-indent values are from an old ESV module.
-       This mechanism is not ideal. The visual appearance does not account for verse numbers.
-    -->
-  <xsl:template name="indent">
-      <xsl:choose>
-        <xsl:when test="@level = '1'">
-          <xsl:text>&#160;&#160;&#160;&#160;</xsl:text>
-        </xsl:when>
-        <xsl:when test="@level = '2' or @type = 'x-indent'">
-          <xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text>
-        </xsl:when>
-        <xsl:when test="@level = '3' or @type = 'x-indent-2'">
-          <xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text>
-        </xsl:when>
-        <xsl:when test="@level = '4'">
-          <xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>&#160;&#160;&#160;&#160;</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
   </xsl:template>
 
   <!-- While a BR is a break, if it is immediately followed by punctuation,

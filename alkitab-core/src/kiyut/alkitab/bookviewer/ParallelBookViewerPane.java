@@ -1058,7 +1058,70 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             searching = false;
         }
     }
+    
+    private void searchImpl(String searchString, boolean ranked, int searchLimit) {
+        if (searchString == null || searchString.length() == 0) {
+            return;
+        }
+        
+        List<Book> books = bookRenderer.getBooks();
+        if (books.isEmpty()) { 
+            JOptionPane.showMessageDialog(this, bundle.getString("MSG_EmptyBooks.Text"), bundle.getString("MSG_EmptyBooks.Title"), JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
 
+        //boolean ranked = searchLimit <= 0 ? false : true;
+
+        DefaultSearchModifier modifier = new DefaultSearchModifier();
+        modifier.setRanked(ranked);
+        
+        Key results = null;
+        
+        try {
+            results =  books.get(0).find(new DefaultSearchRequest(searchString, modifier));
+        } catch (Exception ex) {
+            //Logger logger = Logger.getLogger(this.getClass().getName());
+            //logger.log(Level.WARNING, ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), bundle.getString("MSG_SearchHits.Title"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int total = results.getCardinality();
+        int partial = total;
+        
+        if (total == 0) {
+            Object[] args = {searchString};
+            String msg = MessageFormat.format(bundle.getString("MSG_SearchNoHits.Text"), args);
+            JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if (results instanceof PassageTally || ranked)  {
+            PassageTally tally = (PassageTally) results;
+            tally.setOrdering(PassageTally.ORDER_TALLY);
+            
+            if (searchLimit > 0 && searchLimit < total)  {
+                tally.trimRanges(searchLimit, RestrictionType.NONE);
+                partial = searchLimit;
+            }
+        }
+
+        if (total == partial) {
+            Object[] args = {searchString,new Integer(total)};
+            String msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
+            JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            Object[] args = {searchString,new Integer(partial),new Integer(total)};
+            String msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
+            JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        this.searchString = searchString;
+        setKey(results);
+        reload();
+    }
+
+    /* use for JSword 2.0 
     private void searchImpl(String searchString, boolean ranked, int searchLimit) {
         if (searchString == null || searchString.length() == 0) {
             return;
@@ -1120,7 +1183,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         this.searchString = searchString;
         setKey(results);
         reload();
-    }
+    }*/
     
     /** Return JComboBox with book initials sorted by Bible then Commentary 
      * @return JComboBox
