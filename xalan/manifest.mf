@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-AutoUpdate-Show-In-Client: false
-OpenIDE-Module: kiyut.alkitab.modules.xalan
-OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/xalan/Bundle.properties
-OpenIDE-Module-Install: kiyut/alkitab/modules/xalan/XalanModuleInstall.class
-OpenIDE-Module-Specification-Version: 2.7.1
-
