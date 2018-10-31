@@ -53,8 +53,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(ParallelBookViewerPane.class.getName());
     
-    //protected BookTextPane bookRenderer;
-    protected transient WebViewRenderer bookRenderer;
+    protected TextPaneRenderer bookRenderer;
+    //protected transient WebViewRenderer bookRenderer;
 
     /** just a flag indicating searching mode */
     protected boolean searching;
@@ -334,10 +334,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         //splitPane.setOneTouchExpandable(true);
 
         ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
-        //bookTextPane = new BookTextPane(viewerHints);
-        //bookScrollPane.setViewportView(bookRenderer);
-        bookRenderer = new WebViewRenderer(viewerHints);
-        splitPane.setRightComponent(bookRenderer);
+        bookRenderer = new TextPaneRenderer(viewerHints);
+        bookScrollPane.setViewportView(bookRenderer);
+        //bookRenderer = new WebViewRenderer(viewerHints);
+        //splitPane.setRightComponent(bookRenderer);
+        splitPane.setRightComponent(bookScrollPane);
         
         //getActionMap().setParent(bookRenderer.getActionMap());
 

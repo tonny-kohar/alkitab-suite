@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.bookviewer.event.BookChangeEvent;
 import kiyut.alkitab.history.BookViewerHistory;
@@ -27,7 +26,7 @@ import org.crosswire.jsword.passage.Key;
 public class SingleBookViewerPane extends AbstractBookViewerPane {
 
     protected ResourceBundle bundle = ResourceBundle.getBundle(SingleBookViewerPane.class.getName());
-    protected WebViewRenderer bookRenderer;
+    protected TextPaneRenderer bookRenderer;
     protected HistoryManager historyManager;
     
     /** Creates new SingleBookViewerPane */
@@ -45,15 +44,19 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bookScrollPane = new javax.swing.JScrollPane();
+
         setLayout(new java.awt.BorderLayout());
+        add(bookScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane bookScrollPane;
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
-        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
-        bookRenderer = new WebViewRenderer(viewerHints);
-        add(bookRenderer,BorderLayout.CENTER);
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
+        bookRenderer = new TextPaneRenderer(viewerHints);
+        bookScrollPane.setViewportView(bookRenderer);
         historyManager = new BookViewerHistoryManager();
 
         //getActionMap().setParent(bookRenderer.getActionMap());

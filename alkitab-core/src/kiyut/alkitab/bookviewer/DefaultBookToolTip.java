@@ -65,7 +65,7 @@ public class DefaultBookToolTip implements BookToolTip {
             }
         });
         
-        Border emptyBorder = BorderFactory.createEmptyBorder(4, 6, 6, 6);
+        Border emptyBorder = BorderFactory.createEmptyBorder(2, 6, 6, 6);
         Border border = UIManager.getBorder("ToolTip.border");
         if (border != null) {
             border = BorderFactory.createCompoundBorder(border, emptyBorder);
