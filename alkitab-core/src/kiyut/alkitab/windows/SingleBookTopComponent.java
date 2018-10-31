@@ -174,7 +174,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         if (swordURI == null) {
             Logger logger = Logger.getLogger(DefinitionsTopComponent.class.getName());
             logger.log(Level.WARNING, "invalid SwordURI: {0}", uri);
-            
+            return;
         }
         
         if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {

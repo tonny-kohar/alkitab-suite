@@ -31,7 +31,6 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     
     /** Creates new SingleBookViewerPane */
     public SingleBookViewerPane() {
-        //this.viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
         initComponents();
         initCustom();
     }

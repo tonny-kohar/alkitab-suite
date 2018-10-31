@@ -393,9 +393,9 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         defaultDictionaryComboBox.setModel(new DefaultComboBoxModel<String>());
         defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel<String>());
 
-        fontSizeComboBox.setPrototypeDisplayValue("99");
-        defaultBibleComboBox.setPrototypeDisplayValue("KJV - King James Version (1769) ...");
-        backgroundCombo.setPrototypeDisplayValue("Light Yellow");
+        fontSizeComboBox.setPrototypeDisplayValue("99"); //NOI18N
+        defaultBibleComboBox.setPrototypeDisplayValue("KJV - King James Version (1769) ..."); //NOI18N
+        backgroundCombo.setPrototypeDisplayValue("Light Yellow"); //NOI18N
 
         refreshAvailableFonts();
         refreshDefaultBooks();

@@ -38,7 +38,8 @@ public abstract class AbstractBookViewerPane extends JPanel implements BookViewe
         listenerList.remove(BookChangeListener.class, listener);
     }
     
-    /** Notifies all listeners that have registered interest for notification on this event type. */
+    /** Notifies all listeners that have registered interest for notification on this event type.
+     * @param event the event */
     protected void fireBookChange(BookChangeEvent event) {
         if (event == null) {
             throw new IllegalArgumentException("argument event should not be null");
