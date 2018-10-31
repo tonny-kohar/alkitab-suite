@@ -11,20 +11,40 @@
         <appname>${app.title.full}</appname>
         <appversion>${app.version}</appversion>
         <appsubpath>${app.path}</appsubpath> 
-        <url>http://www.kiyut.com</url>
+        <url>${app.url}</url>
         <authors>
             <author email="support@kiyut.com" name="KIYUT Software"/>
         </authors>
-        <uninstaller/>
-        <!-- combine this later with ProcessPanel for set prefs during install -->
+        <uninstaller>yes</uninstaller>
         <javaversion>1.8</javaversion>
-        <run-privileged/>
     </info>
     
+    <!--
+        The locale section.
+        Asks here to include the English.
+    -->
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    
+    <!--
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="640" height="480" resizable="no">
+        <modifier key="useButtonIcons" value="no"/>
+        <modifier key="useLabelIcons" value="no"/>
+        <modifier key="layoutAnchor" value="NORTHWEST"/>
+        <modifier key="allYGap" value="5"/>        
+        <modifier key="useHeadingPanel" value="yes"/>
+        <modifier key="headingLineCount" value="1"/>
+        <modifier key="headingFontSize" value="1.5"/>
+        <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+        <modifier key="headingPanelCounter" value="text"/>
+        <modifier key="headingPanelCounterPos" value="inHeading"/>
+    </guiprefs>
     
     <variables>
-        <variable name="APP_TITLE_FULL" value="${app.title.full}"/>
-        <variable name="JVM_REQ" value="Java 8 Update 101 or higher."/>
         <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
         <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
     </variables>
@@ -35,43 +55,16 @@
     -->
 
     <!--
-        The gui preferences indication.
-        Sets the installer window to 640x480. It will not be able to change the size.
-    -->
-    
-    <guiprefs width="640" height="480" resizable="no">
-        <modifier key="useButtonIcons" value="no"/>
-        <modifier key="useLabelIcons" value="no"/>
-        <modifier key="allYGap" value="3"/>
-        <modifier key="allXGap" value="3"/>
-        <modifier key="layoutAnchor" value="NORTHWEST"/>
-        <modifier key="useHeadingPanel" value="yes"/>
-        <modifier key="headingLineCount" value="1"/>
-        <modifier key="headingFontSize" value="1.5"/>
-        <modifier key="headingBackgroundColor" value="0x00ffffff"/>
-        <modifier key="headingPanelCounter" value="text"/>
-        <modifier key="headingPanelCounterPos" value="inHeading"/>
-    </guiprefs>
-    
-    <!--
-        The locale section.
-        Asks here to include the English.
-    -->
-    <locale>
-        <langpack iso3="eng"/>
-    </locale>
-
-    <!--
         The resources section.
         The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
     -->
     <resources>
-        <res id="LicencePanel.licence" src="LICENSE-alkitab.txt"/>
-        <res id="shortcutSpec.xml" src="shortcutSpecWindows.xml"/>
-        <res id="Unix_shortcutSpec.xml" src="shortcutSpecUnix.xml"/>
-        <res id="Installer.image" src="installer-image.png"/>
         <res id="Heading.image" src="heading-image.png"/>
-        <res id="XInfoPanel.info" src="XInfoPanel.txt"/>
+        <res id="Installer.image" src="installer-image.png"/>
+        <res id="LicencePanel.licence" src="LICENSE.${app.name}.txt"/>
+        <res id="shortcutSpec.xml" src="win-shortcutSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="unix-shortcutSpec.xml"/>
+        <res id="InfoPanel.info" src="infoPanel.txt"/>
         <res id="packsLang.xml" src="packsLang.xml" type="xml"/>
         <res id="UserPathPanel.dir" src="UserPathPanel.txt"/>
         <res id="UserPathPanel.dir.windows" src="UserPathPanelWindows.txt"/>
@@ -95,8 +88,7 @@
         <panel classname="UserPathPanel"/>
         <panel classname="InstallPanel"/>
         <panel classname="ShortcutPanel"/>
-        <panel classname="XInfoPanel"/>
-        <!-- <panel classname="FinishPanel"/> -->
+        <panel classname="InfoPanel"/>
         <panel classname="SimpleFinishPanel"/>
     </panels>
     
@@ -107,8 +99,8 @@
     <packs>
         <pack name="${app.title.full}" required="yes" loose="true">
             <description>${app.title.full} Core</description>
-            <fileset targetdir="$INSTALL_PATH" dir="${packs.dir}/${app-core.pack}" override="true" />
-            <executable targetfile="$INSTALL_PATH/bin/alkitab" stage="never"/>
+            <fileset dir="${packs.dir}/${app-core.pack}" override="true" />
+            <executable targetfile="$INSTALL_PATH/bin/${app.name}" stage="never"/>
             <executable targetfile="$INSTALL_PATH/Uninstaller/uninstaller" stage="never"/>
         </pack>
         <pack name="[Optional] Books" required="no">

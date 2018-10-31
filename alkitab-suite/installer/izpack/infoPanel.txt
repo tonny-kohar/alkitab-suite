@@ -1,8 +1,8 @@
-$APP_TITLE_FULL requires at least $JVM_REQ
+${app.title.full} requires at least ${app.java.version}.
 It is available from http://www.java.com/getjava 
 You can check Java version by typing "java -version" 
 on the console or command prompt.
 
 If you have any questions, bug reports, or feedback
 please do not hesitate to contact us at support@kiyut.com
-or visit $APP_URL
+or visit ${app.url}

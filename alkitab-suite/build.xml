@@ -59,16 +59,9 @@
         <property name="nbdist-izpack.dir" value="${nbdist.dir}/izpack"/>
         <property name="nbdist-izpack-packs.dir" value="packs"/>
         <property name="nbdist-izpack-app-core.pack" value="${app.title}-${app.version.dash}"/>
-        <property name="izpack-installer" value="setup.jar"/>
+        <!-- <property name="izpack-installer" value="setup.jar"/>
         <property name="izpack.dir" value="C:\Program Files\IzPack"/>
-        
-        <path id="izpack.classpath">
-            <fileset dir="${izpack.dir}">
-                <include name="lib/*.jar" />
-            </fileset>
-        </path>
-        
-        <taskdef name="izpack" classpathref="izpack.classpath" classname="com.izforge.izpack.ant.IzPackTask" />
+        -->
         
         <echo message="=================" />
         <echo message="STEP 1" />
@@ -90,9 +83,7 @@
         </replace>
         
         <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
-            <!-- new since Nb 6.7 -->
             <replacefilter token="$${APPNAME}" value="${app.name}" />
-            
             <replacefilter token="/dev" value="/${app.version}" />
             <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
         </replace>
@@ -106,14 +97,8 @@
         
         <mkdir dir="${nbdist-izpack.dir}/packs" />
         
-        <echo message="Create core app pack" />
+        <echo message="Preparing core app pack" />
         
-        <!-- XXX Izpack Bug when loose=true and unpack=true
-        <zip destfile="${nbdist-izpack.dir}/packs/${nbdist-izpack-app-core.pack}" basedir="${nbdist-app.dir}" />
-        <copy todir="${nbdist-izpack.dir}/packs">
-            <fileset dir="${basedir}/../../redist-books"/>
-        </copy>
-        -->
         <copy todir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/${nbdist-izpack-app-core.pack}">
             <fileset dir="${nbdist-app.dir}" />
         </copy>
@@ -136,23 +121,31 @@
             <fileset dir="installer/izpack" />
         </copy>
         
+        <property name="app.java.version" value="Java 8 Update 181 or higher"/>
+        <property name="app.url" value="http://www.kiyut.com"/>
+        
         <replace file="${nbdist-izpack.dir}/izpack-install-script.xml">
+            <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
             <replacefilter token="$${app.title}" value="${app.title}" />
             <replacefilter token="$${app.version}" value="${app.version}" />
-            <replacefilter token="$${app.path}" value="Kiyut/Alkitab-${app.version.dash}" />
+            <replacefilter token="$${app.path}" value="Kiyut/${app.title}-${app.version.dash}" />
+            <replacefilter token="$${app.url}" value="${app.url}" />
             <replacefilter token="$${app-core.pack}" value="${nbdist-izpack-app-core.pack}" />
             <replacefilter token="$${packs.dir}" value="${nbdist-izpack-packs.dir}" />
         </replace>
-        <replace file="${nbdist-izpack.dir}/shortcutSpecWindows.xml">
+        <replace file="${nbdist-izpack.dir}/win-shortcutSpec.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.version}" value="${app.version}" />
         </replace>
-        <replace file="${nbdist-izpack.dir}/shortcutSpecUnix.xml">
+        <replace file="${nbdist-izpack.dir}/unix-shortcutSpec.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />
-            <replacefilter token="$${app.version}" value="${app.version}" />
+        </replace>
+        <replace file="${nbdist-izpack.dir}/InfoPanel.txt">
+            <replacefilter token="$${app.title.full}" value="${app.title.full}" />
+            <replacefilter token="$${app.java.version}" value="${app.java.version}" />
+            <replacefilter token="$${app.url}" value="${app.url}" />
         </replace>
         
         <echo message="=================" />
@@ -160,14 +153,31 @@
         <echo message="=================" />
         
         <copy file="${nbdist-app.dir}/readme.html" todir="${nbdist-izpack.dir}"/>
-        <copy file="${nbdist-app.dir}/legal/LICENSE-alkitab.txt" todir="${nbdist-izpack.dir}"/>
+        <copy file="${nbdist-app.dir}/legal/LICENSE.${app.name}.txt" todir="${nbdist-izpack.dir}"/>
+        
+        <!-- Use IzPack 5.1.2, because IzPack 5.1.3 have bug regarding folder with space -->
+        <property name="izpack-dir" value="${izpack.dir}"/>
+        <property name="izpack-installer" value="setup.jar"/>
+        
+        <path id="izpack.lib.path">
+            <fileset dir="${izpack-dir}/lib" includes="*.jar"/>
+        </path>
+        
+        <taskdef name="izpack" 
+            classname="com.izforge.izpack.ant.IzPackTask"
+            classpathref="izpack.lib.path" />
         
         <echo message="Makes the installer using IzPack to ${izpack-installer}"/>
             <izpack input="${basedir}/${nbdist-izpack.dir}/izpack-install-script.xml"
                 output="${basedir}/${nbdist-izpack.dir}/${izpack-installer}"  
-                installerType="standard"              
+                installerType="standard"
+                inheritAll="true"             
                 basedir="${basedir}/${nbdist-izpack.dir}"
                 izPackDir="${izpack.dir}/"/>
+            
+        <echo message="=================" />
+        <echo message="STEP 4" />
+        <echo message="=================" />
         
         <zip destfile="${nbdist.dir}/${nbdist-app-installer}">
             <zipfileset dir="${nbdist-izpack.dir}">
@@ -199,31 +209,50 @@
         <property name="nbdist-app.dir" value="${nbdist-resources.dir}/${app.name}"/>
         <property name="nbdist-app-installer" value="${app.name}-${app.version.dash}-mac.zip"/>
         
+        <echo message="======================" />
+        <echo message="Start Custom Mac Build" />
+        <echo message="======================" />
+        
         <delete file="${nbdist-app.dir}/DISTRIBUTION.txt"/>
         <delete file="${nbdist-app.dir}/LICENSE.txt"/>
+        <delete file="${nbdist-resources.dir}/${app.name}.icns"/>
+        
+        <copy tofile="${nbdist-resources.dir}/${app.name}.icns" file="installer/icons/${app.name}.icns" />
         
         <copy todir="${nbdist-app.dir}/legal">
             <fileset dir="legal"/>
         </copy>
         
-        <delete file="${nbdist-resources.dir}/${app.name}.icns"/>
-        <copy tofile="${nbdist-resources.dir}/${app.name}.icns" file="installer/icons/${app.name}.icns" />
+        <echo message="Replace .conf file" />
         
-        <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
+        <replace file="${nbdist-app.dir}/etc/${app.name}.conf" summary="true">
+            <replacefilter token="$${APPNAME}" value="${app.name}" />
             <replacefilter token="/dev" value="/${app.version}" />
             <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
         </replace>
         
+        <echo message="Replace Info.plist" />
+        
+        <!-- TODO always check this, when there is new NbPlatform release 
+             modify the original nb info.plist to include CFBundleName to ${app.title}
+        -->
+        <replace file="${nbdist-contents.dir}/Info.plist" summary="true">
+            <replacefilter token="&gt;${app.name}&lt;" value="&gt;${app.title}&lt;" /> 
+        </replace>
+        
+        <echo message="Rename ${app.name}.app to ${app.title.full}.app folder" />
+        
         <!-- rename alkitab.app to Alkitab.app, use unix mv command to keep symbolic link -->
         <!-- <move file="${nbdist.dir}/${app.name}.app" tofile="${nbdist.dir}/${app.title}.app"/> -->
-        <delete dir="${nbdist.dir}/${app.title.full}.app"/>
         <exec dir="${nbdist.dir}" executable="mv">
             <arg line="${app.name}.app &quot;${app.title.full}.app&quot;"/>
         </exec>
         
+        <echo message="Zip to ${nbdist-app-installer}" />
+        
         <!-- <delete file="${nbdist.dir}/${nbdist-app-installer}"/> -->
         <exec dir="${nbdist.dir}" executable="zip">
-            <arg line="-yr ${nbdist-app-installer} &quot;${app.title.full}.app&quot;"/>
+            <arg line="-yrq ${nbdist-app-installer} &quot;${app.title.full}.app&quot;"/>
         </exec>
         
     </target>
