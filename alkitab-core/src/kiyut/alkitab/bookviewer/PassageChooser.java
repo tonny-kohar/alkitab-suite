@@ -69,7 +69,7 @@ public class PassageChooser extends javax.swing.JPanel {
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         listScrollPane = new javax.swing.JScrollPane();
-        passageList = new javax.swing.JList();
+        passageList = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         summaryLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -107,7 +107,7 @@ public class PassageChooser extends javax.swing.JPanel {
         jPanel1.add(keyScrollPane, gridBagConstraints);
 
         jToolBar1.setFloatable(false);
-        jToolBar1.setOrientation(1);
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
 
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kiyut/alkitab/bookviewer/right.png"))); // NOI18N
@@ -199,7 +199,7 @@ public class PassageChooser extends javax.swing.JPanel {
     private javax.swing.JScrollPane keyScrollPane;
     private javax.swing.JTree keyTree;
     private javax.swing.JScrollPane listScrollPane;
-    private javax.swing.JList passageList;
+    private javax.swing.JList<VerseRange> passageList;
     private javax.swing.JTextArea passageTextArea;
     private javax.swing.JButton removeButton;
     private javax.swing.JLabel summaryLabel;
@@ -344,11 +344,11 @@ public class PassageChooser extends javax.swing.JPanel {
     }
     
     protected void removePassage() {
-        Object[] selection = passageList.getSelectedValues();
+        List<VerseRange> selection = passageList.getSelectedValuesList();
         if (selection == null) { return; }
         
-        for (int i = 0; i < selection.length; i++) {
-            VerseRange verseRange = (VerseRange)selection[i];
+        for (int i = 0; i < selection.size(); i++) {
+            VerseRange verseRange = selection.get(i);
             passage.remove(verseRange);
         }
 
@@ -373,12 +373,12 @@ public class PassageChooser extends javax.swing.JPanel {
         }
     }
     
-    public class PassageListModel extends AbstractListModel {
+    public class PassageListModel extends AbstractListModel<VerseRange> {
         protected Passage passage;
-        protected List data;
+        protected List<VerseRange> data;
         
         public PassageListModel() {
-            data = new ArrayList();
+            data = new ArrayList<>();
         }
 
         public void setPassage(Passage passage) {
@@ -393,7 +393,8 @@ public class PassageChooser extends javax.swing.JPanel {
             
             passage.optimizeReads();
             
-            Iterator iter = passage.rangeIterator(RestrictionType.CHAPTER);
+            @SuppressWarnings("unchecked")
+            Iterator<VerseRange> iter = passage.rangeIterator(RestrictionType.CHAPTER);
             while (iter.hasNext()) {
                 data.add(iter.next());
             }
@@ -411,7 +412,7 @@ public class PassageChooser extends javax.swing.JPanel {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public VerseRange getElementAt(int index) {
             return data.get(index);
         }
         
