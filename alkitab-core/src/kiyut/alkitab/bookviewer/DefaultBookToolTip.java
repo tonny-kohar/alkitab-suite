@@ -9,6 +9,8 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
@@ -31,14 +33,15 @@ public class DefaultBookToolTip implements BookToolTip {
     /** PHI of Golden Ratio */
     static double PHI = 1.618033988749895;
 
-    protected WebViewRenderer renderer;
+    protected TextPaneRenderer renderer;
     protected Popup popup;
+    //protected JScrollPane scrollPane;
     
     /** Just Point object act as cache for performance reason, so it does not always recreate Point object */
     protected Point prefPoint = new Point();
 
     public DefaultBookToolTip() {
-        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key, Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
 
         // special viewer hints for tooltip eg: do not show notes, strongs, etc
         
@@ -53,7 +56,7 @@ public class DefaultBookToolTip implements BookToolTip {
         viewerHints.put(ViewerHints.HEADINGS, true);
         viewerHints.put(ViewerHints.NOTES, false);
         
-        renderer = new WebViewRenderer(viewerHints);
+        renderer = new TextPaneRenderer(viewerHints);
         
         renderer.addMouseListener(new MouseAdapter() {
             @Override
@@ -62,18 +65,23 @@ public class DefaultBookToolTip implements BookToolTip {
             }
         });
         
-        //renderer.setBorder(BorderFactory.createLineBorder(Color.black));
+        Border emptyBorder = BorderFactory.createEmptyBorder(4, 6, 6, 6);
         Border border = UIManager.getBorder("ToolTip.border");
         if (border != null) {
-            renderer.setBorder(border);
+            border = BorderFactory.createCompoundBorder(border, emptyBorder);
+        } else {
+            border = emptyBorder;
         }
+        renderer.setBorder(border);
         
         // TODO set it to Platform ToolTip.Background, Foreground, and Font (not font incase it is using other language eg: greek font)
-        //renderer.setBackground(UIManager.getColor("ToolTip.background"));
-        //renderer.setForeground(UIManager.getColor("ToolTip.foreground"));
-        //renderer.setFont(UIManager.getFont("ToolTip.font"));
+        renderer.setBackground(UIManager.getColor("ToolTip.background"));
+        renderer.setForeground(UIManager.getColor("ToolTip.foreground"));
+        renderer.setFont(UIManager.getFont("ToolTip.font"));
         
         //bookTextPane.putClientProperty(JEditorPane.W3C_LENGTH_UNITS, Boolean.TRUE);
+        
+        //scrollPane = new JScrollPane(renderer);
     }
     
     @Override
@@ -102,7 +110,7 @@ public class DefaultBookToolTip implements BookToolTip {
         //renderer.setVisible(true);
 
         // use Golden Ratio to specify the prefSize
-        Dimension size = renderer.getPreferredSize();
+        /*Dimension size = renderer.getPreferredSize();
         if (size.width == 0 || size.height == 0) {
             size = renderer.getSize();
         }
@@ -129,6 +137,11 @@ public class DefaultBookToolTip implements BookToolTip {
 
         size.setSize(maxW, maxH);
         renderer.setPreferredSize(size);
+        scrollPane.setPreferredSize(new Dimension(size.width + adjust, size.height + adjust));
+        
+        renderer.revalidate();
+        scrollPane.revalidate();
+        */
             
         prefPoint.setLocation(x,y);
         getPreferredLocation(owner, prefPoint);
@@ -150,6 +163,7 @@ public class DefaultBookToolTip implements BookToolTip {
      * with cursor and Screen Size.
      * @param owner Component mouse coordinates are relative to, maybe null
      * @param point inital prefPoint location that will be adjusted based on various factor
+     * @return point
      */
     protected Point getPreferredLocation(Component owner, Point point) {
         int adjust = 20; // some pixel adjustment for cursor prefSize

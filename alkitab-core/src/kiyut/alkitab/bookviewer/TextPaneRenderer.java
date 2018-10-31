@@ -53,7 +53,7 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
     }
 
     public TextPaneRenderer(ViewerHints<ViewerHints.Key, Object> viewerHints) {
-        books = new ArrayList<Book>();
+        books = new ArrayList<>();
         setEditable(false);
         setEditorKit(new HTMLEditorKit());
         addHyperlinkListener(new HyperlinkListener() {
@@ -101,6 +101,7 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
 
     /**
      * Default it is false
+     * @param compareView true or false
      */
     public void setCompareView(boolean compareView) {
         this.compareView = compareView;
@@ -138,6 +139,7 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
      *
      * @see #reload(boolean)
      */
+    @Override
     public void reload() {
         reload(false);
     }
@@ -147,6 +149,7 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
      *
      * @param invokeLater using Event Dispatch Thread
      */
+    @Override
     public void reload(boolean invokeLater) {
         if (invokeLater) {
             SwingUtilities.invokeLater(new Runnable() {

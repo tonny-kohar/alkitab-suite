@@ -333,7 +333,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                
         //splitPane.setOneTouchExpandable(true);
 
-        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
         //bookTextPane = new BookTextPane(viewerHints);
         //bookScrollPane.setViewportView(bookRenderer);
         bookRenderer = new WebViewRenderer(viewerHints);
@@ -819,8 +819,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
 
     /** This only set the search field with the param and do nothing aka
-     * does not perform searching. If you want actual search call #search(String) instead.<br/>
-     * It is only used for persisting the session.<br/>
+     * does not perform searching. If you want actual search call #search(String) instead.
+     * It is only used for persisting the session.
      * @param searchString the search text
      * @see #search(String)
      */
@@ -1114,7 +1114,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             String msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         } else {
-            Object[] args = {searchString, partial,new Integer(total)};
+            Object[] args = {searchString, partial, total};
             String msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         }

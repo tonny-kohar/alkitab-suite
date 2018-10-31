@@ -20,7 +20,8 @@ public interface BookRenderer {
      */
     public String getContentSource();
     
-    /** Return the wrapper component */
+    /** Return the wrapper component
+     * @return the wrapper component */
     public JComponent getComponent();
     
     /**

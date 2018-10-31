@@ -115,6 +115,7 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
         /**
          * Returns {@code true} if the specified object is a valid value for
          * this key, otherwise {@code false}.
+         * @param val Object
          * @return {@code true} or {@code false}
          */
         public abstract boolean accept(Object val);

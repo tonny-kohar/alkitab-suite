@@ -3,6 +3,7 @@
 <filesystem>
     <folder name="OptionsDialog">
         <folder name="BookViewerOptionsCategory">
+            <attr name="position" intvalue="0"/>
             <file name="kiyut-alkitab-options-GeneralAdvancedOptions.instance">
                 <attr name="position" intvalue="0"/>
                 <attr name="controller" newvalue="kiyut.alkitab.options.GeneralOptionsPanelController"/>

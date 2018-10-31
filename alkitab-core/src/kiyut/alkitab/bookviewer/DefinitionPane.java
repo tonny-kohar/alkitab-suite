@@ -23,7 +23,7 @@ import org.crosswire.jsword.passage.PreferredKey;
  */
 public class DefinitionPane extends javax.swing.JPanel {
     
-    protected WebViewRenderer bookRenderer;
+    protected TextPaneRenderer bookRenderer;
     protected ViewerHints<ViewerHints.Key,Object> viewerHints;
     
     /** Creates new DefinitionPane */
@@ -32,7 +32,7 @@ public class DefinitionPane extends javax.swing.JPanel {
     }
     
     public DefinitionPane(Book book) {
-        this.viewerHints = new ViewerHints<ViewerHints.Key,Object>(ViewerHintsOptions.getInstance().getViewerHints());
+        this.viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
         initComponents();
         initCustom();
         setBook(book);
@@ -52,6 +52,7 @@ public class DefinitionPane extends javax.swing.JPanel {
         indexPane = new javax.swing.JPanel();
         indexScrollPane = new javax.swing.JScrollPane();
         indexList = new javax.swing.JList<>();
+        bookScrollPane = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -64,12 +65,14 @@ public class DefinitionPane extends javax.swing.JPanel {
         indexPane.add(indexScrollPane, java.awt.BorderLayout.CENTER);
 
         splitPane.setRightComponent(indexPane);
+        splitPane.setLeftComponent(bookScrollPane);
 
         add(splitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane bookScrollPane;
     protected javax.swing.JList<Key> indexList;
     protected javax.swing.JPanel indexPane;
     private javax.swing.JScrollPane indexScrollPane;
@@ -77,9 +80,9 @@ public class DefinitionPane extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
-        bookRenderer = new WebViewRenderer(viewerHints);
-        //bookScrollPane.setViewportView(bookRenderer);
-        splitPane.setLeftComponent(bookRenderer);
+        bookRenderer = new TextPaneRenderer (viewerHints);
+        bookScrollPane.setViewportView(bookRenderer);
+        //splitPane.setLeftComponent(bookRenderer);
         
         //getActionMap().setParent(bookRenderer.getActionMap());
         
