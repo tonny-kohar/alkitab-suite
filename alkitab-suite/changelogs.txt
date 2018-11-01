@@ -1,3 +1,11 @@
+ver 3.1
+- Fix generate index bug
+- Various bug fixes
+- Improved Session Persistence
+- Improved performance
+- Revert back to JSword 1.6 (more stable)
+- Updated to use Java 8 or Higher
+
 ver 3.0
 - Improved HTML rendering (Java FX WebView)  
 - Add support for Versifications
