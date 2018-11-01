@@ -11,60 +11,20 @@
 
     <shortcut
         name="${app.title.full}"
-        type="Application"
-        programGroup="no"
-        desktop="yes"
-        applications="no"
-        startMenu="yes"
-        startup="no"
         target="$INSTALL_PATH/bin/${app.name}"
         commandLine=""
         workingDirectory="$INSTALL_PATH/bin"
         description="${app.title.full} Launcher"
-        categories="Religion;Bible;Education;Application;Utility"
         iconFile="$INSTALL_PATH/${app.name}/${app.name}48.png"
         iconIndex="0"
+        type="Application"
+        desktop="true"
+        startMenu="true"
         encoding="UTF-8"
         terminal="false"
-        initialState="normal">
+        categories="Religion;Bible;Education;Application;Utility">
+        
         <createForPack name="${app.title.full}"/>
     </shortcut>
     
-    <!-- <shortcut
-        name="Readme.html"
-        type="Link"
-        programGroup="yes"
-        desktop="no"
-        applications="no"
-        startMenu="yes"
-        startup="no"
-        target="$INSTALL_PATH/readme.html"
-        commandLine=""
-        description="${app.title.full} Readme"
-        terminal="false"
-        KdeSubstUID="false"
-        initialState="normal">
-            
-        <createForPack name="${app.title.full}"/>
-    </shortcut>
-
-    <shortcut
-        name="Uninstaller"
-        type="Application"
-        programGroup="yes"
-        desktop="no"
-        applications="no"
-        startMenu="yes"
-        startup="no"
-        target="$INSTALL_PATH/Uninstaller/uninstaller"
-        commandLine=""
-        workingDirectory="$INSTALL_PATH/Uninstaller"
-        description="${app.title.full} Uninstaller"
-        terminal="false"
-        KdeSubstUID="false"
-        initialState="normal">
-            
-        <createForPack name="${app.title.full}"/>
-    </shortcut>
-    -->
 </izpack:shortcuts>

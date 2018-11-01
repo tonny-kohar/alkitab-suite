@@ -8,46 +8,30 @@
   
     <shortcut
         name="${app.title.full}"
-        programGroup="yes"
-        desktop="yes"
-        applications="no"
-        startMenu="no"
-        startup="no"
         target="$INSTALL_PATH\bin\${app.name}.exe"
-        commandLine=""
         description="${app.title.full} Launcher"
         iconFile="$INSTALL_PATH\${app.name}\${app.name}.ico"
-        iconIndex="0"
-        initialState="noShow">
+        programGroup="true"
+        desktop="true" >
             
         <createForPack name="${app.title.full}"/>
     </shortcut>
    
     <shortcut
         name="Readme.html"
-        programGroup="yes"
-        desktop="no"
-        applications="no"
-        startMenu="no"
-        startup="no"
         target="$INSTALL_PATH\readme.html"
-        commandLine=""
-        description="${app.title.full} Readme">
-            
+        description="${app.title.full} Readme"
+        programGroup="true" >
+        
         <createForPack name="${app.title.full}"/>
     </shortcut>
 
     <shortcut
-        name="Uninstaller"
-        programGroup="yes"
-        desktop="no"
-        applications="no"
-        startMenu="no"
-        startup="no"
+        name="Uninstall ${app.title.full}"
         target="$INSTALL_PATH\Uninstaller\uninstaller.exe"
-        commandLine=""
-        description="${app.title.full} Uninstaller">
-            
+        description="${app.title.full} Uninstaller"
+        programGroup="true" >
+        
         <createForPack name="${app.title.full}"/>
     </shortcut>
    

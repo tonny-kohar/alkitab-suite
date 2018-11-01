@@ -46,13 +46,19 @@
     
     <variables>
         <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
-        <variable name="UserPathPanelDependsName" value="[Optional] Books"/>
+        <!-- <variable name="UserPathPanelDependsName" value="[Optional] Books"/> -->
     </variables>
 
-    <!-- <dynamicvariables>
-        <variable name="UserPathPanelVariable" value="${ENV[APPDATA]}${FILE_SEPARATOR}Sword"/>
+    <dynamicvariables>
+        <!-- IzPack bug need checkonce="true" -->
+        <variable name="Books.dir" value="${USER_HOME}${FILE_SEPARATOR}.sword" checkonce="true" />
+        <variable name="Books.dir" value="${ENV[APPDATA]}${FILE_SEPARATOR}Sword" condition="izpack.windowsinstall" />
+        <!-- 
+        <variable name="UserPathPanelVariable" value="${USER_HOME}${FILE_SEPARATOR}.sword"/>
+        <variable name="UserPathPanelVariable" value="${ENV[APPDATA]}${FILE_SEPARATOR}Sword" condition="izpack.windowsinstall" />
+        -->
     </dynamicvariables>
-    -->
+    
 
     <!--
         The resources section.
@@ -66,8 +72,7 @@
         <res id="Unix_shortcutSpec.xml" src="unix-shortcutSpec.xml"/>
         <res id="InfoPanel.info" src="infoPanel.txt"/>
         <res id="packsLang.xml" src="packsLang.xml" type="xml"/>
-        <res id="UserPathPanel.dir" src="UserPathPanel.txt"/>
-        <res id="UserPathPanel.dir.windows" src="UserPathPanelWindows.txt"/>
+        <!-- <res id="UserPathPanelText.xml" src="UserPathPanelText.xml"/> -->
     </resources>
     
     <!-- The native libraries to add -->
@@ -85,7 +90,7 @@
         <panel classname="LicencePanel"/>
         <panel classname="TargetPanel"/>
         <panel classname="TreePacksPanel"/>
-        <panel classname="UserPathPanel"/>
+        <!-- <panel classname="UserPathPanel"/> -->
         <panel classname="InstallPanel"/>
         <panel classname="ShortcutPanel"/>
         <panel classname="InfoPanel"/>
@@ -97,7 +102,7 @@
         We specify here our packs.
     -->
     <packs>
-        <pack name="${app.title.full}" required="yes" loose="true">
+        <pack name="${app.title.full}" required="yes" loose="true" size="${core-pack.size}">
             <description>${app.title.full} Core</description>
             <fileset dir="${packs.dir}/${app-core.pack}" override="true" />
             <executable targetfile="$INSTALL_PATH/bin/${app.name}" stage="never"/>
@@ -106,25 +111,25 @@
         <pack name="[Optional] Books" required="no">
             <description>Optional Books. It is from http://www.crosswire.org/sword/modules/</description>
         </pack>
-        <pack name="Bible: King James Version (KJV)" required="no" parent="[Optional] Books" loose="true">
+        <pack name="Bible: King James Version (KJV)" required="no" parent="[Optional] Books" loose="true" size="${kjv-pack.size}">
             <description>King James Version (1769) with Strongs Numbers and Morphology</description>
-            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/KJV" override="true" />
+            <fileset targetdir="$Books.dir" dir="${packs.dir}/KJV" override="true" />
         </pack>
-        <pack name="Dictionary: Strong's Greek" required="no" parent="[Optional] Books" loose="true">
+        <pack name="Dictionary: Strong's Greek" required="no" parent="[Optional] Books" loose="true" size="${strong-greek-pack.size}">
             <description>Strong's Greek Bible Dictionary</description>
-            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/StrongsGreek" override="true" />
+            <fileset targetdir="$Books.dir" dir="${packs.dir}/StrongsGreek" override="true" />
         </pack>
-        <pack name="Dictionary: Strong's Hebrew" required="no" parent="[Optional] Books" loose="true">
+        <pack name="Dictionary: Strong's Hebrew" required="no" parent="[Optional] Books" loose="true" size="${strong-hebrew-pack.size}">
             <description>Strong's Hebrew Bible Dictionary</description>
-            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/StrongsHebrew" override="true" />
+            <fileset targetdir="$Books.dir" dir="${packs.dir}/StrongsHebrew" override="true" />
         </pack>
-        <pack name="Dictionary: Robinson's Morphology" required="no" parent="[Optional] Books" loose="true">
+        <pack name="Dictionary: Robinson's Morphology" required="no" parent="[Optional] Books" loose="true" size="${robinson-pack.size}">
             <description>Robinson's Morphological Analysis Codes</description>
-            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Robinson" override="true" />
+            <fileset targetdir="$Books.dir" dir="${packs.dir}/Robinson" override="true" />
         </pack>
-        <pack name="Book: Institutes" required="no" parent="[Optional] Books" loose="true">
+        <pack name="Book: Institutes" required="no" parent="[Optional] Books" loose="true" size="${institutes-pack.size}">
             <description>Calvin's Institutes</description>
-            <fileset targetdir="$UserPathPanelVariable" dir="${packs.dir}/Institutes" override="true" />
+            <fileset targetdir="$Books.dir" dir="${packs.dir}/Institutes" override="true" />
         </pack>
     </packs>
 </izpack:installation>

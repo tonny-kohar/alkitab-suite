@@ -121,6 +121,35 @@
             <fileset dir="installer/izpack" />
         </copy>
         
+        <echo message = 'Calculate Packs size' />
+        
+        <length property="core-pack.size" mode="all">
+            <fileset dir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/${nbdist-izpack-app-core.pack}"/>
+        </length>
+        <length property="kjv-pack.size" mode="all">
+            <fileset dir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/KJV"/>
+        </length>
+        <length property="strong-greek-pack.size" mode="all">
+            <fileset dir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsGreek"/>
+        </length>
+        <length property="strong-hebrew-pack.size" mode="all">
+            <fileset dir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/StrongsHebrew"/>
+        </length>
+        <length property="robinson-pack.size" mode="all">
+            <fileset dir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/Robinson"/>
+        </length>
+        <length property="institutes-pack.size" mode="all">
+            <fileset dir="${nbdist-izpack.dir}/${nbdist-izpack-packs.dir}/Institutes"/>
+        </length>
+        
+        <echo message="Core Pack size: ${core-pack.size}"/>
+        <echo message="KJV Pack size: ${kjv-pack.size}"/>
+        <echo message="Strong Greek Pack size: ${strong-greek-pack.size}"/>
+        <echo message="Strong Hebrew Pack size: ${strong-hebrew-pack.size}"/>
+        <echo message="Robinson Pack size: ${robinson-pack.size}"/>
+        <echo message="Institutes Pack size: ${institutes-pack.size}"/>
+        <echo message="" />
+        
         <property name="app.java.version" value="Java 8 Update 181 or higher"/>
         <property name="app.url" value="http://www.kiyut.com"/>
         
@@ -133,6 +162,13 @@
             <replacefilter token="$${app.url}" value="${app.url}" />
             <replacefilter token="$${app-core.pack}" value="${nbdist-izpack-app-core.pack}" />
             <replacefilter token="$${packs.dir}" value="${nbdist-izpack-packs.dir}" />
+            
+            <replacefilter token="$${core-pack.size}" value="${core-pack.size}" />
+            <replacefilter token="$${kjv-pack.size}" value="${kjv-pack.size}" />
+            <replacefilter token="$${strong-greek-pack.size}" value="${strong-greek-pack.size}" />
+            <replacefilter token="$${strong-hebrew-pack.size}" value="${strong-hebrew-pack.size}" />
+            <replacefilter token="$${robinson-pack.size}" value="${robinson-pack.size}" />
+            <replacefilter token="$${institutes-pack.size}" value="${institutes-pack.size}" />
         </replace>
         <replace file="${nbdist-izpack.dir}/win-shortcutSpec.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
