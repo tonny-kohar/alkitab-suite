@@ -4,7 +4,8 @@
 
 This Bible software is build using [JSword](http://www.crosswire.org/jsword/) and is an alternative front end for [Bible Desktop](http://www.crosswire.org/bibledesktop/).
 
-Alkitab Bible Study is released into [Public Domain ](https://github.com/tonny-kohar/alkitab-suite/blob/master/alkitab-suite/legal/LICENSE.alkitab.txt).
+Alkitab Bible Study is released into [Public Domain](https://github.com/tonny-kohar/alkitab-suite/blob/master/alkitab-suite/legal/LICENSE.alkitab.txt).
+Others third party Licenses please check [the following](https://github.com/tonny-kohar/alkitab-suite/tree/master/alkitab-suite/legal)
 
 ![Screenshot](https://www.kiyut.com/products/alkitab/alkitab.png)
 
