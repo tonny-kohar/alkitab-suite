@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 import kiyut.alkitab.bookviewer.BookViewer;
 import kiyut.alkitab.bookviewer.BookViewerNode;
 import kiyut.alkitab.bookviewer.SwordURI;
@@ -88,9 +89,10 @@ public abstract class BookViewerTopComponent extends TopComponent {
 
     @Override
     public javax.swing.Action[] getActions() {
-        List<Action> actionList = new ArrayList<Action>();
+        List<Action> actionList = new ArrayList<>();
         
         // add 
+        actionList.add(new RenameTabAction());
         actionList.add(new ViewSourceAction());
         actionList.add(null);  // separator
         actionList.addAll(Arrays.asList(super.getActions()));
@@ -110,6 +112,17 @@ public abstract class BookViewerTopComponent extends TopComponent {
                 return;
             }
             bookViewer.viewSource();
+        }
+    }
+    
+    public class RenameTabAction extends AbstractAction {
+        public RenameTabAction() {
+            putValue(Action.NAME, NbBundle.getMessage(RenameTabAction.class, "CTL_RenameTabAction"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            JOptionPane.showMessageDialog(BookViewerTopComponent.this, "Not Implemented Yet", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

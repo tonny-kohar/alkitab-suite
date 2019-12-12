@@ -175,7 +175,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         
         // add 
         actionList.addAll(Arrays.asList(super.getActions()));
-        actionList.add(1, new ReindexAction());
+        actionList.add(2, new ReindexAction());
         
         return actionList.toArray(new Action[0]);
     }
