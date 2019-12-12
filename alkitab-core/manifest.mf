@@ -3,5 +3,5 @@ OpenIDE-Module: kiyut.alkitab
 OpenIDE-Module-Layer: kiyut/alkitab/layer.xml
 OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
-OpenIDE-Module-Specification-Version: 3.1
+OpenIDE-Module-Specification-Version: 3.2
 

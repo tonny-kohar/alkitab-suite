@@ -62,8 +62,8 @@
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/View"/>
             <file name="ShowEditorOnlyAction.shadow_hidden"/>
             <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
-            <file name="org-netbeans-core-windows-actions-ToolbarsListAction.instance">
-                <attr name="position" intvalue="1250"/>
+            <file name="org-netbeans-core-windows-actions-ToolbarsListAction.shadow">
+                <attr name="position" intvalue="1190"/>
             </file>
         </folder>
         <folder name="Navigate">
