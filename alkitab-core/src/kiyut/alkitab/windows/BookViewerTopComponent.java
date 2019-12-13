@@ -122,7 +122,37 @@ public abstract class BookViewerTopComponent extends TopComponent {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            JOptionPane.showMessageDialog(BookViewerTopComponent.this, "Not Implemented Yet", "Error", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(BookViewerTopComponent.this, "Not Implemented Yet", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            String newName =  JOptionPane.showInputDialog(BookViewerTopComponent.this, "Please enter the new name: ", getName(), JOptionPane.QUESTION_MESSAGE);
+            
+            // validate 
+            if (newName != null) {
+                newName = newName.trim();
+                if (newName.isEmpty()) {
+                    newName = null;
+                }
+            }
+            
+            if (newName == null) {
+                return;
+            }
+            
+            BookViewer bookViewer = getBookViewer();
+            if (bookViewer == null) { return; }
+            bookViewer.setName(newName);
+            //BookViewerTopComponent.this.setName(newName);
+            //firePropertyChange(newName, newName, newName);
+            
+            /*Logger logger = Logger.getLogger(this.getClass().getName());
+            
+            if (newName == null) {
+                logger.log(Level.WARNING, "new name is null");
+            } else if (newName.isEmpty()) {
+                logger.log(Level.WARNING, "new name is empty");
+            } else {
+                logger.log(Level.WARNING, newName);
+            }*/
         }
     }
 }

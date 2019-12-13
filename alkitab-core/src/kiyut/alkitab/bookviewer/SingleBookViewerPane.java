@@ -2,7 +2,6 @@
 
 package kiyut.alkitab.bookviewer;
 
-import java.awt.BorderLayout;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -63,6 +62,10 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
 
     @Override
     public String getName() {
+        if (name != null) {
+            return name;
+        }
+        
         if (bookRenderer == null) {
             return "";
         }

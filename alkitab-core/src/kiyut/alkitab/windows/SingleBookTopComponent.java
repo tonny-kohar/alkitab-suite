@@ -98,6 +98,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         
         out.writeObject(bookName);
         out.writeObject(bookViewer.getKey());
+        out.writeObject(bookViewer.getName());
     }
     
     @Override
@@ -106,9 +107,11 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         
         String bookName = (String)in.readObject();
         Key key = (Key)in.readObject();
+        String name = (String)in.readObject();
         
         bookViewer.setBook(bookName);
-        bookViewer.setKey(key);        
+        bookViewer.setKey(key); 
+        bookViewer.setName(name);
         bookViewer.reload();
     }
     

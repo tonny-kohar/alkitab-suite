@@ -55,6 +55,9 @@ public interface BookViewer {
     /** Display the source (raw,OSIS,HTML) of the currently viewed book */
     public void viewSource();
     
+    /** Set the name */
+    public void setName(String name);
+        
     public void compareView(boolean compare);
     
     public boolean isCompareView();
@@ -79,7 +82,9 @@ public interface BookViewer {
      */
     public ViewerHints<ViewerHints.Key,Object> getViewerHints();
     
-    /** Is this methods needed ? */
+    /** Is this methods needed ? 
+     * @return {@code ActionMap}
+     */
     public ActionMap getActionMap();
     
     public void addBookChangeListener(BookChangeListener listener);

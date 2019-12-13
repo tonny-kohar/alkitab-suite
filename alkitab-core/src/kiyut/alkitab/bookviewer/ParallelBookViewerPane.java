@@ -524,6 +524,10 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     @Override
     public String getName() {
+        if (name != null) {
+            return name;
+        }
+        
         if (bookRenderer == null) {
             return "";
         }

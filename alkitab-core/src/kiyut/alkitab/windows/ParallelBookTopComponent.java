@@ -135,6 +135,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         out.writeObject(bookViewer.getSearchString());
         out.writeBoolean(bookViewer.isCompareView());
         out.writeObject(bookViewer.getViewerHints());
+        out.writeObject(bookViewer.getName());
     }
     
     @SuppressWarnings("unchecked")
@@ -147,11 +148,13 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         String searchString = (String)in.readObject();
         boolean compareView = in.readBoolean();
         ViewerHints<ViewerHints.Key,Object> viewerHints = (ViewerHints<ViewerHints.Key,Object>)in.readObject();
+        String name = (String)in.readObject();
         
         viewerHints.setDefaults(ViewerHintsOptions.getInstance().getViewerHints());
         bookViewer.setViewerHints(viewerHints);
         bookViewer.setKey(key);
         bookViewer.setSearchString(searchString);
+        bookViewer.setName(name);
         
         for (int i = 0; i < bookNames.size(); i++) {
             bookViewer.addBook(bookNames.get(i));

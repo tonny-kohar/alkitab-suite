@@ -15,6 +15,9 @@ public abstract class AbstractBookViewerPane extends JPanel implements BookViewe
     /** Maximum books allowed in this view. Default is 1 */
     protected int maximumBook = 1;
     
+    /** book viewer name, if null (dynamically generated based on book) or explicitly set */
+    protected String name = null;
+
     @Override
     public int getMaximumBook() {
         return maximumBook;
@@ -26,6 +29,15 @@ public abstract class AbstractBookViewerPane extends JPanel implements BookViewe
     @Override
     public boolean isCompareView() {
         return false;
+    }
+    
+    @Override
+    public void setName(String name) {
+        if (name != null) { 
+            this.name = name; 
+            super.setName(name);
+            firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
+        }
     }
     
     @Override
