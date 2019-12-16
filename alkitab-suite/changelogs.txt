@@ -1,3 +1,7 @@
+ver 3.2
+- Add ability to rename tab
+- Refactor user guide to better follow netbeans guide
+
 ver 3.1
 - Fix generate index bug
 - Various bug fixes

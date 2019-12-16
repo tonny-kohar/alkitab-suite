@@ -150,7 +150,7 @@
         <echo message="Institutes Pack size: ${institutes-pack.size}"/>
         <echo message="" />
         
-        <property name="app.java.version" value="Java 8 Update 181 or higher"/>
+        <property name="app.java.version" value="Java 8 Update 221 or higher"/>
         <property name="app.url" value="http://www.kiyut.com"/>
         
         <replace file="${nbdist-izpack.dir}/izpack-install-script.xml">
