@@ -1,3 +1,7 @@
+ver 4.0-beta1
+- Improved DPI Aware for high resolution screen
+- Updated to use Apache Netbeans 11.3
+
 ver 3.2
 - Add ability to rename tab
 - Refactor user guide to better follow netbeans guide

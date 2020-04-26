@@ -149,10 +149,7 @@
         <echo message="Robinson Pack size: ${robinson-pack.size}"/>
         <echo message="Institutes Pack size: ${institutes-pack.size}"/>
         <echo message="" />
-        
-        <property name="app.java.version" value="Java 8 Update 221 or higher"/>
-        <property name="app.url" value="http://www.kiyut.com"/>
-        
+      
         <replace file="${nbdist-izpack.dir}/izpack-install-script.xml">
             <replacefilter token="$${app.name}" value="${app.name}" />
             <replacefilter token="$${app.title.full}" value="${app.title.full}" />

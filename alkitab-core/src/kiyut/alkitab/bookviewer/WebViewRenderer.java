@@ -2,7 +2,7 @@
 
 package kiyut.alkitab.bookviewer;
 
-import java.awt.Color;
+/*import java.awt.Color;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +44,19 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.xml.sax.ContentHandler;
-
+*/
 
 /**
  * BookRenderer implementation that use JavaFX WebView
  */
-public class WebViewRenderer extends JFXPanel implements BookRenderer {
+/*public class WebViewRenderer extends JFXPanel implements BookRenderer {
     
     public static final String EVENT_TYPE_CLICK = "click";
     public static final String EVENT_TYPE_MOUSEOVER = "mouseover";
     public static final String EVENT_TYPE_MOUSEOUT = "mouseclick";
     
     /** It is used to convert <br></br> to <br />*/
-    public static Pattern FixBRTagPattern = Pattern.compile("<br>\\s*</br>");
+  /*  public static Pattern FixBRTagPattern = Pattern.compile("<br>\\s*</br>");
     
     //protected JFXPanel fxPanel;
     protected WebView webView;
@@ -64,17 +64,13 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
     protected List<Book> books;
     protected Key key;
     protected Converter converter;
-    /**
-     * Default it is false
-     */
-    protected boolean compareView = false;
+    /** Default it is false */
+ /*   protected boolean compareView = false;
     protected ViewerHints<ViewerHints.Key, Object> viewerHints;
     
     //protected EventListenerList listenerList;
     
     protected String contentSource;
-    
-    
     
     public WebViewRenderer() {
         this(new ViewerHints<ViewerHints.Key, Object>());
@@ -173,7 +169,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
      * Default it is false
      * @param compareView
      */
-    public void setCompareView(boolean compareView) {
+  /*  public void setCompareView(boolean compareView) {
         this.compareView = compareView;
     }
 
@@ -209,7 +205,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
      * 
      * @see #reload(boolean)
      */
-    @Override
+/*    @Override
     public void reload() {
         reload(true);
     }
@@ -218,7 +214,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
      * Since it is using JavaFX WebView, this method ignore parameter invokeLater 
      * and always use Platfrom.runLater() thread
      */
-    @Override
+/*    @Override
     public void reload(boolean invokeLater) {
         Platform.runLater(new Runnable() {
             @Override
@@ -228,7 +224,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
         });
     }
     
-    protected void reloadImpl() {
+/*    protected void reloadImpl() {
         //webView.getEngine().load("http://www.kiyut.com");
         //System.err.println("reloadImpl() start");
         
@@ -254,7 +250,7 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
         this.setLocale(new Locale(bmd.getLanguage().getCode()));
         */
 
-        try {
+/*        try {
             SAXEventProvider osissep = bookData.getSAXEventProvider();
             TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
             
@@ -336,3 +332,5 @@ public class WebViewRenderer extends JFXPanel implements BookRenderer {
         return this;
     }
 }
+
+*/
