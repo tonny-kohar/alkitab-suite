@@ -18,12 +18,14 @@
         <type>javax.help.IndexView</type>
         <data>userguide-idx.xml</data>
     </view>
-    <!-- BUG: Apache Netbeans and Javahelp
+    <!-- BUG: Apache Netbeans no longer include jhall.jar
+        workaround, include jhall.jar directly
+    -->
     <view>
         <name>Search</name>
         <label>Search</label>
         <type>javax.help.SearchView</type>
         <data engine="com.sun.java.help.search.DefaultSearchEngine">JavaHelpSearch</data>
     </view>
-    -->
+    
 </helpset>

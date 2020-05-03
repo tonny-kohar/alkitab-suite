@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* This work has been placed into the public domain. */
+
 @HelpSetRegistration(helpSet = "userguide-hs.xml", position = 3452)
 package kiyut.alkitab.modules.userguide.docs;
 
