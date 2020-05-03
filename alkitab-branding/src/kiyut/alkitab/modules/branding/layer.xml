@@ -90,12 +90,8 @@
         </folder>
         <folder name="Help">
             <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Menu/Help"/>
+            <file name="master-help.xml_hidden"/>
             <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow_hidden"/>
-            <!-- BUG: Apache Netbeans and Javahelp
-            <file name="master-help.xml" url="alkitab-master-help.xml">
-                <attr name="position" intvalue="0"/>
-            </file>
-            -->
             <file name="org-netbeans-core-actions-LogAction.shadow">
                 <attr name="position" intvalue="1400"/>
                 <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
@@ -115,11 +111,7 @@
         <file name="AS-Y.shadow_hidden"/>
         <file name="D-4.shadow_hidden"/>
         <file name="D-I.shadow_hidden"/>
-        <!-- BUG: Apache Netbeans and Javahelp
-        <file name="F1.shadow">
-            <attr name="originalFile" stringvalue="Menu/Help/master-help.xml"/>
-        </file>
-        -->        
+        <file name="F1.shadow_hidden"/>
         <file name="D-Q.shadow">
             <attr name="originalFile" stringvalue="Actions/System/org-netbeans-core-actions-SystemExit.instance"/>
         </file>
