@@ -23,11 +23,15 @@ import org.netbeans.spi.options.OptionsPanelController;
 )
 final class PathOptionsPanel extends javax.swing.JPanel {
 
-    private final PathOptionsPanelController controller;
-    private ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    private final ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    
+    /** updating flag */
+    private boolean updating;
+    
+    /** changed flag */
+    private boolean changed;
 
-    PathOptionsPanel(PathOptionsPanelController controller) {
-        this.controller = controller;
+    PathOptionsPanel() {
         initComponents();
         initCustom();
     }
@@ -194,53 +198,6 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    void load() {
-        BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
-        File path = bookViewerOpts.getDownloadPath();
-        if (path != null) {
-            downloadPathField.setText(path.getPath());
-        }
-
-        File[] paths = bookViewerOpts.getBookPaths();
-        if (paths != null) {
-            DefaultListModel<File> model = (DefaultListModel<File>)bookPathList.getModel();
-            model.clear();
-            for (int i=0; i <paths.length; i++) {
-                model.addElement(paths[i]);
-            }
-        }
-
-        // current config
-        refreshCurrentConfig();
-    }
-
-    void store() {
-        BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
-
-        String path = downloadPathField.getText().trim();
-        if (path.length() > 0) {
-            bookViewerOpts.setDownloadPath(new File(path));
-        } else {
-            bookViewerOpts.setDownloadPath(null);
-        }
-
-        File[] paths = new File[bookPathList.getModel().getSize()];
-        for (int i=0; i < paths.length; i++) {
-            paths[i] = bookPathList.getModel().getElementAt(i);
-        }
-        if (paths.length > 0) {
-            bookViewerOpts.setBookPaths(paths);
-        } else {
-            bookViewerOpts.setBookPaths(null);
-        }
-
-        bookViewerOpts.store();
-    }
-
-    boolean valid() {
-        return true;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addPathButton;
     private javax.swing.JList<File> bookPathList;
@@ -273,94 +230,145 @@ final class PathOptionsPanel extends javax.swing.JPanel {
         moveUpPathButton.setMargin(insets);
         moveDownPathButton.setMargin(insets);
 
-        addPathButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                JFileChooser fc = IOUtilities.getFileChooser();
-                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int choice = fc.showOpenDialog(PathOptionsPanel.this);
-                if (choice != JFileChooser.APPROVE_OPTION) {
-                    return;
+        addPathButton.addActionListener((ActionEvent evt) -> {
+            JFileChooser fc = IOUtilities.getFileChooser();
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int choice = fc.showOpenDialog(PathOptionsPanel.this);
+            if (choice != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File file = fc.getSelectedFile();
+            boolean exists = false;
+            for (int i=0; i<bookPathList.getModel().getSize(); i++) {
+                Object obj = bookPathList.getModel().getElementAt(i);
+                if (file.equals(obj)) {
+                    Object[] args = {file.getPath()};
+                    String msg = MessageFormat.format(bundle.getString("MSG_BookPathExists.Text"), args);
+                    JOptionPane.showMessageDialog(PathOptionsPanel.this, msg , bundle.getString("CTL_BookPath.Text"), JOptionPane.ERROR_MESSAGE);
+                    exists = true;
+                    break;
                 }
-                File file = fc.getSelectedFile();
-                boolean exists = false;
-                for (int i=0; i<bookPathList.getModel().getSize(); i++) {
-                    Object obj = bookPathList.getModel().getElementAt(i);
-                    if (file.equals(obj)) {
-                        Object[] args = {file.getPath()};
-                        String msg = MessageFormat.format(bundle.getString("MSG_BookPathExists.Text"), args);
-                        JOptionPane.showMessageDialog(PathOptionsPanel.this, msg , bundle.getString("CTL_BookPath.Text"), JOptionPane.ERROR_MESSAGE);
-                        exists = true;
-                        break;
-                    }
-                }
-
-                if (!exists) {
-                    ((DefaultListModel<File>) bookPathList.getModel()).addElement(file);
-                }
+            }
+            
+            if (!exists) {
+                ((DefaultListModel<File>) bookPathList.getModel()).addElement(file);
+                changed = true;
             }
         });
 
-        removePathButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                int i = bookPathList.getSelectedIndex();
-                if (i < 0) {
-                    return;
-                }
-                ((DefaultListModel) bookPathList.getModel()).remove(i);
+        removePathButton.addActionListener((ActionEvent evt) -> {
+            int i = bookPathList.getSelectedIndex();
+            if (i < 0) {
+                return;
             }
+            ((DefaultListModel) bookPathList.getModel()).remove(i);
+            changed = true;
         });
 
-        moveUpPathButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                int i = bookPathList.getSelectedIndex();
-                if (i <= 0) {
-                    return;
-                }
-                DefaultListModel<File> listModel = (DefaultListModel<File>)bookPathList.getModel();
-                File file = listModel.remove(i);
-                i = i - 1;
-                listModel.add(i, file);
-                bookPathList.setSelectedIndex(i);
+        moveUpPathButton.addActionListener((ActionEvent evt) -> {
+            int i = bookPathList.getSelectedIndex();
+            if (i <= 0) {
+                return;
             }
+            DefaultListModel<File> listModel = (DefaultListModel<File>)bookPathList.getModel();
+            File file = listModel.remove(i);
+            i = i - 1;
+            listModel.add(i, file);
+            bookPathList.setSelectedIndex(i);
+            changed = true;
         });
 
-        moveDownPathButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt)  {
-                if (bookPathList.getModel().getSize() < 2) { return; }
-                int i = bookPathList.getSelectedIndex();
-                if (i < 0 ) { return; }
-                DefaultListModel<File> listModel = (DefaultListModel<File>)bookPathList.getModel();
-                File file = listModel.remove(i);
-                if (i < bookPathList.getModel().getSize()) {
-                    listModel.add(i+1, file);
-                    i = i + 1;
-                } else {
-                    listModel.addElement(file);
-                    i = bookPathList.getModel().getSize() - 1;
-                }
-                bookPathList.setSelectedIndex(i);
+        moveDownPathButton.addActionListener((ActionEvent evt) -> {
+            if (bookPathList.getModel().getSize() < 2) { return; }
+            int i = bookPathList.getSelectedIndex();
+            if (i < 0 ) { return; }
+            DefaultListModel<File> listModel = (DefaultListModel<File>)bookPathList.getModel();
+            File file = listModel.remove(i);
+            if (i < bookPathList.getModel().getSize()) {
+                listModel.add(i+1, file);
+                i = i + 1;
+            } else {
+                listModel.addElement(file);
+                i = bookPathList.getModel().getSize() - 1;
             }
+            bookPathList.setSelectedIndex(i);
+            changed = true;
         });
 
-        browseDownloadPathButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                JFileChooser fc = IOUtilities.getFileChooser();
-                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int choice = fc.showOpenDialog(PathOptionsPanel.this);
-                if (choice != JFileChooser.APPROVE_OPTION) {
-                    return;
-                }
-                File file = fc.getSelectedFile();
-                downloadPathField.setText(file.getPath());
+        browseDownloadPathButton.addActionListener((ActionEvent evt) -> {
+            JFileChooser fc = IOUtilities.getFileChooser();
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int choice = fc.showOpenDialog(PathOptionsPanel.this);
+            if (choice != JFileChooser.APPROVE_OPTION) {
+                return;
             }
+            File file = fc.getSelectedFile();
+            downloadPathField.setText(file.getPath());
+            changed = true;
         });
     }
 
+    void update() {
+        updating = true;
+        
+        BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
+        File path = bookViewerOpts.getDownloadPath();
+        if (path != null) {
+            downloadPathField.setText(path.getPath());
+        }
+
+        File[] paths = bookViewerOpts.getBookPaths();
+        if (paths != null) {
+            DefaultListModel<File> model = (DefaultListModel<File>)bookPathList.getModel();
+            model.clear();
+            for (File filePath : paths) {
+                model.addElement(filePath);
+            }
+        }
+
+        // current config
+        refreshCurrentConfig();
+        
+        updating = false;
+        changed = false;
+    }
+
+    void applyChanges() {
+        BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
+
+        String path = downloadPathField.getText().trim();
+        if (path.length() > 0) {
+            bookViewerOpts.setDownloadPath(new File(path));
+        } else {
+            bookViewerOpts.setDownloadPath(null);
+        }
+
+        File[] paths = new File[bookPathList.getModel().getSize()];
+        for (int i=0; i < paths.length; i++) {
+            paths[i] = bookPathList.getModel().getElementAt(i);
+        }
+        if (paths.length > 0) {
+            bookViewerOpts.setBookPaths(paths);
+        } else {
+            bookViewerOpts.setBookPaths(null);
+        }
+
+        bookViewerOpts.store();
+        changed = false;
+    }
+
+    boolean isOptionsValid() {
+        return true;
+    }
+    
+    void cancel() {
+        // need not do anything special, if no changes have been persisted yet
+    }
+    
+    boolean isChanged() {
+        return changed;
+    }
+    
     protected void refreshCurrentConfig() {
         StringBuilder sb = new StringBuilder();
         File[] files = SwordBookPath.getSwordPath();

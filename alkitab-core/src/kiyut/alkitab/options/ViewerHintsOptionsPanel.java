@@ -15,11 +15,15 @@ import org.netbeans.spi.options.OptionsPanelController;
 )
 final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
 
-    private final ViewerHintsOptionsPanelController controller;
-    private ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    private final ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    
+    /** updating flag */
+    private boolean updating;
+    
+    /** changed flag */
+    private boolean changed;
 
-    ViewerHintsOptionsPanel(ViewerHintsOptionsPanelController controller) {
-        this.controller = controller;
+    ViewerHintsOptionsPanel() {
         initComponents();
         initCustom();
     }
@@ -163,68 +167,6 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    void load() {
-        ViewerHints<ViewerHints.Key,Object> hints = ViewerHintsOptions.getInstance().getViewerHints();
-        Object hintsVal;
-
-        hintsVal = hints.get(ViewerHints.NO_VERSE_NUMBERS);
-        noVNumCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.VERSE_NUMBERS);
-        boolean vNum = ((Boolean)hintsVal).booleanValue();
-        hintsVal = hints.get(ViewerHints.CHAPTER_VERSE_NUMBERS);
-        boolean cvNum = ((Boolean)hintsVal).booleanValue();
-
-        if (vNum) {
-            vNumRadioButton.setSelected(true);
-        } else {
-            if (cvNum) {
-                cvNumRadioButton.setSelected(true);
-            } else {
-                bcvNumRadioButton.setSelected(true);
-            }
-        }
-
-        hintsVal = hints.get(ViewerHints.TINY_VERSE_NUMBERS);
-        tinyVNumCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.START_VERSE_ON_NEWLINE);
-        vLineCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.HEADINGS);
-        headingsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.NOTES);
-        notesCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.STRONGS_NUMBERS);
-        strongsCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.MORPH);
-        morphCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.TOOLTIP_POPUP);
-        tooltipPopupCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-        hintsVal = hints.get(ViewerHints.XREF);
-        xRefCheckBox.setSelected(((Boolean)hintsVal).booleanValue());
-    }
-
-    void store() {
-        ViewerHintsOptions viewerHintsOpts = ViewerHintsOptions.getInstance();
-        ViewerHints<ViewerHints.Key,Object> hints = viewerHintsOpts.getViewerHints();
-        hints.put(ViewerHints.NO_VERSE_NUMBERS, noVNumCheckBox.isSelected());
-        hints.put(ViewerHints.VERSE_NUMBERS, vNumRadioButton.isSelected());
-        hints.put(ViewerHints.CHAPTER_VERSE_NUMBERS, cvNumRadioButton.isSelected());
-        hints.put(ViewerHints.BOOK_CHAPTER_VERSE_NUMBERS, bcvNumRadioButton.isSelected());
-        hints.put(ViewerHints.TINY_VERSE_NUMBERS, tinyVNumCheckBox.isSelected());
-        hints.put(ViewerHints.START_VERSE_ON_NEWLINE, vLineCheckBox.isSelected());
-        hints.put(ViewerHints.HEADINGS, headingsCheckBox.isSelected());
-        hints.put(ViewerHints.NOTES, notesCheckBox.isSelected());
-        hints.put(ViewerHints.STRONGS_NUMBERS, strongsCheckBox.isSelected());
-        hints.put(ViewerHints.MORPH, morphCheckBox.isSelected());
-        hints.put(ViewerHints.TOOLTIP_POPUP, tooltipPopupCheckBox.isSelected());
-        hints.put(ViewerHints.XREF, xRefCheckBox.isSelected());
-
-        viewerHintsOpts.store();
-    }
-
-    boolean valid() {
-        return true;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton bcvNumRadioButton;
     private javax.swing.JRadioButton cvNumRadioButton;
@@ -245,13 +187,111 @@ final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initCustom() {
-        noVNumCheckBox.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent evt) {
-                boolean sel = noVNumCheckBox.isSelected();
-                for (int i = 0; i < verseNumbersPane.getComponentCount(); i++) {
-                    verseNumbersPane.getComponent(i).setEnabled(!sel);
-                }
+        noVNumCheckBox.addItemListener((ItemEvent evt) -> {
+            boolean sel = noVNumCheckBox.isSelected();
+            for (int i = 0; i < verseNumbersPane.getComponentCount(); i++) {
+                verseNumbersPane.getComponent(i).setEnabled(!sel);
             }
         });
+        
+        // listener for tracking change
+        ItemListener listener = (ItemEvent evt) -> {
+            if (updating == false && changed == false) {
+                changed = true;
+            }
+        };
+        
+        noVNumCheckBox.addItemListener(listener);
+        vNumRadioButton.addItemListener(listener);
+        cvNumRadioButton.addItemListener(listener);
+        bcvNumRadioButton.addItemListener(listener);
+        
+        tinyVNumCheckBox.addItemListener(listener);
+        vLineCheckBox.addItemListener(listener);
+        headingsCheckBox.addItemListener(listener);
+        notesCheckBox.addItemListener(listener);
+        strongsCheckBox.addItemListener(listener);
+        morphCheckBox.addItemListener(listener);
+        tooltipPopupCheckBox.addItemListener(listener);
+        xRefCheckBox.addItemListener(listener);
+        
+        updating = false;
+        changed = false;
+    }
+    
+    void update() {
+        updating = true;
+        
+        ViewerHints<ViewerHints.Key,Object> hints = ViewerHintsOptions.getInstance().getViewerHints();
+        Object hintsVal;
+
+        hintsVal = hints.get(ViewerHints.NO_VERSE_NUMBERS);
+        noVNumCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.VERSE_NUMBERS);
+        boolean vNum = ((Boolean)hintsVal);
+        hintsVal = hints.get(ViewerHints.CHAPTER_VERSE_NUMBERS);
+        boolean cvNum = ((Boolean)hintsVal);
+
+        if (vNum) {
+            vNumRadioButton.setSelected(true);
+        } else {
+            if (cvNum) {
+                cvNumRadioButton.setSelected(true);
+            } else {
+                bcvNumRadioButton.setSelected(true);
+            }
+        }
+
+        hintsVal = hints.get(ViewerHints.TINY_VERSE_NUMBERS);
+        tinyVNumCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.START_VERSE_ON_NEWLINE);
+        vLineCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.HEADINGS);
+        headingsCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.NOTES);
+        notesCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.STRONGS_NUMBERS);
+        strongsCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.MORPH);
+        morphCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.TOOLTIP_POPUP);
+        tooltipPopupCheckBox.setSelected(((Boolean)hintsVal));
+        hintsVal = hints.get(ViewerHints.XREF);
+        xRefCheckBox.setSelected(((Boolean)hintsVal));
+        
+        updating = false;
+        changed = false;
+    }
+
+    void applyChanges() {
+        ViewerHintsOptions viewerHintsOpts = ViewerHintsOptions.getInstance();
+        ViewerHints<ViewerHints.Key,Object> hints = viewerHintsOpts.getViewerHints();
+        hints.put(ViewerHints.NO_VERSE_NUMBERS, noVNumCheckBox.isSelected());
+        hints.put(ViewerHints.VERSE_NUMBERS, vNumRadioButton.isSelected());
+        hints.put(ViewerHints.CHAPTER_VERSE_NUMBERS, cvNumRadioButton.isSelected());
+        hints.put(ViewerHints.BOOK_CHAPTER_VERSE_NUMBERS, bcvNumRadioButton.isSelected());
+        hints.put(ViewerHints.TINY_VERSE_NUMBERS, tinyVNumCheckBox.isSelected());
+        hints.put(ViewerHints.START_VERSE_ON_NEWLINE, vLineCheckBox.isSelected());
+        hints.put(ViewerHints.HEADINGS, headingsCheckBox.isSelected());
+        hints.put(ViewerHints.NOTES, notesCheckBox.isSelected());
+        hints.put(ViewerHints.STRONGS_NUMBERS, strongsCheckBox.isSelected());
+        hints.put(ViewerHints.MORPH, morphCheckBox.isSelected());
+        hints.put(ViewerHints.TOOLTIP_POPUP, tooltipPopupCheckBox.isSelected());
+        hints.put(ViewerHints.XREF, xRefCheckBox.isSelected());
+
+        viewerHintsOpts.store();
+        changed = false;
+    }
+    
+    boolean isOptionsValid() {
+        return true;
+    }
+    
+    void cancel() {
+        // need not do anything special, if no changes have been persisted yet
+    }
+    
+    boolean isChanged() {
+        return changed;
     }
 }

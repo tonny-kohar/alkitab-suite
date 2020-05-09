@@ -12,7 +12,7 @@ import org.crosswire.jsword.book.sword.SwordBookPath;
  * 
  */
 public final class BookViewerOptions extends AbstractOptions {
-    private static BookViewerOptions instance; // The single instance
+    private static final BookViewerOptions instance; // The single instance
     static {
         instance = new BookViewerOptions();
     }
@@ -161,8 +161,8 @@ public final class BookViewerOptions extends AbstractOptions {
                 prefs.remove(BOOK_PATHS);
             } else {
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < bookPaths.length; i++) {
-                    sb.append(bookPaths[i].getPath()).append(File.pathSeparator);
+                for (File bookPath : bookPaths) {
+                    sb.append(bookPath.getPath()).append(File.pathSeparator);
                 }
                 sb.deleteCharAt(sb.length() - 1);
                 prefs.put(BOOK_PATHS, sb.toString());
@@ -199,8 +199,9 @@ public final class BookViewerOptions extends AbstractOptions {
         return this.parallelBookLimit;
     }
     
-    /** Set default search limit. Zero (0) is unlimited 
-     * @param limit int specifiy the limit
+    /** 
+     * Set default search limit. Zero (0) is unlimited 
+     * @param limit int specify the limit
      */
     public void setDefaultSearchLimit(int limit) {
         if (limit < 0) {
@@ -213,25 +214,31 @@ public final class BookViewerOptions extends AbstractOptions {
         firePropertyChange(DEFAULT_SEARCH_LIMIT, old, this.defaultSearchLimit);
     }
     
-    /** Return default search limit. Zero (0) is unlimited */
+    /** 
+     * Return default search limit. Zero (0) is unlimited
+     * @return default search limit
+     */
     public int getDefaultSearchLimit() {
         return this.defaultSearchLimit;
     }
     
-    /** Set verses display limit. Zero (0) is unlimited 
-     * @param limit int specifiy the limit*/
+    /** 
+     * Set verses display limit. Zero (0) is unlimited 
+     * @param limit int specify the limit*/
     public void setVersesLimit(int limit) {
         if (limit < 0) {
             throw new IllegalArgumentException("negative limit is not allowed");
         }
-
 
         int old = this.versesLimit;
         this.versesLimit = limit;
         firePropertyChange(VERSES_LIMIT, old, this.versesLimit);
     }
     
-    /** Return verses display limit. Zero (0) is unlimited */
+    /** 
+     * Return verses display limit. Zero (0) is unlimited
+     * @return verses display limit
+     */
     public int getVersesLimit() {
         return this.versesLimit;
     }
@@ -316,7 +323,10 @@ public final class BookViewerOptions extends AbstractOptions {
         return this.bookPaths;
     }
 
-    /** if set to null means use default */
+    /** 
+     * if set to null means use default
+     * @param color Color or null
+     */
     public void setBackground(Color color) {
         Color old = this.background;
         this.background = color;

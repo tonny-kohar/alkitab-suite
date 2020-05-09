@@ -38,19 +38,21 @@ import org.netbeans.spi.options.OptionsPanelController;
 )
 final class GeneralOptionsPanel extends javax.swing.JPanel {
 
-    private final GeneralOptionsPanelController controller;
-    private ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
+    private final ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
 
     private static final Color LIGHT_YELLOW = OptionsUtilities.stringToColor("#FFFFE1");
     private static final Color LIGHT_WHITE = OptionsUtilities.stringToColor("#F5F5F5");
     private static final Color LIGHT_GRAY = OptionsUtilities.stringToColor("#EBEBEB");
 
     private Color customBackground;
-    private boolean isRefreshing;
+    
+    /** updating flag */
+    private boolean updating;
+    
+    /** changed flag */
+    private boolean changed;
 
-
-    GeneralOptionsPanel(GeneralOptionsPanelController controller) {
-        this.controller = controller;
+    GeneralOptionsPanel() {
         initComponents();
         initCustom();
     }
@@ -394,10 +396,10 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initCustom() {
-        fontComboBox.setModel(new DefaultComboBoxModel<String>());
-        defaultBibleComboBox.setModel(new DefaultComboBoxModel<String>());
-        defaultDictionaryComboBox.setModel(new DefaultComboBoxModel<String>());
-        defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel<String>());
+        fontComboBox.setModel(new DefaultComboBoxModel<>());
+        defaultBibleComboBox.setModel(new DefaultComboBoxModel<>());
+        defaultDictionaryComboBox.setModel(new DefaultComboBoxModel<>());
+        defaultDailyDevotionsComboBox.setModel(new DefaultComboBoxModel<>());
 
         fontSizeComboBox.setPrototypeDisplayValue("99"); //NOI18N
         defaultBibleComboBox.setPrototypeDisplayValue("KJV - King James Version (1769) ..."); //NOI18N
@@ -421,16 +423,39 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
             }
         });
 
-        backgroundCombo.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent evt) {
-                backgroundComboItemStateChanged(evt);
-            }
+        backgroundCombo.addItemListener((ItemEvent evt) -> {
+            backgroundComboItemStateChanged(evt);
         });
+        
+        // listener for tracking change
+        ItemListener listener = (ItemEvent evt) -> {
+            if (updating == false && changed == false) {
+                changed = true;
+            }
+        };
+        
+        parallelBookLimitComboBox.addItemListener(listener);
+        versesPerTabComboBox.addItemListener(listener);
+        defaultSearchLimitComboBox.addItemListener(listener);
+        
+        fontComboBox.addItemListener(listener);
+        fontSizeComboBox.addItemListener(listener);
+        fontBoldCheckBox.addItemListener(listener);
+        fontItalicCheckBox.addItemListener(listener);
+
+        defaultBibleComboBox.addItemListener(listener);
+        defaultDictionaryComboBox.addItemListener(listener);
+        defaultDailyDevotionsComboBox.addItemListener(listener);
+        defaultGreekStrongsComboBox.addItemListener(listener);
+        defaultHebrewStrongsComboBox.addItemListener(listener);
+        defaultGreekMorphComboBox.addItemListener(listener);
+        
+        updating = false;
+        changed = false;
     }
 
-    void load() {
-        isRefreshing = true;
+    void update() {
+        updating = true;
         BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
 
         parallelBookLimitComboBox.setSelectedItem(Integer.toString(bookViewerOpts.getParallelBookLimit()));
@@ -465,10 +490,11 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         setDefaultBookComboBox(defaultHebrewStrongsComboBox, bookViewerOpts.getDefaultHebrewStrongs());
         setDefaultBookComboBox(defaultGreekMorphComboBox, bookViewerOpts.getDefaultGreekMorph());
 
-        isRefreshing = false;
+        updating = false;
+        changed = false;
     }
 
-    void store() {
+    void applyChanges() {
         BookViewerOptions bookViewerOpts = BookViewerOptions.getInstance();
         bookViewerOpts.setParallelBookLimit(Integer.parseInt(parallelBookLimitComboBox.getSelectedItem().toString()));
         bookViewerOpts.setVersesLimit(Integer.parseInt(versesPerTabComboBox.getSelectedItem().toString()));
@@ -561,10 +587,19 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         //System.out.println(fontDefs + "   TEST ONLY");
 
         bookViewerOpts.store();
+        changed = true;
     }
 
-    boolean valid() {
+    boolean isOptionsValid() {
         return true;
+    }
+    
+    void cancel() {
+        // need not do anything special, if no changes have been persisted yet
+    }
+    
+    boolean isChanged() {
+        return changed;
     }
 
     /** Refresh available fonts */
@@ -581,8 +616,8 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         model.addElement(SeparatorComboBox.DEFAULT_SEPARATOR);
 
         String fontList[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        for ( int i = 0; i < fontList.length; i++ ) {
-            model.addElement(fontList[i]);
+        for (String fontString : fontList) {
+            model.addElement(fontString);
         }
     }
 
@@ -657,11 +692,12 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
      private void backgroundComboItemStateChanged(ItemEvent evt) {
          if (evt.getStateChange() == ItemEvent.DESELECTED) { return; }
 
-         if (isRefreshing) { return; }
+         if (updating) { return; }
 
          // not custom background color
          if (backgroundCombo.getSelectedIndex() != 4) { return; }
          
          customBackground = JColorChooser.showDialog(this, "Choose Color", customBackground);
+         changed = true;
     }
 }

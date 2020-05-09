@@ -18,7 +18,7 @@ public abstract class AbstractOptions implements Options {
     protected static String DEFAULT_NODE_NAME = "prefs";
     protected String nodeName = null;
 
-    private EventListenerList listenerList;
+    protected EventListenerList listenerList;
 
     public AbstractOptions() {
         listenerList = new EventListenerList();
