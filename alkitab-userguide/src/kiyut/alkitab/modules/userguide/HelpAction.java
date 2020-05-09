@@ -3,6 +3,7 @@
 package kiyut.alkitab.modules.userguide;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.net.URL;
@@ -86,8 +87,15 @@ public class HelpAction extends AbstractAction {
             helpBroker.setSize(new Dimension(1024, 700));
         }
         
+        // center location
+        int w = helpBroker.getSize().width;
+        int h = helpBroker.getSize().height;
+        int x = (d.width-w)/2;
+        int y = (d.height-h)/2;
+        helpBroker.setLocation(new Point(x,y));
+        
         helpBroker.initPresentation();
         //helpBroker.setDisplayed(true);
-        //helpBroker.setViewDisplayed(true);
+        //helpBroker.setViewDisplayed(true);        
     }
 }
