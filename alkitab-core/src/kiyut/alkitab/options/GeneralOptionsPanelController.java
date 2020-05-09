@@ -9,6 +9,12 @@ import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
+@OptionsPanelController.SubRegistration(
+    location = "BookViewer",
+    displayName="kiyut.alkitab.options.GeneralOptionsPanel#DisplayName",
+    keywords="kiyut.alkitab.options.GeneralOptionsPanel#Keywords",
+    keywordsCategory="BookViewer/General"    
+)
 public final class GeneralOptionsPanelController extends OptionsPanelController {
 
     private GeneralOptionsPanel panel;

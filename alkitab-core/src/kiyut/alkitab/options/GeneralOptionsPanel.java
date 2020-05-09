@@ -29,7 +29,13 @@ import kiyut.swing.combo.SeparatorComboBox;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
+import org.netbeans.spi.options.OptionsPanelController;
 
+@OptionsPanelController.Keywords(
+    location="BookViewer",
+    tabTitle="kiyut.alkitab.options.GeneralOptionsPanel#DisplayName",
+    keywords={"kiyut.alkitab.options.GeneralOptionsPanel#Keywords"}    
+)
 final class GeneralOptionsPanel extends javax.swing.JPanel {
 
     private final GeneralOptionsPanelController controller;

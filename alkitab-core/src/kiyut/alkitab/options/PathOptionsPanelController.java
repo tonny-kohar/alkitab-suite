@@ -4,12 +4,17 @@ package kiyut.alkitab.options;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
+@OptionsPanelController.SubRegistration(
+    location="BookViewer",
+    displayName="kiyut.alkitab.options.PathOptionsPanel#DisplayName",
+    keywords="kiyut.alkitab.options.PathOptionsPanel#Keywords",
+    keywordsCategory="BookViewer/Path"
+)
 public final class PathOptionsPanelController extends OptionsPanelController {
 
     private PathOptionsPanel panel;

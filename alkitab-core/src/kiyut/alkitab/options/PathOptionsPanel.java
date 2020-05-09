@@ -14,7 +14,13 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kiyut.alkitab.util.IOUtilities;
 import org.crosswire.jsword.book.sword.SwordBookPath;
+import org.netbeans.spi.options.OptionsPanelController;
 
+@OptionsPanelController.Keywords(
+    location="BookViewer",
+    tabTitle="kiyut.alkitab.options.PathOptionsPanel#DisplayName",
+    keywords={"kiyut.alkitab.options.PathOptionsPanel#Keywords"}    
+)
 final class PathOptionsPanel extends javax.swing.JPanel {
 
     private final PathOptionsPanelController controller;

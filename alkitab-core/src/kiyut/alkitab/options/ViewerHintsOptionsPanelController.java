@@ -9,6 +9,12 @@ import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
+@OptionsPanelController.SubRegistration(
+    location="BookViewer",
+    displayName="kiyut.alkitab.options.ViewerHintsOptionsPanel#DisplayName",
+    keywords="kiyut.alkitab.options.ViewerHintsOptionsPanel#Keywords",
+    keywordsCategory="BookViewer/ViewerHints"
+)
 public final class ViewerHintsOptionsPanelController extends OptionsPanelController {
 
     private ViewerHintsOptionsPanel panel;

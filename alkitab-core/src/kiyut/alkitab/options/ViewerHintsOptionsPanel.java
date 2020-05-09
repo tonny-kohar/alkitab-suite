@@ -6,7 +6,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ResourceBundle;
 import kiyut.alkitab.bookviewer.ViewerHints;
+import org.netbeans.spi.options.OptionsPanelController;
 
+@OptionsPanelController.Keywords(
+    location="BookViewer",
+    tabTitle="kiyut.alkitab.options.ViewerHintsOptionsPanel#DisplayName",
+    keywords={"kiyut.alkitab.options.ViewerHintsOptionsPanel#Keywords"}    
+)
 final class ViewerHintsOptionsPanel extends javax.swing.JPanel {
 
     private final ViewerHintsOptionsPanelController controller;
