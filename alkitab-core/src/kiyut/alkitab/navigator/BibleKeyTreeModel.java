@@ -88,6 +88,7 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
     /** Recursive build this model 
      * @param node the {@code KeyTreeNode}
      * @param level one of the: LEVEL_BOOK, LEVEL_CHAPTER, LEVEL_VERSE
+     * @throws org.crosswire.jsword.passage.NoSuchVerseException
      */
     protected void buildModel(DefaultKeyTreeNode node, int level) throws NoSuchVerseException {
         if (maxLevel < level) {
@@ -154,7 +155,8 @@ public class BibleKeyTreeModel extends DefaultTreeModel implements KeyTreeModel 
 
     
     
-    /** Set the filter based on b index 1-66, default is display all books.
+    /** 
+     * Set the filter based on b index 1-66, default is display all books.
      * @param begin begin index
      * @param end end index
      */

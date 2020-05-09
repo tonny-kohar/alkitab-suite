@@ -54,11 +54,8 @@ public class BookNavigatorPane extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     protected void initCustom() {
-        treeSelectionListener = new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent evt) {
-                keyValueChanged(evt);
-            }
+        treeSelectionListener = (TreeSelectionEvent evt) -> {
+            keyValueChanged(evt);
         };
     }
 

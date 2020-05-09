@@ -48,6 +48,7 @@ import org.crosswire.jsword.passage.RestrictionType;
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which able to display parallel book
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
@@ -351,99 +352,75 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         searchGoButton.setMargin(insets);
         advancedSearchButton.setMargin(insets);
         
-        addBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                addBook(null);
-                reload();
-            }
+        addBookButton.addActionListener((ActionEvent evt) -> {
+            addBook(null);
+            reload();
         });
         
-        removeBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                removeBook(booksComboPane.getComponentCount()-1);
-                reload();
-            }
+        removeBookButton.addActionListener((ActionEvent evt) -> {
+            removeBook(booksComboPane.getComponentCount()-1);
+            reload();
         });
         
-        bookComboActionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                Object comboBox = evt.getSource();
-                int index = -1;
-                for (int i = 0; i < booksComboPane.getComponentCount(); i++) {
-                    if (comboBox.equals(booksComboPane.getComponent(i))) {
-                        index = i;
-                        break;
-                    }
+        bookComboActionListener = (ActionEvent evt) -> {
+            Object comboBox = evt.getSource();
+            int index = -1;
+            for (int i = 0; i < booksComboPane.getComponentCount(); i++) {
+                if (comboBox.equals(booksComboPane.getComponent(i))) {
+                    index = i;
+                    break;
                 }
-                if (index == -1) {
-                    return;
-                }
-
-                String bookName = ((JComboBox)comboBox).getSelectedItem().toString();
-                setBook(index, bookName);
-                reload();
             }
+            if (index == -1) {
+                return;
+            }
+            
+            String bookName = ((JComboBox)comboBox).getSelectedItem().toString();
+            setBook(index, bookName);
+            reload();
         };
         
-        compareCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                compareView(compareCheckBox.isSelected());
-                reload();
-            }
+        compareCheckBox.addActionListener((ActionEvent evt) -> {
+            compareView(compareCheckBox.isSelected());
+            reload();
         });
         
-        passageChooserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PassageChooser passageChooser = new PassageChooser();
-                passageChooser.setPassage(passageTextArea.getText());
-                int choice = passageChooser.showDialog(ParallelBookViewerPane.this);
-                if (choice != JOptionPane.OK_OPTION) {
-                    return;
-                }
-                Key key = passageChooser.getKey();
-                viewPassage(key);
-                //setKey(key);
-                //refresh();
+        passageChooserButton.addActionListener((ActionEvent evt) -> {
+            PassageChooser passageChooser = new PassageChooser();
+            passageChooser.setPassage(passageTextArea.getText());
+            int choice = passageChooser.showDialog(ParallelBookViewerPane.this);
+            if (choice != JOptionPane.OK_OPTION) {
+                return;
             }
+            Key key = passageChooser.getKey();
+            viewPassage(key);
+            //setKey(key);
+            //refresh();
         });
         
-        passageGoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                String str = passageTextArea.getText();
-                viewPassage(str);
-                //setKey(str);
-                //refresh();
-            }
+        passageGoButton.addActionListener((ActionEvent evt) -> {
+            String str = passageTextArea.getText();
+            viewPassage(str);
+            //setKey(str);
+            //refresh();
         });
         
-        advancedSearchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SearchPane searchPane = new SearchPane();
-                searchPane.setRanked(false);
-                searchPane.setSearchLimit(BookViewerOptions.getInstance().getDefaultSearchLimit());
-                int choice = searchPane.showDialog(ParallelBookViewerPane.this);
-                if (choice != JOptionPane.OK_OPTION) {
-                    return;
-                }
-                boolean ranked = searchPane.isRanked();
-                int searchLimit = searchPane.getSearchLimit();
-                searchTextArea.setText(searchPane.getSearchString());
-                search(searchTextArea.getText(),ranked,searchLimit);
+        advancedSearchButton.addActionListener((ActionEvent evt) -> {
+            SearchPane searchPane1 = new SearchPane();
+            searchPane1.setRanked(false);
+            searchPane1.setSearchLimit(BookViewerOptions.getInstance().getDefaultSearchLimit());
+            int choice = searchPane1.showDialog(ParallelBookViewerPane.this);
+            if (choice != JOptionPane.OK_OPTION) {
+                return;
             }
+            boolean ranked = searchPane1.isRanked();
+            int searchLimit = searchPane1.getSearchLimit();
+            searchTextArea.setText(searchPane1.getSearchString());
+            search(searchTextArea.getText(),ranked,searchLimit);
         });
         
-        searchGoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                search(searchTextArea.getText());
-            }
+        searchGoButton.addActionListener((ActionEvent evt) -> {
+            search(searchTextArea.getText());
         });
         
         passageTextArea.addKeyListener(new KeyAdapter() {
@@ -492,21 +469,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             }
         });
         
-        indexButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                List<Book> books = bookRenderer.getBooks();
-                if (!books.isEmpty()) {
-                    Indexer.getInstance().createIndex(books.get(0),true);
-                }
+        indexButton.addActionListener((ActionEvent evt) -> {
+            List<Book> books = bookRenderer.getBooks();
+            if (!books.isEmpty()) {
+                Indexer.getInstance().createIndex(books.get(0),true);
             }
         });
 
-        indexChangeListener = new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent evt) {
-                checkIndexStatus();
-            }
+        indexChangeListener = (ChangeEvent evt) -> {
+            checkIndexStatus();
         };
         
         Indexer.getInstance().addChangeListener(indexChangeListener);
@@ -620,7 +591,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         reload();
     }
     
-    /** Add Book
+    /** 
+     * Add Book
      * @param bookName Book Initials or Book Name
      */
     public void addBook(String bookName) {
@@ -663,7 +635,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         fireBookChange(new BookChangeEvent(this));
     }
 
-    /** This is only called if it is the first book displayed and have not specified
+    /** 
+     * This is only called if it is the first book displayed and have not specified
      * any key to be displayed. Try to display something eg: display Gen 1 for bible or commentary
      * @param book Book
      */
@@ -704,8 +677,9 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         setKey(initialKey);
     }
     
-    /** Remove book at particular index.
-     *  It do nothing if there is only one book left
+    /** 
+     * Remove book at particular index.
+     * It do nothing if there is only one book left
      * @param index index at which the specified book is to be removed.
      * @throws ArrayIndexOutOfBoundsException - if the index value does not exist.
      */
@@ -734,7 +708,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
     }
     
-    /** Replaces book at particular index
+    /** 
+     * Replaces book at particular index
      * @param index index at which the specified book is to be replaced.
      * @param bookName Book Initials or Book Name
      */
@@ -815,7 +790,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
     }
 
-    /** Return {@code true} or {@code false}
+    /** 
+     * Return {@code true} or {@code false}
      * @return {@code true} or {@code false}
      */
     @Override
@@ -823,7 +799,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         return bookRenderer.isCompareView();
     }
 
-    /** This only set the search field with the param and do nothing aka
+    /** 
+     * This only set the search field with the param and do nothing aka
      * does not perform searching. If you want actual search call #search(String) instead.
      * It is only used for persisting the session.
      * @param searchString the search text
@@ -980,7 +957,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         reload();
     }
     
-    /** Expand/Widen currently displayed passage by
+    /** 
+     * Expand/Widen currently displayed passage by
      * @param by The number of verses/keys to widen by
      * @param restrict The RestrictionType
      */
@@ -1026,7 +1004,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         searchTextArea.requestFocusInWindow();
     }
 
-    /** Display the specified passage
+    /** 
+     * Display the specified passage
      * @param key the passage key to display
      * @see #viewPassage(String)
      */
@@ -1035,7 +1014,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         reload();
     }
 
-    /** Display the specified passage
+    /** 
+     * Display the specified passage
      * @param passage the passage to display
      * @see #viewPassage(Key)
      */
@@ -1044,7 +1024,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         reload();
     }
 
-    /** Search the specified String which is not ranked
+    /** 
+     * Search the specified String which is not ranked
      * @param searchString String to search
      * @see #search(String,boolean,int)
      */
@@ -1052,7 +1033,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         search(searchString,false,BookViewerOptions.getInstance().getDefaultSearchLimit());
     }
     
-    /** Search the specified String
+    /** 
+     * Search the specified String
      * @param searchString String to search
      * @param ranked true or false
      * @param searchLimit only applicable if ranked is true
@@ -1083,7 +1065,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         DefaultSearchModifier modifier = new DefaultSearchModifier();
         modifier.setRanked(ranked);
         
-        Key results = null;
+        Key results;
         
         try {
             results =  books.get(0).find(new DefaultSearchRequest(searchString, modifier));

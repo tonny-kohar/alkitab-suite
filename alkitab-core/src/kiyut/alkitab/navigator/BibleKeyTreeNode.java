@@ -48,9 +48,10 @@ public class BibleKeyTreeNode extends DefaultKeyTreeNode {
         return toString();
     }
 
-    /** {@inheritDoc}
-     * If in the constructor param name is specified,
-     * this will return that param name instead
+    /** 
+     * {@inheritDoc}
+     * If in the constructor parameter name is specified,
+     * this will return that parameter name instead
      */
     @Override
     public String toString() {

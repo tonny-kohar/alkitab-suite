@@ -9,6 +9,7 @@ import kiyut.alkitab.bookviewer.ViewerHints;
 /**
  * Implementation of ViewerHintsOptions
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public final class ViewerHintsOptions extends AbstractOptions {
 

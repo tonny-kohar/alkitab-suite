@@ -50,7 +50,8 @@ public class SwordUtilities {
         return scheme;
     }
     
-    /** Return the previous key in the sequence order 
+    /** 
+     * Return the previous key in the sequence order 
      * @param key the {@code Key}
      * @return previous key or null
      */
@@ -70,7 +71,8 @@ public class SwordUtilities {
         return prevKey;
     }
     
-    /** Return the next key in the sequence order 
+    /** 
+     * Return the next key in the sequence order 
      * @param key the {@code Key}
      * @return next key or null
      */
@@ -110,7 +112,8 @@ public class SwordUtilities {
         return nextKey;
     }
     
-    /** Return the previous sibling key under the same parent
+    /** 
+     * Return the previous sibling key under the same parent
      * @param key the {@code Key}
      * @return sibling key or null
      */
@@ -135,7 +138,8 @@ public class SwordUtilities {
         return siblingKey;
     }
     
-    /** Return the next sibling key under the same parent
+    /** 
+     * Return the next sibling key under the same parent
      * @param key the {@code Key}
      * @return sibling key or null
      */

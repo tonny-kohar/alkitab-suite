@@ -86,26 +86,23 @@ public final class BookNavigatorTopComponent extends TopComponent {
 
     @Override
     public void componentActivated() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (!displayUpdated) {
-                    if (bookViewer == null) {
-                        // special case only when loading from TopComponent persistence
-                        // and this got the focus (activated) from previous session.
-                        Mode mode = WindowManager.getDefault().findMode("editor"); //NOI18N
-                        if (mode != null) {
-                            TopComponent selectedTC = mode.getSelectedTopComponent();
-                            if (selectedTC != null && selectedTC instanceof BookViewerTopComponent) {
-                                BookViewerTopComponent tc = (BookViewerTopComponent) selectedTC;
-                                bookViewer = tc.getBookViewer();
-                                registerBookViewer(bookViewer);
-                                return;
-                            }
+        SwingUtilities.invokeLater(() -> {
+            if (!displayUpdated) {
+                if (bookViewer == null) {
+                    // special case only when loading from TopComponent persistence
+                    // and this got the focus (activated) from previous session.
+                    Mode mode = WindowManager.getDefault().findMode("editor"); //NOI18N
+                    if (mode != null) {
+                        TopComponent selectedTC = mode.getSelectedTopComponent();
+                        if (selectedTC != null && selectedTC instanceof BookViewerTopComponent) {
+                            BookViewerTopComponent tc = (BookViewerTopComponent) selectedTC;
+                            bookViewer = tc.getBookViewer();
+                            registerBookViewer(bookViewer);
+                            return;
                         }
                     }
-                    updateDisplay();
                 }
+                updateDisplay();
             }
         });
     }
@@ -116,30 +113,23 @@ public final class BookNavigatorTopComponent extends TopComponent {
     }
 
     private void initCustom() {
-        navigatorMap = new HashMap<BookViewer,BookNavigatorPane>();
+        navigatorMap = new HashMap<>();
         
-        tcPropertyChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                Object obj = evt.getNewValue();
-                if (!(obj instanceof BookViewerTopComponent)) {
-                    return;
-                }
-
-                String propName = evt.getPropertyName();
-                if (propName.equals(TopComponent.Registry.PROP_TC_CLOSED)) {
-                    BookViewerTopComponent tc = (BookViewerTopComponent)obj;
-                    BookViewer bookViewer = tc.getBookViewer();
-                    unregisterBookViewer(bookViewer);
-                } 
+        tcPropertyChangeListener = (PropertyChangeEvent evt) -> {
+            Object obj = evt.getNewValue();
+            if (!(obj instanceof BookViewerTopComponent)) {
+                return;
+            }
+            String propName = evt.getPropertyName();
+            if (propName.equals(TopComponent.Registry.PROP_TC_CLOSED)) {
+                BookViewerTopComponent tc = (BookViewerTopComponent)obj;
+                BookViewer bookViewer1 = tc.getBookViewer();
+                unregisterBookViewer(bookViewer1); 
             }
         };
         
-        bookViewerLookupListener = new LookupListener() {
-            @Override
-            public void resultChanged(LookupEvent lookupEvent) {
-                bookViewerLookupListenerResultChanged(lookupEvent);
-            }
+        bookViewerLookupListener = (LookupEvent lookupEvent) -> {
+            bookViewerLookupListenerResultChanged(lookupEvent);
         };
 
         result = Utilities.actionsGlobalContext().lookupResult(BookViewer.class);
@@ -162,13 +152,10 @@ public final class BookNavigatorTopComponent extends TopComponent {
     }
     
     private synchronized void registerBookViewer(final BookViewer bookViewer) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (bookViewer == null) { return; }
-                registerBookViewerImpl(bookViewer);
-                updateDisplay();
-            }
+        SwingUtilities.invokeLater(() -> {
+            if (bookViewer == null) { return; }
+            registerBookViewerImpl(bookViewer);
+            updateDisplay();
         });
     }
     

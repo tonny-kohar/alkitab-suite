@@ -26,7 +26,7 @@ public class BookViewerHistory implements History {
         this.key = key;
         this.search = search;
 
-        keyList = new ArrayList<Key>();
+        keyList = new ArrayList<>();
         index = 0;
 
         if (key instanceof Passage) {

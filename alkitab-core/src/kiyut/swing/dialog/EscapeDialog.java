@@ -15,7 +15,7 @@ import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 /**
- * {@code JDialog} which is closeable by pressing ESC key
+ * {@code JDialog} which is closable by pressing ESC key
  *
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */

@@ -7,8 +7,9 @@ import kiyut.alkitab.bookviewer.event.BookChangeEvent;
 import kiyut.alkitab.bookviewer.event.BookChangeListener;
 
 /**
- * Abstract implementaion of {@link kiyut.alkitab.api.BookViewer BookViewer} 
+ * Abstract implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} 
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public abstract class AbstractBookViewerPane extends JPanel implements BookViewer {
 
@@ -50,8 +51,10 @@ public abstract class AbstractBookViewerPane extends JPanel implements BookViewe
         listenerList.remove(BookChangeListener.class, listener);
     }
     
-    /** Notifies all listeners that have registered interest for notification on this event type.
-     * @param event the event */
+    /** 
+     * Notifies all listeners that have registered interest for notification on this event type.
+     * @param event the event 
+     */
     protected void fireBookChange(BookChangeEvent event) {
         if (event == null) {
             throw new IllegalArgumentException("argument event should not be null");

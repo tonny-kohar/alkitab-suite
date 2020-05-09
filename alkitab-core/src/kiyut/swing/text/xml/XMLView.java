@@ -3,6 +3,7 @@
 package kiyut.swing.text.xml;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Shape;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -28,6 +29,8 @@ public class XMLView extends PlainView {
     
     /**
      * Construct a simple colorized view of XML text.
+     * @param context
+     * @param elem
      */
     public XMLView(XMLContext context, Element elem) {
         super(elem);
@@ -44,7 +47,7 @@ public class XMLView extends PlainView {
     }
     
     @Override
-    protected int drawUnselectedText(Graphics g, int x, int y, int p0, int p1) throws BadLocationException {
+    protected float drawUnselectedText(Graphics2D g, float x, float y, int p0, int p1) throws BadLocationException {
         XMLDocument doc = (XMLDocument)getDocument();
         XMLToken token = doc.getScannerStart(p0);
         
@@ -92,7 +95,8 @@ public class XMLView extends PlainView {
         return x;
     }
     
-    /** Overriden to handle multi line node
+    /** 
+     * override to handle multi line node
      * {@inheritDoc}
      */
     @Override

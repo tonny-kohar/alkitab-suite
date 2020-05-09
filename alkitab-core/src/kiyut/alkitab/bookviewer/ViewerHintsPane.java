@@ -5,7 +5,6 @@ package kiyut.alkitab.bookviewer;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -174,19 +173,17 @@ public class ViewerHintsPane extends javax.swing.JPanel {
 
     
     protected void initCustom() {
-        noVNumCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent evt) {
-                boolean sel = noVNumCheckBox.isSelected();
-                for (int i = 0; i < verseNumbersPane.getComponentCount(); i++) {
-                    verseNumbersPane.getComponent(i).setEnabled(!sel);
-                }
+        noVNumCheckBox.addItemListener((ItemEvent evt) -> {
+            boolean sel = noVNumCheckBox.isSelected();
+            for (int i = 0; i < verseNumbersPane.getComponentCount(); i++) {
+                verseNumbersPane.getComponent(i).setEnabled(!sel);
             }
         });
     }
     
     /** Show as Dialog 
      * @param parentComponent {@code Component}
+     * @return JOptionPane options
      */
     public int showDialog(Component parentComponent) {
         JPanel pane = new JPanel();

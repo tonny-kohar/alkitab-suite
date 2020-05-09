@@ -128,21 +128,14 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         
         bookViewerNode = new BookViewerNode(bookViewer);
         
-        bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                String name = (String)evt.getNewValue();
-                setName(name);
-                setToolTipText(name);
-            }
+        bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, (PropertyChangeEvent evt) -> {
+            String name1 = (String)evt.getNewValue();
+            setName(name1);
+            setToolTipText(name1);
         });
         
-        bookViewer.addHyperlinkListener(new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent evt) {
-                SingleBookTopComponent.this.hyperlinkUpdate(evt);
-                
-            }
+        bookViewer.addHyperlinkListener((HyperlinkEvent evt) -> {
+            SingleBookTopComponent.this.hyperlinkUpdate(evt);
         });
         
         ActionMap actionMap = getActionMap();
@@ -232,5 +225,4 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
             bookViewer.reload();
         }
     }
-
 }

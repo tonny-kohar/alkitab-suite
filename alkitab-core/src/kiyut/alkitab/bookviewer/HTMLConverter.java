@@ -12,6 +12,7 @@ import org.openide.modules.InstalledFileLocator;
 /**
  * Simple Swing-HTML stylesheet converter
  *
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class HTMLConverter implements Converter {
 

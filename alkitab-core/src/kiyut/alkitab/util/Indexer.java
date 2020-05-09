@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -46,7 +45,7 @@ import org.openide.windows.WindowManager;
  */
 public final class Indexer {
 
-    private static Indexer instance; // The single instance
+    private static final Indexer instance; // The single instance
     static {
         instance = new Indexer();
     }
@@ -96,7 +95,8 @@ public final class Indexer {
         }
     }
 
-    /** Create index for the specified books for category Bible and Commentary only.
+    /** 
+     * Create index for the specified books for category Bible and Commentary only.
      * It will indexing the books which does not have index yet. 
      * It is the same as createIndex(books,false)
      * @param books List of Books to be indexed
@@ -106,7 +106,8 @@ public final class Indexer {
         createIndex(books, false);
     }
 
-    /** Create index for the specified books for category Bible and Commentary only.
+    /** 
+     * Create index for the specified books for category Bible and Commentary only.
      * It will indexing/re-indexing the books. This methods also block the GUI using SwingFX
      * @param books List of Books to be indexed
      * @param reindex flag for reindex
@@ -134,7 +135,7 @@ public final class Indexer {
      *  @see #createIndex(List, boolean)
      */
     public void createIndex(Book book, boolean reindex) {
-        List<Book> books = new ArrayList<Book>(1);
+        List<Book> books = new ArrayList<>(1);
         books.add(book);
 
         IndexerProgress progress = new IndexerProgress();
@@ -145,7 +146,7 @@ public final class Indexer {
         IndexManagerFactory.getIndexManager().deleteIndex(book);
     }
 
-    /** Implementaation of indexing progress using SwingFX */
+    /** Implementation of indexing progress using SwingFX */
     class IndexerProgress {
 
         private PerformanceCancelableProgressPanel progressPane;
@@ -164,12 +165,11 @@ public final class Indexer {
         private double textY;
 
         public IndexerProgress() {
-            indexJobs = Collections.synchronizedList(new ArrayList<Progress>());
+            indexJobs = Collections.synchronizedList(new ArrayList<>());
             workListener = createWorkListener();
             JobManager.addWorkListener(workListener);
 
             progressAdapter = new CancelableProgessAdapter(null) {
-
                 @Override
                 public void paintSubComponents(double maxY) {
                     // XXX workaround for PerformanceProgressPanel drawTextAt, because it does not write text
@@ -225,11 +225,8 @@ public final class Indexer {
                 progressPane.setFont(font.deriveFont(font.getSize2D() + 2));
             }
 
-            progressPane.addCancelListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent evt) {
-                    cancelIndexing();
-                }
+            progressPane.addCancelListener((ActionEvent evt) -> {
+                cancelIndexing();
             });
         }
 
@@ -253,7 +250,7 @@ public final class Indexer {
 
         /** Filter the book that meet criteria */
         private List<Book> filterBooks(List<Book> books, boolean reindex) {
-            List<Book> list = new ArrayList<Book>();
+            List<Book> list = new ArrayList<>();
 
             for (int i = 0; i < books.size(); i++) {
                 Book book = books.get(i);
@@ -268,25 +265,22 @@ public final class Indexer {
         }
 
         private synchronized void show() {
-            Runnable runner = new Runnable() {
-
-                public void run() {
-                    Frame mainWindow = WindowManager.getDefault().getMainWindow();
-                    if (mainWindow instanceof JFrame) {
-                        JFrame owner = (JFrame) mainWindow;
-                        rootPane = owner.getRootPane();
-                        origGlassPane = owner.getGlassPane();
-                        rootPane.setGlassPane(progressPane);
-                        rootPane.revalidate();
-                    }
-
-                    progressPane.setText("Indexing");
-
-                    progressAdapter.setAdaptee(progressPane);
-                    progressPane.setVisible(true);
-                    displayed = true;
-                    //System.out.println("show");
+            Runnable runner = () -> {
+                Frame mainWindow = WindowManager.getDefault().getMainWindow();
+                if (mainWindow instanceof JFrame) {
+                    JFrame owner = (JFrame) mainWindow;
+                    rootPane = owner.getRootPane();
+                    origGlassPane = owner.getGlassPane();
+                    rootPane.setGlassPane(progressPane);
+                    rootPane.revalidate();
                 }
+                
+                progressPane.setText("Indexing");
+                
+                progressAdapter.setAdaptee(progressPane);
+                progressPane.setVisible(true);
+                displayed = true;
+                //System.out.println("show");
             };
 
             if (SwingUtilities.isEventDispatchThread()) {
@@ -297,25 +291,22 @@ public final class Indexer {
         }
 
         private synchronized void hide() {
-            Runnable runner = new Runnable() {
-
-                public void run() {
-                    //progressPane.stop();
-                    progressPane.setVisible(false);  // for PerformanceCancellableProgressPanel
-
-                    if (rootPane != null && origGlassPane != null) {
-                        rootPane.setGlassPane(origGlassPane);
-                    }
-
-                    if (workListener != null) {
-                        JobManager.removeWorkListener(workListener);
-                        workListener = null;
-                    }
-
-                    displayed = false;
-                    fireStateChanged();
-                    //System.out.println("hide");
+            Runnable runner = () -> {
+                //progressPane.stop();
+                progressPane.setVisible(false);  // for PerformanceCancellableProgressPanel
+                
+                if (rootPane != null && origGlassPane != null) {
+                    rootPane.setGlassPane(origGlassPane);
                 }
+                
+                if (workListener != null) {
+                    JobManager.removeWorkListener(workListener);
+                    workListener = null;
+                }
+                
+                displayed = false;
+                fireStateChanged();
+                //System.out.println("hide");
             };
 
             if (SwingUtilities.isEventDispatchThread()) {
@@ -327,6 +318,7 @@ public final class Indexer {
 
         private WorkListener createWorkListener() {
             WorkListener listener = new WorkListener() {
+                @Override
                 public void workProgressed(WorkEvent evt) {
                     synchronized (indexJobs) {
                         Progress job = evt.getJob();
@@ -357,6 +349,7 @@ public final class Indexer {
                     }
                 }
 
+                @Override
                 public void workStateChanged(WorkEvent evt) {
                     // do nothing
                 }

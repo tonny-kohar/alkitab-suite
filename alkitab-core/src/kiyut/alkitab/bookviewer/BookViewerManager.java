@@ -8,7 +8,6 @@ import kiyut.alkitab.options.BookViewerOptions;
 import org.crosswire.jsword.passage.Key;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
 import org.openide.util.lookup.Lookups;
 
 /**
@@ -17,11 +16,12 @@ import org.openide.util.lookup.Lookups;
  * You can register your implementation by using @ServiceProvider annotation 
  * with path=&quot;Alkitab/BookViewProvider&quot;
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public final class BookViewerManager {
 
     /** The single instance */
-    private static BookViewerManager instance;
+    private static final BookViewerManager instance;
     static {
         instance = new BookViewerManager();
     }
@@ -38,8 +38,7 @@ public final class BookViewerManager {
     private boolean synchronizeInProgress;
     
     /**
-     * Returns the single instance. 
-     *
+     * Returns the single instance.      *
      * @return The single instance.
      */
     public static BookViewerManager getInstance() {
@@ -52,12 +51,9 @@ public final class BookViewerManager {
         //Lookup.Result<BookViewProvider> result = Lookup.getDefault().lookupResult(BookViewerProvider.class);
         setBookViewerProvider(result.allInstances()); // needed to tell Nb that it is processed
         
-        result.addLookupListener(new LookupListener() {
-            @Override
-            public void resultChanged(LookupEvent evt) {
-                Collection<? extends BookViewerProvider> c = result.allInstances();
-                setBookViewerProvider(c);
-            }
+        result.addLookupListener((LookupEvent evt) -> {
+            Collection<? extends BookViewerProvider> c = result.allInstances();
+            setBookViewerProvider(c);
         });
 
         // load from options, regarding synchronizeView
@@ -73,7 +69,8 @@ public final class BookViewerManager {
         }
     }
     
-    /** Open URI with newView is false
+    /** 
+     * Open URI with newView is false
      * @param uri {@link SwordURI} to be opened
      * @see #openURI(SwordURI,String,boolean)
      */
@@ -81,7 +78,8 @@ public final class BookViewerManager {
         openURI(uri,null, false);
     }
     
-     /** Open URI
+     /** 
+      * Open URI
       * @param uri {@link SwordURI} to be opened
       * @param info optional additional info eg: search term, etc
       * @param newView only Hints indicating it will be opened in new view or replace existing view
@@ -100,7 +98,8 @@ public final class BookViewerManager {
         BookViewerOptions.getInstance().setSynchronizeView(this.synchronizeView);
     }
 
-    /** Return key or null 
+    /** 
+     * Return key or null 
      * @return key or null
      */
     public Key getSynchronizeKey() {
@@ -110,7 +109,8 @@ public final class BookViewerManager {
         return synchronizeKey;
     }
 
-    /** Synchronize all available view to display the same key.
+    /** 
+     * Synchronize all available view to display the same key.
      * The real process is depend on the isSynchronizeView(),
      * if it is false do nothing
      * @param key the Key to be displayed in all available view

@@ -18,7 +18,8 @@ import org.crosswire.jsword.passage.RestrictionType;
  */
 public interface HistoryManager {
     
-    /** Returns the maximum number of histories this HistoryManager will hold. 
+    /** 
+     * Returns the maximum number of histories this HistoryManager will hold. 
      * Default value is 100.
      * @return maximum number of histories
      * @see #setLimit(int) 
@@ -32,12 +33,14 @@ public interface HistoryManager {
      */
     public void setLimit(int limit);
     
-    /** Add history.
+    /** 
+     * Add history.
      * @param history {@link History}
      */
     public void add(History history);
 
-    /** Expand / blur the current history by.
+    /** 
+     * Expand / blur the current history by.
      * The result will be automatically managed by this HistoryManager
      * by creating a new entry for the current and move the existing to back list
      * <strong>note: </strong> only applicable to verse/passage key type

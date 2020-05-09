@@ -46,7 +46,7 @@ public class XMLEditorKit extends DefaultEditorKit {
         return context;
     }
     
-    /** Overriden to set the JEditorPane font to match with the XMLContext
+    /** Override to set the JEditorPane font to match with the XMLContext
      * {@inheritDoc}
      */
     @Override
@@ -92,9 +92,10 @@ public class XMLEditorKit extends DefaultEditorKit {
      */
     protected class XMLViewFactory implements ViewFactory {
         // Creates the XML View.
+        @Override
         public View create(Element elem) {
             XMLView view = new XMLView(context,elem);
-            view.setTabSize(4);;
+            view.setTabSize(4);
             return view;
         }
     }

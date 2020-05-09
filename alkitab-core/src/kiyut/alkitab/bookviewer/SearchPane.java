@@ -5,7 +5,6 @@ package kiyut.alkitab.bookviewer;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
@@ -15,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import kiyut.alkitab.options.BookViewerOptions;
@@ -285,73 +283,58 @@ public class SearchPane extends javax.swing.JPanel {
             searchLimitSlider.setValue(limit);
         }
                 
-        rankedCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                ranked = rankedCheckBox.isSelected();
-                searchLimitSlider.setVisible(ranked);
-                searchLimit = searchLimitSlider.getValue();
-                pack();
-            }
+        rankedCheckBox.addActionListener((ActionEvent evt) -> {
+            ranked = rankedCheckBox.isSelected();
+            searchLimitSlider.setVisible(ranked);
+            searchLimit = searchLimitSlider.getValue();
+            pack();
         });
         
-        searchLimitSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent evt) {
-                JSlider slider = (JSlider) evt.getSource();
-                if (slider.getValueIsAdjusting()) {
-                    return;
-                }
-                int val = slider.getValue();
-                searchLimit = val;
+        searchLimitSlider.addChangeListener((ChangeEvent evt) -> {
+            JSlider slider = (JSlider) evt.getSource();
+            if (slider.getValueIsAdjusting()) {
+                return;
             }
+            int val = slider.getValue();
+            searchLimit = val;
         });
         
         String[] presets = bundle.getString("Range.Preset").split("\\|");
         rangeComboBox.setModel(new DefaultComboBoxModel<String>(presets));
         
-        rangeCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                boolean checked = rangeCheckBox.isSelected();
-                rangePane.setVisible(checked);
-                pack();
-            }
+        rangeCheckBox.addActionListener((ActionEvent evt) -> {
+            boolean checked = rangeCheckBox.isSelected();
+            rangePane.setVisible(checked);
+            pack();
         });
         
-        rangeComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                JComboBox<String> comboBox = rangeComboBox;
-                int index = comboBox.getSelectedIndex();
-                if (index <= 0) {
-                    return;
-                }
-                
-                String preset = comboBox.getSelectedItem().toString();
-                int start = preset.indexOf("(");
-                int end = preset.indexOf(")");
-                if (start < 0 || end < 0) {
-                    return;
-                }
-                String includes = preset.substring(start+1, end);
-                rangeIncludesField.setText(includes);
+        rangeComboBox.addActionListener((ActionEvent evt) -> {
+            JComboBox<String> comboBox = rangeComboBox;
+            int index = comboBox.getSelectedIndex();
+            if (index <= 0) {
+                return;
             }
+            
+            String preset = comboBox.getSelectedItem().toString();
+            int start = preset.indexOf("(");
+            int end = preset.indexOf(")");
+            if (start < 0 || end < 0) {
+                return;
+            }
+            String includes = preset.substring(start+1, end);
+            rangeIncludesField.setText(includes);
         });
         
-        rangeIncludesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PassageChooser passageChooser = new PassageChooser();
-                passageChooser.setPassage(rangeIncludesField.getText());
-                int choice = passageChooser.showDialog(SearchPane.this);
-                if (choice != JOptionPane.OK_OPTION) {
-                    return;
-                }
-                rangeIncludesField.setText(passageChooser.getKey().toString());
-                if (rangeComboBox.getSelectedIndex() != 0) {
-                    rangeComboBox.setSelectedIndex(0);
-                }
+        rangeIncludesButton.addActionListener((ActionEvent e) -> {
+            PassageChooser passageChooser = new PassageChooser();
+            passageChooser.setPassage(rangeIncludesField.getText());
+            int choice = passageChooser.showDialog(SearchPane.this);
+            if (choice != JOptionPane.OK_OPTION) {
+                return;
+            }
+            rangeIncludesField.setText(passageChooser.getKey().toString());
+            if (rangeComboBox.getSelectedIndex() != 0) {
+                rangeComboBox.setSelectedIndex(0);
             }
         });
         
@@ -365,13 +348,10 @@ public class SearchPane extends javax.swing.JPanel {
             }
         });
         
-        syntaxCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                boolean checked = syntaxCheckBox.isSelected();
-                syntaxScrollPane.setVisible(checked);
-                pack();
-            }
+        syntaxCheckBox.addActionListener((ActionEvent evt) -> {
+            boolean checked = syntaxCheckBox.isSelected();
+            syntaxScrollPane.setVisible(checked);
+            pack();
         });
         
         DocumentListener docListener = new DocumentListener() {
@@ -407,8 +387,10 @@ public class SearchPane extends javax.swing.JPanel {
         }
     }
     
-    /** Show as Dialog 
+    /** 
+     * Show as Dialog 
      * @param parentComponent {@code Component}
+     * @return JOptionPane options
      */
     public int showDialog(Component parentComponent) {
         int choice = JOptionPane.showConfirmDialog(parentComponent,this,bundle.getString("CTL_Title.Text"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -428,14 +410,16 @@ public class SearchPane extends javax.swing.JPanel {
         // TODO not implmented yet; 
     }
     
-    /** Return search string. Delegated into {@link #createSearchString()}
+    /** 
+     * Return search string. Delegated into {@link #createSearchString()}
      * @return {@code String}
      */
     public String getSearchString() {
         return createSearchString();
     }
     
-    /** Set ranked or prioritized search
+    /** 
+     * Set ranked or prioritized search
      * @param ranked {@code true} or {@code false}
      */
     public void setRanked(boolean ranked) {

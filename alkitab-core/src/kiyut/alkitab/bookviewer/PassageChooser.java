@@ -268,11 +268,8 @@ public class PassageChooser extends javax.swing.JPanel {
             }
         });
         
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removePassage();
-            }
+        removeButton.addActionListener((ActionEvent evt) -> {
+            removePassage();
         });
     }
     

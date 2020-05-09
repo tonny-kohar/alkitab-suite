@@ -10,9 +10,9 @@ import org.openide.util.lookup.InstanceContent;
 /**
  * <strong>Note:</strong> This is Netbeans Platform RCP specific API implementation
  * 
- * It is just simple Node wrapper for BookViewer. Anything is handled by {@link BookViewer} <br/>
+ * It is just simple Node wrapper for BookViewer. Anything is handled by {@link BookViewer} <br>
  * Alternative architecture is this BookViewerNode handle JSword Book rather than BookViewer.
- * The drawback is the API will be very thight with Netbeans Platform RCP, but more integrated into
+ * The drawback is the API will be very tight with Netbeans Platform RCP, but more integrated into
  * Netbeans Platform.
  * 
  * So which one to choose ? Currently it is using the first approach.

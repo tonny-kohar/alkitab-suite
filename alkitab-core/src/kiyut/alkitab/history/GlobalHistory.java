@@ -175,7 +175,8 @@ public class GlobalHistory {
         
     }
 
-    /** Add the passed text into text.
+    /** 
+     * Add the passed text into text.
      * @param text the passage as String
      * @see #add(String,String)
      */
@@ -183,7 +184,8 @@ public class GlobalHistory {
         add(text, null);
     }
 
-    /** Add the passed text and search into text
+    /** 
+     * Add the passed text and search into text
      * @param text the passage as String
      * @param search the search String or {@code null}
      */
@@ -272,9 +274,9 @@ public class GlobalHistory {
 
 
     public class Entry {
-        private long millis;
-        private String text;
-        private String search;
+        protected long millis;
+        protected String text;
+        protected String search;
 
         public Entry(long millis, String text, String search) {
             this.millis = millis;

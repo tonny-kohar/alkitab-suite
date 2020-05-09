@@ -10,7 +10,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
 
 
-/** Collection of I/O Utilities
+/** 
+ * Collection of I/O Utilities
  *
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
@@ -21,9 +22,10 @@ public class IOUtilities {
         throw new Error("IOUtilities is a utility class for static methods"); // NOI18N
     }
     
-    /** Return JFileChooser that remember the last opened directory based on
+    /** 
+     * Return JFileChooser that remember the last opened directory based on
      * {@code System.getProperty("user.dir")} value
-     *@return {@code JFileChooser}
+     * @return {@code JFileChooser}
      */
     public static JFileChooser getFileChooser() {
         //String def = System.getProperty("user.home");
@@ -35,9 +37,10 @@ public class IOUtilities {
         return fc;
     }
     
-    /** Convenience methods to set user's current working directory 
+    /** 
+     * Convenience methods to set user's current working directory 
      * aka {@code System.getProperty("user.dir")}.
-     * If the param is not a directory it will look for the contained directory, 
+     * If the parameter is not a directory it will look for the contained directory, 
      * if null set as {@code FileSystemView.getFileSystemView().getDefaultDirectory()},
      * otherwise just set as it is. 
      * @param file {@code File}
@@ -63,7 +66,8 @@ public class IOUtilities {
         }
     }
     
-    /** Return a new instance of FileFilter preconfigured for Zip file
+    /** 
+     * Return a new instance of FileFilter preconfigured for Zip file
      * @return FileFilter
      */
     public static FileFilter getZipFileFilter() {

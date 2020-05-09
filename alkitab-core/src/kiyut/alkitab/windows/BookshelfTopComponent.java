@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -196,25 +195,22 @@ public final class BookshelfTopComponent extends TopComponent {
             }
         });
 
-        booksTree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent evt) {
-                if (selectedBook != null) {
-                    content.remove(selectedBook);
-                    selectedBook = null;
-                }
-                
-                TreePath treePath = evt.getPath();
-                if (treePath == null) {
-                    return;
-                }
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
-
-                Object obj = node.getUserObject();
-                if (obj instanceof Book) {
-                    selectedBook = (Book)obj;
-                    content.add(selectedBook);
-                }
+        booksTree.getSelectionModel().addTreeSelectionListener((TreeSelectionEvent evt) -> {
+            if (selectedBook != null) {
+                content.remove(selectedBook);
+                selectedBook = null;
+            }
+            
+            TreePath treePath = evt.getPath();
+            if (treePath == null) {
+                return;
+            }
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) treePath.getLastPathComponent();
+            
+            Object obj = node.getUserObject();
+            if (obj instanceof Book) {
+                selectedBook = (Book)obj;
+                content.add(selectedBook);
             }
         });
     }

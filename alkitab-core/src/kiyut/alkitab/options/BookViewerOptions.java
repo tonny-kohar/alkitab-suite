@@ -10,6 +10,7 @@ import org.crosswire.jsword.book.sword.SwordBookPath;
 /**
  * Implementation of Book Viewer Options
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public final class BookViewerOptions extends AbstractOptions {
     private static final BookViewerOptions instance; // The single instance

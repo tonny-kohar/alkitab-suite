@@ -130,17 +130,13 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             GlobalHistory.Entry entry = GlobalHistory.getInstance().getHistory(index);
             if (entry != null ) {
-                String display = null;
                 if (entry.getSearch() != null) {
-                    display = "search: " + entry.getSearch() + " (" + entry.getText() + ")";
+                    value = "search: " + entry.getSearch() + " (" + entry.getText() + ")";
                 } else {
-                    display = entry.getText();
+                    value = entry.getText();
                 }
-                value = display;
             }
             return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         }
-
     }
-
 }

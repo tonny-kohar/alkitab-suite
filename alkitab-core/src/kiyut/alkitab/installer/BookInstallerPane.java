@@ -8,7 +8,6 @@ import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -207,34 +206,26 @@ public class BookInstallerPane extends javax.swing.JPanel {
             model.addElement(paths[i]);
         }
         
-        srcBrowseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                File file = showFileChooser();
-                if (file == null) { return; }
-                srcField.setText(file.toString());
+        srcBrowseButton.addActionListener((ActionEvent evt) -> {
+            File file = showFileChooser();
+            if (file == null) { return; }
+            srcField.setText(file.toString());
+        });
+        
+        installButton.addActionListener((ActionEvent evt) -> {
+            installBook();
+        });
+        
+        closeButton.addActionListener((ActionEvent evt) -> {
+            Component comp = SwingUtilities.getWindowAncestor(BookInstallerPane.this);
+            if (comp != null) {
+                comp.setVisible(false);
             }
-        });
-        
-        installButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent evt)  {
-               installBook();
-           }
-        });
-        
-        closeButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent evt)  {
-               Component comp = SwingUtilities.getWindowAncestor(BookInstallerPane.this);
-               if (comp != null) {
-                   comp.setVisible(false);
-               }
-           }
         });
     }
     
-    /** Show as Dialog and handle the installation
+    /** 
+     * Show as Dialog and handle the installation
      * @param owner {@code Component}
      */
     public void showDialog(Component owner) {
@@ -269,14 +260,15 @@ public class BookInstallerPane extends javax.swing.JPanel {
     }
     
     /** 
-     * Return whether any book is installed sucessfully during the dialog shown.
+     * Return whether any book is installed successfully during the dialog shown.
      * @return true or false
      */
     public boolean isBookInstalled() {
         return bookInstalled;
     }
     
-    /** Display JFileChooser
+    /** 
+     * Display JFileChooser
      * @return the selected file or null
      */
     protected File showFileChooser() {
@@ -295,7 +287,8 @@ public class BookInstallerPane extends javax.swing.JPanel {
         return file;
     }
     
-    /** Return source file (zip file of raw books)
+    /** 
+     * Return source file (zip file of raw books)
      * @return file or null
      */
     public File getSourceFile() {
@@ -306,7 +299,8 @@ public class BookInstallerPane extends javax.swing.JPanel {
         return file;
     }
     
-    /** Return destination folder (sword path to install the raw zip to)
+    /** 
+     * Return destination folder (sword path to install the raw zip to)
      * @return file or null
      */
     public File getDestinationFile() {
@@ -315,32 +309,28 @@ public class BookInstallerPane extends javax.swing.JPanel {
     
     /** Install or extracting the book raw zip file */
     protected void installBook() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Cursor cursor = getCursor();
-                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                installButton.setEnabled(false);
-                closeButton.setEnabled(false);
-                updateProgress(null);
-                try {
-                    boolean valid = validateInstall();
-                    if (!valid) {
-                        return;
-                    }
-                    
-                    extractZip();
-                    JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InstallFinish.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.INFORMATION_MESSAGE);
-                    srcField.setText(null);
-                    bookInstalled = true;
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(BookInstallerPane.this, ex.getLocalizedMessage(), bundle.getString("CTL_Title.Text"), JOptionPane.ERROR_MESSAGE);
-                } finally {
-                    updateProgress(null);
-                    installButton.setEnabled(true);
-                    closeButton.setEnabled(true);
-                    setCursor(cursor);
+        SwingUtilities.invokeLater(() -> {
+            Cursor cursor1 = getCursor();
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            installButton.setEnabled(false);
+            closeButton.setEnabled(false);
+            updateProgress(null);
+            try {
+                boolean valid1 = validateInstall();
+                if (!valid1) {
+                    return;
                 }
+                extractZip();
+                JOptionPane.showMessageDialog(BookInstallerPane.this, bundle.getString("MSG_InstallFinish.Text"), bundle.getString("CTL_Title.Text"), JOptionPane.INFORMATION_MESSAGE);
+                srcField.setText(null);
+                bookInstalled = true;
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(BookInstallerPane.this, ex.getLocalizedMessage(), bundle.getString("CTL_Title.Text"), JOptionPane.ERROR_MESSAGE);
+            } finally {
+                updateProgress(null);
+                installButton.setEnabled(true);
+                closeButton.setEnabled(true);
+                setCursor(cursor1);
             }
         });
     }
@@ -406,7 +396,9 @@ public class BookInstallerPane extends javax.swing.JPanel {
         return true;
     }
     
-    /** Install or extracting the book raw zip file */
+    /** Install or extracting the book raw zip file
+     * @throws java.io.IOException 
+     */
     protected void extractZip() throws IOException {
         File srcFile = getSourceFile();
         File dstFile = getDestinationFile();

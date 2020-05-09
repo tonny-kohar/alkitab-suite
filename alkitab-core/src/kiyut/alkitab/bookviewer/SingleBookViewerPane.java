@@ -21,6 +21,7 @@ import org.crosswire.jsword.passage.Key;
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which display single book
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class SingleBookViewerPane extends AbstractBookViewerPane {
 

@@ -110,7 +110,6 @@ public class SeparatorComboBox extends JComboBox<String> {
                     return separatorComp;
                 }
             }
-            
             return wrapped.getListCellRendererComponent( list, value, index,isSelected, cellHasFocus );
         }
     }

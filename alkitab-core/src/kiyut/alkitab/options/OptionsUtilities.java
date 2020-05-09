@@ -6,7 +6,7 @@ import java.awt.Color;
 
 /**
  * Collections of Options Utilities
- * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com> * 
  */
 public class OptionsUtilities {
 
@@ -14,7 +14,8 @@ public class OptionsUtilities {
         throw new Error("OptionsUtilities is a utility class for static methods");
     }
 
-    /**Return Color from the supplied value string in hex format eg:#53F27C
+    /**
+     * Return Color from the supplied value string in hex format eg:#53F27C
      * @param value {@code String} that describe the Color
      * @return Color or null
      * @see #colorToString(Color)
@@ -23,7 +24,8 @@ public class OptionsUtilities {
         return hexStringToColor(value);
     }
 
-    /**Return Color from the supplied value string in hex format eg:#53F27C
+    /**
+     * Return Color from the supplied value string in hex format eg:#53F27C
      * @param value {@code String} that describe the Color
      * @param def the value to be returned in the event that this parsing fail for whatever reason
      * @return Color
@@ -39,7 +41,8 @@ public class OptionsUtilities {
         return def;
     }
 
-    /** Return string representative of the color in hex format eg:#53F27C
+    /** 
+     * Return string representative of the color in hex format eg:#53F27C
      * @param color {@code Color} to be converted
      * @return string representative of the color
      * @see #stringToColor(String)
@@ -48,12 +51,13 @@ public class OptionsUtilities {
         return toHexString(color);
     }
 
-    /** Return the hex string for the supplied{@code Color}
+    /** 
+     * Return the hex string for the supplied{@code Color}
      * @param color AWT{@code Color}
      * @return the hex string for the supplied{@code Color}
      */
     private static String toHexString(Color color) {
-        String str = null;
+        String str;
 
         try {
             str = "#";
@@ -73,15 +77,16 @@ public class OptionsUtilities {
         return str;
     }
 
-    /** Return the equivalent AWT{@code Color} of the supplied hexString in format eg #FF33D2
+    /** 
+     * Return the equivalent AWT{@code Color} of the supplied hexString in format eg #FF33D2
      * @param hexString Color in hexString format eg: #FF33D2
      * @return the AWT{@code Color}
      */
     private static Color hexStringToColor(String hexString) {
-        Color color = null;
-        int r = 0;
-        int g = 0;
-        int b = 0;
+        Color color;
+        int r;
+        int g;
+        int b;
 
         try {
             String tmpStr = hexString.substring(1,3);

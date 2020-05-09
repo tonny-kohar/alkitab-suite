@@ -19,7 +19,7 @@ public class ComponentOrientationSupport {
 
     /** 
      * Return component orientation base on the value of
-     * {@code System.getProperty("alkitab.orientation")} <br/>
+     * {@code System.getProperty("alkitab.orientation")} <br>
      * If it is not specified it will return ComponentOrientation.LEFT_TO_RIGHT
      * Possible value are:
      * <code>
@@ -45,7 +45,8 @@ public class ComponentOrientationSupport {
         return orient;
     }
 
-    /** Apply the getComponentOrientation to the specified container
+    /** 
+     * Apply the getComponentOrientation to the specified container
      * @param container Container
      */
     public static void applyComponentOrientation(Container container) {

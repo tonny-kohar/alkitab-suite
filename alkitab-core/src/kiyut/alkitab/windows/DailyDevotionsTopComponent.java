@@ -5,7 +5,6 @@ package kiyut.alkitab.windows;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +77,7 @@ public final class DailyDevotionsTopComponent extends TopComponent {
     
     @Override
     public javax.swing.Action[] getActions() {
-        List<Action> actionList = new ArrayList<Action>();
+        List<Action> actionList = new ArrayList<>();
         
         // add 
         actionList.add(new ViewSourceAction());
@@ -90,26 +89,20 @@ public final class DailyDevotionsTopComponent extends TopComponent {
     
     private void initCustom() {
         tabbedPane = TabbedPaneFactory.createCloseButtonTabbedPane();
-        tabbedPane.addPropertyChangeListener( TabbedPaneFactory.PROP_CLOSE, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                JTabbedPane pane = (JTabbedPane)evt.getSource();
-                Object obj = evt.getNewValue();
-                if (obj == null || !(obj instanceof DailyDevotionPane)) {
-                    return;
-                }
-                DailyDevotionPane dailyPane = (DailyDevotionPane)obj;
-                dailyPane.removeHyperlinkListener(hyperlinkListener);
-                pane.remove(dailyPane);
+        tabbedPane.addPropertyChangeListener(TabbedPaneFactory.PROP_CLOSE, (PropertyChangeEvent evt) -> {
+            JTabbedPane pane = (JTabbedPane)evt.getSource();
+            Object obj = evt.getNewValue();
+            if (obj == null || !(obj instanceof DailyDevotionPane)) {
+                return;
             }
+            DailyDevotionPane dailyPane = (DailyDevotionPane)obj;
+            dailyPane.removeHyperlinkListener(hyperlinkListener);
+            pane.remove(dailyPane);
         });
         this.add(BorderLayout.CENTER, tabbedPane);
         
-        hyperlinkListener = new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent evt) {
-                DailyDevotionsTopComponent.this.hyperlinkUpdate(evt);
-            }
+        hyperlinkListener = (HyperlinkEvent evt) -> {
+            DailyDevotionsTopComponent.this.hyperlinkUpdate(evt);
         };
         
         // this part make the loading slower

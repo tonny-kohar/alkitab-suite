@@ -132,6 +132,7 @@ public class SourceViewerPane extends javax.swing.JPanel {
     
     /** Show as Dialog 
      * @param owner {@code Component}
+     * @param modal true or false
      */
     public void showDialog(Component owner, boolean modal) {
         JDialog dialog = null;
@@ -146,6 +147,8 @@ public class SourceViewerPane extends javax.swing.JPanel {
             } else if (comp instanceof Dialog) {
                 dialog = new EscapeDialog((Dialog)comp, bundle.getString("CTL_Title.Text"), true);
             } 
+        } else {
+            return;
         }
         
         dialog.setLayout(new BorderLayout());
@@ -168,7 +171,8 @@ public class SourceViewerPane extends javax.swing.JPanel {
         }
     }
 
-    /** Init this component with the source text
+    /** 
+     * Init this component with the source text
      * @Deprecated replaced with #initSource(BookTextPane)
      */
     @SuppressWarnings("unchecked")
@@ -236,7 +240,7 @@ public class SourceViewerPane extends javax.swing.JPanel {
     public class ExtendedEditorPane extends JEditorPane {
 
         /**
-         * Overriden to add antialiasing
+         * Override to add antialiasing
          */
         @Override
         public void paintComponent(Graphics g) {

@@ -19,14 +19,12 @@ public class FontUtilities {
     
     /**
      * Convert a String to a Font. Accepts one of two inputs:
-     * FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or
-     * BOLDITALIC<br/>
-     * or<br/>
+     * FamilyName-STYLE-size, where STYLE is either PLAIN, BOLD, ITALIC or BOLDITALIC<br>
+     * or<br>
      * FamilyName,style,size, where STYLE is 0 for PLAIN, 1 for BOLD, 2 for
      * ITALIC or 3 for BOLDITALIC.
      * 
-     * @param value
-     *            the thing to convert
+     * @param value the thing to convert
      * @return the converted data
      */
     public static Font string2Font(String value) {
@@ -53,8 +51,7 @@ public class FontUtilities {
      * Convert a Font to a String. Produces a format that can be read with
      * <code>Font.decode(String)</code>.
      * 
-     * @param font
-     *            the thing to convert
+     * @param font the font to convert
      * @return the converted data
      */
     public static String font2String(Font font) {
@@ -77,10 +74,8 @@ public class FontUtilities {
      * Create a font just like the another with regard to style and size, but
      * differing in font family.
      * 
-     * @param fontspec
-     *            the font to model
-     * @param fontName
-     *            the font to use
+     * @param fontspec the font to model
+     * @param fontName the font to use
      * @return the font
      */
     public static Font deriveFont(String fontspec, String fontName) {

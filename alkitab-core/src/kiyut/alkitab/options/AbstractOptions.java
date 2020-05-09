@@ -12,7 +12,8 @@ import org.openide.util.NbPreferences;
  * Abstract Preferences Option. 
  * if nodeName is null, it will use DEFAULT_NODE_NAME
  * It is using {@code NbPreferences} as the backing store.
- *
+ * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public abstract class AbstractOptions implements Options {
     protected static String DEFAULT_NODE_NAME = "prefs";

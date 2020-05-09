@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * Options (Preferences) Interface
- * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public interface Options {
     

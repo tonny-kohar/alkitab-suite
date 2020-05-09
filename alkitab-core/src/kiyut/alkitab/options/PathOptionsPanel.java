@@ -4,7 +4,6 @@ package kiyut.alkitab.options;
 
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -372,8 +371,8 @@ final class PathOptionsPanel extends javax.swing.JPanel {
     protected void refreshCurrentConfig() {
         StringBuilder sb = new StringBuilder();
         File[] files = SwordBookPath.getSwordPath();
-        for (int i=0; i<files.length; i++) {
-            sb.append(files[i].toString()).append("\n");
+        for (File file : files) {
+            sb.append(file.toString()).append("\n");
         }
         currentConfigTextPane.setText(sb.toString());
     }

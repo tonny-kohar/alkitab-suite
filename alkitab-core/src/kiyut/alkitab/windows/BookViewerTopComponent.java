@@ -36,26 +36,21 @@ public abstract class BookViewerTopComponent extends TopComponent {
     public abstract void openURI(SwordURI uri, String info);
 
     public BookViewerTopComponent() {
-        backgroundPropertyChangeListener = new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (!evt.getPropertyName().equals(BookViewerOptions.BACKGROUND)) {
-                    return;
-                }
-                BookViewer bookViewer = getBookViewer();
-                if (bookViewer == null) {
-                    return;
-                }
-                /*Color bg = null;
-                if (evt.getNewValue() instanceof Color) {
-                    bg = (Color) evt.getNewValue();
-                }
-                bookViewer.getBookRenderer().getComponent().setBackground(bg);
-                */
-                bookViewer.reload();
-                
+        backgroundPropertyChangeListener = (PropertyChangeEvent evt) -> {
+            if (!evt.getPropertyName().equals(BookViewerOptions.BACKGROUND)) {
+                return;
             }
+            BookViewer bookViewer = getBookViewer();
+            if (bookViewer == null) {
+                return;
+            }
+            /*Color bg = null;
+            if (evt.getNewValue() instanceof Color) {
+            bg = (Color) evt.getNewValue();
+            }
+            bookViewer.getBookRenderer().getComponent().setBackground(bg);
+            */
+            bookViewer.reload();
         };
     }
 

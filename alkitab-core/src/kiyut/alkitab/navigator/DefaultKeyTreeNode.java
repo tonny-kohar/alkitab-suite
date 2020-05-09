@@ -21,6 +21,7 @@ public class DefaultKeyTreeNode extends DefaultMutableTreeNode implements KeyTre
         return userObject;
     }
     
+    @Override
     public boolean isKey() {
         if (userObject instanceof Key) {
             return true;
@@ -28,6 +29,7 @@ public class DefaultKeyTreeNode extends DefaultMutableTreeNode implements KeyTre
         return false;
     }
     
+    @Override
     public Key getKey() {
         if (isKey()) {
             return (Key)userObject;

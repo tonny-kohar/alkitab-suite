@@ -24,7 +24,8 @@ public class KeyListModel extends AbstractListModel<Key> {
         setKey(keyList);
     }
     
-    /** Set the this model backing data
+    /** 
+     * Set the this model backing data
      * @param keyList backing data for this model
      */
     public void setKey(Key keyList) {

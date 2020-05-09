@@ -12,7 +12,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.BooleanStateAction;
 
 /**
- * Action which could change the state of Synchonize View
+ * Action which could change the state of Synchronize View
  * 
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */

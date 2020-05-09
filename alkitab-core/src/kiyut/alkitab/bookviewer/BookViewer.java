@@ -19,32 +19,38 @@ public interface BookViewer {
     
     public static final String VIEWER_NAME = "ViewerName";
     
-    /** Return {@code BookRenderer} that acts as the viewer 
+    /** 
+     * Return {@code BookRenderer} that acts as the viewer 
      * @return {@code BookRenderer}
      */
     public BookRenderer getBookRenderer();
     
-    /** Return {@link java.util.Collections#unmodifiableList(List) unmodifiableList} of {@code Book}
+    /** 
+     * Return {@link java.util.Collections#unmodifiableList(List) unmodifiableList} of {@code Book}
      * @return unmodifiableList of {@code Book}
      */
     public List<Book> getBooks();
     
-    /** Return number of allowable books, useful for parallel view 
+    /** 
+     * Return number of allowable books, useful for parallel view 
      * @return number of allowable books
      */
     public int getMaximumBook();
     
-    /** Return the number of book currently hold
+    /** 
+     * Return the number of book currently hold
      * @return number of book
      */
     public int getBookCount();
     
-    /** Set {@code Key}
+    /** 
+     * Set {@code Key}
      * @param key the view key as string
      */
     public void setKey(Key key);
     
-    /** Return {@code Key}
+    /** 
+     * Return {@code Key}
      * @return {@code Key} or {@code null}
      */
     public Key getKey();
@@ -55,27 +61,33 @@ public interface BookViewer {
     /** Display the source (raw,OSIS,HTML) of the currently viewed book */
     public void viewSource();
     
-    /** Set the name */
+    /** 
+     * Set the name
+     * @param name the book name
+     */
     public void setName(String name);
         
     public void compareView(boolean compare);
     
     public boolean isCompareView();
     
-    /** Open the specified {@code SwordURI}
+    /** 
+     * Open the specified {@code SwordURI}
      * @param uri the {@code SwordURI} to be opened
      * @see #openURI(SwordURI,String)
      */
     public void openURI(SwordURI uri);
 
-    /** Open the specified {@code SwordURI}
+    /** 
+     * Open the specified {@code SwordURI}
      * @param uri the {@code SwordURI} to be opened
      * @param info optional additional info eg: search term, etc
      * @see #openURI(SwordURI)
      */
     public void openURI(SwordURI uri, String info);
     
-    /** Return {@link kiyut.alkitab.api.ViewerHints ViewerHints} used by this BookViewer.
+    /** 
+     * Return {@link kiyut.alkitab.api.ViewerHints ViewerHints} used by this BookViewer.<br>
      * This method should not return null, it could return empty {@link kiyut.alkitab.api.ViewerHints ViewerHints}
      * but not null
      * @return {@code ViewerHints}

@@ -19,12 +19,14 @@ public class DefaultKeyTreeModel extends DefaultTreeModel implements KeyTreeMode
         setRoot(rootNode);
     }
     
+    @Override
     public TreeCellRenderer getTreeCellRendererComponent() {
         return new DefaultKeyTreeCellRenderer();
     }
         
     /** Recursive build this model 
      * @param key the {@code Key}
+     * @return {@code DefaultKeyTreeNode}
      */
     protected DefaultKeyTreeNode buildModel(Key key) {
         DefaultKeyTreeNode node = new DefaultKeyTreeNode(key);

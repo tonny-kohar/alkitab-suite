@@ -28,6 +28,7 @@ public class BookshelfTree extends JTree {
     
     /** 
      * Convenience methods to set groupBy list
+     * @param groupBy
      * @see BookshelfTreeModel#setGroupBy(List)
      */
     public void setGroupBy(List<String> groupBy) {
@@ -36,6 +37,7 @@ public class BookshelfTree extends JTree {
     
     /** 
      * Convenience methods to get groupBy list
+     * @return list of groupBy
      * @see BookshelfTreeModel#getGroupBy()
      */
     public List<String> getGroupBy() {

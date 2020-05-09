@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
@@ -26,6 +25,7 @@ import org.openide.util.lookup.ServiceProvider;
  * Internally, it is using {@link javax.swing.PopupFactory PopupFactory}.
  * This implementation is sharing the popup. So only one popup can be displayed at a time.
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ServiceProvider(service=BookToolTip.class, path="Alkitab/BookToolTip")
 public class DefaultBookToolTip implements BookToolTip {

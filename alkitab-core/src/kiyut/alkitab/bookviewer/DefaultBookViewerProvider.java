@@ -3,7 +3,6 @@
 package kiyut.alkitab.bookviewer;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +21,7 @@ import org.openide.windows.WindowManager;
 /**
  * Default {@link kiyut.alkitab.api.BookViewerProvider BookViewerProvider} implementation
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com> * 
  */
 @ServiceProvider(service=BookViewerProvider.class, path="Alkitab/BookViewerProvider")
 public final class DefaultBookViewerProvider extends AbstractBookViewerProvider {
@@ -29,11 +29,8 @@ public final class DefaultBookViewerProvider extends AbstractBookViewerProvider 
     private BookViewerTopComponent bookViewerTC;
     
     public DefaultBookViewerProvider() {
-        TopComponent.getRegistry().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                bookViewerTopComponentPropertyChangeListener(evt);
-            }
+        TopComponent.getRegistry().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            bookViewerTopComponentPropertyChangeListener(evt);
         });
     }
     
@@ -124,11 +121,8 @@ public final class DefaultBookViewerProvider extends AbstractBookViewerProvider 
         
         final BookViewerTopComponent finalTC = tc;
         
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                finalTC.openURI(uri, info);
-            }
+        SwingUtilities.invokeLater(() -> {
+            finalTC.openURI(uri, info);
         });
     }
     
@@ -159,11 +153,8 @@ public final class DefaultBookViewerProvider extends AbstractBookViewerProvider 
         tc.open();
         tc.requestActive();
         
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                tc.openURI(uri, info);
-            }
+        SwingUtilities.invokeLater(() -> {
+            tc.openURI(uri, info);
         });
     }
 

@@ -315,7 +315,6 @@ public final class DefinitionsTopComponent extends TopComponent {
             
             BookViewerManager.getInstance().openURI(swordURI);
         } else if (eventType.equals(HyperlinkEvent.EventType.ENTERED)) {
-            //StatusDisplayer.getDefault().setStatusText(uri);
             StatusDisplayer.getDefault().setStatusText(swordURI.toString());
         }
     }

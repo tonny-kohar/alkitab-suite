@@ -16,7 +16,6 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
 import kiyut.alkitab.util.FontUtilities;
 import org.crosswire.common.xml.Converter;
@@ -32,6 +31,7 @@ import org.crosswire.jsword.passage.Key;
  * BookRenderer implementation that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit. 
  * This support parallel book.
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class TextPaneRenderer extends JTextPane implements BookRenderer {
 
@@ -56,12 +56,8 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
         books = new ArrayList<>();
         setEditable(false);
         setEditorKit(new HTMLEditorKit());
-        addHyperlinkListener(new HyperlinkListener() {
-
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent evt) {
-                TextPaneRenderer.this.hyperlinkUpdate(evt);
-            }
+        addHyperlinkListener((HyperlinkEvent evt) -> {
+            TextPaneRenderer.this.hyperlinkUpdate(evt);
         });
 
         setConverter(new HTMLConverter());
@@ -152,12 +148,8 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
     @Override
     public void reload(boolean invokeLater) {
         if (invokeLater) {
-            SwingUtilities.invokeLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    reloadImpl();
-                }
+            SwingUtilities.invokeLater(() -> {
+                reloadImpl();
             });
         } else {
             reloadImpl();

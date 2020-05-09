@@ -9,12 +9,12 @@ import kiyut.alkitab.util.SwordUtilities;
 import org.crosswire.jsword.book.Book;
 
 /**
- * Sword URI in the format<br/>
+ * Sword URI in the format<br>
  * [scheme://][path/][#]fragment
  * 
- * scheme = sword,bible,commentary,... <br/>
- * path = name of the book eg: KJV, ESV <br/>
- * fragment/Reference = the key eg: GEN 1 1<br/>
+ * scheme = sword,bible,commentary,... <br>
+ * path = name of the book eg: KJV, ESV <br>
+ * fragment/Reference = the key eg: GEN 1 1<br>
  * 
  * eg:
  * <pre>
@@ -31,7 +31,7 @@ import org.crosswire.jsword.book.Book;
  * </pre>
  * 
  * We know that Calvin Institute is not a bible category, it is a General Book category, as for now
- * the behaviour is unspecified (not forced by the API), do as you wish. However, it is recommended
+ * the behavior is unspecified (not forced by the API), do as you wish. However, it is recommended
  * to silently ignore by do not display anything, or show an error/message dialog
  * 
  * <strong>Important: </strong> this Sword URI spec is subject to change, it is not fixed yet
@@ -96,7 +96,6 @@ public class SwordURI {
         }
         
         //System.out.println(parts[0] + " " + type);
-        
     }
     
     public Type getType() {
@@ -126,8 +125,9 @@ public class SwordURI {
      * part[1] = path/book name part or empty string
      * part[2] = fragment/reference part or empty string
      * </pre>
-     * @return String[] of parts
-     * @throws {@code URISyntaxException} if parsing fail
+     * @param uri the URI
+     * @return String[] of parts   
+     * @throws java.net.URISyntaxException if parsing fail
      */
     public static String[] parseParts(String uri) throws URISyntaxException {
         String scheme = "";

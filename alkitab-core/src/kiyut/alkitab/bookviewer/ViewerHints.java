@@ -89,7 +89,8 @@ public class ViewerHints<K,V> extends HashMap<K,V> {
         return v;
     }
     
-    /** Update the supplied provider parameter, with this ViewerHints <br/>
+    /** 
+     * Update the supplied provider parameter, with this ViewerHints <br>
      * note: this does not handle FontStore
      * @param provider the {@code TransformingSAXEventProvider}
      */

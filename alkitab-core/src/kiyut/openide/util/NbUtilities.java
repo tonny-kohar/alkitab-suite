@@ -19,7 +19,7 @@ import org.openide.loaders.DataObject;
 import org.openide.util.actions.Presenter;
 
 /**
- * Collection of Netbean Platform or OpenIDE Utilities
+ * Collection of Netbeans Platform or OpenIDE Utilities
  * 
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */

@@ -196,29 +196,20 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
 
         bookViewerNode = new BookViewerNode(bookViewer);
 
-        bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    String name = (String) evt.getNewValue();
-                    setName(name);
-                    setToolTipText(name);
-                }
+        bookViewer.addPropertyChangeListener(BookViewer.VIEWER_NAME, (PropertyChangeEvent evt) -> {
+            String name1 = (String) evt.getNewValue();
+            setName(name1);
+            setToolTipText(name1);
         });
 
-        bookViewer.addHyperlinkListener(new HyperlinkListener() {
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent evt) {
-                ParallelBookTopComponent.this.hyperlinkUpdate(evt);
-            }
+        bookViewer.addHyperlinkListener((HyperlinkEvent evt) -> {
+            ParallelBookTopComponent.this.hyperlinkUpdate(evt);
         });
         
         linkToolTipLocation = new Point();
 
-        linkToolTipTimer = new Timer(500, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                showToolTip(linkToolTipSwordURI);
-            }
+        linkToolTipTimer = new Timer(500, (ActionEvent evt) -> {
+            showToolTip(linkToolTipSwordURI);
         });
 
         linkToolTipTimer.setRepeats(false);
@@ -230,8 +221,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             public void mouseMoved(MouseEvent evt) {
                 linkToolTipLocation.setLocation(evt.getX(), evt.getY());
 
-                int onMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-                if ((evt.getModifiers() & onMask) == onMask) {
+                int onMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+                if ((evt.getModifiersEx()& onMask) == onMask) {
                     linkToolTipForceVisible = true;
                 } else {
                     hideToolTip();
@@ -378,7 +369,8 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         linkToolTipForceVisible = false;
     }
 
-    /** Return the book from the preferences. If not defined in preferences,
+    /** 
+     * Return the book from the preferences. If not defined in preferences,
      * it will return in the following order
      * - return StrongsGreek, StrongsHebrew, Robinson <br/>
      * - return the first available book in the category list <br/>

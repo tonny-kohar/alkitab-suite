@@ -9,7 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import kiyut.alkitab.navigator.KeyListModel;
 import kiyut.alkitab.options.ViewerHintsOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
@@ -20,6 +19,7 @@ import org.crosswire.jsword.passage.PreferredKey;
 /**
  * Panel which display single book with list of key on the right side
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class DefinitionPane extends javax.swing.JPanel {
     
@@ -90,11 +90,8 @@ public class DefinitionPane extends javax.swing.JPanel {
         indexList.setModel(new KeyListModel());
         indexList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        indexList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                keyValueChanged(evt);
-            }
+        indexList.addListSelectionListener((ListSelectionEvent evt) -> {
+            keyValueChanged(evt);
         });
     }
     

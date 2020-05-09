@@ -9,6 +9,7 @@ import org.crosswire.jsword.passage.Key;
  * All methods is implemented as empty methods, only the class is marked as abstract,
  * for convenience during implementation of real provider
  * 
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public abstract class AbstractBookViewerProvider implements BookViewerProvider {
     
