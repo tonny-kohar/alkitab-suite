@@ -1,4 +1,5 @@
-ver 4.0-beta1
+ver 4.0
+- Improved Options settings
 - Improved DPI Aware for high resolution screen
 - Updated to use Apache Netbeans 11.3
 
