@@ -5,4 +5,15 @@
 <project name="kiyut.alkitab.modules.branding" default="netbeans" basedir=".">
     <description>Builds, tests, and runs the project kiyut.alkitab.modules.branding.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <target name="jar-prep" depends="projectized-common.jar-prep">
+        <property file="${basedir}/../alkitab-suite/nbproject/project.properties" />
+        
+        <!-- <echo message=".....Test Properties ${alkitab-update-center}" /> -->
+        
+        <!-- Need to use replace file instead of propertyfile because ant escape colon : with backward slash -->
+        <replace file="${basedir}/build/classes/kiyut/alkitab/modules/branding/Bundle.properties" 
+                 token="$${alkitab-update-center}" value="${alkitab-update-center}" />        
+    </target>
+    
 </project>

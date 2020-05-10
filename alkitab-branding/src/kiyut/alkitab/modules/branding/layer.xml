@@ -141,7 +141,7 @@
         <folder name="AutoupdateType">
             <file name="AlkitabUpdateCenter.instance">
                 <attr name="displayName" bundlevalue="kiyut.alkitab.modules.branding.Bundle#Services/AutoupdateType/AlkitabUpdateCenter.instance"/>
-                <attr name="enabled" boolvalue="false"/>
+                <attr name="enabled" boolvalue="true"/>
                 <attr name="instanceCreate" methodvalue="org.netbeans.modules.autoupdate.updateprovider.AutoupdateCatalogFactory.createUpdateProvider"/>
                 <attr name="instanceOf" stringvalue="org.netbeans.spi.autoupdate.UpdateProvider"/>
                 <attr name="url" bundlevalue="kiyut.alkitab.modules.branding.Bundle#alkitab-update-center"/>

@@ -5,4 +5,17 @@
 <project name="kiyut.alkitab" default="netbeans" basedir=".">
     <description>Builds, tests, and runs the project kiyut.alkitab.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <target name="jar-prep" depends="projectized-common.jar-prep">
+        <property file="${basedir}/../alkitab-suite/nbproject/project.properties" />
+        
+        <!-- <echo message=".....Test ${app.title.full}" /> -->
+        
+        <propertyfile
+            file="${basedir}/build/classes/kiyut/alkitab/Application.properties" 
+            comment="Updated by build script">
+            <entry key="alkitab-update-center" value="${alkitab-update-center}" />            
+        </propertyfile>
+    </target>   
+    
 </project>

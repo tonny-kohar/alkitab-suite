@@ -23,31 +23,21 @@
             <entry key="CTL_MainWindow_Title_No_Project" value="${app.title.full}" />
         </propertyfile>
         
-        <!-- Why i comment this, is it not needed anymore ???
-        <propertyfile
-            file="${basedir}/branding/modules/org-netbeans-core.jar/org/netbeans/core/ui/Bundle.properties" 
-            comment="Updated by build script">
-            <entry key="LBL_ProductInformation" value="${app.title.full}" />
-        </propertyfile>
-        -->
-        
-        <propertyfile
-            file="${basedir}/../alkitab-core/src/kiyut/alkitab/Application.properties" 
-            comment="Updated by build script">
-            <entry key="title" value="${app.title}" />
-            <entry key="title.full" value="${app.title.full}" />
-            <entry key="buildnumber" value="${app.buildnumber}" />
-            <entry key="version" value="${app.version}" />
-            <entry key="debug" value="${app.debug}" />
-        </propertyfile>
-        
-        <copy todir="${basedir}/branding/core/core.jar/org/netbeans/core/startup/" overwrite="true">
+         <copy todir="${basedir}/branding/core/core.jar/org/netbeans/core/startup/" overwrite="true">
             <fileset dir="${basedir}">
                 <include name="frame.gif"/>
                 <include name="frame32.gif"/>
                 <include name="frame48.gif"/>
             </fileset>
         </copy>
+        
+        <!-- Why i comment this, is it not needed anymore ???
+        <propertyfile
+            file="${basedir}/branding/modules/org-netbeans-core.jar/org/netbeans/core/ui/Bundle.properties" 
+            comment="Updated by build script">
+            <entry key="LBL_ProductInformation" value="${app.title.full}" />
+        </propertyfile>
+        -->       
     </target>
     
     <target name="build-installer" description="Create Installer" depends="clean,build-zip">
