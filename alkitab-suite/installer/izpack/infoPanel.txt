@@ -1,4 +1,4 @@
-${app.title.full} requires at least ${app.java.version}.
+${app.title.full} requires at least Java ${app.java.version} or higher.
 It is available from https://adoptopenjdk.net 
 You can check Java version by typing "java -version" 
 on the console or command prompt.

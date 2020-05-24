@@ -147,6 +147,7 @@
             <replacefilter token="$${app.version}" value="${app.version}" />
             <replacefilter token="$${app.path}" value="Kiyut/${app.title}-${app.version.dash}" />
             <replacefilter token="$${app.url}" value="${app.url}" />
+            <replacefilter token="$${app.java.version}" value="${app.java.version}" />
             <replacefilter token="$${app-core.pack}" value="${nbdist-izpack-app-core.pack}" />
             <replacefilter token="$${packs.dir}" value="${nbdist-izpack-packs.dir}" />
             

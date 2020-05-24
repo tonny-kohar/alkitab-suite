@@ -16,7 +16,7 @@
             <author email="support@kiyut.com" name="KIYUT Software"/>
         </authors>
         <uninstaller>yes</uninstaller>
-        <javaversion>1.8</javaversion>
+        <javaversion>${app.java.version}</javaversion>
     </info>
     
     <!--
