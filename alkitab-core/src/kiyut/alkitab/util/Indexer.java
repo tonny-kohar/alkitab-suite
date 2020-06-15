@@ -45,19 +45,19 @@ import org.openide.windows.WindowManager;
  */
 public final class Indexer {
 
-    private static final Indexer instance; // The single instance
-    static {
-        instance = new Indexer();
-    }
-    
-    private EventListenerList listenerList;
+    private final EventListenerList listenerList;
 
+    private static Indexer instance; // The single instance
+    
     /**
      * Returns singleton instance accessor method for indexer
      *
      * @return The single instance.
      */
-    public static Indexer getInstance() {
+    public synchronized  static Indexer getInstance() {
+        if (instance == null) {
+            instance = new Indexer();
+        }
         return instance;
     }
 
@@ -68,15 +68,16 @@ public final class Indexer {
     
     /** Registers listener so that it will receive ChangeEvent when createIndex or removeIndex.
      * The ChangeEvent source will be this Indexer.
-     * Note: to keep everything simple, it will trigger the notifcation does not matter when it is failed/success.
-     * It just fire the notication at the end of the process (not per book but per process)
+     * Note: to keep everything simple, it will trigger the notification does not matter when it is failed/success.
+     * It just fire the notification at the end of the process (not per book but per process)
      *@param listener the ProgressListener to register
      */
     public void addChangeListener(ChangeListener listener) {
         listenerList.add(ChangeListener.class, listener);
     }
     
-    /** Unregisters listener so it will not receive ChangeEvent when createIndex or removeIndex. */
+    /** Unregisters listener so it will not receive ChangeEvent when createIndex or removeIndex.
+     * @param listener */
     public void removeChangeListener(ChangeListener listener) {
         listenerList.remove(ChangeListener.class, listener);
     }
@@ -149,9 +150,9 @@ public final class Indexer {
     /** Implementation of indexing progress using SwingFX */
     class IndexerProgress {
 
-        private PerformanceCancelableProgressPanel progressPane;
-        private CancelableProgessAdapter progressAdapter;
-        private List<Progress> indexJobs;
+        private final PerformanceCancelableProgressPanel progressPane;
+        private final CancelableProgessAdapter progressAdapter;
+        private final List<Progress> indexJobs;
         private boolean displayed = false;
         private WorkListener workListener = null;
         private double totalWork = 0;
@@ -178,12 +179,8 @@ public final class Indexer {
                 }
             };
             
-            // XXX workaround for Java 1.5 useBackBuffer should be false if not it will have screen artifact
-            boolean useBackBuffer = true;
-            //System.out.println(System.getProperty("java.version"));
-            if (System.getProperty("java.version").startsWith("1.5")) {
-                useBackBuffer = false;
-            }
+            boolean useBackBuffer = false;
+            
             progressPane = new PerformanceCancelableProgressPanel(useBackBuffer,progressAdapter) {
                 private Rectangle2D oldBounds = null;
 

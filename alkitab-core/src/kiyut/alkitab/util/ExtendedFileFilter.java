@@ -99,7 +99,7 @@ public class ExtendedFileFilter extends FileFilter {
     
     
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      * Returns the human readable description of this filter. For
      * example: "JPEG and GIF Image Files (*.jpg, *.gif)"
      *
