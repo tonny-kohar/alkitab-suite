@@ -1,3 +1,9 @@
+ver 4.0.1
+- Improved performance (search using thread)
+- Fix general options panel
+- Fix bookshelf book properties display empty dialog
+- Fix screen glitch during indexing
+
 ver 4.0
 - Improved Options settings
 - Improved DPI Aware for high resolution screen
