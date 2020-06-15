@@ -6,9 +6,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLEditorKit;
+import kiyut.alkitab.bookviewer.HTMLConverter;
 import kiyut.alkitab.bookviewer.ViewerHints;
+import org.crosswire.common.xml.Converter;
+import org.crosswire.common.xml.JDOMSAXEventProvider;
+import org.crosswire.common.xml.SAXEventProvider;
+import org.crosswire.common.xml.TransformingSAXEventProvider;
+import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 
 /**
@@ -94,7 +102,7 @@ public class BookProperties extends javax.swing.JPanel {
     }
     
     public void setBook(Book book) {
-        setBook(book, new ViewerHints<ViewerHints.Key,Object>());
+        setBook(book, new ViewerHints<>());
     }
     
     public void setBook(Book book, ViewerHints<ViewerHints.Key,Object> viewerHints) {
@@ -104,9 +112,10 @@ public class BookProperties extends javax.swing.JPanel {
         }   
         
         // TODO jsword2
-        /*try {
+        try {
             SAXEventProvider osissep = new JDOMSAXEventProvider(book.toOSIS());
-            Converter converter = new SwingHTMLConverter();
+            //Converter converter = new SwingHTMLConverter();
+            Converter converter = new HTMLConverter();
             TransformingSAXEventProvider htmlsep = (TransformingSAXEventProvider)converter.convert(osissep);
             if (viewerHints != null) {
                 viewerHints.updateProvider(htmlsep);
@@ -119,6 +128,6 @@ public class BookProperties extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);
-        }*/
+        }
     }
 }
