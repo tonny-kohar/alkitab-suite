@@ -14,7 +14,7 @@ import org.crosswire.jsword.passage.RestrictionType;
  */
 public class BookViewerHistoryManager implements HistoryManager {
     /** Default 100 */
-    protected int limit;
+    protected int limit = 100;
     
     protected List<History> backList;
     protected List<History> forwardList;
@@ -30,8 +30,8 @@ public class BookViewerHistoryManager implements HistoryManager {
     public BookViewerHistoryManager(int limit) {
         setLimit(limit);
         
-        backList = Collections.synchronizedList(new ArrayList<History>());
-        forwardList = Collections.synchronizedList(new ArrayList<History>());
+        backList = Collections.synchronizedList(new ArrayList<>());
+        forwardList = Collections.synchronizedList(new ArrayList<>());
     }
     
     @Override

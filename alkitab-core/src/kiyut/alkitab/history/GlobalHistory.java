@@ -36,21 +36,20 @@ public class GlobalHistory {
 
     private static final String FILENAME = "history.xml";
 
-    private static final GlobalHistory instance; // The single instance
-    static {
-        instance = new GlobalHistory();
-    }
-
     protected List<Entry> data;
     protected EventListenerList listenerList;
     protected boolean modified;
 
+    private static GlobalHistory instance; // The single instance
+    
     /**
      * Returns the single instance
-     *
      * @return The single instance.
      */
-    public static GlobalHistory getInstance() {
+    public synchronized static GlobalHistory getInstance() {
+        if (instance == null) {
+            instance = new GlobalHistory();
+        }
         return instance;
     }
 
@@ -62,7 +61,7 @@ public class GlobalHistory {
     }
 
     @SuppressWarnings("unchecked")
-    protected synchronized void load() {
+    protected void load() {
         //InstalledFileLocator fileLocator = InstalledFileLocator.getDefault();
         //String parent = System.getProperty("netbeans.user");
         //File file = new File(parent + File.separator + "alkitab-history" + File.separator + FILENAME);
