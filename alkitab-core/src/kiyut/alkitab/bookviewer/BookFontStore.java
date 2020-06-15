@@ -12,25 +12,23 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookMetaData;
 
 /**
- * Reimplementation of org.crosswire.common.swing.FontStore <br/>
- * It is used to specify each book font.<br/>
- * The persistence location is same with JSword<br/>
+ * Reimplementation of org.crosswire.common.swing.FontStore <br>
+ * It is used to specify each book font.<br>
+ * The persistence location is same with JSword<br>
  *
  */
 public class BookFontStore extends FontStore {
 
     private static BookFontStore instance; // The single instance
 
-    static {
-        instance = new BookFontStore();
-    }
-
     /**
      * Returns the single instance
-     *
      * @return The single instance.
      */
-    public static BookFontStore getInstance() {
+    public synchronized static BookFontStore getInstance() {
+        if (instance == null) {
+            instance = new BookFontStore();
+        }
         return instance;
     }
 
@@ -59,7 +57,7 @@ public class BookFontStore extends FontStore {
     }
 
     /**
-     * Get the most appropriate font for the book.<br/>
+     * Get the most appropriate font for the book.<br>
      *
      * @param book the book
      * @return the font
@@ -82,7 +80,7 @@ public class BookFontStore extends FontStore {
     }
 
     /**
-     * Overriden to provide its own default font
+     * Override to provide its own default font
      * which is UIManager.getFont("EditorPane.font");
      * @return the defaultFont
      */

@@ -300,7 +300,7 @@ public class SearchPane extends javax.swing.JPanel {
         });
         
         String[] presets = bundle.getString("Range.Preset").split("\\|");
-        rangeComboBox.setModel(new DefaultComboBoxModel<String>(presets));
+        rangeComboBox.setModel(new DefaultComboBoxModel<>(presets));
         
         rangeCheckBox.addActionListener((ActionEvent evt) -> {
             boolean checked = rangeCheckBox.isSelected();

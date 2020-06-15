@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
@@ -1041,12 +1042,19 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * @see #search(String,boolean,int)
      */
     protected void search(String searchString, boolean ranked, int searchLimit) {
-        searching = true;
-        try {
-            searchImpl(searchString, ranked, searchLimit);
-        } finally {
-            searching = false;
+        if (searching) { 
+            JOptionPane.showMessageDialog(this, bundle.getString("MSG_SearchInProgress.Text"), bundle.getString("MSG_SearchInProgress.Title"), JOptionPane.ERROR_MESSAGE);
+            return; 
         }
+        
+        searching = true;
+        SwingUtilities.invokeLater(() -> {
+            try {
+                searchImpl(searchString, ranked, searchLimit);
+            } finally {
+                searching = false;
+            }
+        });
     }
     
     private void searchImpl(String searchString, boolean ranked, int searchLimit) {

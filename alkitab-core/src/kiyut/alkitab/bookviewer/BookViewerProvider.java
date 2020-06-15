@@ -29,7 +29,6 @@ public interface BookViewerProvider {
      */
     public void openURI(SwordURI uri, String info, boolean newView);
 
-
     /** 
      * Synchronize the All opened bookViewer to display the URI
      * @param key the Key to be displayed

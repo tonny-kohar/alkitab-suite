@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
 import org.openide.util.lookup.Lookups;
 
 /**
@@ -19,16 +18,15 @@ import org.openide.util.lookup.Lookups;
  */
 public final class BookToolTipFactory {
     private static BookToolTipFactory instance; // The single instance
-    static {
-        instance = new BookToolTipFactory();
-    }
     
     /**
      * Returns the single instance
-     *
      * @return The single instance.
      */
-    public static BookToolTipFactory getInstance() {
+    public synchronized static BookToolTipFactory getInstance() {
+        if (instance == null) {
+            instance = new BookToolTipFactory();
+        }
         return instance;
     }
     
@@ -38,12 +36,9 @@ public final class BookToolTipFactory {
         final Lookup.Result<BookToolTip> result = Lookups.forPath("Alkitab/BookToolTip").lookupResult(BookToolTip.class);
         setBookToolTip(result.allInstances()); // needed to tell Nb that it is processed
         
-        result.addLookupListener(new LookupListener() {
-            @Override
-            public void resultChanged(LookupEvent evt) {
-                Collection<? extends BookToolTip> c = result.allInstances();
-                setBookToolTip(c);
-            }
+        result.addLookupListener((LookupEvent evt) -> {
+            Collection<? extends BookToolTip> c = result.allInstances();
+            setBookToolTip(c);
         });
     }
     

@@ -19,12 +19,6 @@ import org.openide.util.lookup.Lookups;
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public final class BookViewerManager {
-
-    /** The single instance */
-    private static final BookViewerManager instance;
-    static {
-        instance = new BookViewerManager();
-    }
     
     private BookViewerProvider bookViewerProvider;
     
@@ -36,12 +30,18 @@ public final class BookViewerManager {
 
     /** Simple flag for synchronize in progress */
     private boolean synchronizeInProgress;
+
+    /** The single instance */
+    private static BookViewerManager instance;
     
     /**
      * Returns the single instance.      *
      * @return The single instance.
      */
-    public static BookViewerManager getInstance() {
+    public synchronized static BookViewerManager getInstance() {
+        if (instance == null) {
+            instance = new BookViewerManager();
+        }
         return instance;
     }
 
