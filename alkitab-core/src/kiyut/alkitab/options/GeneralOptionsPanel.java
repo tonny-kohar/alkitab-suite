@@ -524,7 +524,6 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
                 break;
         }
 
-
         String initials;
         if (defaultBibleComboBox.getSelectedIndex() > 0) {
             initials = defaultBibleComboBox.getSelectedItem().toString();
@@ -587,7 +586,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         //System.out.println(fontDefs + "   TEST ONLY");
 
         bookViewerOpts.store();
-        changed = true;
+        changed = false;
     }
 
     boolean isOptionsValid() {
@@ -689,7 +688,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         }
     }
 
-     private void backgroundComboItemStateChanged(ItemEvent evt) {
+    private void backgroundComboItemStateChanged(ItemEvent evt) {
          if (evt.getStateChange() == ItemEvent.DESELECTED) { return; }
 
          if (updating) { return; }
