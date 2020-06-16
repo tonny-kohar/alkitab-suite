@@ -2,15 +2,15 @@ This work is authored by Tonny Kohar
 This work is released into Public Domain.
 You are free to use this work in any way you wish.
 
+DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED AS-IS, WITH ABSOLUTELY NO WARRANTY.
+YOU ASSUME ALL RESPONSIBILITY FOR ANY AND ALL CONSEQUENCES
+THAT MAY RESULT FROM THE USE OF THIS SOFTWARE!
+
 IMPORTANT
 
 This computer program also includes other components 
 developed by third parties. Each component is governed
 by its own license which may not be under public domain
 license.
-
-DISCLAIMER
-
-THIS SOFTWARE IS PROVIDED AS-IS, WITH ABSOLUTELY NO WARRANTY.
-YOU ASSUME ALL RESPONSIBILITY FOR ANY AND ALL CONSEQUENCES
-THAT MAY RESULT FROM THE USE OF THIS SOFTWARE!
