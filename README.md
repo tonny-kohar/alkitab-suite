@@ -24,7 +24,7 @@ Others third party Licenses please check [the following](https://github.com/tonn
 # Development
 
 The whole architecture is divided into 3 areas:
-* Netbeans Platform RCP
+* Apache Netbeans Platform
 * JSword CrossWire
 * Alkitab Bible Study
 
@@ -49,5 +49,3 @@ alkitab-suite (Main Container Project)
 |- JSword
 |- etc
 ```
-
-The main source code is under alkitab-core
