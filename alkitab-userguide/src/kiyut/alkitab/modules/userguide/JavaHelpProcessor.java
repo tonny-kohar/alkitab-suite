@@ -42,8 +42,7 @@ public class JavaHelpProcessor implements Environment.Provider {
             @Override
             public Object instanceCreate() throws IOException, ClassNotFoundException {
                 try {
-                    //Document doc = XMLUtil.parse(new InputSource(obj.getPrimaryFile().getURL().toString()), true, false, XMLUtil.defaultErrorHandler(), EntityCatalog.getDefault());
-                    Document doc = XMLUtil.parse(new InputSource(obj.getPrimaryFile().getPath()), true, false, XMLUtil.defaultErrorHandler(), EntityCatalog.getDefault());
+                    Document doc = XMLUtil.parse(new InputSource(obj.getPrimaryFile().toURL().toString()), true, false, XMLUtil.defaultErrorHandler(), EntityCatalog.getDefault());
                     Element el = doc.getDocumentElement();
                     if (!el.getNodeName().equals("helpsetref")) { // NOI18N
                         throw new IOException();

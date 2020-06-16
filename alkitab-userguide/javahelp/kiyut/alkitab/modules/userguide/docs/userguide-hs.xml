@@ -6,13 +6,13 @@
         <homeID>kiyut.alkitab.modules.userguide</homeID>
         <mapref location="userguide-map.xml"/>
     </maps>
-    <view mergetype="javax.help.AppendMerge">
+    <view mergetype="javax.help.UniteAppendMerge">
         <name>TOC</name>
         <label>Table of Contents</label>
         <type>javax.help.TOCView</type>
         <data>userguide-toc.xml</data>
     </view>
-    <view mergetype="javax.help.AppendMerge">
+    <view mergetype="javax.help.SortMerge">
         <name>Index</name>
         <label>Index</label>
         <type>javax.help.IndexView</type>

@@ -4,7 +4,7 @@
     <folder name="Services">
         <folder name="JavaHelp">
             <file name="userguide-helpset.xml" url="userguide-helpset.xml">
-                <attr name="position" intvalue="100"/>
+                <attr name="position" intvalue="0"/>
             </file>
         </folder>
     </folder>
