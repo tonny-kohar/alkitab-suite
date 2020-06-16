@@ -1,26 +1,19 @@
 /* This work has been placed into the public domain. */
-
 package kiyut.alkitab.modules.userguide;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.util.Lookup;
+
 /**
  * This action will open book help viewer.
  * 
- * @author Tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 @ActionID(id = "kiyut.alkitab.modules.userguide.HelpAction", category = "Help")
 @ActionRegistration(displayName = "#CTL_HelpAction")
@@ -30,72 +23,13 @@ import org.openide.awt.ActionRegistration;
 })
 public class HelpAction extends AbstractAction {
 
-    private HelpBroker helpBroker;
-    
     @Override
     public void actionPerformed(ActionEvent e) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                displayHelp();
-            }
+        SwingUtilities.invokeLater(() -> {
+            HelpViewer help = Lookup.getDefault().lookup(HelpViewer.class);
+            if (help != null) {
+                help.showHelp(null);
+            } 
         });
-    }
-    
-    private void displayHelp() {
-        if (helpBroker == null) { 
-            initHelp();
-        } 
-        
-        if (helpBroker == null) {
-            return;
-        }
-        
-        if (helpBroker.isDisplayed()) {
-            // bring to front
-            helpBroker.setDisplayed(true);
-            return;
-        }
-        
-        // display homeID
-        helpBroker.setCurrentID("kiyut.alkitab.modules.userguide");
-        helpBroker.setDisplayed(true);
-        helpBroker.setViewDisplayed(true);
-    }
-    
-    private void initHelp() {
-        String helpHS = "kiyut/alkitab/modules/userguide/docs/userguide-hs.xml";
-        HelpSet hs;
-        ClassLoader cl = this.getClass().getClassLoader();
-        //ClassLoader cl = Lookup.getDefault().lookup(ClassLoader.class);
-        //ClassLoader cl = Help.class.getClassLoader();
-        try {
-            URL hsURL = cl.getResource(helpHS);
-            hs = new HelpSet(null, hsURL);
-        } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING,ex.getMessage(),ex);
-            return;
-        }
-        
-        // Create a HelpBroker object:
-        helpBroker = hs.createHelpBroker();
-        
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        // Default HelpBroker size is too small, make bigger unless on anciente "VGA" resolution
-        if (d.width >= 1024 && d.height >= 800) {
-            helpBroker.setSize(new Dimension(1024, 700));
-        }
-        
-        // center location
-        int w = helpBroker.getSize().width;
-        int h = helpBroker.getSize().height;
-        int x = (d.width-w)/2;
-        int y = (d.height-h)/2;
-        helpBroker.setLocation(new Point(x,y));
-        
-        helpBroker.initPresentation();
-        //helpBroker.setDisplayed(true);
-        //helpBroker.setViewDisplayed(true);        
     }
 }

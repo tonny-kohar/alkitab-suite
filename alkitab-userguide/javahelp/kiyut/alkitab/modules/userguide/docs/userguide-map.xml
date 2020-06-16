@@ -3,6 +3,14 @@
 <map version="2.0">
     <mapID target="kiyut.alkitab.modules.userguide" url="userguide/index.html"/>
 
+    <mapID target="helpviewer_back" url="helpviewer_back.png"/>
+    <mapID target="helpviewer_forward" url="helpviewer_forward.png"/>
+    <mapID target="helpviewer_page-setup" url="helpviewer_page-setup.png"/>
+    <mapID target="helpviewer_print" url="helpviewer_print.png"/>
+    <mapID target="helpviewer_book-open" url="helpviewer_book-open.png"/>
+    <mapID target="helpviewer_book-closed" url="helpviewer_book-closed.png"/>
+    <mapID target="helpviewer_topic" url="helpviewer_topic.png"/>
+    
     <mapID target="kiyut.alkitab.modules.userguide.bible" url="userguide/bible/index.html" />
     <mapID target="kiyut.alkitab.modules.userguide.faq" url="userguide/faq/index.html" />
     <mapID target="kiyut.alkitab.modules.userguide.legal" url="userguide/legal/index.html" />

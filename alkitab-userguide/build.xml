@@ -5,4 +5,14 @@
 <project name="kiyut.alkitab.modules.userguide" default="netbeans" basedir=".">
     <description>Builds, tests, and runs the project kiyut.alkitab.modules.userguide.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <!-- override javahelp to execute init-custom-javahelp -->
+    <target name="javahelp" depends="init-custom-javahelp,harness.javahelp" if="has.javahelp" />
+    
+    <target name="init-custom-javahelp">
+        <!-- copy all license files to userguide -->
+        <copy todir="${basedir}/build/javahelp/kiyut/alkitab/modules/userguide/docs/userguide/legal/" overwrite="true">
+            <fileset dir="${basedir}/../alkitab-suite/legal" />
+        </copy>
+    </target>
 </project>

@@ -25,7 +25,15 @@
         <name>Search</name>
         <label>Search</label>
         <type>javax.help.SearchView</type>
-        <data engine="com.sun.java.help.search.DefaultSearchEngine">JavaHelpSearch</data>
+        <data>JavaHelpSearch</data>
     </view>
-    
+    <presentation default="true">
+        <name>main window</name>
+        <toolbar>
+            <helpaction image="helpviewer_back">javax.help.BackAction</helpaction>
+            <helpaction image="helpviewer_forward">javax.help.ForwardAction</helpaction>
+            <helpaction image="helpviewer_print">javax.help.PrintAction</helpaction>
+            <helpaction image="helpviewer_page-setup">javax.help.PrintSetupAction</helpaction>
+        </toolbar>
+    </presentation>
 </helpset>

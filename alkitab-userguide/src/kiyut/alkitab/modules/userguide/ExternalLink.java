@@ -1,5 +1,4 @@
 /* This work has been placed into the public domain. */
-
 package kiyut.alkitab.modules.userguide;
 
 import com.sun.java.help.impl.ViewAwareComponent;
@@ -24,7 +23,7 @@ import org.openide.awt.HtmlBrowser;
 /**
  * Simple lightweight component to be included in HTML content within JavaHelp 
  * to open link externally using default browser.
- * @author Tonny
+ * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
 public class ExternalLink extends JLabel implements ViewAwareComponent {
     private String content = "";
@@ -142,19 +141,19 @@ public class ExternalLink extends JLabel implements ViewAwareComponent {
 	StyleSheet css = doc.getStyleSheet();
 	try {
 	    if (size.equals("xx-small")) {
-		newsize = (int)css.getPointSize(0);
-	    } else if (size.equals("x-small")) {
 		newsize = (int)css.getPointSize(1);
-	    } else if (size.equals("small")) {
+	    } else if (size.equals("x-small")) {
 		newsize = (int)css.getPointSize(2);
-	    } else if (size.equals("medium")) {
+	    } else if (size.equals("small")) {
 		newsize = (int)css.getPointSize(3);
-	    } else if (size.equals("large")) {
+	    } else if (size.equals("medium")) {
 		newsize = (int)css.getPointSize(4);
-	    } else if (size.equals("x-large")) {
+	    } else if (size.equals("large")) {
 		newsize = (int)css.getPointSize(5);
-	    } else if (size.equals("xx-large")) {
+	    } else if (size.equals("x-large")) {
 		newsize = (int)css.getPointSize(6);
+	    } else if (size.equals("xx-large")) {
+		newsize = (int)css.getPointSize(7);
 	    } else if (size.equals("bigger")) {
 		newsize = (int)css.getPointSize("+1");
 	    } else if (size.equals("smaller")) {
@@ -182,6 +181,5 @@ public class ExternalLink extends JLabel implements ViewAwareComponent {
      */
     public String getTextFontSize() {
 	return Integer.toString(StyleConstants.getFontSize(textAttribs));
-    }
-    
+    }    
 }
