@@ -45,6 +45,9 @@ import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageTally;
 import org.crosswire.jsword.passage.RestrictionType;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.util.RequestProcessor;
 
 /**
  * Implementation of {@link kiyut.alkitab.api.BookViewer BookViewer} which able to display parallel book
@@ -76,7 +79,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     //protected IndexWorkListener indexWorkListener;
 
     protected ChangeListener indexChangeListener;
-
+    
     /** Creates new ParallelBookViewerPane. */
     public ParallelBookViewerPane() {
         initComponents();
@@ -177,14 +180,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         jLabel2.setToolTipText(bundle.getString("HINT_Search.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.ABOVE_BASELINE_TRAILING;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         topPane.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText(bundle.getString("CTL_Passsage.Text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.ABOVE_BASELINE_TRAILING;
         gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 6);
         topPane.add(jLabel3, gridBagConstraints);
 
@@ -354,13 +357,17 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         advancedSearchButton.setMargin(insets);
         
         addBookButton.addActionListener((ActionEvent evt) -> {
-            addBook(null);
-            reload();
+            boolean added = addBook(null);
+            if (added) {
+                reload();
+            }
         });
         
         removeBookButton.addActionListener((ActionEvent evt) -> {
-            removeBook(booksComboPane.getComponentCount()-1);
-            reload();
+            boolean removed = removeBook(booksComboPane.getComponentCount()-1);
+            if (removed) {
+                reload();
+            }
         });
         
         bookComboActionListener = (ActionEvent evt) -> {
@@ -595,12 +602,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     /** 
      * Add Book
      * @param bookName Book Initials or Book Name
+     * @return true if book is added, otherwise false
      */
-    public void addBook(String bookName) {
+    public boolean addBook(String bookName) {
         maximumBook = BookViewerOptions.getInstance().getParallelBookLimit();
         int count = booksComboPane.getComponentCount();
         if (count >= maximumBook) {
-            return;
+            return false;
         }
         
         JComboBox<String> comboBox = createBookComboBox();
@@ -611,7 +619,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         Book book = Books.installed().getBook(bookName);
         if (book == null) {
-            return;
+            return false;
         }
         
         comboBox.setSelectedItem(bookName);
@@ -634,6 +642,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
+        
+        return true;
     }
 
     /** 
@@ -679,15 +689,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     }
     
     /** 
-     * Remove book at particular index.
-     * It do nothing if there is only one book left
+     * Remove book at particular index.It do nothing if there is only one book left
      * @param index index at which the specified book is to be removed.
+     * @return true if book is removed, otherwise false
      * @throws ArrayIndexOutOfBoundsException - if the index value does not exist.
      */
-    public void removeBook(int index) {
+    public boolean removeBook(int index) {
         int count = booksComboPane.getComponentCount();
         if (count <= 1) {
-            return;
+            return false;
         }
         
         //comboBox.addActionListener(bookComboActionListener);
@@ -707,6 +717,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         firePropertyChange(BookViewer.VIEWER_NAME, null, getName());
         fireBookChange(new BookChangeEvent(this));
 
+        return true;
     }
     
     /** 
@@ -1048,13 +1059,19 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         searching = true;
-        SwingUtilities.invokeLater(() -> {
+        Runnable runnable = () -> {
+            ProgressHandle handle = ProgressHandleFactory.createHandle(bundle.getString("MSG_SearchInProgress.Text"), null, null);
+            handle.switchToIndeterminate();
+            handle.setInitialDelay(500);
             try {
+                handle.start();
                 searchImpl(searchString, ranked, searchLimit);
             } finally {
                 searching = false;
+                handle.finish();
             }
-        });
+        };
+        RequestProcessor.getDefault().post(runnable);
     }
     
     private void searchImpl(String searchString, boolean ranked, int searchLimit) {
@@ -1086,10 +1103,11 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         int total = results.getCardinality();
         int partial = total;
+        String msg;
         
         if (total == 0) {
             Object[] args = {searchString};
-            String msg = MessageFormat.format(bundle.getString("MSG_SearchNoHits.Text"), args);
+            msg = MessageFormat.format(bundle.getString("MSG_SearchNoHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -1106,14 +1124,14 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
         if (total == partial) {
             Object[] args = {searchString, total};
-            String msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
+            msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             Object[] args = {searchString, partial, total};
-            String msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
+            msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         }
-
+        
         this.searchString = searchString;
         setKey(results);
         reload();
