@@ -61,6 +61,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
 import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.ParallelBookViewerPane ParallelBookViewerPane}.
@@ -158,7 +159,10 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         }
         
         bookViewer.compareView(compareView);
-        bookViewer.reload();
+        
+        WindowManager.getDefault().invokeWhenUIReady(() -> {
+            bookViewer.reload();
+        });
     }
 
     @Override
