@@ -15,12 +15,14 @@ public interface BookRenderer {
     public boolean isCompareView();
     public Key getKey();
     
-    /** Return string of HTML source 
+    /** 
+     * Return string of HTML source 
      * @return string of HTML source
      */
     public String getContentSource();
     
-    /** Return the wrapper component
+    /** 
+     * Return the wrapper component
      * @return the wrapper component */
     public JComponent getComponent();
     

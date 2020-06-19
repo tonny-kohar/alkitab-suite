@@ -4,8 +4,17 @@ package kiyut.alkitab.bookviewer;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -16,7 +25,23 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
+import javax.swing.text.Element;
+import javax.swing.text.FlowView;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.View;
+import javax.swing.text.ViewFactory;
+import javax.swing.text.html.BlockView;
+import javax.swing.text.html.CSS;
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.HTMLEditorKit.HTMLFactory;
+import javax.swing.text.html.StyleSheet;
+import javax.xml.transform.OutputKeys;
 import kiyut.alkitab.util.FontUtilities;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -26,6 +51,7 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
+import org.openide.util.Exceptions;
 
 /**
  * BookRenderer implementation that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit. 
@@ -159,9 +185,11 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
     @SuppressWarnings("unchecked")
     protected void reloadImpl() {
         //System.out.println("TextPaneRenderer refreshImpl()");
-
+        
+        // clear the document
+        setText("");
+        
         if (books.isEmpty() || key == null) {
-            clear();
             return;
         }
 
@@ -169,7 +197,6 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
 
         BookMetaData bmd = bookData.getFirstBook().getBookMetaData();
         if (bmd == null) {
-            clear();
             return;
         }
 
@@ -195,19 +222,47 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
             // set the font, overrides default if needed
             String fontSpec = FontUtilities.font2String(BookFontStore.getInstance().getFont(bookData.getFirstBook()));
             htmlSEP.setParameter(HTMLConverter.FONT, fontSpec);
-
+            
             viewerHints.updateProvider(htmlSEP);
-
+            
             // HTML Text
             text = XMLUtil.writeToString(htmlSEP);
 
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);
+            return;
         }
-
-        setText(text);
-        select(0, 0);
+        
+        //long startTime = System.currentTimeMillis();
+        
+        // very slow, use editorKit.read() and replace doc instead
+        //setText(text);
+        
+        Document doc = getEditorKit().createDefaultDocument();
+        //HTMLDocument doc = (HTMLDocument)getEditorKit().createDefaultDocument();
+        //doc.setAsynchronousLoadPriority(-1);
+        //doc.setTokenThreshold(200);
+        
+        //putClientProperty("charset", "UTF-8");
+        //try (InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8))) {
+        //try (Reader in = new InputStreamReader(new ByteArrayInputStream(text.getBytes()))) {
+        try (Reader in = new StringReader(text)) {
+            EditorKit kit = getEditorKit();
+            kit.read(in, doc, 0);
+            //read(in, doc);
+        } catch (Exception ex) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.WARNING, ex.getMessage(), ex);
+            return;
+        }
+        
+        setDocument(doc);
+        //select(0, 0);
+        
+        //long endTime = System.currentTimeMillis();
+        //Logger prefLog = Logger.getLogger("Alkitab Reload Performance");
+        //prefLog.log(Level.INFO,"Total execution time: " + (endTime-startTime) + "ms");
     }
 
     /**
@@ -232,10 +287,6 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
         }
     }
 
-    protected void clear() {
-        setText(null);
-    }
-    
     @Override
     public String getContentSource() {
         return getText();

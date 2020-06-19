@@ -94,6 +94,7 @@ public final class BookshelfTopComponent extends TopComponent {
 
     /**
      * Obtain the BookshelfTopComponent instance.
+     * @return BookshelfTopComponent instance.
      */
     public static synchronized BookshelfTopComponent findInstance() {
         TopComponent win = WindowManager.getDefault().findTopComponent("BookshelfTopComponent");

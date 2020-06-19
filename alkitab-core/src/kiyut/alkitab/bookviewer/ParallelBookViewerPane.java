@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
@@ -1134,7 +1133,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         
         this.searchString = searchString;
         setKey(results);
-        reload();
+        //reload();
+        bookRenderer.reload(false);
     }
 
     /* use for JSword 2.0 
