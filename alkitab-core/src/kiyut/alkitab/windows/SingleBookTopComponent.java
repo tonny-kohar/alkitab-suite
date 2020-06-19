@@ -5,7 +5,6 @@ package kiyut.alkitab.windows;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -18,7 +17,6 @@ import javax.swing.ActionMap;
 import javax.swing.JComponent;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
-import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.actions.GoNextAction;
 import kiyut.alkitab.actions.GoPreviousAction;
 import kiyut.alkitab.actions.ReloadAction;
@@ -37,6 +35,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.CallbackSystemAction;
 import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.bookviewer.SingleBookViewerPane SingleBookViewerPane}.
@@ -112,7 +111,10 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
         bookViewer.setBook(bookName);
         bookViewer.setKey(key); 
         bookViewer.setName(name);
-        bookViewer.reload();
+        
+        WindowManager.getDefault().invokeWhenUIReady(() -> {
+            bookViewer.reload();
+        });
     }
     
     /** If you override this, please make sure to call super.initCustom() */
