@@ -49,9 +49,9 @@ import org.openide.windows.TopComponent;
     preferredID = "DailyDevotionsTopComponent")
 public final class DailyDevotionsTopComponent extends TopComponent {
 
-    private JTabbedPane tabbedPane;
+    private transient JTabbedPane tabbedPane;
     
-    private HyperlinkListener hyperlinkListener;
+    private transient HyperlinkListener hyperlinkListener;
 
     private DailyDevotionsTopComponent() {
         initComponents();

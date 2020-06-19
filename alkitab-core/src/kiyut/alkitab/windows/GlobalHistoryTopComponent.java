@@ -28,7 +28,7 @@ import org.openide.windows.TopComponent;
     preferredID = "GlobalHistoryTopComponent")
 public final class GlobalHistoryTopComponent extends TopComponent {
 
-    private GlobalHistoryPane historyPane;
+    private transient GlobalHistoryPane historyPane;
 
     public GlobalHistoryTopComponent() {
         initComponents();

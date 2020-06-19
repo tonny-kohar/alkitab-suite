@@ -42,17 +42,19 @@ import org.openide.windows.WindowManager;
  * 
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
+@TopComponent.Description(preferredID = "SingleBookTopComponent",
+    //iconBase="SET/PATH/TO/ICON/HERE", 
+    persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED)
 public class SingleBookTopComponent extends BookViewerTopComponent {
     
     /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-
-    private static final String PREFERRED_ID = "SingleBookTopComponent";
+    //static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
+    //private static final String PREFERRED_ID = "SingleBookTopComponent";
     
-    private SingleBookViewerPane bookViewer;
+    private transient SingleBookViewerPane bookViewer;
 
-    private Action goPreviousDelegateAction;
-    private Action goNextDelegateAction;
+    private transient Action goPreviousDelegateAction;
+    private transient Action goNextDelegateAction;
     
     public SingleBookTopComponent() {
         initComponents();
@@ -78,7 +80,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    @Override
+    /*@Override
     public int getPersistenceType() {
         return TopComponent.PERSISTENCE_ONLY_OPENED;
     }
@@ -86,7 +88,7 @@ public class SingleBookTopComponent extends BookViewerTopComponent {
     @Override
     protected String preferredID() {
         return PREFERRED_ID;
-    }
+    }*/
     
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {

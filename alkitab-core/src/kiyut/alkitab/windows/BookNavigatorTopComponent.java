@@ -43,18 +43,18 @@ import org.openide.windows.WindowManager;
     preferredID = "BookNavigatorTopComponent")
 public final class BookNavigatorTopComponent extends TopComponent {
 
-    private PropertyChangeListener tcPropertyChangeListener;
+    private transient PropertyChangeListener tcPropertyChangeListener;
     
-    private Lookup.Result<BookViewer> result = null;
-    private LookupListener bookViewerLookupListener = null;
+    private transient Lookup.Result<BookViewer> result = null;
+    private transient LookupListener bookViewerLookupListener = null;
     
-    private Map<BookViewer,BookNavigatorPane> navigatorMap;
+    private transient Map<BookViewer,BookNavigatorPane> navigatorMap;
     
-    private BookViewer bookViewer;
+    private transient BookViewer bookViewer;
 
     /** For bible reuse this component */
-    private BookNavigatorPane bibleNavPane;
-    private boolean displayUpdated = false;
+    private transient BookNavigatorPane bibleNavPane;
+    private transient boolean displayUpdated = false;
 
 
     private BookNavigatorTopComponent() {

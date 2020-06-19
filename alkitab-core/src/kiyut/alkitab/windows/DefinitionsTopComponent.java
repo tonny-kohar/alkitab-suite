@@ -56,11 +56,11 @@ import org.openide.windows.TopComponent;
     preferredID = "DefinitionsTopComponent")
 public final class DefinitionsTopComponent extends TopComponent {
 
-    private JTabbedPane tabbedPane;
+    private transient JTabbedPane tabbedPane;
     
-    private HyperlinkListener hyperlinkListener;
+    private transient HyperlinkListener hyperlinkListener;
 
-    protected PropertyChangeListener backgroundPropertyChangeListener;
+    protected transient PropertyChangeListener backgroundPropertyChangeListener;
     
     private DefinitionsTopComponent() {
         initComponents();

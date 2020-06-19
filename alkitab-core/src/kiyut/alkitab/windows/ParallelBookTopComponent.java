@@ -68,21 +68,24 @@ import org.openide.windows.WindowManager;
  * 
  * @author Tonny Kohar <tonny.kohar@gmail.com>
  */
+@TopComponent.Description(preferredID = "ParallelBookTopComponent",
+    //iconBase="SET/PATH/TO/ICON/HERE", 
+    persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED)
 public class ParallelBookTopComponent extends BookViewerTopComponent {
 
     /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-    private static final String PREFERRED_ID = "ParallelBookTopComponent";
-    private ParallelBookViewerPane bookViewer;
-    private Point linkToolTipLocation;
-    private Timer linkToolTipTimer;
-    private SwordURI linkToolTipSwordURI;
-    private boolean linkToolTipForceVisible;
+    //static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
+    //private static final String PREFERRED_ID = "ParallelBookTopComponent";
+    private transient ParallelBookViewerPane bookViewer;
+    private transient Point linkToolTipLocation;
+    private transient Timer linkToolTipTimer;
+    private transient SwordURI linkToolTipSwordURI;
+    private transient boolean linkToolTipForceVisible;
 
-    private Action goBackDelegateAction;
-    private Action goForwardDelegateAction;
-    private Action goPreviousDelegateAction;
-    private Action goNextDelegateAction;
+    private transient Action goBackDelegateAction;
+    private transient Action goForwardDelegateAction;
+    private transient Action goPreviousDelegateAction;
+    private transient Action goNextDelegateAction;
 
     public ParallelBookTopComponent() {
         initComponents();
@@ -108,15 +111,15 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    @Override
+    /*@Override
     public int getPersistenceType() {
         return TopComponent.PERSISTENCE_ONLY_OPENED;
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected String preferredID() {
         return PREFERRED_ID;
-    }
+    }*/
        
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
@@ -164,7 +167,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
             bookViewer.reload();
         });
     }
-
+    
     @Override
     public void componentClosed() {
         if (bookViewer != null) {
