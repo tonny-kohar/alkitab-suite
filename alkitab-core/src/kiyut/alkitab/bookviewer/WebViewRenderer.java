@@ -2,7 +2,7 @@
 
 package kiyut.alkitab.bookviewer;
 
-/*import java.awt.Color;
+import java.awt.Color;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,7 @@ import org.crosswire.common.xml.FormatType;
 import org.crosswire.common.xml.PrettySerializingContentHandler;
 import org.crosswire.common.xml.SAXEventProvider;
 import org.crosswire.common.xml.TransformingSAXEventProvider;
+import org.crosswire.common.xml.XMLUtil;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
@@ -44,19 +45,19 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.xml.sax.ContentHandler;
-*/
+
 
 /**
  * BookRenderer implementation that use JavaFX WebView
  */
-/*public class WebViewRenderer extends JFXPanel implements BookRenderer {
+public class WebViewRenderer extends JFXPanel implements BookRenderer {
     
     public static final String EVENT_TYPE_CLICK = "click";
     public static final String EVENT_TYPE_MOUSEOVER = "mouseover";
     public static final String EVENT_TYPE_MOUSEOUT = "mouseclick";
     
     /** It is used to convert <br></br> to <br />*/
-  /*  public static Pattern FixBRTagPattern = Pattern.compile("<br>\\s*</br>");
+    public static Pattern FixBRTagPattern = Pattern.compile("<br>\\s*</br>");
     
     //protected JFXPanel fxPanel;
     protected WebView webView;
@@ -65,10 +66,10 @@ import org.xml.sax.ContentHandler;
     protected Key key;
     protected Converter converter;
     /** Default it is false */
- /*   protected boolean compareView = false;
+    protected boolean compareView = false;
     protected ViewerHints<ViewerHints.Key, Object> viewerHints;
     
-    //protected EventListenerList listenerList;
+    protected EventListenerList listenerList;
     
     protected String contentSource;
     
@@ -169,7 +170,7 @@ import org.xml.sax.ContentHandler;
      * Default it is false
      * @param compareView
      */
-  /*  public void setCompareView(boolean compareView) {
+    public void setCompareView(boolean compareView) {
         this.compareView = compareView;
     }
 
@@ -205,7 +206,7 @@ import org.xml.sax.ContentHandler;
      * 
      * @see #reload(boolean)
      */
-/*    @Override
+    @Override
     public void reload() {
         reload(true);
     }
@@ -214,7 +215,7 @@ import org.xml.sax.ContentHandler;
      * Since it is using JavaFX WebView, this method ignore parameter invokeLater 
      * and always use Platfrom.runLater() thread
      */
-/*    @Override
+    @Override
     public void reload(boolean invokeLater) {
         Platform.runLater(new Runnable() {
             @Override
@@ -224,12 +225,14 @@ import org.xml.sax.ContentHandler;
         });
     }
     
-/*    protected void reloadImpl() {
+    protected void reloadImpl() {
         //webView.getEngine().load("http://www.kiyut.com");
         //System.err.println("reloadImpl() start");
         
+        // clear document
+        webView.getEngine().loadContent("");
+        
         if (books.isEmpty() || key == null) {
-            clear();
             return;
         }
 
@@ -237,12 +240,11 @@ import org.xml.sax.ContentHandler;
 
         BookMetaData bmd = bookData.getFirstBook().getBookMetaData();
         if (bmd == null) {
-            clear();
             return;
         }
         
-        /*boolean ltr = bmd.isLeftToRight();
-        applyComponentOrientation(ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
+        boolean ltr = bmd.isLeftToRight();
+        /*applyComponentOrientation(ltr ? ComponentOrientation.LEFT_TO_RIGHT : ComponentOrientation.RIGHT_TO_LEFT);
         
         System.err.println("reloadImpl() after applyComponentOrientation");
 
@@ -250,9 +252,9 @@ import org.xml.sax.ContentHandler;
         this.setLocale(new Locale(bmd.getLanguage().getCode()));
         */
 
-/*        try {
+        try {
             SAXEventProvider osissep = bookData.getSAXEventProvider();
-            TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
+            /*TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
             
             if (bmd.getBookCategory() != BookCategory.BIBLE) {
                 boolean ltr = bmd.isLeftToRight();
@@ -263,7 +265,16 @@ import org.xml.sax.ContentHandler;
                 String uriString = uri == null ? "" : uri.toURL().toExternalForm();
                 htmlSEP.setParameter(HTMLConverter.BASE_URL, uriString);
                 htmlSEP.setParameter(HTMLConverter.CSS, uriString);
-            }
+            }*/
+            
+            TransformingSAXEventProvider htmlSEP = (TransformingSAXEventProvider) converter.convert(osissep);
+            htmlSEP.setParameter(HTMLConverter.DIRECTION, ltr ? "ltr" : "rtl");
+
+            URI uri = bmd.getLocation();
+            //String uriString = uri == null ? "" : NetUtil.getAsFile(uri).getCanonicalPath();
+            String uriString = uri == null ? "" : uri.toURL().toExternalForm();
+            htmlSEP.setParameter(HTMLConverter.BASE_URL, uriString);
+            htmlSEP.setParameter(HTMLConverter.CSS, uriString);
             
             // set the font, overrides default if needed
             String fontSpec = FontUtilities.font2String(BookFontStore.getInstance().getFont(bookData.getFirstBook()));
@@ -277,15 +288,17 @@ import org.xml.sax.ContentHandler;
             viewerHints.updateProvider(htmlSEP);
             
             // HTML Text
-            ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC);
+            //contentSource = XMLUtil.writeToString(htmlSEP);
+                        
+            ContentHandler html = new PrettySerializingContentHandler(FormatType.CLASSIC_INDENT);
             htmlSEP.provideSAXEvents(html);
             contentSource = html.toString();
-            //contentSource = XMLUtil.writeToString(htmlSEP);
             
-            contentSource = FixBRTagPattern.matcher(contentSource).replaceAll("<br />");
+            //contentSource = FixBRTagPattern.matcher(contentSource).replaceAll("<br />");
+            contentSource = FixBRTagPattern.matcher(contentSource).replaceAll("<br>");
             
         } catch (Exception ex) {
-            clear();
+            //clear();
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);
         }
@@ -318,12 +331,13 @@ import org.xml.sax.ContentHandler;
         }
     }
     
-    protected void clear() {
+    /*protected void clear() {
         webView.getEngine().loadContent("");
-    }
+    }*/
     
     @Override
     public String getContentSource() {
+        //return webView.getEngine().getDocument().toString();
         return contentSource;
     }
     
@@ -333,4 +347,3 @@ import org.xml.sax.ContentHandler;
     }
 }
 
-*/

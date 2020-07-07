@@ -4,17 +4,10 @@ package kiyut.alkitab.bookviewer;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -25,23 +18,9 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;
 import javax.swing.text.EditorKit;
-import javax.swing.text.Element;
-import javax.swing.text.FlowView;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.View;
-import javax.swing.text.ViewFactory;
-import javax.swing.text.html.BlockView;
-import javax.swing.text.html.CSS;
-import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.HTMLEditorKit.HTMLFactory;
-import javax.swing.text.html.StyleSheet;
-import javax.xml.transform.OutputKeys;
 import kiyut.alkitab.util.FontUtilities;
 import org.crosswire.common.xml.Converter;
 import org.crosswire.common.xml.SAXEventProvider;
@@ -51,7 +30,6 @@ import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookMetaData;
 import org.crosswire.jsword.passage.Key;
-import org.openide.util.Exceptions;
 
 /**
  * BookRenderer implementation that use {@link javax.swing.JTextPane JTextPane} HTML mode or HTMLEditorKit. 
@@ -69,7 +47,7 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
      */
     protected boolean compareView;
     protected ViewerHints<ViewerHints.Key, Object> viewerHints;
-
+    
     /**
      * Creates new TextPaneRenderer. By default it is using empty TransfomerHints
      *
@@ -227,7 +205,7 @@ public class TextPaneRenderer extends JTextPane implements BookRenderer {
             
             // HTML Text
             text = XMLUtil.writeToString(htmlSEP);
-
+            
         } catch (Exception ex) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.WARNING, ex.getMessage(), ex);

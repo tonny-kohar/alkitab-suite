@@ -35,7 +35,7 @@ public final class BookViewerManager {
     private static BookViewerManager instance;
     
     /**
-     * Returns the single instance.      *
+     * Returns the single instance. 
      * @return The single instance.
      */
     public synchronized static BookViewerManager getInstance() {

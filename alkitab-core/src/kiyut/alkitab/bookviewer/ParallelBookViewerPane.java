@@ -19,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
@@ -57,8 +59,8 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     
     protected ResourceBundle bundle = ResourceBundle.getBundle(ParallelBookViewerPane.class.getName());
     
-    protected TextPaneRenderer bookRenderer;
-    //protected transient WebViewRenderer bookRenderer;
+    //protected transient TextPaneRenderer bookRenderer;
+    protected transient WebViewRenderer bookRenderer;
 
     /** just a flag indicating searching mode */
     protected boolean searching;
@@ -119,7 +121,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         advancedSearchButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         indexButton = new javax.swing.JButton();
-        bookScrollPane = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -292,7 +293,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         topPane.add(searchPane, gridBagConstraints);
 
         splitPane.setLeftComponent(topPane);
-        splitPane.setRightComponent(bookScrollPane);
 
         add(splitPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -301,7 +301,6 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBookButton;
     private javax.swing.JButton advancedSearchButton;
-    private javax.swing.JScrollPane bookScrollPane;
     private javax.swing.JPanel booksComboPane;
     private javax.swing.JCheckBox compareCheckBox;
     private javax.swing.JButton indexButton;
@@ -338,11 +337,13 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         //splitPane.setOneTouchExpandable(true);
 
         ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
-        bookRenderer = new TextPaneRenderer(viewerHints);
-        bookScrollPane.setViewportView(bookRenderer);
-        //bookRenderer = new WebViewRenderer(viewerHints);
-        //splitPane.setRightComponent(bookRenderer);
-        splitPane.setRightComponent(bookScrollPane);
+        
+        //JScrollPane bookScrollPane = new JScrollPane();
+        //bookRenderer = new TextPaneRenderer(viewerHints);
+        //bookScrollPane.setViewportView(bookRenderer);
+        //splitPane.setRightComponent(bookScrollPane);
+        bookRenderer = new WebViewRenderer(viewerHints);
+        splitPane.setRightComponent(bookRenderer);
         
         //getActionMap().setParent(bookRenderer.getActionMap());
 
@@ -783,14 +784,16 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
 
     @Override
     public void viewSource() {
-        try {
-            SourceViewerPane sourcePane = new SourceViewerPane();
-            sourcePane.initSource(bookRenderer);
-            sourcePane.showDialog(this,true);
-        } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage(), ex);
-        }
+        SwingUtilities.invokeLater(() -> {
+            try {
+                SourceViewerPane sourcePane = new SourceViewerPane();
+                sourcePane.initSource(bookRenderer);
+                sourcePane.showDialog(this, true);
+            } catch (Exception ex) {
+                Logger logger = Logger.getLogger(this.getClass().getName());
+                logger.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        });
     }
     
     @Override

@@ -6,11 +6,13 @@
 /alkitab-localization/nbproject/private/
 /alkitab-suite/build/
 /alkitab-suite/nbproject/private/
+/alkitab-suite/dist/
 /alkitab-userguide/build/
 /alkitab-userguide/nbproject/private/
 /jsword/build/
 /jsword/nbproject/private/
 /swingfx/build/
 /swingfx/nbproject/private/
-
-/alkitab-suite/dist/
+/javafx/build/
+/javafx/nbproject/private/
+/javafx/release/**
