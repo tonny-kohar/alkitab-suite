@@ -110,6 +110,8 @@
         <xsl:with-param name="style">css</xsl:with-param>
       </xsl:call-template>
   </xsl:variable>
+  
+  <xsl:param name="background-color" select="'transparent'"/>  
 
   <!-- Create a global key factory from which OSIS ids will be generated -->
   <xsl:variable name="keyf" select="jsword:org.crosswire.jsword.passage.PassageKeyFactory.instance()"/>
@@ -122,7 +124,8 @@
       <head>
         <base href="{$baseURL}"/>
         <style type="text/css">
-          BODY { <xsl:value-of select="$fontspec" /> }
+          BODY, TABLE { <xsl:value-of select="$fontspec" /> }
+          BODY { background-color:<xsl:value-of select="$background-color" />; }
           A { text-decoration: none; }
           A.strongs { color: black; text-decoration: none; }
           SUB.strongs { font-size: 75%; color: red; }
