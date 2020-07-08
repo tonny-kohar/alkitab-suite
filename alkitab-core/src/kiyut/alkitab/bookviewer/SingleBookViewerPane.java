@@ -2,11 +2,13 @@
 
 package kiyut.alkitab.bookviewer;
 
+import java.awt.BorderLayout;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkListener;
 import kiyut.alkitab.bookviewer.event.BookChangeEvent;
 import kiyut.alkitab.history.BookViewerHistory;
@@ -26,7 +28,8 @@ import org.crosswire.jsword.passage.Key;
 public class SingleBookViewerPane extends AbstractBookViewerPane {
 
     protected ResourceBundle bundle = ResourceBundle.getBundle(SingleBookViewerPane.class.getName());
-    protected TextPaneRenderer bookRenderer;
+    //protected transient TextPaneRenderer bookRenderer;
+    protected transient WebViewRenderer bookRenderer;
     protected HistoryManager historyManager;
     
     /** Creates new SingleBookViewerPane */
@@ -43,19 +46,19 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bookScrollPane = new javax.swing.JScrollPane();
-
         setLayout(new java.awt.BorderLayout());
-        add(bookScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane bookScrollPane;
     // End of variables declaration//GEN-END:variables
 
     protected void initCustom() {
         ViewerHints<ViewerHints.Key,Object> viewerHints = new ViewerHints<>(ViewerHintsOptions.getInstance().getViewerHints());
-        bookRenderer = new TextPaneRenderer(viewerHints);
-        bookScrollPane.setViewportView(bookRenderer);
+        //JScrollPane bookScrollPane = new JScrollPane();
+        //bookRenderer = new TextPaneRenderer(viewerHints);
+        //bookScrollPane.setViewportView(bookRenderer);
+        //add(this.bookScrollPane, BorderLayout.CENTER);
+        bookRenderer = new WebViewRenderer(viewerHints);
+        add(bookRenderer, BorderLayout.CENTER);
         historyManager = new BookViewerHistoryManager();
 
         //getActionMap().setParent(bookRenderer.getActionMap());
@@ -118,15 +121,17 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
     
     @Override
     public void viewSource() {
-        try {
-            SourceViewerPane sourcePane = new SourceViewerPane();
-            sourcePane.initSource(bookRenderer);
-            //sourcePane.initSource(bookRenderer.getBooks(), bookRenderer.getKey(), bookRenderer.getConverter(), bookRenderer.getViewerHints(), bookRenderer.isCompareView());
-            sourcePane.showDialog(this,true);
-        } catch (Exception ex) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, ex.getMessage(), ex);
-        }
+        SwingUtilities.invokeLater(() -> {
+            try {
+                SourceViewerPane sourcePane = new SourceViewerPane();
+                sourcePane.initSource(bookRenderer);
+                //sourcePane.initSource(bookRenderer.getBooks(), bookRenderer.getKey(), bookRenderer.getConverter(), bookRenderer.getViewerHints(), bookRenderer.isCompareView());
+                sourcePane.showDialog(this, true);
+            } catch (Exception ex) {
+                Logger logger = Logger.getLogger(this.getClass().getName());
+                logger.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        });
     }
 
     @Override
@@ -240,7 +245,8 @@ public class SingleBookViewerPane extends AbstractBookViewerPane {
         reload();
     }
     
-    /** For single book viewer, this method do nothing 
+    /** 
+     * For single book viewer, this method do nothing 
      * {@inheritDoc}
      */
     @Override
