@@ -3,8 +3,6 @@
 package kiyut.alkitab.bookviewer;
 
 import java.awt.Font;
-import java.awt.Toolkit;
-import javax.swing.UIManager;
 import org.crosswire.common.swing.FontStore;
 import org.crosswire.common.swing.GuiConvert;
 import org.crosswire.common.util.CWProject;
@@ -79,22 +77,23 @@ public class BookFontStore extends FontStore {
         return getFont(book.getInitials(), book.getLanguage(), fontSpec);
     }
 
-    /**
-     * Override to provide its own default font
-     * which is UIManager.getFont("EditorPane.font");
-     * @return the defaultFont
-     */
-    @Override
+    /*@Override
     public String getDefaultFont() {
         Font defaultFont = getFont("default", null, defaultFontSpec);
         return GuiConvert.font2String(defaultFont);
-    }
+    }*/
 
+    protected String createDefaultFontSpec() {
+        return GuiConvert.font2String(createDefaultFont());
+    }
+    
     protected Font createDefaultFont() {
-        Font font = UIManager.getFont("EditorPane.font");
+        return new Font("SansSerif",Font.PLAIN,12);
+        
+        /*Font font = UIManager.getFont("EditorPane.font");
         if (font == null) {
             // serif,0,14
-            return new Font("SansSerif",Font.PLAIN,13);
+            return new Font("SansSerif",Font.PLAIN,14);
         }
 
         float fontSize = font.getSize();
@@ -108,9 +107,6 @@ public class BookFontStore extends FontStore {
         font = font.deriveFont(fontSize);
 
         return font;
+        */
     }
-
-     protected String createDefaultFontSpec() {
-         return GuiConvert.font2String(createDefaultFont());
-     }
 }

@@ -1043,7 +1043,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * @see #search(String,boolean,int)
      */
     protected void search(String searchString) {
-        search(searchString,false,BookViewerOptions.getInstance().getDefaultSearchLimit());
+        search(searchString,true,BookViewerOptions.getInstance().getDefaultSearchLimit());
     }
     
     /** 

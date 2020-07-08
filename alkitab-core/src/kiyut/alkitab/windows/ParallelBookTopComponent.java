@@ -212,7 +212,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         
         linkToolTipLocation = new Point();
 
-        linkToolTipTimer = new Timer(500, (ActionEvent evt) -> {
+        linkToolTipTimer = new Timer(1000, (ActionEvent evt) -> {
             showToolTip(linkToolTipSwordURI);
         });
 

@@ -12,6 +12,8 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -26,6 +28,7 @@ import kiyut.alkitab.history.GlobalHistory;
 import kiyut.alkitab.options.BookViewerOptions;
 import kiyut.alkitab.util.ComponentOrientationSupport;
 import kiyut.alkitab.util.IOUtilities;
+import org.crosswire.common.util.CWProject;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.sword.SwordBookPath;
@@ -175,6 +178,12 @@ public class BrandingModuleInstall extends ModuleInstall {
 
         // adding Orientation to the log
         //sb.append(orientationKey + ": " + strOrientation + "\n");
+        
+        sb.append("  JSword Path: ").append(newline);
+        Path jswordPath = Paths.get(CWProject.instance().getWritableProjectDir());
+        if (jswordPath != null) {
+            sb.append("\t").append(jswordPath.toString()).append(newline);
+        }
 
         sb.append("-------------------------------------------------------------------------------").append(newline);
 

@@ -22,11 +22,7 @@ public class HTMLConverter implements Converter {
     public static String CSS = "css";
     public static String BACKGROUND_COLOR = "background-color";
     
-    /*
-     * The xsl path , by default it is kiyut/alkitab/modules/jsword/xsl/simple.xsl
-     */
-    //private String xslPath = "/kiyut/alkitab/modules/jsword/xsl/simple.xsl";
-
+    
     @Override
     public SAXEventProvider convert(SAXEventProvider xmlsep) throws TransformerException {
         try {

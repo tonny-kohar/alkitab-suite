@@ -84,6 +84,15 @@ public class OptionsUtilities {
      */
     private static Color hexStringToColor(String hexString) {
         Color color;
+        
+        try {
+            color = Color.decode(hexString);
+        } catch (Exception e) {
+            color = null;
+        }    
+        
+        /*
+        Color color;
         int r;
         int g;
         int b;
@@ -98,7 +107,7 @@ public class OptionsUtilities {
             color = new Color(r,g,b);
         } catch (Exception e) {
             color = null;
-        }
+        }*/
 
         return color;
     }

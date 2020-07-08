@@ -33,9 +33,10 @@ public class DefaultBookToolTip implements BookToolTip {
     /** PHI of Golden Ratio */
     static double PHI = 1.618033988749895;
 
-    protected TextPaneRenderer renderer;
     protected Popup popup;
     //protected JScrollPane scrollPane;
+    protected TextPaneRenderer renderer;
+    //protected WebViewRenderer renderer;
     
     /** Just Point object act as cache for performance reason, so it does not always recreate Point object */
     protected Point prefPoint = new Point();
@@ -57,6 +58,7 @@ public class DefaultBookToolTip implements BookToolTip {
         viewerHints.put(ViewerHints.NOTES, false);
         
         renderer = new TextPaneRenderer(viewerHints);
+        //renderer = new WebViewRenderer(viewerHints);
         
         renderer.addMouseListener(new MouseAdapter() {
             @Override
@@ -159,10 +161,11 @@ public class DefaultBookToolTip implements BookToolTip {
         }
     }
     
-    /** Return preferred popup location based on ScreenSize, etc so it does not overlap 
+    /** 
+     * Return preferred popup location based on ScreenSize, etc so it does not overlap 
      * with cursor and Screen Size.
      * @param owner Component mouse coordinates are relative to, maybe null
-     * @param point inital prefPoint location that will be adjusted based on various factor
+     * @param point initial prefPoint location that will be adjusted based on various factor
      * @return point
      */
     protected Point getPreferredLocation(Component owner, Point point) {

@@ -41,7 +41,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
     private final ResourceBundle bundle = ResourceBundle.getBundle(this.getClass().getName());
 
     private static final Color LIGHT_YELLOW = OptionsUtilities.stringToColor("#FFFFE1");
-    private static final Color LIGHT_WHITE = OptionsUtilities.stringToColor("#F5F5F5");
+    private static final Color LIGHT_WHITE = OptionsUtilities.stringToColor("#FAFAFA");
     private static final Color LIGHT_GRAY = OptionsUtilities.stringToColor("#EBEBEB");
 
     private Color customBackground;
@@ -442,6 +442,7 @@ final class GeneralOptionsPanel extends javax.swing.JPanel {
         fontSizeComboBox.addItemListener(listener);
         fontBoldCheckBox.addItemListener(listener);
         fontItalicCheckBox.addItemListener(listener);
+        backgroundCombo.addItemListener(listener);
 
         defaultBibleComboBox.addItemListener(listener);
         defaultDictionaryComboBox.addItemListener(listener);
