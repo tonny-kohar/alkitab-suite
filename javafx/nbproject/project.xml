@@ -49,96 +49,24 @@
                 <binary-origin>release/modules/ext/javafx-base.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/javafx-base-linux.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-base-linux.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-base-mac.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-base-mac.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-base-win.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-base-win.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/javafx-controls.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/javafx-controls.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-controls-linux.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-controls-linux.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-controls-mac.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-controls-mac.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-controls-win.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-controls-win.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-graphics.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-graphics.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-graphics-linux.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-graphics-linux.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-graphics-mac.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-graphics-mac.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-graphics-win.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-graphics-win.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-media.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-media.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-media-linux.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-media-linux.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-media-mac.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-media-mac.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-media-win.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-media-win.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/javafx-swing.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/javafx-swing.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/javafx-swing-linux.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-swing-linux.jar</binary-origin>
+                <runtime-relative-path>ext/javafx-graphics.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/javafx-graphics.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/javafx-swing-mac.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-swing-mac.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-swing-win.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-swing-win.jar</binary-origin>
+                <runtime-relative-path>ext/javafx-media.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/javafx-media.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/javafx-web.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/javafx-web.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-web-linux.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-web-linux.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-web-mac.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-web-mac.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/javafx-web-win.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/javafx-web-win.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>

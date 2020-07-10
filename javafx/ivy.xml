@@ -13,42 +13,42 @@
     <dependencies>
         
         <dependency org="org.openjfx" name="javafx-base" rev="11.0.2" conf="repo->default">
-            <artifact name="javafx-base"/>
+            <!-- <artifact name="javafx-base"/> -->
             <artifact name="javafx-base" e:classifier="win"/>
             <artifact name="javafx-base" e:classifier="linux"/>
             <artifact name="javafx-base" e:classifier="mac"/>
         </dependency>
         
         <dependency org="org.openjfx" name="javafx-controls" rev="11.0.2" conf="repo->default">
-            <artifact name="javafx-controls"/>
+            <!-- <artifact name="javafx-controls"/> -->
             <artifact name="javafx-controls" e:classifier="win"/>
             <artifact name="javafx-controls" e:classifier="linux"/>
             <artifact name="javafx-controls" e:classifier="mac"/>
         </dependency>
         
         <dependency org="org.openjfx" name="javafx-graphics" rev="11.0.2" conf="repo->default">
-            <artifact name="javafx-graphics"/>
+            <!-- <artifact name="javafx-graphics"/> -->
             <artifact name="javafx-graphics" e:classifier="win"/>
             <artifact name="javafx-graphics" e:classifier="linux"/>
             <artifact name="javafx-graphics" e:classifier="mac"/>
         </dependency>
         
         <dependency org="org.openjfx" name="javafx-media" rev="11.0.2" conf="repo->default">
-            <artifact name="javafx-media"/>
+            <!-- <artifact name="javafx-media"/> -->
             <artifact name="javafx-media" e:classifier="win"/>
             <artifact name="javafx-media" e:classifier="linux"/>
             <artifact name="javafx-media" e:classifier="mac"/>
         </dependency>
         
         <dependency org="org.openjfx" name="javafx-swing" rev="11.0.2" conf="repo->default">
-            <artifact name="javafx-swing"/>
+            <!-- <artifact name="javafx-swing"/> -->
             <artifact name="javafx-swing" e:classifier="win"/>
             <artifact name="javafx-swing" e:classifier="linux"/>
             <artifact name="javafx-swing" e:classifier="mac"/>
         </dependency>
         
         <dependency org="org.openjfx" name="javafx-web" rev="11.0.2" conf="repo->default">
-            <artifact name="javafx-web"/>
+            <!-- <artifact name="javafx-web"/> -->
             <artifact name="javafx-web" e:classifier="win"/>
             <artifact name="javafx-web" e:classifier="linux"/>
             <artifact name="javafx-web" e:classifier="mac"/>

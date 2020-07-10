@@ -6,6 +6,8 @@
     <description>Builds, tests, and runs the project kiyut.alkitab.modules.javafx.</description>
     <import file="nbproject/build-impl.xml"/>
     
+    <property name="lib.dir" location="release/modules/ext"/>
+    
     <target name="ivy-setup">
         <mkdir dir="${user.home}/.ant/lib"/>
         <get src="https://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
@@ -14,9 +16,54 @@
     </target>
     
     <!-- Note: need to run ivy-setup target first (for settings up ivy) -->
-    <target name="ivy-download-dependencies" description="Download dependencies">
-        <property name="lib.dir" location="release/modules/ext"/>
+    <target name="ivy-build" description="Download dependencies" depends="ivy-clean">
         <ivy:retrieve pattern="${lib.dir}/[artifact](-[classifier]).[ext]"/>
+        
+        <!-- simplify the javaFX jar -->
+        <move file="${lib.dir}/javafx-base-win.jar" tofile="${lib.dir}/javafx-base.jar" overwrite="true"/>
+        <delete file="${lib.dir}/javafx-base-linux.jar" />
+        <delete file="${lib.dir}/javafx-base-mac.jar" />
+        
+        <move file="${lib.dir}/javafx-controls-win.jar" tofile="${lib.dir}/javafx-controls.jar" overwrite="true"/>
+        <delete file="${lib.dir}/javafx-controls-linux.jar" />
+        <delete file="${lib.dir}/javafx-controls-mac.jar" />
+        
+        <move file="${lib.dir}/javafx-swing-win.jar" tofile="${lib.dir}/javafx-swing.jar" overwrite="true"/>
+        <delete file="${lib.dir}/javafx-swing-linux.jar" />
+        <delete file="${lib.dir}/javafx-swing-mac.jar" />
+        
+        <jar update="yes" jarfile="${lib.dir}/javafx-graphics-win.jar">
+            <zipfileset src="${lib.dir}/javafx-graphics-linux.jar" includes="*.*"/>
+            <zipfileset src="${lib.dir}/javafx-graphics-mac.jar" includes="*.*"/>
+        </jar>
+        <move file="${lib.dir}/javafx-graphics-win.jar" tofile="${lib.dir}/javafx-graphics.jar" overwrite="true"/>
+        <delete file="${lib.dir}/javafx-graphics-linux.jar" />
+        <delete file="${lib.dir}/javafx-graphics-mac.jar" />
+        
+        <jar update="yes" jarfile="${lib.dir}/javafx-media-win.jar">
+            <zipfileset src="${lib.dir}/javafx-media-linux.jar" includes="*.*"/>
+            <zipfileset src="${lib.dir}/javafx-media-mac.jar" includes="*.*"/>
+        </jar>
+        <move file="${lib.dir}/javafx-media-win.jar" tofile="${lib.dir}/javafx-media.jar" overwrite="true"/>
+        <delete file="${lib.dir}/javafx-media-linux.jar" />
+        <delete file="${lib.dir}/javafx-media-mac.jar" />
+        
+        <jar update="yes" jarfile="${lib.dir}/javafx-web-win.jar">
+            <zipfileset src="${lib.dir}/javafx-web-linux.jar" includes="*.*"/>
+            <zipfileset src="${lib.dir}/javafx-web-mac.jar" includes="*.*"/>
+        </jar>
+        <move file="${lib.dir}/javafx-web-win.jar" tofile="${lib.dir}/javafx-web.jar" overwrite="true"/>
+        <delete file="${lib.dir}/javafx-web-linux.jar" />
+        <delete file="${lib.dir}/javafx-web-mac.jar" />
+        
+    </target>
+    
+    <target name="ivy-clean" description="ivy clean lib dir">
+        <delete dir="${lib.dir}"/>
+    </target>
+    
+    <target name="ivy-cleancache" description="ivy cleancache">
+        <ivy:cleancache />
     </target>
     
 </project>
