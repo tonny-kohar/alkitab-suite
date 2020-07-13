@@ -1043,7 +1043,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
      * @see #search(String,boolean,int)
      */
     protected void search(String searchString) {
-        search(searchString,true,BookViewerOptions.getInstance().getDefaultSearchLimit());
+        search(searchString,false,BookViewerOptions.getInstance().getDefaultSearchLimit());
     }
     
     /** 
@@ -1121,17 +1121,25 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
                 tally.trimRanges(searchLimit, RestrictionType.NONE);
                 partial = searchLimit;
             }
+        } else {
+            if (searchLimit < total)  {
+                partial = searchLimit;
+            }
         }
+        
+        Object[] args = {searchString, partial, total};
+        msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
+        JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
 
-        if (total == partial) {
-            Object[] args = {searchString, total};
+        /*if (total == partial) {
+            Object[] args = {searchString, partial, total};
             msg = MessageFormat.format(bundle.getString("MSG_SearchHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             Object[] args = {searchString, partial, total};
             msg = MessageFormat.format(bundle.getString("MSG_SearchPartialHits.Text"), args);
             JOptionPane.showMessageDialog(this, msg , bundle.getString("MSG_SearchHits.Title"), JOptionPane.INFORMATION_MESSAGE);
-        }
+        }*/
         
         this.searchString = searchString;
         setKey(results);
