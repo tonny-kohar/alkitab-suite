@@ -219,7 +219,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         linkToolTipTimer.setRepeats(false);
         linkToolTipTimer.setCoalesce(true);
         linkToolTipForceVisible = false;
-
+        
         bookViewer.getBookRenderer().getComponent().addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent evt) {
@@ -253,7 +253,17 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
                     Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(redirEvt);
                 }
             }
+            
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                if (!linkToolTipForceVisible) {
+                   linkToolTipTimer.stop();
+                    hideToolTip();
+                }
+            }
         });
+        
+
 
         ActionMap actionMap = getActionMap();
         //bookViewer.getActionMap().setParent(actionMap);
@@ -310,6 +320,7 @@ public class ParallelBookTopComponent extends BookViewerTopComponent {
         if (swordURI == null) {
             Logger logger = Logger.getLogger(ParallelBookTopComponent.class.getName());
             logger.log(Level.WARNING, "invalid SwordURI: {0}", uri);
+            return;
         }
 
         if (eventType.equals(HyperlinkEvent.EventType.ACTIVATED)) {
