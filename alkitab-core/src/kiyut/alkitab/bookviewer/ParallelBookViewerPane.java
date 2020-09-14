@@ -1060,6 +1060,15 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
         }
         
         searching = true;
+        SwingUtilities.invokeLater(() -> {
+            try {
+                searchImpl(searchString, ranked, searchLimit);
+            } finally {
+                searching = false;
+            }
+        });
+        
+        /*searching = true;
         Runnable runnable = () -> {
             ProgressHandle handle = ProgressHandleFactory.createHandle(bundle.getString("MSG_SearchInProgress.Text"), null, null);
             handle.switchToIndeterminate();
@@ -1073,6 +1082,7 @@ public class ParallelBookViewerPane extends AbstractBookViewerPane {
             }
         };
         RequestProcessor.getDefault().post(runnable);
+        */
     }
     
     private void searchImpl(String searchString, boolean ranked, int searchLimit) {

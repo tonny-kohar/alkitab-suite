@@ -40,6 +40,13 @@
         <p><a name="what_new"></a></p>
         <h2>What's New</h2>
         <blockquote>
+            <p>ver 5.0.</p>
+            <ul>
+                <li>Improved performance</li>
+                <li>Updated to use JavaFX WebView</li>
+                <li>Updated to use Java 11 or higher</li>
+                <li>Updated to use Netbeans 12.0</li>
+            </ul>
             <p>ver 4.0.1</p>
             <ul>
                 <li>Improved performance (search using thread)</li>
@@ -149,6 +156,22 @@
                 </li>
                 <li>enjoy the product</li>
             </ul>
+            <h3>Error cannot find Java 1.8 or higher</h3>
+            <p>If you encounter this error cannot find Java 1.8 or higher, please <strong>reinstall</strong> the AdoptOpenJDK 
+                (if you use AdopOpenJDK), and make sure to set both 
+                <ul>
+                    <li>to set JAVA_HOME variable <strong>enabled</strong></li>
+                    <li>to set Javasoft(Oracle) registry key <strong>enabled</strong></li>
+                </ul>
+            </p>
+            <p>Alternatively, you can edit the [INSTALL_DIR]/etc/alkitab.conf file and set the jdkhome directly by:
+                <ul>
+                    <li>uncomment the jdkhome entry, by removing the # symbol </li>
+                    <li>set it to your java path eg:<br/>
+                        jdkhome=&quot;C:\Program Files\AdoptOpenJDK\jdk-11.0.4.11-hotspot&quot;
+                    </li>
+                </ul>
+            </p>
         </blockquote>
         <p>&nbsp;</p>
         
