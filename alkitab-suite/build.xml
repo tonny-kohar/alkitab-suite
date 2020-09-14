@@ -19,8 +19,8 @@
         <propertyfile
             file="${basedir}/branding/modules/org-netbeans-core-windows.jar/org/netbeans/core/windows/view/ui/Bundle.properties"
             comment="Updated by build script">
-            <entry key="CTL_MainWindow_Title" value="${app.title.full}" />
-            <entry key="CTL_MainWindow_Title_No_Project" value="${app.title.full}" />
+            <entry key="CTL_MainWindow_Title" value="${app.title.full} ${app.version}" />
+            <entry key="CTL_MainWindow_Title_No_Project" value="${app.title.full} ${app.version}" />
         </propertyfile>
         
          <copy todir="${basedir}/branding/core/core.jar/org/netbeans/core/startup/" overwrite="true">
@@ -31,13 +31,6 @@
             </fileset>
         </copy>
         
-        <!-- Why i comment this, is it not needed anymore ???
-        <propertyfile
-            file="${basedir}/branding/modules/org-netbeans-core.jar/org/netbeans/core/ui/Bundle.properties" 
-            comment="Updated by build script">
-            <entry key="LBL_ProductInformation" value="${app.title.full}" />
-        </propertyfile>
-        -->       
     </target>
     
     <target name="build-installer" description="Create Installer" depends="clean,build-zip">
