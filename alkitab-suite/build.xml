@@ -66,9 +66,10 @@
         </replace>
         
         <replace file="${nbdist-app.dir}/etc/${app.name}.conf">
-            <replacefilter token="$${APPNAME}" value="${app.name}" />
+            <!-- <replacefilter token="$${APPNAME}" value="${app.name}" /> -->
+            <!-- <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" /> -->
             <replacefilter token="/dev" value="/${app.version}" />
-            <replacefilter token="-J-Xms24m -J-Xmx64m" value="${run.args.extra}" />
+            <replacefilter token="--branding ${app.name}" value="--branding ${app.name} ${run.args.extra}" />
         </replace>
         
         <delete file="${nbdist-app.dir}/DISTRIBUTION.txt"/>
