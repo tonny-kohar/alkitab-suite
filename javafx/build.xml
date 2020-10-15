@@ -33,8 +33,14 @@
         <delete file="${lib.dir}/javafx-swing-mac.jar" />
         
         <jar update="yes" jarfile="${lib.dir}/javafx-graphics-win.jar">
-            <zipfileset src="${lib.dir}/javafx-graphics-linux.jar" includes="*.*"/>
-            <zipfileset src="${lib.dir}/javafx-graphics-mac.jar" includes="*.*"/>
+            <zipfileset src="${lib.dir}/javafx-graphics-linux.jar">
+                <include name="*.*" />
+                <include name="com/sun/glass/ui/gtk/*" />
+            </zipfileset>
+            <zipfileset src="${lib.dir}/javafx-graphics-mac.jar">
+                <include name="*.*" />
+                <include name="com/sun/glass/ui/mac/*" />
+            </zipfileset>
         </jar>
         <move file="${lib.dir}/javafx-graphics-win.jar" tofile="${lib.dir}/javafx-graphics.jar" overwrite="true"/>
         <delete file="${lib.dir}/javafx-graphics-linux.jar" />
