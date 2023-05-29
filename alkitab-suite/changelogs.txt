@@ -1,3 +1,7 @@
+ver x.x (6.0)
+- Updated to use Apache Netbeans 17
+- Updated to use Java 17 or higher
+
 ver 5.0.1
 - Fix Mac OS ClassNotFound Exception
 - REGRESSION run.args.extra is not parsed and updated to conf file
