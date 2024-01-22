@@ -44,7 +44,8 @@ public abstract class BookshelfBookAction extends CallableSystemAction {
        // do nothing
     }
     
-    /** Overidden to return false
+    /** 
+     * Overidden to return false
      * {@inheritDoc}
      */
     @Override
@@ -52,7 +53,8 @@ public abstract class BookshelfBookAction extends CallableSystemAction {
         return false;
     }
     
-    /** Overidden to return HelpCtx.DEFAULT_HELP
+    /** 
+     * Overridden to return HelpCtx.DEFAULT_HELP
      * {@inheritDoc} 
      */
     @Override

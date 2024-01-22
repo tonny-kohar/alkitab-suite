@@ -10,12 +10,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import javax.swing.JPopupMenu;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import kiyut.alkitab.bookviewer.BookViewerManager;
 import kiyut.alkitab.bookviewer.SwordURI;
+import kiyut.openide.util.NbUtilities;
 
 /**
  * Panel which display user's history
@@ -24,6 +26,8 @@ import kiyut.alkitab.bookviewer.SwordURI;
  */
 public class GlobalHistoryPane extends javax.swing.JPanel {
     protected ListModel<GlobalHistory.Entry> listModel;
+    protected JPopupMenu historyContextMenu;
+    private String historyContextMenuFolderName = "Alkitab/GlobalHistory/PopupMenu";
 
     /** Creates new form GlobalHistoryPane */
     public GlobalHistoryPane() {
@@ -79,6 +83,10 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
                 }
             }
         });
+        
+        historyContextMenu = new JPopupMenu();
+        NbUtilities.createMenu(historyContextMenu,historyContextMenuFolderName);
+        historyList.setComponentPopupMenu(historyContextMenu);
     }
 
     protected void viewHistory() {
@@ -93,6 +101,19 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
         BookViewerManager.getInstance().openURI(uri, hist.getSearch(), false);
     }
 
+    public void deleteSelected() {
+        int index = historyList.getSelectedIndex();
+        if (index < 0) {
+            return;
+        }
+        
+        GlobalHistory.getInstance().delete(index);
+    }
+    
+    public void clearAll() {
+        GlobalHistory.getInstance().clearAll();
+    }
+    
     private class HistoryListModel extends AbstractListModel<GlobalHistory.Entry> {
         public HistoryListModel() {
            ListDataListener listDataListener = new ListDataListener() {
@@ -138,5 +159,5 @@ public class GlobalHistoryPane extends javax.swing.JPanel {
             }
             return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         }
-    }
+    } 
 }

@@ -2,4 +2,4 @@ Manifest-Version: 1.0
 OpenIDE-Module: kiyut.alkitab.modules.userguide
 OpenIDE-Module-Layer: kiyut/alkitab/modules/userguide/layer.xml
 OpenIDE-Module-Localizing-Bundle: kiyut/alkitab/modules/userguide/Bundle.properties
-OpenIDE-Module-Specification-Version: 5.0.1
+OpenIDE-Module-Specification-Version: 6.1

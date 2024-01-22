@@ -9,6 +9,7 @@ import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * TopComponent which displays {@link kiyut.alkitab.history.GlobalHistoryPane GlobalHistoryPane}.
@@ -53,8 +54,29 @@ public final class GlobalHistoryTopComponent extends TopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Obtain the GlobalHistoryTopComponent instance.
+     * @return GlobalHistoryTopComponent instance.
+     */
+    public static synchronized GlobalHistoryTopComponent findInstance() {
+        TopComponent win = WindowManager.getDefault().findTopComponent("GlobalHistoryTopComponent");
+        if (win instanceof GlobalHistoryTopComponent) {
+            return (GlobalHistoryTopComponent) win;
+        }
+        
+        return null;
+    }
+    
     private void initCustom() {
         historyPane = new GlobalHistoryPane();
         this.add(historyPane, BorderLayout.CENTER);
+    }
+    
+    public void deleteSelected() {
+        historyPane.deleteSelected();
+    }
+    
+    public void clearAll() {
+        historyPane.clearAll();
     }
 }

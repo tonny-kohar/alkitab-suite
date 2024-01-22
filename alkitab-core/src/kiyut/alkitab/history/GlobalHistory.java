@@ -36,7 +36,7 @@ public class GlobalHistory {
 
     private static final String FILENAME = "history.xml";
 
-    protected List<Entry> data;
+    protected List<Entry> dataList;
     protected EventListenerList listenerList;
     protected boolean modified;
 
@@ -55,11 +55,15 @@ public class GlobalHistory {
 
     private GlobalHistory() {
         listenerList = new EventListenerList();
-        data = new ArrayList<>();
+        dataList = new ArrayList<>();
         load();
         modified = false;
     }
-
+    
+    /**
+     * Load the persisted history list
+     * @see #save()
+     */
     @SuppressWarnings("unchecked")
     protected void load() {
         //InstalledFileLocator fileLocator = InstalledFileLocator.getDefault();
@@ -101,7 +105,7 @@ public class GlobalHistory {
 
                 // just precautuion to make sure the entry is not null
                 if (text != null) {
-                    data.add(new Entry(Long.parseLong(elt.getAttributeValue(MILLIS)), text, search));
+                    dataList.add(new Entry(Long.parseLong(elt.getAttributeValue(MILLIS)), text, search));
                 }
             }
 
@@ -111,10 +115,14 @@ public class GlobalHistory {
             return;
         }
 
-        fireIntervalAdded(0, data.size()-1);
+        fireIntervalAdded(0, dataList.size()-1);
         
     }
 
+    /**
+     * persist the history list
+     * @see #load()
+     */
     public synchronized void save() {
         if (!modified) { return; }
 
@@ -138,8 +146,8 @@ public class GlobalHistory {
         Element root = new Element("history");
         Document doc = new Document(root);
         
-        for (int i=0; i<data.size(); i++) {
-            Entry entry = data.get(i);
+        for (int i=0; i<dataList.size(); i++) {
+            Entry entry = dataList.get(i);
             Element elt = new Element(ENTRY);
             elt.setAttribute(MILLIS, Long.toString(entry.getMillis()));
 
@@ -174,52 +182,12 @@ public class GlobalHistory {
         
     }
 
-    /** 
-     * Add the passed text into text.
-     * @param text the passage as String
-     * @see #add(String,String)
+    /**
+     * Return the number of history entries
+     * @return the number of history entries
      */
-    public void add(String text) {
-        add(text, null);
-    }
-
-    /** 
-     * Add the passed text and search into text
-     * @param text the passage as String
-     * @param search the search String or {@code null}
-     */
-    public void add(String text, String search) {
-        // check last entry
-        if (!data.isEmpty()) {
-            Entry last = data.get(0);
-            if (last.getText().equalsIgnoreCase(text)) {
-                return;
-            }
-        }
-
-        if (text == null) { return; }
-      
-        if (text.isEmpty()) { return; }
-
-        data.add(0,new Entry (System.currentTimeMillis(), text, search));
-        fireIntervalAdded(0, 0);
-
-        int first = -1;
-        int last = data.size() - 1;
-        while (data.size() > 1000) {
-            first = data.size()-1;
-            data.remove(data.size()-1);
-        }
-
-        if (first != -1) {
-            fireIntervalRemoved(first, last);
-        }
-
-        modified = true;
-    }
-
     public int size() {
-        return data.size();
+        return dataList.size();
     }
 
     /**
@@ -232,9 +200,79 @@ public class GlobalHistory {
             return null;
         }
         
-        return data.get(index);
+        return dataList.get(index);
     }
 
+    /** 
+     * Add the passed text into text.
+     * @param text the passage as String
+     * @see #add(String,String)
+     */
+    public synchronized void add(String text) {
+        add(text, null);
+    }
+
+    /** 
+     * Add the passed text and search into text
+     * @param text the passage as String
+     * @param search the search String or {@code null}
+     */
+    public synchronized void add(String text, String search) {
+        // check last entry
+        if (!dataList.isEmpty()) {
+            Entry last = dataList.get(0);
+            if (last.getText().equalsIgnoreCase(text)) {
+                return;
+            }
+        }
+
+        if (text == null) { return; }
+      
+        if (text.isEmpty()) { return; }
+
+        dataList.add(0,new Entry (System.currentTimeMillis(), text, search));
+        fireIntervalAdded(0, 0);
+
+        int first = -1;
+        int last = dataList.size() - 1;
+        while (dataList.size() > 1000) {
+            first = dataList.size()-1;
+            dataList.remove(dataList.size()-1);
+        }
+
+        if (first != -1) {
+            fireIntervalRemoved(first, last);
+        }
+
+        modified = true;
+    }
+    
+    /**
+     * Delete history entry
+     * @param index the entry index
+     */
+    public synchronized void delete(int index) {
+        if (size() <= 0 || size() <= index) {
+            return;
+        }
+        
+        dataList.remove(index);
+        fireIntervalRemoved(index, index);        
+        modified = true;
+    }
+    
+    /**
+     * Clear all history entries
+     */
+    public synchronized void clearAll() {
+        if (dataList.isEmpty()) { return; }
+        
+        int end = dataList.size() - 1;
+        dataList.clear();
+        fireIntervalRemoved(0, end);
+        modified = true;
+    }
+    
     public void addListDataListener(ListDataListener listener) {
         listenerList.add(ListDataListener.class, listener);
     }
